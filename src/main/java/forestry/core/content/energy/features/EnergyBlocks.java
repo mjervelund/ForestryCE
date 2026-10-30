@@ -29,5 +29,5 @@ public class EnergyBlocks {
 
 	// Deviation from 1.20.1: the block factory now takes the Properties as an argument and the
 	// properties come from a separate supplier, and Properties.copy was renamed to ofFullCopy.
-	public static final FeatureBlock<Block, BlockItem> SOLAR_PANEL = REGISTRY.block(SolarPanelBlock::new, () -> RegistrationIds.block(BlockBehaviour.Properties.ofFullCopy(Blocks.DAYLIGHT_DETECTOR)).sound(SoundType.METAL).pushReaction(PushReaction.BLOCK), ItemBlockForestry::new, "solar_panel");
+	public static final FeatureBlock<Block, BlockItem> SOLAR_PANEL = REGISTRY.block(SolarPanelBlock::new, () -> RegistrationIds.block(BlockBehaviour.Properties.ofFullCopy(Blocks.DAYLIGHT_DETECTOR)).sound(SoundType.METAL).pushReaction(PushReaction.IMMOVEABLE), ItemBlockForestry::new, "solar_panel");
 }

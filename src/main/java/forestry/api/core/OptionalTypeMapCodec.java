@@ -83,7 +83,7 @@ final class OptionalTypeMapCodec<V, T> extends MapCodec<V> {
 	}
 
 	private DataResult<T> byId(Identifier id) {
-		T type = this.registry.get(id);
+		T type = this.registry.getValue(id);
 		if (type == null) {
 			return DataResult.error(() -> "Unknown " + this.typeName + ": " + id);
 		}

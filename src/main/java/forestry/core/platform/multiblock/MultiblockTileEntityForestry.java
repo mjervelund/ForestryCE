@@ -1,5 +1,7 @@
 package forestry.core.platform.multiblock;
 
+import net.minecraft.world.Containers;
+import net.minecraft.world.entity.ContainerUser;
 import forestry.core.platform.util.NbtValueIO;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
@@ -151,13 +153,13 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		}
 
 		if (data.contains(ANCHOR_KEY)) {
-			NbtUtils.readBlockPos(data, ANCHOR_KEY).ifPresent(this::setAnchorPos);
+			data.read(ANCHOR_KEY, BlockPos.CODEC).ifPresent(this::setAnchorPos);
 		}
 
 		// The shared payload, meaning controller state, is stashed until load-time validation adopts it. Any
 		// member type may carry it after a re-anchor hand-off (spec 6.4), so always stash it if present.
 		if (data.contains(PAYLOAD_KEY)) {
-			setStash(data.getCompound(PAYLOAD_KEY).copy());
+			setStash(data.getCompoundOrEmpty(PAYLOAD_KEY).copy());
 		}
 
 		// Per-block own inventory (sieve, swarmer, hygroregulator) round-trips here. The shared controller
@@ -185,7 +187,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 
 		BlockPos anchor = getAnchorPos();
 		if (anchor != null) {
-			data.put(ANCHOR_KEY, NbtUtils.writeBlockPos(anchor));
+			data.store(ANCHOR_KEY, BlockPos.CODEC, anchor);
 		}
 
 		// Single-holder invariant (spec 6.1), only the holder serializes the shared payload. If a live
@@ -582,7 +584,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		super.encodeDescriptionPacket(packetData);
 		BlockPos anchor = getAnchorPos();
 		if (anchor != null) {
-			packetData.put(ANCHOR_KEY, NbtUtils.writeBlockPos(anchor));
+			packetData.store(ANCHOR_KEY, BlockPos.CODEC, anchor);
 		}
 		if (isHolder()) {
 			MultiblockController controller = getController();
@@ -599,7 +601,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 				List<BlockPos> memberPositions = controller.getMembers();
 				members.putInt("count", memberPositions.size());
 				for (int i = 0; i < memberPositions.size(); i++) {
-					members.put(Integer.toString(i), NbtUtils.writeBlockPos(memberPositions.get(i)));
+					members.store(Integer.toString(i), BlockPos.CODEC, memberPositions.get(i));
 				}
 				packetData.put(MEMBERS_KEY, members);
 
@@ -614,7 +616,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 	protected void decodeDescriptionPacket(CompoundTag packetData) {
 		super.decodeDescriptionPacket(packetData);
 		if (packetData.contains(ANCHOR_KEY)) {
-			NbtUtils.readBlockPos(packetData, ANCHOR_KEY).ifPresent(this::setAnchorPos);
+			packetData.read(ANCHOR_KEY, BlockPos.CODEC).ifPresent(this::setAnchorPos);
 		}
 
 		// BUG 2. When the holder's packet carries the full assembled state, reconstruct and register a real
@@ -622,7 +624,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		// NOT depend on the client running its own unreliable validation, so the GUI and highlight resolve a
 		// real assembled controller after a world reload (spec 9).
 		if (this.level != null && this.level.isClientSide()) {
-			if (packetData.getBoolean(ASSEMBLED_KEY) && packetData.contains(MEMBERS_KEY)) {
+			if (packetData.getBooleanOr(ASSEMBLED_KEY, false) && packetData.contains(MEMBERS_KEY)) {
 				reconstructClientController(packetData);
 			} else {
 				dropClientController();
@@ -659,7 +661,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		BlockPos min = null;
 		BlockPos max = null;
 		for (int i = 0; i < count; i++) {
-			BlockPos pos = NbtUtils.readBlockPos(membersTag, Integer.toString(i)).orElse(null);
+			BlockPos pos = membersTag.read(Integer.toString(i), BlockPos.CODEC).orElse(null);
 			if (pos == null) {
 				continue;
 			}
@@ -713,6 +715,15 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		return FakeInventoryAdapter.INSTANCE;
 	}
 
+	// 26.x: replaces BlockStructure#onRemove. Plain components expose the controller's shared inventory through
+	// Container, so only components with their own inventory drop it, as before
+	@Override
+	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+		if (this instanceof IMultiblockComponent.HasInventory component && this.level != null) {
+			Containers.dropContents(this.level, pos, component.getInternalInventory());
+		}
+	}
+
 	public boolean allowsAutomation() {
 		return false;
 	}
@@ -753,12 +764,12 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 	}
 
 	@Override
-	public final void startOpen(Player player) {
+	public final void startOpen(ContainerUser player) {
 		getInternalInventory().startOpen(player);
 	}
 
 	@Override
-	public final void stopOpen(Player player) {
+	public final void stopOpen(ContainerUser player) {
 		getInternalInventory().stopOpen(player);
 	}
 

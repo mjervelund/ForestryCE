@@ -1,5 +1,7 @@
 package forestry.apiculture.bees.genetics.effects;
 
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.ItemStack;
 import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.core.genetics.IEffectData;
@@ -12,12 +14,12 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.animal.fox.Fox;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.event.entity.EntityTeleportEvent.ChorusFruit;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 
 import java.util.List;
 
@@ -54,13 +56,14 @@ public class PhasingBeeEffect extends ThrottledBeeEffect {
 
 				Vec3 vec3 = entity.position();
 				level.gameEvent(GameEvent.TELEPORT, vec3, GameEvent.Context.of(entity));
-				ChorusFruit event = EventHooks.onChorusFruitTeleport(entity, targetX, targetY, targetZ);
+				// 26.x: the chorus fruit event became the general item consumption teleport (no item here)
+				EntityTeleportEvent.ItemConsumption event = EventHooks.onItemConsumptionTeleport(entity, ItemStack.EMPTY, targetX, targetY, targetZ);
 
 				if (event.isCanceled()) {
 					break;
 				}
 
-				if (entity.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true)) {
+				if (entity.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true, BlockTags.CONSUMABLE_DOES_NOT_TELEPORT_TO)) {
 					SoundEvent sound = entity instanceof Fox ? SoundEvents.FOX_TELEPORT : SoundEvents.CHORUS_FRUIT_TELEPORT;
 					level.playSound(null, x, y, z, sound, SoundSource.BLOCKS, 1f, 1f);
 					entity.playSound(sound, 1f, 1f);

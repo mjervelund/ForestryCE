@@ -1,5 +1,6 @@
 package forestry.core.content.burnbarrel;
 
+import forestry.core.platform.util.FuelUtil;
 import forestry.api.core.ForestryError;
 import forestry.api.core.IErrorLogic;
 import forestry.core.features.CoreItems;
@@ -92,7 +93,7 @@ public class TileBurnBarrel extends TileBase implements IStreamableGui {
 				hasResources = true;
 
 				ItemStack stack = getInternalInventory().getItem(nextInputIndex);
-				this.burnTime = stack.getBurnTime(null);
+				this.burnTime = FuelUtil.getBurnTime(this, stack);
 				this.currentMaxBurnTime = this.burnTime;
 				getInternalInventory().setItem(nextInputIndex, stack.copyWithCount(stack.getCount() - 1));
 			}
@@ -148,7 +149,7 @@ public class TileBurnBarrel extends TileBase implements IStreamableGui {
 		// while SLOT_INPUT_1 is 0. Written the same way as canOutput below
 		for (int i = InventoryBurnBarrel.SLOT_INPUT_1 + InventoryBurnBarrel.SLOT_INPUT_COUNT - 1; i >= InventoryBurnBarrel.SLOT_INPUT_1; i--) {
 			ItemStack stack = getInternalInventory().getItem(i);
-			if (!stack.isEmpty() && stack.getBurnTime(null) > 0) {
+			if (!stack.isEmpty() && FuelUtil.isFuel(stack)) {
 				return i;
 			}
 		}

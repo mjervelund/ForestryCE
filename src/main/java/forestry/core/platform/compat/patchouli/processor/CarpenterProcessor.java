@@ -1,5 +1,6 @@
 package forestry.core.platform.compat.patchouli.processor;
 
+import forestry.core.platform.util.EmptyIngredient;
 import forestry.Forestry;
 import forestry.api.core.machines.ICarpenterRecipe;
 import forestry.core.platform.util.ModUtil;
@@ -54,7 +55,7 @@ public class CarpenterProcessor implements IComponentProcessor {
 			try {
 				ingredient = this.recipe.getCraftingGridRecipe().getIngredients().get(index - 1);
 			} catch (Exception e) {
-				ingredient = Ingredient.EMPTY;
+				ingredient = EmptyIngredient.EMPTY;
 			}
 			return IVariable.from(ingredient.getItems(), registries);
 		} else {

@@ -1,5 +1,6 @@
 package forestry.apiculture.bees.genetics.effects;
 
+import net.minecraft.world.entity.EntityTypes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -101,23 +102,23 @@ public class ResurrectionBeeEffect extends ThrottledBeeEffect {
 
 	public static List<Resurrectable> getReanimationList() {
 		List<Resurrectable> list = new ArrayList<>();
-		list.add(new Resurrectable(Items.BONE, EntityType.SKELETON));
-		list.add(new Resurrectable(Items.ARROW, EntityType.SKELETON));
-		list.add(new Resurrectable(Items.ROTTEN_FLESH, EntityType.ZOMBIE));
-		list.add(new Resurrectable(Items.BLAZE_ROD, EntityType.BLAZE));
+		list.add(new Resurrectable(Items.BONE, EntityTypes.SKELETON));
+		list.add(new Resurrectable(Items.ARROW, EntityTypes.SKELETON));
+		list.add(new Resurrectable(Items.ROTTEN_FLESH, EntityTypes.ZOMBIE));
+		list.add(new Resurrectable(Items.BLAZE_ROD, EntityTypes.BLAZE));
 		return list;
 	}
 
 	public static List<Resurrectable> getResurrectionList() {
 		List<Resurrectable> list = new ArrayList<>();
-		list.add(new Resurrectable(Items.GUNPOWDER, EntityType.CREEPER));
-		list.add(new Resurrectable(Items.ENDER_PEARL, EntityType.ENDERMAN));
-		list.add(new Resurrectable(Items.STRING, EntityType.SPIDER));
-		list.add(new Resurrectable(Items.SPIDER_EYE, EntityType.SPIDER));
-		list.add(new Resurrectable(Items.STRING, EntityType.CAVE_SPIDER));
-		list.add(new Resurrectable(Items.SPIDER_EYE, EntityType.CAVE_SPIDER));
-		list.add(new Resurrectable(Items.GHAST_TEAR, EntityType.GHAST));
-		list.add(new Resurrectable(Blocks.DRAGON_EGG.asItem(), EntityType.ENDER_DRAGON));
+		list.add(new Resurrectable(Items.GUNPOWDER, EntityTypes.CREEPER));
+		list.add(new Resurrectable(Items.ENDER_PEARL, EntityTypes.ENDERMAN));
+		list.add(new Resurrectable(Items.STRING, EntityTypes.SPIDER));
+		list.add(new Resurrectable(Items.SPIDER_EYE, EntityTypes.SPIDER));
+		list.add(new Resurrectable(Items.STRING, EntityTypes.CAVE_SPIDER));
+		list.add(new Resurrectable(Items.SPIDER_EYE, EntityTypes.CAVE_SPIDER));
+		list.add(new Resurrectable(Items.GHAST_TEAR, EntityTypes.GHAST));
+		list.add(new Resurrectable(Blocks.DRAGON_EGG.asItem(), EntityTypes.ENDER_DRAGON));
 		return list;
 	}
 

@@ -1,5 +1,8 @@
 package forestry.core.platform.item;
 
+import forestry.core.platform.block.ITooltipBlock;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.util.ItemTooltipUtil;
 import net.minecraft.network.chat.Component;
@@ -30,8 +33,11 @@ public class ItemBlockForestry<B extends Block> extends BlockItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
-		super.appendHoverText(stack, context, tooltip, advanced);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
+		super.appendHoverText(stack, context, display, tooltip, advanced);
+		if (getBlock() instanceof ITooltipBlock tooltipBlock) {
+			tooltipBlock.appendHoverText(stack, context, tooltip, advanced);
+		}
 		ItemTooltipUtil.addInformation(stack, tooltip);
 	}
 }

@@ -118,7 +118,7 @@ public record TaxonDefinition(@Nullable String parent, String name, @Nullable Ta
 		buf.writeNullable(def.parent, FriendlyByteBuf::writeUtf);
 		buf.writeUtf(def.name);
 		buf.writeNullable(def.rank, (b, rank) -> TaxonomicRank.STREAM_CODEC.encode((RegistryFriendlyByteBuf) b, rank));
-		buf.writeNullable(def.type, FriendlyByteBuf::writeResourceLocation);
+		buf.writeNullable(def.type, FriendlyByteBuf::writeIdentifier);
 		if (def.type != null && !def.alleles.isEmpty()) {
 			buf.writeBoolean(true);
 			IKaryotype karyotype = karyotypeFor(def.type);
@@ -135,7 +135,7 @@ public record TaxonDefinition(@Nullable String parent, String name, @Nullable Ta
 		String parent = buf.readNullable(FriendlyByteBuf::readUtf);
 		String name = buf.readUtf();
 		TaxonomicRank rank = buf.readNullable(b -> TaxonomicRank.STREAM_CODEC.decode((RegistryFriendlyByteBuf) b));
-		Identifier type = buf.readNullable(FriendlyByteBuf::readResourceLocation);
+		Identifier type = buf.readNullable(FriendlyByteBuf::readIdentifier);
 		Map<Identifier, Allele<?>> alleles = Map.of();
 		if (buf.readBoolean()) {
 			IKaryotype karyotype = karyotypeFor(type);

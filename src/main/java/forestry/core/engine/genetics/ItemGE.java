@@ -1,5 +1,8 @@
 package forestry.core.engine.genetics;
 
+import net.minecraft.core.HolderLookup;
+import forestry.core.platform.util.TooltipLines;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.client.Minecraft;
 import forestry.Forestry;
 import forestry.api.core.genetics.IGenome;
@@ -43,7 +46,7 @@ public abstract class ItemGE extends ItemForestry implements IIndividualItem {
 	protected final ILifeStage stage;
 
 	protected ItemGE(Item.Properties properties, ILifeStage stage) {
-		super(properties.setNoRepair());
+		super(properties.setNoCombineRepair());
 
 		this.stage = stage;
 	}
@@ -171,12 +174,12 @@ public abstract class ItemGE extends ItemForestry implements IIndividualItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-		appendGeneticsTooltip(stack, tooltip);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+		appendGeneticsTooltip(stack, new TooltipLines(tooltip));
 	}
 
 	@Override
-	public String getCreatorModId(ItemStack stack) {
+	public String getCreatorModId(HolderLookup.Provider registries, ItemStack stack) {
 		ISpecies<?> species = getSpecies(stack);
 		return species.id().getNamespace();
 	}

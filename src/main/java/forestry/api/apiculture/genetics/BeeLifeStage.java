@@ -39,6 +39,6 @@ public enum BeeLifeStage implements ILifeStage {
 
 	@Override
 	public Item getItemForm() {
-		return BuiltInRegistries.ITEM.get(this.itemId);
+		return BuiltInRegistries.ITEM.getValue(this.itemId);
 	}
 }

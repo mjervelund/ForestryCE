@@ -52,7 +52,7 @@ public class FilteredTank extends StandardTank {
 	 */
 	public FilteredTank setFilter(DataMapType<Fluid, ?> dataMap) {
 		this.filters = () -> BuiltInRegistries.FLUID.getDataMap(dataMap).keySet().stream()
-				.map(ResourceKey::location)
+				.map(ResourceKey::identifier)
 				.collect(Collectors.toSet());
 		setValidator(stack -> !stack.isEmpty() && stack.typeHolder().getData(dataMap) != null);
 		return this;
@@ -85,7 +85,7 @@ public class FilteredTank extends StandardTank {
 
 		if (Minecraft.getInstance().hasShiftDown() || filters.size() < 5) {
 			for (Identifier filterName : filters) {
-				Fluid fluidFilter = BuiltInRegistries.FLUID.get(filterName);
+				Fluid fluidFilter = BuiltInRegistries.FLUID.getValue(filterName);
 				if (fluidFilter == Fluids.EMPTY) {
 					continue;
 				}

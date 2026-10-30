@@ -76,7 +76,7 @@ public final class MultiblockValidation {
 				PatternResult.Failure failure = (PatternResult.Failure) result;
 				if (failure.firstKey().equals(Predicates.KEY_NOT_LOADED)) {
 					StructurePos cell = failure.first().pos();
-					unloadedChunks.add(ChunkPos.asLong(cell.x() >> 4, cell.z() >> 4));
+					unloadedChunks.add(ChunkPos.pack(cell.x() >> 4, cell.z() >> 4));
 				}
 				int rank = hintRank(failure.firstKey());
 				if (rank > bestRank) {

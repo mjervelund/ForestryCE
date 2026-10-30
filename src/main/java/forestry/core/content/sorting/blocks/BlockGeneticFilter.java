@@ -1,5 +1,8 @@
 package forestry.core.content.sorting.blocks;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import forestry.core.platform.block.BlockForestry;
 import forestry.core.platform.tile.IForestryTicker;
 import forestry.core.platform.tile.TileUtil;
@@ -60,7 +63,7 @@ public class BlockGeneticFilter extends BlockForestry implements EntityBlock {
 			.setValue(DOWN, false));
 	}
 
-	public BlockState updateShape(BlockState state, Direction direction, BlockState changedState, LevelAccessor world, BlockPos pos, BlockPos changedPos) {
+	public BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess ticks, BlockPos pos, Direction direction, BlockPos changedPos, BlockState changedState, RandomSource random) {
 		TileGeneticFilter geneticFilter = TileUtil.getTile(world, pos, TileGeneticFilter.class);
 		if (geneticFilter == null) {
 			return defaultBlockState();

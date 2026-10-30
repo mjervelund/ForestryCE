@@ -19,14 +19,14 @@ public class FluidTagFilter extends ReloadableFluidFilter {
 
 	public FluidTagFilter(TagKey<Fluid> tag) {
 		super(() -> {
-			HolderSet.Named<Fluid> set = RecipeUtils.getFluidRegistry().getTag(tag).orElse(null);
+			HolderSet.Named<Fluid> set = RecipeUtils.getFluidRegistry().get(tag).orElse(null);
 			if (set == null || set.size() == 0) {
 				return Set.of();
 			}
 			Set<Identifier> ids = new HashSet<>(set.size());
 
 			for (Holder<Fluid> holder : set) {
-				ids.add(holder.unwrapKey().get().location());
+				ids.add(holder.unwrapKey().get().identifier());
 			}
 
 			return ids;

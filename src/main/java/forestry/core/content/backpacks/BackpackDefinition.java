@@ -28,7 +28,7 @@ public class BackpackDefinition implements IBackpackDefinition {
 	@Override
 	public Component getName(ItemStack backpack) {
 		Item item = backpack.getItem();
-		Component display = Component.translatable((item.getDescriptionId(backpack)).trim());
+		Component display = Component.translatable(item.getDescriptionId().trim());
 
 		CompoundTag tagCompound = NBTUtilForestry.getItemStackTag(backpack);
 		if (tagCompound != null && tagCompound.contains("display")) {

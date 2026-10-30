@@ -199,7 +199,7 @@ public class TileCarpenter extends TilePowered implements WorldlyContainer, ILiq
 		}
 
 		Container inventory = new InventoryMapper(getInternalInventory(), InventoryCarpenter.SLOT_INVENTORY_1, InventoryCarpenter.SLOT_INVENTORY_COUNT);
-		return InventoryUtil.consumeIngredients(inventory, this.currentRecipe.getCraftingGridRecipe().getIngredients(), null, true, false, doRemove);
+		return InventoryUtil.consumeIngredients(inventory, this.currentRecipe.getCraftingGridRecipe().placementInfo().ingredients(), null, true, false, doRemove);
 	}
 
 	/* STATE INFORMATION */

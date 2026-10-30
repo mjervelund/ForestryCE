@@ -1,5 +1,8 @@
 package forestry.core.content.lighting;
 
+import net.minecraft.util.ARGB;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -18,7 +21,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import org.joml.Vector3f;
 
 public class BlockWaterloggableTorch extends TorchBlock implements SimpleWaterloggedBlock {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -28,7 +30,7 @@ public class BlockWaterloggableTorch extends TorchBlock implements SimpleWaterlo
 	 * phosphor dust can no longer be handed to super. Super gets a vanilla flame purely to satisfy the block codec,
 	 * and animateTick below is overridden to spawn this instead, which keeps the original look.
 	 */
-	private static final DustParticleOptions PHOSPHOR_PARTICLE = new DustParticleOptions(new Vector3f(0.68f, 1.0f, 0.89f), 0.8f);
+	private static final DustParticleOptions PHOSPHOR_PARTICLE = new DustParticleOptions(ARGB.colorFromFloat(1.0f, 0.68f, 1.0f, 0.89f), 0.8f);
 
 	public BlockWaterloggableTorch(BlockBehaviour.Properties properties) {
 		// Deviation from 1.20.1: the properties now come from the feature registry rather than being built here.
@@ -63,10 +65,10 @@ public class BlockWaterloggableTorch extends TorchBlock implements SimpleWaterlo
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+	public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
 		if (state.getValue(WATERLOGGED)) {
-			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+			ticks.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
-		return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+		return super.updateShape(state, level, ticks, pos, direction, neighborPos, neighborState, random);
 	}
 }

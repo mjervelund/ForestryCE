@@ -1,5 +1,6 @@
 package forestry.core.platform.inventory;
 
+import net.minecraft.world.entity.ContainerUser;
 import forestry.api.core.IInventoryAdapter;
 import forestry.core.platform.config.Constants;
 import net.minecraft.core.HolderLookup;
@@ -80,11 +81,11 @@ public enum FakeInventoryAdapter implements IInventoryAdapter {
 	}
 
 	@Override
-	public void startOpen(Player player) {
+	public void startOpen(ContainerUser player) {
 	}
 
 	@Override
-	public void stopOpen(Player player) {
+	public void stopOpen(ContainerUser player) {
 	}
 
 	@Override

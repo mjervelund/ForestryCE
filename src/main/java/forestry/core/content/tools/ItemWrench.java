@@ -1,5 +1,6 @@
 package forestry.core.content.tools;
 
+import net.minecraft.world.item.component.SwingAnimation;
 import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +34,7 @@ public class ItemWrench extends ItemForestry {
 		Block block = state.getBlock();
 		BlockState rotatedState = block.rotate(state, worldIn, pos, Rotation.CLOCKWISE_90);
 		if (rotatedState != state) {    //TODO - how to rotate based on a direction, might need helper method
-			player.swing(hand);
+			player.swing(hand, SwingAnimation.DEFAULT, false);
 			worldIn.setBlock(pos, rotatedState, Block.UPDATE_CLIENTS);
 			return InteractionResult.SUCCESS;
 		}

@@ -1,5 +1,6 @@
 package forestry.core.content.machines.tiles;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import forestry.api.core.ForestryError;
 import forestry.api.core.IErrorLogic;
 import forestry.api.core.machines.fuels.MoistenerFuel;
@@ -78,11 +79,11 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 
 		// Write pending product
 		if (this.pendingProduct != null) {
-			CompoundTag CompoundNBTP = (CompoundTag) this.pendingProduct.saveOptional(registries);
+			CompoundTag CompoundNBTP = NBTUtilForestry.saveStack(registries, this.pendingProduct);
 			compoundNBT.put("PendingProduct", CompoundNBTP);
 		}
 		if (this.currentProduct != null) {
-			CompoundTag CompoundNBTP = (CompoundTag) this.currentProduct.saveOptional(registries);
+			CompoundTag CompoundNBTP = NBTUtilForestry.saveStack(registries, this.currentProduct);
 			compoundNBT.put("CurrentProduct", CompoundNBTP);
 		}
 	}
@@ -100,11 +101,11 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 		// Load pending product
 		if (compoundNBT.contains("PendingProduct")) {
 			CompoundTag compoundNBTP = compoundNBT.getCompoundOrEmpty("PendingProduct");
-            this.pendingProduct = ItemStack.parse(registries, compoundNBTP).orElse(ItemStack.EMPTY);
+            this.pendingProduct = NBTUtilForestry.parseStack(registries, compoundNBTP);
 		}
 		if (compoundNBT.contains("CurrentProduct")) {
 			CompoundTag compoundNBTP = compoundNBT.getCompoundOrEmpty("CurrentProduct");
-            this.currentProduct = ItemStack.parse(registries, compoundNBTP).orElse(ItemStack.EMPTY);
+            this.currentProduct = NBTUtilForestry.parseStack(registries, compoundNBTP);
 		}
 
 		checkRecipe();

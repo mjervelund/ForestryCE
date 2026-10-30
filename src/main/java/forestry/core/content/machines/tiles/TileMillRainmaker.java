@@ -22,7 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ServerLevelData;
+import net.minecraft.world.level.saveddata.WeatherData;
 
 import javax.annotation.Nullable;
 import forestry.api.ForestryDataMaps;
@@ -135,11 +135,15 @@ public class TileMillRainmaker extends TileMill {
 			this.particleCount = 0;
 			this.yParticle = pos.getY() + 2;
 
-			if (this.reverse) {
-				level.getLevelData().setRaining(false);
-			} else {
-				level.getLevelData().setRaining(true);
-				((ServerLevelData) level.getLevelData()).setRainTime(this.duration);
+			// 26.x: weather lives in the server level's WeatherData
+			if (level instanceof ServerLevel serverLevel) {
+				WeatherData weather = serverLevel.getWeatherData();
+				if (this.reverse) {
+					weather.setRaining(false);
+				} else {
+					weather.setRaining(true);
+					weather.setRainTime(this.duration);
+				}
 			}
             this.charge = 0;
             this.duration = 0;

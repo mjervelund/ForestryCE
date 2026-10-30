@@ -58,7 +58,7 @@ public class PostOffice extends SavedData implements IPostOffice {
 			}
 
 			Identifier id = Identifier.tryParse(key);
-			Item item = id == null ? Items.AIR : BuiltInRegistries.ITEM.get(id);
+			Item item = id == null ? Items.AIR : BuiltInRegistries.ITEM.getValue(id);
 
 			// Nothing can be handed back for an item that no longer exists, so drop it loudly
 			if (item == Items.AIR) {

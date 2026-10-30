@@ -130,25 +130,6 @@ public class BlockBase<P extends Enum<P> & IBlockType> extends BlockForestry imp
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			BlockEntity tile = TileUtil.getTile(level, pos);
-			if (tile instanceof Container inventory) {
-				Containers.dropContents(level, pos, inventory);
-			}
-			if (tile instanceof TileForestry forestry) {
-				forestry.onDropContents((ServerLevel) level);
-			}
-			if (tile instanceof ISocketable socketable) {
-				InventoryUtil.dropSockets(socketable, level, pos);
-			}
-		}
-
-		// Remove tile entity after emptying out its contents
-		super.onRemove(state, level, pos, newState, isMoving);
-	}
-
-	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
 		Direction facing = state.getValue(FACING);
 		return state.setValue(FACING, rot.rotate(facing));

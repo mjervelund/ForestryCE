@@ -1,5 +1,6 @@
 package forestry.arboriculture.leaves;
 
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.arboriculture.genetics.ITree;
 import forestry.api.client.IForestryClientApi;
@@ -37,7 +38,7 @@ public class DecorativeLeavesBlock extends Block implements IColoredBlock, IShea
 			.isValidSpawn(BlockUtil.IS_PARROT_OR_OCELOT)
 			.isSuffocating(BlockUtil.ALWAYS)
 			.isRedstoneConductor(BlockUtil.NEVER)
-			.isViewBlocking(BlockUtil.NEVER));
+			.isViewBlocking(BlockUtil.NEVER_VIEW_BLOCKING));
 		this.type = type;
 	}
 
@@ -63,7 +64,7 @@ public class DecorativeLeavesBlock extends Block implements IColoredBlock, IShea
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
+	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
 		Vec3 motion = entityIn.getDeltaMovement();
 		entityIn.setDeltaMovement(motion.multiply(0.4D, 1.0D, 0.4D));
 	}

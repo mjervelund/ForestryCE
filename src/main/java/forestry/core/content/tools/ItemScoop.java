@@ -1,5 +1,8 @@
 package forestry.core.content.tools;
 
+import net.minecraft.world.item.Item;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryTags;
 import forestry.api.apiculture.ForestryBeeSpecies;
@@ -16,7 +19,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -42,9 +45,8 @@ public class ItemScoop extends Item {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity entity, LivingEntity player) {
+	public void hurtEnemy(ItemStack stack, LivingEntity entity, LivingEntity player) {
 		stack.hurtAndBreak(2, player, EquipmentSlot.MAINHAND);
-		return true;
 	}
 
 	@Override
@@ -85,7 +87,7 @@ public class ItemScoop extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
 		ItemTooltipUtil.addInformation(stack, tooltip);
 	}
 }

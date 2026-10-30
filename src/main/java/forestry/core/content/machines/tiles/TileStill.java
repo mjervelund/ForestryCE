@@ -1,5 +1,6 @@
 package forestry.core.content.machines.tiles;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import com.google.common.base.Preconditions;
 import forestry.api.core.ForestryError;
 import forestry.api.core.IErrorLogic;
@@ -60,7 +61,7 @@ public class TileStill extends TilePowered implements WorldlyContainer, ILiquidT
         this.tankManager.write(compoundNBT, registries);
 
 		if (!this.bufferedLiquid.isEmpty()) {
-			compoundNBT.put("Buffer", this.bufferedLiquid.save(registries));
+			compoundNBT.put("Buffer", NBTUtilForestry.saveFluid(registries, this.bufferedLiquid));
 		}
 	}
 
@@ -71,7 +72,7 @@ public class TileStill extends TilePowered implements WorldlyContainer, ILiquidT
 
 		if (compoundNBT.contains("Buffer")) {
 			CompoundTag buffer = compoundNBT.getCompoundOrEmpty("Buffer");
-            this.bufferedLiquid = FluidStack.parseOptional(registries, buffer);
+            this.bufferedLiquid = NBTUtilForestry.parseFluid(registries, buffer);
 		}
 	}
 

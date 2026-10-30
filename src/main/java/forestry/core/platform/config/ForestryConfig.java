@@ -184,7 +184,7 @@ public class ForestryConfig {
 	}
 
 	public static void register(@UnknownNullability ModContainer ctx) {
-		ctx.registerConfig(ModConfig.Type.SERVER, SERVER_SPEC);
+		ctx.registerConfig(ModConfig.Type.SYNCED, SERVER_SPEC);
 		ctx.registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC);
 	}
 

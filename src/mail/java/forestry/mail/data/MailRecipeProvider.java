@@ -1,5 +1,6 @@
 package forestry.mail.data;
 
+import forestry.core.platform.util.EmptyIngredient;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -99,7 +100,7 @@ public class MailRecipeProvider {
 
 			new CarpenterRecipeBuilder()
 				.setLiquid(ForestryFluids.SEED_OIL.getFluid(300))
-				.setBox(Ingredient.EMPTY)
+				.setBox(EmptyIngredient.EMPTY)
 				.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, item, 9)
 					.pattern("###")
 					.pattern("PPP")
@@ -111,7 +112,7 @@ public class MailRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(10)
 			.setLiquid(new FluidStack(Fluids.WATER, 250))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, MailItems.LETTERS.get(LetterItem.Size.EMPTY, LetterItem.State.FRESH).item())
 				.pattern("###")
 				.pattern("###")

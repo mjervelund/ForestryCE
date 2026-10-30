@@ -1,5 +1,6 @@
 package forestry.core.content.decorative;
 
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -47,8 +48,8 @@ public class BlockPlywoodBlock extends RotatedPillarBlock {
 	}
 
 	@Override
-	public void onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction direction, @Nullable LivingEntity igniter) {
-		super.onCaughtFire(state, level, pos, direction, igniter);
+	public boolean onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction direction, @Nullable LivingEntity igniter, ItemStack ignitionItem) {
 		level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
+		return true;
 	}
 }

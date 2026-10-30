@@ -17,7 +17,7 @@ public interface ILeafTint {
 	/**
 	 * A default fallback tint.
 	 */
-	ILeafTint DEFAULT = (level, pos) -> FoliageColor.getDefaultColor();
+	ILeafTint DEFAULT = (level, pos) -> FoliageColor.FOLIAGE_DEFAULT;
 
 	int get(@Nullable BlockAndTintGetter level, @Nullable BlockPos pos);
 }

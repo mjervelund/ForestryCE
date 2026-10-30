@@ -1,5 +1,8 @@
 package forestry.lepidopterology.cocoons;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import forestry.core.platform.util.ItemStackUtil;
 import forestry.lepidopterology.cocoons.TileCocoon;
 import net.minecraft.core.BlockPos;
@@ -55,7 +58,7 @@ public class BlockSolidCocoon extends Block implements EntityBlock {
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, LevelReader worldIn, ScheduledTickAccess ticks, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
 		if (facing != Direction.UP || !facingState.isAir()) {
 			return state;
 		}

@@ -1,5 +1,7 @@
 package forestry.arboriculture.trees;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryTags;
 import forestry.api.arboriculture.IToolGrafter;
@@ -25,10 +27,10 @@ public class GrafterItem extends ItemForestry implements IToolGrafter {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
-		super.appendHoverText(stack, context, tooltip, advanced);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
+		super.appendHoverText(stack, context, display, tooltip, advanced);
 		if (!stack.isDamaged()) {
-			tooltip.add(Component.translatable("item.forestry.uses", stack.getMaxDamage()).withStyle(ChatFormatting.GRAY));
+			tooltip.accept(Component.translatable("item.forestry.uses", stack.getMaxDamage()).withStyle(ChatFormatting.GRAY));
 		}
 	}
 

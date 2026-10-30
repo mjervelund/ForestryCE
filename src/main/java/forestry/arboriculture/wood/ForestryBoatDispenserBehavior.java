@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import forestry.arboriculture.entities.IForestryBoat;
 import forestry.arboriculture.wood.ForestryWoodType;
@@ -30,7 +31,7 @@ public class ForestryBoatDispenserBehavior extends DefaultDispenseItemBehavior {
 		Direction direction = source.state().getValue(DispenserBlock.FACING);
 		Level level = source.level();
 		Vec3 center = source.center();
-		double offset = 0.5625D + (double) EntityType.BOAT.getWidth() / 2.0D;
+		double offset = 0.5625D + (double) EntityTypes.OAK_BOAT.getWidth() / 2.0D;
 		double x = center.x() + (double) direction.getStepX() * offset;
 		double y = center.y() + (double) ((float) direction.getStepY() * 1.125F);
 		double z = center.z() + (double) direction.getStepZ() * offset;

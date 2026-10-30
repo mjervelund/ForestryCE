@@ -42,7 +42,7 @@ public class SpeciesTypeBuilder implements ISpeciesTypeBuilder {
 		this.researchMaterials = map -> {
 			map.put(CoreItems.HONEY_DROP.item(), 0.5f);
 			map.put(CoreItems.HONEYDEW.item(), 0.7f);
-			Item honeyComb = BuiltInRegistries.ITEM.get(ForestryConstants.forestry("honey_comb"));
+			Item honeyComb = BuiltInRegistries.ITEM.getValue(ForestryConstants.forestry("honey_comb"));
 			if (honeyComb != Items.AIR) {
 				map.put(honeyComb, 0.4f);
 			}

@@ -60,7 +60,7 @@ public class PotionBeeEffect extends ThrottledBeeEffect {
 		this.chance = chance;
 
 		Collection<MobEffectInstance> potionEffects = Collections.singleton(new MobEffectInstance(potion, 1, 0));
-		this.potionFXColor = PotionContents.getColor(potionEffects);
+		this.potionFXColor = PotionContents.getColorOptional(potionEffects).orElse(PotionContents.BASE_POTION_COLOR);
 	}
 
 	@Override

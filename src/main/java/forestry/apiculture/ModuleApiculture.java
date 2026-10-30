@@ -23,7 +23,6 @@ import forestry.apiculture.alveary.multiblock.AlvearyHygroregulatorBlockEntity;
 import forestry.apiculture.apiarist.ArmorApiaristHelper;
 import forestry.apiculture.apiarist.ItemArmorApiarist;
 import forestry.apiculture.apiarist.villagers.ApicultureVillagers;
-import forestry.apiculture.bees.EnumPollenCluster;
 import forestry.apiculture.bees.genetics.BeeEffectManager;
 import forestry.apiculture.bees.genetics.BeeJubilanceManager;
 import forestry.apiculture.bees.genetics.BeeSpeciesManager;
@@ -44,9 +43,6 @@ import forestry.modules.BlankForestryModule;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -59,7 +55,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
-import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 
 import java.util.*;
@@ -74,18 +69,6 @@ public class ModuleApiculture extends BlankForestryModule {
 	public static int maxFlowersSpawnedPerHive = 20;
 
 	private static void onCommonSetup(FMLCommonSetupEvent event) {
-	}
-
-	private static void registerBrewingRecipes(RegisterBrewingRecipesEvent event) {
-		// BREWING RECIPES
-		event.getBuilder().addRecipe(
-			Ingredient.of(PotionContents.createItemStack(Items.POTION, Potions.AWKWARD)),
-			Ingredient.of(ApicultureItems.POLLEN_CLUSTER.stack(EnumPollenCluster.NORMAL, 1)),
-			PotionContents.createItemStack(Items.POTION, Potions.HEALING));
-		event.getBuilder().addRecipe(
-			Ingredient.of(PotionContents.createItemStack(Items.POTION, Potions.AWKWARD)),
-			Ingredient.of(ApicultureItems.POLLEN_CLUSTER.stack(EnumPollenCluster.CRYSTALLINE, 1)),
-			PotionContents.createItemStack(Items.POTION, Potions.REGENERATION));
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -188,7 +171,7 @@ public class ModuleApiculture extends BlankForestryModule {
 		modBus.addListener(ModuleApiculture::registerDataMaps);
 		modBus.addListener(ModuleApiculture::onCommonSetup);
 
-		NeoForge.EVENT_BUS.addListener(ModuleApiculture::registerBrewingRecipes);
+		// 26.x: the brewing recipes are data (data/forestry/recipe/brewing)
 		NeoForge.EVENT_BUS.addListener(ModuleApiculture::onNetherBeeMate);
 		NeoForge.EVENT_BUS.addListener(ModuleApiculture::modifySnifferLoot);
 	}

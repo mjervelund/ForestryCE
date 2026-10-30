@@ -92,12 +92,4 @@ public abstract class BlockStructure extends BlockForestry {
 		}
 	}
 
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (level.getBlockEntity(pos) instanceof IMultiblockComponent.HasInventory component) {
-			Containers.dropContents(level, pos, component.getInternalInventory());
-		}
-
-		super.onRemove(state, level, pos, newState, isMoving);
-	}
 }

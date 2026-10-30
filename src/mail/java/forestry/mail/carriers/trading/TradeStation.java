@@ -1,5 +1,6 @@
 package forestry.mail.carriers.trading;
 
+import net.minecraft.world.entity.ContainerUser;
 import com.mojang.authlib.GameProfile;
 import forestry.api.mail.*;
 import forestry.core.platform.inventory.InventoryAdapter;
@@ -502,11 +503,11 @@ public class TradeStation implements ITradeStation {
 	}
 
 	@Override
-	public void startOpen(Player player) {
+	public void startOpen(ContainerUser player) {
 	}
 
 	@Override
-	public void stopOpen(Player player) {
+	public void stopOpen(ContainerUser player) {
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public class VillagerJigsaw {
 	}
 
 	public static void addToJigsawPattern(Registry<StructureTemplatePool> pools, Identifier pool, StructurePoolElement newPiece, int weight) {
-		StructureTemplatePool oldPool = pools.get(pool);
+		StructureTemplatePool oldPool = pools.getValue(pool);
 		if (oldPool != null) {
 			List<StructurePoolElement> jigsawPieces = oldPool.templates;
 

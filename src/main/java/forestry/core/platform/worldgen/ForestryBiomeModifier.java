@@ -1,5 +1,6 @@
 package forestry.core.platform.worldgen;
 
+import net.minecraft.core.RegistryAccess;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import forestry.api.IForestryApi;
@@ -34,7 +35,7 @@ public record ForestryBiomeModifier(Optional<Holder<PlacedFeature>> hive, Option
 	).apply(instance, ForestryBiomeModifier::new));
 
 	@Override
-	public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+	public void modify(RegistryAccess registries, Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
 		if (phase == Phase.ADD) {
 			// server configs are loaded, so ores can be added
 			if (biome.is(BiomeTags.IS_OVERWORLD)) {

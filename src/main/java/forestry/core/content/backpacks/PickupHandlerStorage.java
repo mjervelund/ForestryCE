@@ -27,7 +27,7 @@ public class PickupHandlerStorage {
 		// Make sure to top off manually placed itemstacks in player inventory first
 		topOffPlayerInventory(player, itemstack);
 
-		for (ItemStack pack : player.getInventory().items) {
+		for (ItemStack pack : player.getInventory().getNonEquipmentItems()) {
 			if (itemstack.isEmpty()) {
 				break;
 			}

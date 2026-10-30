@@ -1,5 +1,7 @@
 package forestry.arboriculture.loot;
 
+import net.minecraft.core.Holder;
+import java.util.Optional;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -20,8 +22,8 @@ public class CountBlockFunction extends LootItemConditionalFunction {
 	public static final MapCodec<CountBlockFunction> CODEC = RecordCodecBuilder.mapCodec(instance -> commonFields(instance)
 		.apply(instance, CountBlockFunction::new));
 
-	protected CountBlockFunction(List<LootItemCondition> conditions) {
-		super(conditions);
+	protected CountBlockFunction(Optional<Holder<LootItemCondition>> condition) {
+		super(condition);
 	}
 
 	public static LootItemConditionalFunction.Builder<?> builder() {
@@ -29,7 +31,7 @@ public class CountBlockFunction extends LootItemConditionalFunction {
 	}
 
 	@Override
-	public MapCodec<? extends LootItemFunction> codec() {
+	public MapCodec<? extends LootItemConditionalFunction> codec() {
 		return CODEC;
 	}
 

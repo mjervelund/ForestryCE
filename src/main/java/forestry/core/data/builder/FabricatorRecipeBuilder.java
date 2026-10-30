@@ -1,7 +1,7 @@
 package forestry.core.data.builder;
 
 import forestry.core.content.machines.recipes.FabricatorRecipe;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.ImpossibleTrigger;
 import net.minecraft.data.recipes.RecipeOutput;

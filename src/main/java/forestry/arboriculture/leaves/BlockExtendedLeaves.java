@@ -1,5 +1,9 @@
 package forestry.arboriculture.leaves;
 
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.sounds.AmbientLeavesBlockSoundPlayer;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import forestry.arboriculture.worldgen.AbstractArboricultureFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,7 +26,8 @@ public class BlockExtendedLeaves extends LeavesBlock {
 	public static final BooleanProperty SUPPORTED = BooleanProperty.create("supported");
 
 	public BlockExtendedLeaves(Properties properties) {
-		super(properties);
+		// 26.x: no falling leaf particles, as in 1.21.1
+		super(AmbientLeavesBlockSoundPlayer.noAmbientSound(), properties);
 
 		registerDefaultState(defaultBlockState().setValue(SUPPORTED, false));
 	}
@@ -44,15 +49,15 @@ public class BlockExtendedLeaves extends LeavesBlock {
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
-		BlockState newState = super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+	public BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, RandomSource random) {
+		BlockState newState = super.updateShape(state, level, ticks, currentPos, facing, facingPos, facingState, random);
 
 		boolean oldSupported = newState.getValue(SUPPORTED);
 		boolean newSupported = hasSupport(newState, level, currentPos);
 
 		if (oldSupported != newSupported) {
 			newState.setValue(SUPPORTED, newSupported);
-			level.scheduleTick(currentPos, this, 1);
+			ticks.scheduleTick(currentPos, this, 1);
 		}
 
 		return newState;
@@ -81,7 +86,7 @@ public class BlockExtendedLeaves extends LeavesBlock {
 		}
 	}
 
-	private static boolean hasSupport(BlockState state, LevelAccessor level, BlockPos pos) {
+	private static boolean hasSupport(BlockState state, BlockGetter level, BlockPos pos) {
 		if (state.getValue(DISTANCE) <= 6) {
 			return true;
 		}
@@ -89,7 +94,7 @@ public class BlockExtendedLeaves extends LeavesBlock {
 		return AbstractArboricultureFeature.SKIP_EXTENDED_CHECKS.get() || hasExtendedSupport(level, pos);
 	}
 
-	private static boolean hasExtendedSupport(LevelAccessor level, BlockPos pos) {
+	private static boolean hasExtendedSupport(BlockGetter level, BlockPos pos) {
 		byte[] surroundings = BlockExtendedLeaves.SURROUNDINGS.get();
 
 		BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();

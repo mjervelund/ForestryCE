@@ -1,5 +1,8 @@
 package forestry.apiculture.apiary;
 
+import forestry.core.platform.util.TooltipLines;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.apiculture.IBeeModifier;
@@ -43,11 +46,11 @@ public class HiveFrameItem extends ItemForestry implements IHiveFrame {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
-		super.appendHoverText(stack, context, tooltip, advanced);
-		this.beeModifier.addInformation(tooltip);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
+		super.appendHoverText(stack, context, display, tooltip, advanced);
+		this.beeModifier.addInformation(new TooltipLines(tooltip));
 		if (!stack.isDamaged()) {
-			tooltip.add(Component.translatable("item.forestry.durability", stack.getMaxDamage()));
+			tooltip.accept(Component.translatable("item.forestry.durability", stack.getMaxDamage()));
 		}
 	}
 

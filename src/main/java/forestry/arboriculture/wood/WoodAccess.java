@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.tags.BlockItemTags;
 import forestry.api.arboriculture.IWoodType;
 import forestry.api.arboriculture.WoodBlockKind;
 import forestry.core.platform.registration.FeatureBlockGroup;
@@ -184,13 +185,13 @@ public enum WoodAccess {
 		register(VanillaWoodType.CHERRY, WoodBlockKind.PRESSURE_PLATE, false, Blocks.CHERRY_PRESSURE_PLATE.defaultBlockState(), () -> Items.CHERRY_PRESSURE_PLATE);
 
 		// Log tags
-		registerLogTag(VanillaWoodType.OAK, false, BlockTags.OAK_LOGS, ItemTags.OAK_LOGS);
-		registerLogTag(VanillaWoodType.SPRUCE, false, BlockTags.SPRUCE_LOGS, ItemTags.SPRUCE_LOGS);
-		registerLogTag(VanillaWoodType.BIRCH, false, BlockTags.BIRCH_LOGS, ItemTags.BIRCH_LOGS);
+		registerLogTag(VanillaWoodType.OAK, false, BlockItemTags.OAK_LOGS.block(), BlockItemTags.OAK_LOGS.item());
+		registerLogTag(VanillaWoodType.SPRUCE, false, BlockItemTags.SPRUCE_LOGS.block(), BlockItemTags.SPRUCE_LOGS.item());
+		registerLogTag(VanillaWoodType.BIRCH, false, BlockItemTags.BIRCH_LOGS.block(), BlockItemTags.BIRCH_LOGS.item());
 		registerLogTag(VanillaWoodType.JUNGLE, false, BlockTags.JUNGLE_LOGS, ItemTags.JUNGLE_LOGS);
-		registerLogTag(VanillaWoodType.ACACIA, false, BlockTags.ACACIA_LOGS, ItemTags.ACACIA_LOGS);
-		registerLogTag(VanillaWoodType.DARK_OAK, false, BlockTags.DARK_OAK_LOGS, ItemTags.DARK_OAK_LOGS);
-		registerLogTag(VanillaWoodType.CHERRY, false, BlockTags.CHERRY_LOGS, ItemTags.CHERRY_LOGS);
+		registerLogTag(VanillaWoodType.ACACIA, false, BlockItemTags.ACACIA_LOGS.block(), BlockItemTags.ACACIA_LOGS.item());
+		registerLogTag(VanillaWoodType.DARK_OAK, false, BlockItemTags.DARK_OAK_LOGS.block(), BlockItemTags.DARK_OAK_LOGS.item());
+		registerLogTag(VanillaWoodType.CHERRY, false, BlockItemTags.CHERRY_LOGS.block(), BlockItemTags.CHERRY_LOGS.item());
 		for (VanillaWoodType type : VanillaWoodType.VALUES) {
 			registerLogTag(type, true, type.fireproofBlockTag, type.fireproofItemTag);
 		}

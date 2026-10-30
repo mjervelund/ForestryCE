@@ -1,5 +1,6 @@
 package forestry.core.content.energy.tiles;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import forestry.api.IForestryApi;
 import forestry.api.core.ForestryError;
 import forestry.api.core.circuits.ForestryCircuitSocketTypes;
@@ -249,7 +250,7 @@ public class PeatEngineBlockEntity extends EngineBlockEntity implements WorldlyC
 
 		if (compoundNBT.contains("EngineFuelItemStack")) {
 			CompoundTag fuelItemNbt = compoundNBT.getCompoundOrEmpty("EngineFuelItemStack");
-            this.fuel = ItemStack.parse(registries, fuelItemNbt).orElse(ItemStack.EMPTY);
+            this.fuel = NBTUtilForestry.parseStack(registries, fuelItemNbt);
 		}
 
         this.burnTime = compoundNBT.getFloatOr("EngineBurnTime", 0f);
@@ -275,7 +276,7 @@ public class PeatEngineBlockEntity extends EngineBlockEntity implements WorldlyC
         this.sockets.write(nbt, registries);
 
 		if (!this.fuel.isEmpty()) {
-			nbt.put("EngineFuelItemStack", this.fuel.save(registries, new CompoundTag()));
+			nbt.put("EngineFuelItemStack", NBTUtilForestry.saveStack(registries, this.fuel));
 		}
 
 		nbt.putFloat("EngineBurnTime", this.burnTime);

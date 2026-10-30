@@ -1,5 +1,8 @@
 package forestry.core.engine.genetics;
 
+import forestry.core.platform.util.TooltipLines;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import com.mojang.authlib.GameProfile;
@@ -48,14 +51,14 @@ public class ItemResearchNote extends ItemForestry {
 		} else {
 			researcherName = note.researcher.name();
 		}
-		return Component.translatable(getDescriptionId(itemstack), researcherName);
+		return Component.translatable(getDescriptionId(), researcherName);
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(itemstack, context, list, flag);
+	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
+		super.appendHoverText(itemstack, context, display, list, flag);
 		ResearchNote note = new ResearchNote(NBTUtilForestry.getItemStackTag(itemstack));
-		note.addTooltip(list);
+		note.addTooltip(new TooltipLines(list));
 	}
 
 	@Override

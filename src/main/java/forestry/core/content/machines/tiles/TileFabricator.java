@@ -224,7 +224,7 @@ public class TileFabricator extends TilePowered implements ISlotPickupWatcher, I
 
 	private boolean removeFromInventory(IFabricatorRecipe recipe, boolean doRemove) {
 		Container inventory = new InventoryMapper(this, InventoryFabricator.SLOT_INVENTORY_1, InventoryFabricator.SLOT_INVENTORY_COUNT);
-		return InventoryUtil.consumeIngredients(inventory, recipe.getCraftingGridRecipe().getIngredients(), null, true, false, doRemove);
+		return InventoryUtil.consumeIngredients(inventory, recipe.getCraftingGridRecipe().placementInfo().ingredients(), null, true, false, doRemove);
 	}
 
 	@Override

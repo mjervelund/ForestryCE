@@ -1,5 +1,6 @@
 package forestry.core.platform.inventory.wrappers;
 
+import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -66,12 +67,12 @@ public abstract class InvWrapperBase implements Container {
 	}
 
 	@Override
-	public void startOpen(Player player) {
+	public void startOpen(ContainerUser player) {
         this.inv.startOpen(player);
 	}
 
 	@Override
-	public void stopOpen(Player player) {
+	public void stopOpen(ContainerUser player) {
         this.inv.stopOpen(player);
 	}
 

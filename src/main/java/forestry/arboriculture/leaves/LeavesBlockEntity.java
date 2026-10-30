@@ -1,5 +1,6 @@
 package forestry.arboriculture.leaves;
 
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import forestry.api.IForestryApi;
 import forestry.api.arboriculture.ForestryTreeSpecies;
 import forestry.api.arboriculture.ILeafTickHandler;
@@ -240,7 +241,7 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 
 	@OnlyIn(Dist.CLIENT)
 	public int getFoliageColour() {
-		final int baseColor = IForestryClientApi.INSTANCE.getTreeManager().getTint(this.species).get(this.level, this.worldPosition);
+		final int baseColor = IForestryClientApi.INSTANCE.getTreeManager().getTint(this.species).get((BlockAndTintGetter) this.level, this.worldPosition);
 
 		ITree tree = getTree();
 		if (isDestroyed(tree, this.damage)) {

@@ -47,7 +47,8 @@ public class NetworkUtil {
 	}
 
 	public static void sendToServer(CustomPacketPayload packet) {
-		PacketDistributor.sendToServer(packet);
+		// 26.x: serverbound sending moved to the client-only ClientPacketDistributor
+		net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(packet);
 	}
 
 	public static void sendToAllPlayers(CustomPacketPayload packet) {

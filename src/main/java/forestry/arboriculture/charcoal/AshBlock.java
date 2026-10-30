@@ -1,5 +1,7 @@
 package forestry.arboriculture.charcoal;
 
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import com.mojang.serialization.MapCodec;
 import forestry.api.ForestryConstants;
 import forestry.core.platform.advancements.AdvancementHelper;
@@ -22,18 +24,12 @@ import net.minecraft.world.level.material.PushReaction;
 import javax.annotation.Nullable;
 
 public class AshBlock extends FallingBlock {
-	public static final MapCodec<AshBlock> CODEC = simpleCodec(AshBlock::new);
 	public static final IntegerProperty AMOUNT = IntegerProperty.create("amount", 0, 63);
 
 	private static final Identifier BREAK_ASH_BLOCK = ForestryConstants.forestry("break_ash_block");
 
 	public AshBlock(Block.Properties properties) {
 		super(properties.sound(SoundType.SAND).strength(0.6F).mapColor(MapColor.COLOR_LIGHT_GRAY));
-	}
-
-	@Override
-	public MapCodec<AshBlock> codec() {
-		return CODEC;
 	}
 
 	@Override
@@ -47,7 +43,7 @@ public class AshBlock extends FallingBlock {
 	}
 
 	@Override
-	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+	public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
 		super.playerDestroy(level, player, pos, state, blockEntity, tool);
 
 		if (state.getValue(AMOUNT) > 0) {

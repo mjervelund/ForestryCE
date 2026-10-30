@@ -1,5 +1,6 @@
 package forestry.arboriculture.fruit;
 
+import net.minecraft.world.level.block.BonemealSource;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.tile.TileUtil;
 import forestry.core.platform.util.BlockUtil;
@@ -32,12 +33,12 @@ public class FruitPodBlock extends CocoaBlock implements EntityBlock {
 	private final ForestryPodType podType;
 
 	public FruitPodBlock(ForestryPodType podType) {
-		super(SaplingBlock.RegistrationIds.block().randomTicks().strength(0.2f, 3.0f).sound(SoundType.WOOD));
+		super(RegistrationIds.block().randomTicks().strength(0.2f, 3.0f).sound(SoundType.WOOD));
 		this.podType = podType;
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
 		FruitPodBlockEntity tile = TileUtil.getTile(level, pos, FruitPodBlockEntity.class);
 		if (tile == null) {
 			return ItemStack.EMPTY;
@@ -87,13 +88,13 @@ public class FruitPodBlock extends CocoaBlock implements EntityBlock {
 
 	/* IGrowable */
 	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
 		FruitPodBlockEntity podTile = TileUtil.getTile(level, pos, FruitPodBlockEntity.class);
 		return podTile != null && podTile.canMature();
 	}
 
 	@Override
-	public void performBonemeal(ServerLevel level, RandomSource rand, BlockPos pos, BlockState state) {
+	public void performBonemeal(ServerLevel level, RandomSource rand, BlockPos pos, BlockState state, BonemealSource source) {
 		FruitPodBlockEntity podTile = TileUtil.getTile(level, pos, FruitPodBlockEntity.class);
 		if (podTile != null) {
 			podTile.addRipeness(0.5f);

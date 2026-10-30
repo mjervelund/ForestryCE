@@ -1,5 +1,6 @@
 package forestry.arboriculture.trees;
 
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import forestry.api.arboriculture.ITreeSpecies;
@@ -33,7 +34,7 @@ import javax.annotation.Nullable;
 
 public class TreeItem extends ItemGE implements IVariableFermentable, ITintedItem {
 	public TreeItem(TreeLifeStage type) {
-		super(RegistrationIds.item(), type);
+		super(RegistrationIds.item().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_ITEMS_EXTRA_SMALL), type);
 	}
 
 	@Override
@@ -130,8 +131,4 @@ public class TreeItem extends ItemGE implements IVariableFermentable, ITintedIte
 		return tree.getGenome().getActiveValue(TreeChromosomes.SAPPINESS) * 10;
 	}
 
-	@Override
-	public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
-		return 100;
-	}
 }

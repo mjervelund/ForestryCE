@@ -254,7 +254,7 @@ public class Bee extends IndividualLiving<IBeeSpecies, IBee, IBeeSpeciesType> im
 	// todo this can be optimized in a cache somewhere
 	@Override
 	public List<Holder.Reference<Biome>> getSuitableBiomes(Registry<Biome> registry) {
-		return registry.holders().filter(this::isSuitableBiome).toList();
+		return registry.listElements().filter(this::isSuitableBiome).toList();
 	}
 /*
 	@Override

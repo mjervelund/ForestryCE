@@ -50,7 +50,7 @@ public class LeavesBlockItem extends ItemBlockForestry<AbstractLeavesBlock> impl
 	public int getColorFromItemStack(ItemStack itemStack, int renderPass) {
 		CompoundTag tag = NBTUtilForestry.getItemStackTag(itemStack);
 		if (tag == null) {
-			return FoliageColor.getDefaultColor();
+			return FoliageColor.FOLIAGE_DEFAULT;
 		}
 
 		LeavesBlockEntity tileLeaves = new LeavesBlockEntity(BlockPos.ZERO, getBlock().defaultBlockState());

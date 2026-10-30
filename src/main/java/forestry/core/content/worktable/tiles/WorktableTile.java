@@ -1,5 +1,6 @@
 package forestry.core.content.worktable.tiles;
 
+import net.minecraft.util.Prediction;
 import forestry.core.platform.inventory.InventoryGhostCrafting;
 import forestry.core.platform.inventory.wrappers.InventoryMapper;
 import forestry.core.platform.tile.TileBase;
@@ -167,7 +168,7 @@ public class WorktableTile extends TileBase implements ICrafterWorktable {
 		for (ItemStack remainingItem : remainingItems) {
 			if (remainingItem != null && !remainingItem.isEmpty()) {
 				if (!InventoryUtil.tryAddStack(this, remainingItem, true)) {
-					player.drop(remainingItem, false);
+					player.drop(remainingItem, false, Prediction.SERVER_ONLY);
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 package forestry.core.platform.fluids;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import forestry.api.core.INbtReadable;
@@ -62,7 +63,8 @@ public class TankManager implements ITankManager, ITankUpdateHandler, IStreamabl
 			if (!tank.getFluid().isEmpty()) {
 				CompoundTag tag = new CompoundTag();
 				tag.putByte("tank", slot);
-				tank.writeToNBT(registries, tag);
+				// 26.x: FluidTank#writeToNBT/readFromNBT are gone; same "Fluid" key as before
+				tag.put("Fluid", NBTUtilForestry.saveFluid(registries, tank.getFluid()));
 				tagList.add(tag);
 			}
 		}
@@ -77,7 +79,7 @@ public class TankManager implements ITankManager, ITankUpdateHandler, IStreamabl
 			int slot = compound.getByteOr("tank", (byte) 0);
 			if (slot >= 0 && slot < this.tanks.size()) {
 				StandardTank tank = this.tanks.get(slot);
-				tank.readFromNBT(registries, compound);
+				tank.setFluid(NBTUtilForestry.parseFluid(registries, compound.getCompoundOrEmpty("Fluid")));
 				updateTankLevels(tank);
 			}
 		}

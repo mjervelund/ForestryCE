@@ -1,5 +1,7 @@
 package forestry.apiculture.bees;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.apiculture.genetics.BeeLifeStage;
 import forestry.api.apiculture.genetics.IBee;
@@ -34,7 +36,7 @@ public class ForestryBeeItem extends ItemGE implements ITintedItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
 		if (!hasIndividual(stack)) {
 			return;
 		}
@@ -42,14 +44,14 @@ public class ForestryBeeItem extends ItemGE implements ITintedItem {
 		if (this.stage != BeeLifeStage.DRONE) {
 			IIndividualHandlerItem.ifPresent(stack, individual -> {
 				if (((IBee) individual).isPristine()) {
-					list.add(Component.translatable("for.bees.stock.pristine").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
+					list.accept(Component.translatable("for.bees.stock.pristine").withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC));
 				} else {
-					list.add(Component.translatable("for.bees.stock.ignoble").withStyle(ChatFormatting.YELLOW));
+					list.accept(Component.translatable("for.bees.stock.ignoble").withStyle(ChatFormatting.YELLOW));
 				}
 			});
 		}
 
-		super.appendHoverText(stack, context, list, flag);
+		super.appendHoverText(stack, context, display, list, flag);
 	}
 
 	@Override

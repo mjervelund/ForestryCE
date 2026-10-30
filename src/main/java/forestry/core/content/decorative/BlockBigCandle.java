@@ -1,5 +1,8 @@
 package forestry.core.content.decorative;
 
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -63,7 +66,7 @@ public class BlockBigCandle extends Block implements SimpleWaterloggedBlock {
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (!state.getValue(LIT)) return;
-		BlockJumboCandle.addParticlesAndSound(level, pos.getCenter().add(0, 0.4375f, 0), random, this.flame);
+		BlockJumboCandle.addParticlesAndSound(level, Vec3.atCenterOf(pos).add(0, 0.4375f, 0), random, this.flame);
 	}
 
 	/**
@@ -80,7 +83,7 @@ public class BlockBigCandle extends Block implements SimpleWaterloggedBlock {
 			if (stack.is(Items.FLINT_AND_STEEL)) {
 				if (!level.isClientSide()) {
 					level.setBlock(pos, state.setValue(LIT, true), 3);
-					stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+					stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
 				}
 				level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
 				return InteractionResult.SUCCESS;
@@ -115,12 +118,12 @@ public class BlockBigCandle extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	protected BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
 		if (state.getValue(WATERLOGGED)) {
 			state = state.setValue(LIT, false);
-			level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+			ticks.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
-		return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+		return super.updateShape(state, level, ticks, pos, direction, neighborPos, neighborState, random);
 	}
 
 	@Override

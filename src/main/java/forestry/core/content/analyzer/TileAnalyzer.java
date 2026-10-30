@@ -17,7 +17,6 @@ import forestry.core.platform.util.GeneticsUtil;
 import forestry.core.platform.util.InventoryUtil;
 import forestry.core.platform.util.NetworkUtil;
 import forestry.core.platform.util.SpeciesUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -158,10 +157,10 @@ public class TileAnalyzer extends TilePowered implements WorldlyContainer, ILiqu
 	public void handleItemStackForDisplay(ItemStack itemStack) {
 		if (!ItemStack.matches(itemStack, this.individualOnDisplayClient)) {
             this.individualOnDisplayClient = itemStack;
-			//TODO
-			BlockPos pos = getBlockPos();
-			Minecraft.getInstance().levelRenderer.setSectionDirty(pos.getX(), pos.getY(), pos.getZ());
-			//			world.markForRerender(getPos());
+			// 26.x: LevelRenderer#setSectionDirty is gone (and took section, not block, coordinates)
+			if (this.level != null) {
+				this.level.setBlocksDirty(getBlockPos(), getBlockState(), getBlockState());
+			}
 		}
 	}
 

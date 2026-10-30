@@ -1,5 +1,6 @@
 package forestry.core.platform.inventory;
 
+import net.minecraft.world.entity.ContainerUser;
 import com.google.common.base.Preconditions;
 import forestry.core.features.CoreDataComponents;
 import forestry.api.core.IFilterSlotDelegate;
@@ -86,11 +87,7 @@ public abstract class ItemInventory implements Container, IFilterSlotDelegate {
 	public static int getOccupiedSlotCount(ItemStack itemStack) {
 		ItemContainerContents container = itemStack.get(DataComponents.CONTAINER);
 		if (container != null) {
-			int occupied = 0;
-			for (ItemStack ignored : container.nonEmptyItemsCopy()) {
-				occupied++;
-			}
-			return occupied;
+			return (int) container.nonEmptyItemCopyStream().count();
 		}
 
 		CompoundTag nbt = NBTUtilForestry.getItemStackTag(itemStack);
@@ -313,11 +310,11 @@ public abstract class ItemInventory implements Container, IFilterSlotDelegate {
 	}
 
 	@Override
-	public void startOpen(Player player) {
+	public void startOpen(ContainerUser player) {
 	}
 
 	@Override
-	public void stopOpen(Player player) {
+	public void stopOpen(ContainerUser player) {
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package forestry.core.platform.commands;
 
+import net.minecraft.commands.Commands;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -7,7 +8,7 @@ import net.minecraft.network.chat.Style;
 import java.util.function.Predicate;
 
 public class CommandHelpers {
-	public static final Predicate<CommandSourceStack> ADMIN = sender -> sender.hasPermission(2);
+	public static final Predicate<CommandSourceStack> ADMIN = Commands.hasPermission(Commands.LEVEL_GAMEMASTERS);
 
 	public static void sendLocalizedChatMessage(CommandSourceStack sender, String locTag, Object... args) {
 		sender.sendSuccess(() -> Component.translatable(locTag, args), false);

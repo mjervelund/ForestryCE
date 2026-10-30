@@ -1,5 +1,8 @@
 package forestry.core.content.resources;
 
+import forestry.core.platform.util.TooltipLines;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.api.IForestryApi;
 import forestry.api.core.circuits.ICircuit;
 import forestry.api.core.circuits.ICircuitLayout;
@@ -23,16 +26,16 @@ public class ItemElectronTube extends ItemForestry {
 
 	// todo show the combined speed, efficiency and fortune multipliers
 	@Override
-	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(itemstack, context, list, flag);
+	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
+		super.appendHoverText(itemstack, context, display, list, flag);
 		ArrayList<Pair<ICircuitLayout, ICircuit>> circuits = getCircuits(itemstack);
 		if (!circuits.isEmpty()) {
 			for (var entry : circuits) {
-				list.add(entry.left().getUsage().withStyle(ChatFormatting.WHITE, ChatFormatting.UNDERLINE));
-				entry.right().addTooltip(list);
+				list.accept(entry.left().getUsage().withStyle(ChatFormatting.WHITE, ChatFormatting.UNDERLINE));
+				entry.right().addTooltip(new TooltipLines(list));
 			}
 		} else {
-			list.add(Component.literal("<")
+			list.accept(Component.literal("<")
 				.append(Component.translatable("for.gui.noeffect")
 					.append(">").withStyle(ChatFormatting.GRAY)));
 		}

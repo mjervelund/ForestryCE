@@ -1,5 +1,7 @@
 package forestry.arboriculture.charcoal;
 
+import javax.annotation.Nullable;
+import net.minecraft.world.level.redstone.Orientation;
 import com.google.common.base.Preconditions;
 import forestry.api.IForestryApi;
 import forestry.api.arboriculture.ICharcoalManager;
@@ -57,12 +59,16 @@ public class LogPileBlock extends Block {
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean p_220069_6_) {
-		BlockState fromState = level.getBlockState(fromPos);
-
-		if (fromState.is(Blocks.FIRE)) {
-			if (!state.getValue(IS_ACTIVE)) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, @Nullable Orientation orientation, boolean p_220069_6_) {
+		// 26.x: neighborChanged no longer passes the neighbor's position (the orientation is null outside
+		// the experimental redstone), so look for fire on every side
+		if (state.getValue(IS_ACTIVE)) {
+			return;
+		}
+		for (Direction direction : Direction.values()) {
+			if (level.getBlockState(pos.relative(direction)).is(Blocks.FIRE)) {
 				activatePile(state, level, pos, true);
+				return;
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package forestry.core.platform.util;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.Holder;
 import forestry.api.core.machines.*;
 import forestry.core.platform.client.ClientsideCode;

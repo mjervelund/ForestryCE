@@ -1,5 +1,8 @@
 package forestry.core.platform.tile;
 
+import forestry.core.platform.util.InventoryUtil;
+import forestry.core.engine.circuits.ISocketable;
+import net.minecraft.world.entity.ContainerUser;
 import forestry.core.platform.util.NbtValueIO;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
@@ -156,6 +159,19 @@ public abstract class TileForestry extends BlockEntity implements IStreamable, I
 	public void onDropContents(ServerLevel level) {
 	}
 
+	// 26.x: Block#onRemove is gone; the block entity drops its contents when its block is replaced
+	// (BlockBase#onRemove did this before)
+	@Override
+	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+		super.preRemoveSideEffects(pos, state);
+		if (this.level instanceof ServerLevel serverLevel) {
+			onDropContents(serverLevel);
+		}
+		if (this instanceof ISocketable socketable) {
+			InventoryUtil.dropSockets(socketable, this.level, pos);
+		}
+	}
+
 	// / REDSTONE INFO
 	protected boolean isRedstoneActivated() {
 		return this.level.getBestNeighborSignal(getBlockPos()) > 0;
@@ -224,12 +240,12 @@ public abstract class TileForestry extends BlockEntity implements IStreamable, I
 	}
 
 	@Override
-	public final void startOpen(Player player) {
+	public final void startOpen(ContainerUser player) {
 		getInternalInventory().startOpen(player);
 	}
 
 	@Override
-	public final void stopOpen(Player player) {
+	public final void stopOpen(ContainerUser player) {
 		getInternalInventory().stopOpen(player);
 	}
 

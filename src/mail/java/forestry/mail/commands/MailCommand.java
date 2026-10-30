@@ -46,7 +46,7 @@ public class MailCommand {
 
 		public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
 			ServerPlayer player = context.getSource().getPlayerOrException();
-			ServerLevel level = player.serverLevel();
+			ServerLevel level = player.level();
 			for (ITradeStation trade : TradeStationRegistry.getOrCreate(level).getActiveTradeStations().values()) {
 				CommandHelpers.sendChatMessage(context.getSource(), makeTradeListEntry(trade.getTradeInfo()));
 			}
@@ -81,7 +81,7 @@ public class MailCommand {
 		public static int execute(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
 			ServerPlayer player = context.getSource().getPlayerOrException();
 
-			Level world = player.getCommandSenderWorld();
+			Level world = player.level();
 
 			MailAddress address = new MailAddress(player.getGameProfile());
 			ITradeStation trade = TradeStationRegistry.getOrCreate((ServerLevel) world).getTradeStation(address);

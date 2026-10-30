@@ -17,7 +17,7 @@ public class FeatureTileType<T extends BlockEntity> extends ModFeature implement
 
 	public FeatureTileType(IFeatureRegistry registry, Identifier moduleId, String name, BlockEntityType.BlockEntitySupplier<T> constructorTileEntity, Supplier<Collection<? extends Block>> validBlocks) {
 		super(moduleId, name);
-		this.blockEntityObject = registry.getRegistry(Registries.BLOCK_ENTITY_TYPE).register(name, () -> BlockEntityType.Builder.of(constructorTileEntity, validBlocks.get().toArray(Block[]::new)).build(null));
+		this.blockEntityObject = registry.getRegistry(Registries.BLOCK_ENTITY_TYPE).register(name, () -> new BlockEntityType<>(constructorTileEntity, validBlocks.get().toArray(Block[]::new)));
 	}
 
 	@Override

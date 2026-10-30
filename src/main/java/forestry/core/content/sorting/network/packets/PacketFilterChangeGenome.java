@@ -19,7 +19,7 @@ public record PacketFilterChangeGenome(BlockPos pos, Direction facing, short ind
 	public static void handle(PacketFilterChangeGenome msg, ServerPlayer player) {
 		TileUtil.getInterface(player.level(), msg.pos(), ForestryCapabilities.FILTER_LOGIC, null).ifPresent(logic -> {
 			if (logic.setGenomeFilter(msg.facing(), msg.index(), msg.active(), msg.species())) {
-				logic.getNetworkHandler().sendToPlayers(logic, player.serverLevel(), player);
+				logic.getNetworkHandler().sendToPlayers(logic, player.level(), player);
 			}
 		});
 	}

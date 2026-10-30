@@ -1,5 +1,8 @@
 package forestry.core.content.tools;
 
+import forestry.core.platform.util.TooltipLines;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.core.IToolPipette;
 import forestry.core.features.CoreDataComponents;
@@ -29,12 +32,12 @@ public class ItemPipette extends ItemForestry implements IToolPipette, ITintedIt
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(itemstack, context, list, flag);
+	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
+		super.appendHoverText(itemstack, context, display, list, flag);
 
 		PipetteContents contained = PipetteContents.create(itemstack);
 		if (contained != null) {
-			contained.addTooltip(list);
+			contained.addTooltip(new TooltipLines(list));
 		}
 	}
 

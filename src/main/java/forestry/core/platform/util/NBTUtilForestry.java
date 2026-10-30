@@ -1,5 +1,8 @@
 package forestry.core.platform.util;
 
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.core.UUIDUtil;
 import com.mojang.authlib.GameProfile;
 import forestry.core.platform.network.IStreamable;
@@ -54,7 +57,7 @@ public abstract class NBTUtilForestry {
 		}
 
 		UUID id = nbt.read(GAME_PROFILE_ID, UUIDUtil.CODEC).orElse(null);
-		String name = nbt.contains(GAME_PROFILE_NAME) ? nbt.getString(GAME_PROFILE_NAME) : null;
+		String name = nbt.getString(GAME_PROFILE_NAME).orElse(null);
 		if (id == null && (name == null || name.isEmpty())) {
 			return null;
 		}
@@ -81,5 +84,23 @@ public abstract class NBTUtilForestry {
 
 	public static void setItemStackTag(ItemStack stack, CompoundTag tag) {
 		stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag.copy()));
+	}
+
+	// 26.x: ItemStack#save/saveOptional/parse and FluidStack#save/parseOptional are gone; these write the same
+	// {id, count, components} compound through the codecs (an empty stack is an empty compound, as saveOptional wrote)
+	public static CompoundTag saveStack(HolderLookup.Provider registries, ItemStack stack) {
+		return (CompoundTag) ItemStack.OPTIONAL_CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), stack).getOrThrow();
+	}
+
+	public static ItemStack parseStack(HolderLookup.Provider registries, Tag tag) {
+		return ItemStack.OPTIONAL_CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), tag).result().orElse(ItemStack.EMPTY);
+	}
+
+	public static CompoundTag saveFluid(HolderLookup.Provider registries, FluidStack fluid) {
+		return (CompoundTag) FluidStack.OPTIONAL_CODEC.encodeStart(registries.createSerializationContext(NbtOps.INSTANCE), fluid).getOrThrow();
+	}
+
+	public static FluidStack parseFluid(HolderLookup.Provider registries, Tag tag) {
+		return FluidStack.OPTIONAL_CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), tag).result().orElse(FluidStack.EMPTY);
 	}
 }

@@ -45,7 +45,7 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 		InventoryUtil.deepCopyInventoryContents(craftMatrix, this.craftMatrix);
 		this.recipes = recipes;
 		for (RecipeHolder<CraftingRecipe> recipe : recipes) {
-			this.recipeIds.add(recipe.id());
+			this.recipeIds.add(recipe.id().identifier());
 		}
 	}
 
@@ -85,7 +85,7 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 	public ItemStack getOutputIcon(Level level) {
 		RecipeHolder<CraftingRecipe> selectedRecipe = getSelectedRecipe();
 		if (selectedRecipe != null) {
-			ItemStack recipeOutput = selectedRecipe.value().assemble(this.craftMatrix.asCraftInput(), level.registryAccess());
+			ItemStack recipeOutput = selectedRecipe.value().assemble(this.craftMatrix.asCraftInput());
 			if (!recipeOutput.isEmpty()) {
 				return recipeOutput;
 			}

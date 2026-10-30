@@ -1,5 +1,6 @@
 package forestry.core.platform.util;
 
+import java.util.function.Consumer;
 import forestry.api.core.tooltips.ToolTip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -13,16 +14,16 @@ import java.util.List;
 
 public class ItemTooltipUtil {
 	// todo this should probably be removed
-	public static void addInformation(ItemStack stack, List<Component> tooltip) {
-		String translationKey = stack.getDescriptionId();
+	public static void addInformation(ItemStack stack, Consumer<Component> tooltip) {
+		String translationKey = stack.getItem().getDescriptionId();
 		String tooltipKey = translationKey + ".tooltip";
 		if (Translator.canTranslateToLocal(tooltipKey)) {
-			tooltip.add(Component.translatable(tooltipKey).withStyle(ChatFormatting.GRAY));
+			tooltip.accept(Component.translatable(tooltipKey).withStyle(ChatFormatting.GRAY));
 		}
 	}
 
-	public static void addShiftInformation(List<Component> tooltip) {
-		tooltip.add(Component.translatable("for.gui.tooltip.tmi", "< %s >").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+	public static void addShiftInformation(Consumer<Component> tooltip) {
+		tooltip.accept(Component.translatable("for.gui.tooltip.tmi", "< %s >").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
 	}
 
 	@Nullable

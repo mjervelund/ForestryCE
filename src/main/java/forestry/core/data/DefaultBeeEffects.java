@@ -29,7 +29,7 @@ public class DefaultBeeEffects {
 
 		effects.put(ForestryBeeEffects.BEATIFIC, new PotionBeeEffect(false, MobEffects.REGENERATION, 100));
 		effects.put(ForestryBeeEffects.MIASMIC, new PotionBeeEffect(false, MobEffects.POISON, 600, 100, 0.1f));
-		effects.put(ForestryBeeEffects.DRUNKARD, new PotionBeeEffect(false, MobEffects.CONFUSION, 100));
+		effects.put(ForestryBeeEffects.DRUNKARD, new PotionBeeEffect(false, MobEffects.NAUSEA, 100));
 		effects.put(ForestryBeeEffects.DARKNESS, new PotionBeeEffect(false, MobEffects.DARKNESS, 150));
 		effects.put(ForestryBeeEffects.REANIMATION, new ResurrectionBeeEffect(true, 40, ResurrectionBeeEffect.getReanimationList()));
 		effects.put(ForestryBeeEffects.RESURRECTION, new ResurrectionBeeEffect(true, 40, ResurrectionBeeEffect.getResurrectionList()));

@@ -1,5 +1,6 @@
 package forestry.apiculture.bees;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import forestry.api.IForestryApi;
 import forestry.api.apiculture.*;
 import forestry.api.apiculture.genetics.BeeLifeStage;
@@ -76,7 +77,7 @@ public class BeeHousingBeekeepingLogic implements IBeekeepingLogic {
 		compoundNBT.putInt("Throttle", this.workThrottleCounter);
 
 		if (!this.queenStack.isEmpty()) {
-			CompoundTag queenNbt = (CompoundTag) this.queenStack.saveOptional(registries);
+			CompoundTag queenNbt = NBTUtilForestry.saveStack(registries, this.queenStack);
 			compoundNBT.put("queen", queenNbt);
 		}
 
@@ -87,7 +88,7 @@ public class BeeHousingBeekeepingLogic implements IBeekeepingLogic {
 		ArrayDeque<ItemStack> spawnCopy = new ArrayDeque<>(this.spawn);
 		ListTag nbttaglist = new ListTag();
 		while (!spawnCopy.isEmpty()) {
-			CompoundTag compoundNBT1 = (CompoundTag) spawnCopy.removeFirst().saveOptional(registries);
+			CompoundTag compoundNBT1 = NBTUtilForestry.saveStack(registries, spawnCopy.removeFirst());
 			nbttaglist.add(compoundNBT1);
 		}
 		compoundNBT.put("Offspring", nbttaglist);
@@ -102,7 +103,7 @@ public class BeeHousingBeekeepingLogic implements IBeekeepingLogic {
 		// sadly this means duplicated NBT
 		if (compoundNBT.contains("queen")) {
 			CompoundTag queenNBT = compoundNBT.getCompoundOrEmpty("queen");
-			this.queenStack = ItemStack.parse(registries, queenNBT).orElse(ItemStack.EMPTY);
+			this.queenStack = NBTUtilForestry.parseStack(registries, queenNBT);
 			this.queen = (IBee) IIndividualHandlerItem.getIndividual(this.queenStack);
 			if (this.queen != null) {
 				this.beeProgressMax = this.queen.getMaxHealth();
@@ -115,7 +116,7 @@ public class BeeHousingBeekeepingLogic implements IBeekeepingLogic {
 
 		ListTag list = compoundNBT.getListOrEmpty("Offspring");
 		for (int i = 0; i < list.size(); i++) {
-			this.spawn.add(ItemStack.parse(registries, list.getCompound(i)).orElse(ItemStack.EMPTY));
+			this.spawn.add(NBTUtilForestry.parseStack(registries, list.getCompoundOrEmpty(i)));
 		}
 	}
 

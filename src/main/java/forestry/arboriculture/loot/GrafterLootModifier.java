@@ -1,5 +1,7 @@
 package forestry.arboriculture.loot;
 
+import net.minecraft.core.Holder;
+import java.util.Optional;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import forestry.api.arboriculture.IToolGrafter;
@@ -40,8 +42,8 @@ import java.util.List;
 public class GrafterLootModifier extends LootModifier {
 	public static final MapCodec<GrafterLootModifier> CODEC = RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, GrafterLootModifier::new));
 
-	public GrafterLootModifier(LootItemCondition[] conditionsIn) {
-		super(conditionsIn);
+	public GrafterLootModifier(Optional<Holder<LootItemCondition>> condition, int priority) {
+		super(condition, priority);
 	}
 
 	@Override
@@ -50,7 +52,8 @@ public class GrafterLootModifier extends LootModifier {
 		if (state == null || !state.is(BlockTags.LEAVES)) {
 			return generatedLoot;
 		}
-		ItemStack harvestingTool = context.getOptional(LootContextParams.TOOL);
+		// 26.x: the tool parameter is an ItemInstance; block drops pass the held ItemStack, which this damages
+		ItemStack harvestingTool = context.getOptional(LootContextParams.TOOL) instanceof ItemStack stack ? stack : null;
 		if (harvestingTool == null || harvestingTool.isEmpty()) {
 			return generatedLoot;
 		}

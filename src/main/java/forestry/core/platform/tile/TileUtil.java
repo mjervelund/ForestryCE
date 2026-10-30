@@ -1,5 +1,6 @@
 package forestry.core.platform.tile;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import forestry.core.platform.legacy.LegacyCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -106,7 +107,7 @@ public abstract class TileUtil {
 
         for (int i = 0; i < offspring.length; i++) {
             if (offspring[i] != null) {
-                CompoundTag products = (CompoundTag) offspring[i].saveOptional(registries);
+                CompoundTag products = NBTUtilForestry.saveStack(registries, offspring[i]);
                 products.putByte("Slot", (byte) i);
                 listTag.add(products);
             }

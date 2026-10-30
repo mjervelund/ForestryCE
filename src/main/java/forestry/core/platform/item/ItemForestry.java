@@ -1,5 +1,7 @@
 package forestry.core.platform.item;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.util.ItemTooltipUtil;
 import net.minecraft.network.chat.Component;
@@ -19,7 +21,7 @@ public class ItemForestry extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
 		ItemTooltipUtil.addInformation(stack, tooltip);
 	}
 }

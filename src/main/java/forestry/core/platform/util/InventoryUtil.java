@@ -1,5 +1,7 @@
 package forestry.core.platform.util;
 
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.util.Prediction;
 import com.mojang.serialization.DataResult;
 import net.minecraft.nbt.NbtOps;
 import forestry.core.engine.circuits.ISocketable;
@@ -15,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.CommonHooks;
 import forestry.core.platform.legacy.items.IItemHandler;
 
 import javax.annotation.Nullable;
@@ -69,7 +70,7 @@ public abstract class InventoryUtil {
 			ItemStack oldStack = inventory.getItem(i);
 			ItemStack removed = inventory.removeItem(i, count);
 
-			if (stowContainer && oldStack.getItem().hasCraftingRemainingItem(oldStack)) {
+			if (stowContainer && oldStack.getCraftingRemainder() != null) {
 				stowContainerItem(removed, inventory, i, player);
 			}
 
@@ -178,7 +179,7 @@ public abstract class InventoryUtil {
 					ItemStack removed = inventory.removeItem(j, stackToRemove.getCount());
 					stackToRemove.shrink(removed.getCount());
 
-					if (stowContainer && stackToRemove.getItem().hasCraftingRemainingItem(stackToRemove)) {
+					if (stowContainer && stackToRemove.getCraftingRemainder() != null) {
 						stowContainerItem(removed, inventory, j, player);
 					}
 
@@ -387,15 +388,16 @@ public abstract class InventoryUtil {
 	}
 
 	public static void stowContainerItem(ItemStack itemstack, Container stowing, int slotIndex, @Nullable Player player) {
-		if (!itemstack.getItem().hasCraftingRemainingItem(itemstack)) {
+		if (itemstack.getCraftingRemainder() == null) {
 			return;
 		}
 
-		ItemStack container = CommonHooks.getCraftingRemainingItem(itemstack);
+		ItemStackTemplate remainder = itemstack.getCraftingRemainder();
+		ItemStack container = remainder == null ? ItemStack.EMPTY : remainder.create();
 		if (!container.isEmpty()) {
 			if (!tryAddStack(stowing, container, slotIndex, 1, true)) {
 				if (!tryAddStack(stowing, container, true) && player != null) {
-					player.drop(container, true);
+					player.drop(container, false, Prediction.SERVER_ONLY);
 				}
 			}
 		}

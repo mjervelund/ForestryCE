@@ -1,5 +1,6 @@
 package forestry.core.platform.inventory;
 
+import forestry.core.platform.util.FuelUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -25,7 +26,7 @@ public enum StandardStackFilters implements Predicate<ItemStack> {
 	FUEL {
 		@Override
 		public boolean test(ItemStack stack) {
-			return FurnaceBlockEntity.getFuel().get(stack.getItem()) > 0;
+			return FuelUtil.isFuel(stack);
 		}
 	},
 	//TODO - where is this used?

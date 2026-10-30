@@ -35,7 +35,7 @@ public record PacketGenomeTrackerSync(@Nullable CompoundTag nbt) implements Cust
 			ISpeciesType<?, ?> root = IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypeSafe(Identifier.parse(type));
 
 			if (root != null) {
-				IBreedingTracker tracker = root.getBreedingTracker(player.getCommandSenderWorld(), player.getGameProfile());
+				IBreedingTracker tracker = root.getBreedingTracker(player.level(), player.getGameProfile());
 				tracker.load(msg.nbt);
 				NeoForge.EVENT_BUS.post(new ForestryEvent.SyncedBreedingTracker(tracker, player));
 			}

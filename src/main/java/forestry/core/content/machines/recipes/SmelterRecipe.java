@@ -63,8 +63,9 @@ public class SmelterRecipe implements ISmelterRecipe {
 	public ItemStack getOutput() {
 		// The output is an ingredient so a recipe can name an alloy by tag and let whichever mod
 		// fills that tag supply the item. A tag no loaded mod fills resolves to nothing
-		ItemStack[] items = this.output.getItems();
-		return items.length == 0 ? ItemStack.EMPTY : items[0].copyWithCount(this.output.count());
+		return this.output.ingredient().items().findFirst()
+			.map(item -> new ItemStack(item, this.output.count()))
+			.orElse(ItemStack.EMPTY);
 	}
 
 	@Override

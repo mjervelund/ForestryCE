@@ -1,5 +1,7 @@
 package forestry.core.content.tools;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.Item;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.resources.ResourceKey;
@@ -33,7 +35,7 @@ public class ItemSpectacles extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
 		ItemTooltipUtil.addInformation(stack, tooltip);
 	}
 }

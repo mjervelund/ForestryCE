@@ -1,5 +1,7 @@
 package forestry.core.content.backpacks.items;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import com.google.common.base.Preconditions;
 import forestry.api.core.backpacks.BackpackStowEvent;
 import forestry.api.core.backpacks.EnumBackpackType;
@@ -180,17 +182,17 @@ public class BackpackItem extends WithScreenItem implements ITintedItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(itemstack, context, list, flag);
+	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
+		super.appendHoverText(itemstack, context, display, list, flag);
 
 		int occupied = ItemInventory.getOccupiedSlotCount(itemstack);
 
 		BackpackMode mode = getMode(itemstack);
 		String infoKey = mode.getTranslationKey();
 		if (infoKey != null) {
-			list.add(Component.translatable(infoKey).withStyle(ChatFormatting.GRAY));
+			list.accept(Component.translatable(infoKey).withStyle(ChatFormatting.GRAY));
 		}
-		list.add(Component.translatable("for.gui.slots", String.valueOf(occupied), String.valueOf(getBackpackSize())).withStyle(ChatFormatting.GRAY));
+		list.accept(Component.translatable("for.gui.slots", String.valueOf(occupied), String.valueOf(getBackpackSize())).withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package forestry.apiculture.alveary.multiblock;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import forestry.api.core.climate.IClimateControlled;
 import forestry.api.core.multiblock.IAlvearyComponent;
 import forestry.apiculture.alveary.AlvearyBlock;
@@ -103,7 +104,7 @@ public class AlvearyHygroregulatorBlockEntity extends AbstractAlvearyBlockEntity
         this.heatTicks = compoundNBT.getIntOr("TransferTime", 0);
 
 		if (compoundNBT.contains("CurrentLiquid")) {
-			FluidStack liquid = FluidStack.parseOptional(registries, compoundNBT.getCompound("CurrentLiquid"));
+			FluidStack liquid = NBTUtilForestry.parseFluid(registries, compoundNBT.getCompoundOrEmpty("CurrentLiquid"));
             this.currentRecipe = getHygroRegulatorRecipe(RecipeUtils.getRecipeMap(), liquid);
 		}
 	}
@@ -116,7 +117,7 @@ public class AlvearyHygroregulatorBlockEntity extends AbstractAlvearyBlockEntity
 
 		compoundNBT.putInt("TransferTime", this.heatTicks);
 		if (this.currentRecipe != null) {
-			compoundNBT.put("CurrentLiquid", this.currentRecipe.getInputFluid().save(registries));
+			compoundNBT.put("CurrentLiquid", NBTUtilForestry.saveFluid(registries, this.currentRecipe.getInputFluid()));
 		}
 	}
 

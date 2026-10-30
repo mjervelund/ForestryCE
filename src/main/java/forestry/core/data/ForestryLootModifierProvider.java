@@ -33,7 +33,7 @@ public class ForestryLootModifierProvider extends GlobalLootModifierProvider {
 	protected void start() {
 		for (Map.Entry<ResourceKey<LootTable>, Collection<LootTableHelper.Entry>> mapEntry : LootTableHelper.getInstance().entries.asMap().entrySet()) {
 			List<String> extensions = mapEntry.getValue().stream().map(entry -> entry.extension).toList();
-			add(mapEntry.getKey().location().getPath(), new ConditionLootModifier(mapEntry.getKey().location(), extensions));
+			add(mapEntry.getKey().identifier().getPath(), new ConditionLootModifier(mapEntry.getKey().identifier(), extensions));
 		}
 		add("grafter", new GrafterLootModifier(new LootItemCondition[]{
 			toolMatches(item().of(ArboricultureItems.GRAFTER.item())).or(toolMatches(item().of(ArboricultureItems.PROVEN_GRAFTER.item()))).build()

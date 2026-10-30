@@ -33,7 +33,7 @@ public record PacketFilterChangeRule(BlockPos pos, Direction facing,
 	public static void handle(PacketFilterChangeRule msg, ServerPlayer player) {
 		TileUtil.getInterface(player.level(), msg.pos(), ForestryCapabilities.FILTER_LOGIC, null).ifPresent(logic -> {
 			if (logic.setRule(msg.facing(), msg.rule())) {
-				logic.getNetworkHandler().sendToPlayers(logic, player.serverLevel(), player);
+				logic.getNetworkHandler().sendToPlayers(logic, player.level(), player);
 			}
 		});
 	}

@@ -1,5 +1,7 @@
 package forestry.apiculture.bees;
 
+import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
+import net.minecraft.world.item.component.Consumables;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.item.ItemForestryFood;
@@ -17,8 +19,11 @@ public class ItemAmbrosia extends ItemForestryFood {
 				.alwaysEdible()
 				.nutrition(Constants.FOOD_AMBROSIA_HEAL)
 				.saturationModifier(0.6f)
-				.effect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0), 1.0F)
-				.build()));
+				.build(),
+				// 26.x: food effects are consume effects of the Consumable component
+				Consumables.defaultFood()
+					.onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0), 1.0F))
+					.build()));
 	}
 
 	@Override

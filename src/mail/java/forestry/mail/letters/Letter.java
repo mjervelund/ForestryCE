@@ -1,5 +1,6 @@
 package forestry.mail.letters;
 
+import net.minecraft.world.entity.ContainerUser;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import forestry.api.mail.ILetter;
@@ -291,12 +292,12 @@ public class Letter implements ILetter {
 	}
 
 	@Override
-	public void startOpen(Player var1) {
+	public void startOpen(ContainerUser var1) {
         this.inventory.startOpen(var1);
 	}
 
 	@Override
-	public void stopOpen(Player var1) {
+	public void stopOpen(ContainerUser var1) {
         this.inventory.stopOpen(var1);
 	}
 

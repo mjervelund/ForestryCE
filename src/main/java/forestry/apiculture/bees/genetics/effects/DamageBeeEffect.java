@@ -92,7 +92,7 @@ public class DamageBeeEffect extends ThrottledBeeEffect {
 
 			@Override
 			public boolean matches(LivingEntity entity) {
-				return entity.getType().is(this.tag);
+				return entity.typeHolder().is(this.tag);
 			}
 		}
 	}

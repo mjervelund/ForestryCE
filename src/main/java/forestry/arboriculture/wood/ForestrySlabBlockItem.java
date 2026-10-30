@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -10,17 +11,7 @@ import javax.annotation.Nullable;
 
 public class ForestrySlabBlockItem extends BlockItem {
 	public ForestrySlabBlockItem(ForestrySlabBlock block) {
-		super(block, RegistrationIds.item());
+		super(block, block.isFireproof() ? RegistrationIds.item() : RegistrationIds.item().cookingFuel(ContextIntProviders.COOKING_TIME_WOOD_SLABS));
 	}
 
-	@Override
-	public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
-		ForestrySlabBlock forestrySlab = (ForestrySlabBlock) getBlock();
-
-		if (forestrySlab.isFireproof()) {
-			return 0;
-		} else {
-			return 150;
-		}
-	}
 }

@@ -1,5 +1,9 @@
 package forestry.apiculture.apiarist;
 
+import javax.annotation.Nullable;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.server.level.ServerLevel;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.apiculture.hives.IHiveTile;
 import forestry.core.platform.item.ItemForestry;
@@ -22,10 +26,12 @@ public class ItemSmoker extends ItemForestry {
 		super(RegistrationIds.item().stacksTo(1));
 	}
 
+	// 26.x: inventoryTick only runs on the server, so the idle puff while held is sent as vanilla smoke
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide() && isSelected && level.getRandom().nextInt(40) == 0) {
-			addSmoke(level, entity, 1);
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
+		if (slot == EquipmentSlot.MAINHAND && level.getRandom().nextInt(40) == 0) {
+			Vec3 smokePos = getSmokePos(entity, 1);
+			level.sendParticles(ParticleTypes.SMOKE, smokePos.x, smokePos.y + 1, smokePos.z, 1, 0, 0, 0, 0);
 		}
 	}
 
@@ -50,6 +56,17 @@ public class ItemSmoker extends ItemForestry {
 		if (distance <= 0) {
 			return;
 		}
+		Vec3 smokePos = getSmokePos(entity, distance);
+
+		if (level.isClientSide()) {
+			ParticleRender.addEntitySmokeFX(level, smokePos.x, smokePos.y + 1, smokePos.z);
+		}
+
+		BlockPos blockPos = BlockPos.containing(smokePos.x, smokePos.y + 1, smokePos.z);
+		TileUtil.actOnTile(level, blockPos, IHiveTile.class, IHiveTile::calmBees);
+	}
+
+	private static Vec3 getSmokePos(Entity entity, int distance) {
 		Vec3 look = entity.getLookAngle();
 		HumanoidArm handSide = getHandSide(entity);
 
@@ -62,14 +79,7 @@ public class ItemSmoker extends ItemForestry {
 
 		Vec3 lookDistance = new Vec3(look.x * distance, look.y * distance, look.z * distance);
 		Vec3 scaledOffset = handOffset.scale(1.0 / distance);
-		Vec3 smokePos = lookDistance.add(entity.position()).add(scaledOffset);
-
-		if (level.isClientSide()) {
-			ParticleRender.addEntitySmokeFX(level, smokePos.x, smokePos.y + 1, smokePos.z);
-		}
-
-		BlockPos blockPos = BlockPos.containing(smokePos.x, smokePos.y + 1, smokePos.z);
-		TileUtil.actOnTile(level, blockPos, IHiveTile.class, IHiveTile::calmBees);
+		return lookDistance.add(entity.position()).add(scaledOffset);
 	}
 
 	@Override

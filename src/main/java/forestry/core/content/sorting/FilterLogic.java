@@ -69,7 +69,7 @@ public class FilterLogic implements IFilterLogic {
 	@Override
 	public void read(CompoundTag data, HolderLookup.Provider registries) {
 		for (int i = 0; i < this.filterRules.length; i++) {
-			this.filterRules[i] = IForestryApi.INSTANCE.getFilterManager().getRuleOrDefault(data.getString("TypeFilter" + i));
+			this.filterRules[i] = IForestryApi.INSTANCE.getFilterManager().getRuleOrDefault(data.getStringOr("TypeFilter" + i, ""));
 		}
 
 		for (int i = 0; i < 6; i++) {

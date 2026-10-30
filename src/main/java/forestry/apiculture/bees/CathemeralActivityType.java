@@ -1,5 +1,6 @@
 package forestry.apiculture.bees;
 
+import net.minecraft.util.Mth;
 import forestry.api.apiculture.IActivityType;
 import forestry.api.apiculture.LightPreference;
 import forestry.api.core.ForestryError;
@@ -12,7 +13,9 @@ import org.joml.Vector2i;
 import java.util.List;
 
 public class CathemeralActivityType implements IActivityType {
-	private static final PerlinNoise NOISE = PerlinNoise.create(RandomSource.create(13L), List.of(5, 3, 6));
+	// 26.x: the multi-octave PerlinNoise.create(random, octaves) is gone; a single gradient noise with the same seed
+	// gives each position a different but stable offset (the pattern differs from 1.21.1)
+	private static final PerlinNoise NOISE = new PerlinNoise(RandomSource.create(13L));
 
 	// Active during [x,y)
 	public static Vector2i getSleepPeriod(BlockPos pos) {
@@ -26,7 +29,7 @@ public class CathemeralActivityType implements IActivityType {
 
 	// Varies according to position, but y coordinate has lower impact on variation
 	private static long getOffset(BlockPos pos) {
-		return (long) (NOISE.getValue(pos.getX() / 40.0, pos.getY() / 1000.0, pos.getZ() / 40.0) * 24000L);
+		return (long) (Mth.clamp(NOISE.get(pos.getX() / 40.0, pos.getY() / 1000.0, pos.getZ() / 40.0), -1.0f, 1.0f) * 24000L);
 	}
 
 	@Override

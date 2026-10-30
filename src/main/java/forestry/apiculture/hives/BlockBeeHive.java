@@ -1,5 +1,6 @@
 package forestry.apiculture.hives;
 
+import net.minecraft.world.item.ItemInstance;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryTags;
 import forestry.api.IForestryApi;
@@ -94,7 +95,7 @@ public class BlockBeeHive extends Block implements EntityBlock {
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
 		BlockPos pos = BlockPos.containing(builder.getParameter(LootContextParams.ORIGIN));
-		ItemStack tool = builder.getParameter(LootContextParams.TOOL);
+		ItemInstance tool = builder.getParameter(LootContextParams.TOOL);
 
 		if (tool.is(ForestryTags.Items.SCOOPS)) {
 			HolderLookup.RegistryLookup<Enchantment> enchantments = builder.getLevel().registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
@@ -185,7 +186,7 @@ public class BlockBeeHive extends Block implements EntityBlock {
 	}
 
 	public IBee adjustForDimension(ServerLevel level, BlockPos pos, IBee bee){
-		if(level.dimension().location().toString().equals("twilightforest:twilight_forest")){
+		if(level.dimension().identifier().toString().equals("twilightforest:twilight_forest")){
 			return bee.copyWithGenome(bee.getGenome().copyWith(Map.of(BeeChromosomes.ACTIVITY, Allele.reference(ForestryActivityTypes.CREPUSCULAR))));
 		}
 		return bee;

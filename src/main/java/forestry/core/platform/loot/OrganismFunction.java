@@ -1,5 +1,7 @@
 package forestry.core.platform.loot;
 
+import net.minecraft.core.Holder;
+import java.util.Optional;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import forestry.api.IForestryApi;
@@ -29,8 +31,8 @@ public class OrganismFunction extends LootItemConditionalFunction {
 	private final Identifier typeId;
 	private final Identifier speciesId;
 
-	private OrganismFunction(List<LootItemCondition> conditions, Identifier typeId, Identifier speciesId) {
-		super(conditions);
+	private OrganismFunction(Optional<Holder<LootItemCondition>> condition, Identifier typeId, Identifier speciesId) {
+		super(condition);
 		this.typeId = typeId;
 		this.speciesId = speciesId;
 	}
@@ -57,7 +59,7 @@ public class OrganismFunction extends LootItemConditionalFunction {
 	}
 
 	@Override
-	public MapCodec<? extends LootItemFunction> codec() {
+	public MapCodec<? extends LootItemConditionalFunction> codec() {
 		return CODEC;
 	}
 }

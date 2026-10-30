@@ -1,5 +1,9 @@
 package forestry.arboriculture.wood;
 
+import forestry.api.ForestryConstants;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import java.util.Optional;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.arboriculture.IWoodType;
 import forestry.api.arboriculture.WoodBlockKind;
@@ -11,8 +15,9 @@ import net.minecraft.world.level.material.MapColor;
 public class ForestryWallHangingSignBlock extends WallHangingSignBlock implements IWoodTyped {
 	private final ForestryWoodType type;
 
+	// 26.x: lootFrom is gone; drop the standing sign through its loot table id
 	public ForestryWallHangingSignBlock(ForestryWoodType type) {
-		super(type.getWoodType(), RegistrationIds.block().mapColor(MapColor.WOOD).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).lootFrom(ArboricultureBlocks.HANGING_SIGN.get(type)::block).ignitedByLava());
+		super(type.getWoodType(), RegistrationIds.block().mapColor(MapColor.WOOD).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).overrideLootTable(Optional.of(ResourceKey.create(Registries.LOOT_TABLE, ForestryConstants.forestry("blocks/" + type.getSerializedName() + "_hanging_sign")))).ignitedByLava());
 
 		this.type = type;
 	}

@@ -1,5 +1,6 @@
 package forestry.agriculture.farmlogic.crops;
 
+import net.minecraft.world.phys.Vec3;
 import forestry.core.platform.util.BlockUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -35,7 +36,7 @@ public class CropChorusFlower extends Crop {
 				level.getBlockEntity(pos),
 				new ArrayList<>(List.of(new ItemEntity(
 					level,
-					// We could use pos.getCenter(), but let's avoid importing Vec3 for this.
+					// We could use Vec3.atCenterOf(pos), but let's avoid importing Vec3 for this.
 					pos.getX() + 0.5D,
 					pos.getY() + 0.5D,
 					pos.getZ() + 0.5D,

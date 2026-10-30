@@ -1,5 +1,6 @@
 package forestry.core.platform.loot;
 
+import java.util.Optional;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -25,13 +26,15 @@ import java.util.function.Consumer;
  * A global loot modifier used by forestry to inject the additional chest loot to the vanilla loot tables.
  */
 public class ConditionLootModifier extends LootModifier {
-	public static final MapCodec<ConditionLootModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-		LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions),
+	// 26.x: a loot modifier has a single optional condition, so the table id is checked in doApply instead of
+	// being merged into the condition list
+	public static final MapCodec<ConditionLootModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> codecStart(instance).and(instance.group(
 		Identifier.CODEC.fieldOf("table").forGetter(lm -> lm.tableLocation),
 		Codec.list(Codec.STRING).fieldOf("extensions").forGetter(o -> o.extensions)
-	).apply(instance, ConditionLootModifier::new));
+	)).apply(instance, ConditionLootModifier::new));
 
 	private final Identifier tableLocation;
+	private final LootItemCondition tableCondition;
 	private final List<String> extensions;
 
 	/**
@@ -44,28 +47,19 @@ public class ConditionLootModifier extends LootModifier {
 	private boolean operates = false;
 
 	public ConditionLootModifier(Identifier location, List<String> extensions) {
-		super(new LootItemCondition[]{
-			LootTableIdCondition.builder(location).build()
-		});
-		this.tableLocation = location;
-		this.extensions = extensions;
+		this(Optional.empty(), IGlobalLootModifier.DEFAULT_PRIORITY, location, extensions);
 	}
 
-	private static LootItemCondition[] merge(LootItemCondition[] conditions, LootItemCondition condition) {
-		LootItemCondition[] newArray = Arrays.copyOf(conditions, conditions.length + 1);
-		newArray[conditions.length] = condition;
-		return newArray;
-	}
-
-	private ConditionLootModifier(LootItemCondition[] conditions, Identifier location, List<String> extensions) {
-		super(merge(conditions, LootTableIdCondition.builder(location).build()));
+	private ConditionLootModifier(Optional<Holder<LootItemCondition>> condition, int priority, Identifier location, List<String> extensions) {
+		super(condition, priority);
 		this.tableLocation = location;
+		this.tableCondition = LootTableIdCondition.builder(location).build();
 		this.extensions = extensions;
 	}
 
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		if (this.operates) {
+		if (this.operates || !this.tableCondition.test(context)) {
 			return generatedLoot;
 		}
 

@@ -1,5 +1,7 @@
 package forestry.arboriculture.leaves;
 
+import net.minecraft.world.item.ItemInstance;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import com.mojang.authlib.GameProfile;
 import forestry.api.arboriculture.ForestryTreeSpecies;
 import forestry.api.arboriculture.ITreeSpecies;
@@ -57,19 +59,16 @@ public abstract class AbstractLeavesBlock extends BlockExtendedLeaves implements
 			.noOcclusion()
 			.isValidSpawn(BlockUtil.IS_PARROT_OR_OCELOT)
 			.isSuffocating(BlockUtil.NEVER)
-			.isViewBlocking(BlockUtil.NEVER));
+			.isViewBlocking(BlockUtil.NEVER_VIEW_BLOCKING)
+			// Use the same for all leaves, so the default leaves don't have an other name than the pollinated ones
+			.overrideDescription("block.forestry.leaves"));
 	}
 
 	@Nullable
 	protected abstract ITree getTree(BlockGetter world, BlockPos pos);
 
 	@Override
-	public String getDescriptionId() {
-		return "block.forestry.leaves";// Use the same for all leaves, so the default leaves don't have an other name than the pollinated ones
-	}
-
-	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean includeData) {
 		ITree tree = getTree(world, pos);
 		if (tree == null) {
 			return ItemStack.EMPTY;
@@ -111,8 +110,8 @@ public abstract class AbstractLeavesBlock extends BlockExtendedLeaves implements
 	 * Used for walking through willow leaves.
 	 */
 	@Override
-	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
-		super.entityInside(state, worldIn, pos, entityIn);
+	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn, InsideBlockEffectApplier effectApplier, boolean isPrecise) {
+		super.entityInside(state, worldIn, pos, entityIn, effectApplier, isPrecise);
 		Vec3 motion = entityIn.getDeltaMovement();
 		entityIn.setDeltaMovement(motion.x() * 0.4D, motion.y(), motion.z() * 0.4D);
 	}
@@ -148,7 +147,7 @@ public abstract class AbstractLeavesBlock extends BlockExtendedLeaves implements
 		if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Player player) {
 			profile = player.getGameProfile();
 		}
-		ItemStack tool = context.getOptionalParameter(LootContextParams.TOOL);
+		ItemInstance tool = context.getOptionalParameter(LootContextParams.TOOL);
 		BlockPos pos = BlockUtil.getPos(context);
 		int fortune = 0;
 		if (tool != null) {

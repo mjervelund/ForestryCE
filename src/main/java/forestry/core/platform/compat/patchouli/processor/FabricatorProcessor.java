@@ -1,5 +1,6 @@
 package forestry.core.platform.compat.patchouli.processor;
 
+import forestry.core.platform.util.EmptyIngredient;
 import net.minecraft.world.item.crafting.CraftingInput;
 import forestry.Forestry;
 import forestry.api.core.machines.IFabricatorRecipe;
@@ -58,7 +59,7 @@ public class FabricatorProcessor implements IComponentProcessor {
 			try {
 				ingredient = this.recipe.getCraftingGridRecipe().getIngredients().get(index - 1);
 			} catch (Exception e) {
-				ingredient = Ingredient.EMPTY;
+				ingredient = EmptyIngredient.EMPTY;
 			}
 			return IVariable.from(ingredient.getItems(), registries);
 		} else if (key.equals("plan")) {

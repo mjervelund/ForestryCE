@@ -1,5 +1,8 @@
 package forestry.core.engine.circuits;
 
+import forestry.core.platform.util.TooltipLines;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.api.IForestryApi;
 import forestry.api.core.circuits.ICircuit;
 import forestry.api.core.circuits.ICircuitBoard;
@@ -29,10 +32,10 @@ public class ItemCircuitBoard extends ItemForestry {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
 		ICircuitBoard circuitboard = IForestryApi.INSTANCE.getCircuitManager().getCircuitBoard(stack);
 		if (circuitboard != null) {
-			circuitboard.addTooltip(list);
+			circuitboard.addTooltip(new TooltipLines(list));
 		}
 	}
 

@@ -175,7 +175,7 @@ public class ModuleCore extends BlankForestryModule {
 
 	private static void onTagsUpdated(TagsUpdatedEvent event) {
 		if (event.shouldUpdateStaticData()) {
-			event.getRegistryAccess().registry(Registries.BIOME).ifPresent(registry -> ((ForestryClimateManager) IForestryApi.INSTANCE.getClimateManager()).onBiomesReloaded(registry));
+			event.getRegistries().lookup(Registries.BIOME).ifPresent(registry -> ((ForestryClimateManager) IForestryApi.INSTANCE.getClimateManager()).onBiomesReloaded(registry));
 		}
 	}
 

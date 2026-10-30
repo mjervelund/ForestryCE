@@ -74,7 +74,7 @@ public class FluidComponent implements ICustomComponent {
 		try {
 			// the fluid is absent when the processor found no recipe to show
 			Identifier id = Identifier.parse(lookup.apply(this.fluid).asString());
-			this.fluidStack = new FluidStack(BuiltInRegistries.FLUID.get(id), mb);
+			this.fluidStack = new FluidStack(BuiltInRegistries.FLUID.getValue(id), mb);
 		} catch (Exception e) {
 			this.fluidStack = FluidStack.EMPTY;
 		}

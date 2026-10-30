@@ -1,5 +1,6 @@
 package forestry.apiculture.alveary.multiblock;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import forestry.api.IForestryApi;
 import forestry.api.apiculture.genetics.BeeLifeStage;
 import forestry.api.apiculture.genetics.IBee;
@@ -141,7 +142,7 @@ public class AlvearySwarmerBlockEntity extends AbstractAlvearyBlockEntity implem
 		ListTag nbttaglist = compoundNBT.getListOrEmpty("PendingSpawns");
 		for (int i = 0; i < nbttaglist.size(); i++) {
 			CompoundTag compoundNBT1 = nbttaglist.getCompoundOrEmpty(i);
-            this.pendingSpawns.add(ItemStack.parse(registries, compoundNBT1).orElse(ItemStack.EMPTY));
+            this.pendingSpawns.add(NBTUtilForestry.parseStack(registries, compoundNBT1));
 		}
 	}
 

@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -11,7 +12,7 @@ import javax.annotation.Nullable;
 public class ForestryDoorBlockItem extends ForestryWoodBlockItem<ForestryDoorBlock> {
 
 	public ForestryDoorBlockItem(ForestryDoorBlock block) {
-		super(block);
+		super(block, ContextIntProviders.COOKING_TIME_WOOD_ITEMS_LARGE);
 	}
 
 	/**
@@ -23,12 +24,4 @@ public class ForestryDoorBlockItem extends ForestryWoodBlockItem<ForestryDoorBlo
 		return super.placeBlock(p_195941_1_, p_195941_2_);
 	}
 
-	@Override
-	public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
-		if (getBlock().isFireproof()) {
-			return 0;
-		} else {
-			return 200;
-		}
-	}
 }

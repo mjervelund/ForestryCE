@@ -1,5 +1,6 @@
 package forestry.apiculture.bees.genetics.effects;
 
+import net.minecraft.world.entity.EntityTypes;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.core.genetics.IEffectData;
 import forestry.api.core.genetics.IGenome;
@@ -12,7 +13,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.cow.Cow;
-import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.entity.animal.cow.MushroomCow;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -102,13 +103,10 @@ public class FungificationBeeEffect extends ThrottledBeeEffect {
 	}
 
 	private static boolean convertCowToMooshroom(Cow cow) {
-		if (cow instanceof MushroomCow) {
-			return false;
-		}
 		Level world = cow.level();
 		cow.discard();
-		MushroomCow mooshroom = new MushroomCow(EntityType.MOOSHROOM, world);
-		mooshroom.moveTo(cow.getX(), cow.getY(), cow.getZ(), cow.getYRot(), cow.getXRot());
+		MushroomCow mooshroom = new MushroomCow(EntityTypes.MOOSHROOM, world);
+		mooshroom.snapTo(cow.getX(), cow.getY(), cow.getZ(), cow.getYRot(), cow.getXRot());
 		mooshroom.setHealth(cow.getHealth());
 		mooshroom.yBodyRot = cow.yBodyRot;
 		world.addFreshEntity(mooshroom);

@@ -1,5 +1,8 @@
 package forestry.core.content.analyzer;
 
+import net.minecraft.world.item.Item;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.features.CoreDataComponents;
 import forestry.core.content.analyzer.PortableAnalyzerMenu;
 import forestry.core.platform.inventory.PortableAnalyzerInventory;
@@ -19,10 +22,10 @@ public class PortableAnalyzerItem extends WithScreenItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
-		super.appendHoverText(stack, context, tooltip, advanced);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
+		super.appendHoverText(stack, context, display, tooltip, advanced);
 		int charges = stack.getOrDefault(CoreDataComponents.ALYZER_CHARGES, 0);
-		tooltip.add(Component.translatable(stack.getDescriptionId() + ".charges", charges).withStyle(ChatFormatting.GOLD));
+		tooltip.accept(Component.translatable(stack.getItem().getDescriptionId() + ".charges", charges).withStyle(ChatFormatting.GOLD));
 	}
 
 	@Override

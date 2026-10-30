@@ -37,9 +37,9 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Enderman;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -301,7 +301,7 @@ public class HiveBlockEntity extends BlockEntity implements IHiveTile, IActivata
 
 	@Override
 	public int getBlockLightValue() {
-		return this.level.isDay() ? 15 : 0; // hives may have the sky obstructed but should still be active
+		return this.level.isBrightOutside() ? 15 : 0; // hives may have the sky obstructed but should still be active
 	}
 
 	@Override
@@ -350,7 +350,7 @@ public class HiveBlockEntity extends BlockEntity implements IHiveTile, IActivata
 					return true;
 				} else if (input instanceof Enemy) {
 					// don't attack semi-passive vanilla mobs
-					return !(input instanceof EnderMan) && !(input instanceof ZombifiedPiglin);
+					return !(input instanceof Enderman) && !(input instanceof ZombifiedPiglin);
 				}
 			}
 			return false;

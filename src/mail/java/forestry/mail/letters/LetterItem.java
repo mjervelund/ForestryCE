@@ -1,5 +1,8 @@
 package forestry.mail.letters;
 
+import forestry.core.platform.util.TooltipLines;
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import forestry.api.core.IItemSubtype;
@@ -74,18 +77,18 @@ public class LetterItem extends WithScreenItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(itemstack, context, list, flag);
+	public void appendHoverText(ItemStack itemstack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
+		super.appendHoverText(itemstack, context, display, list, flag);
 
 		Letter letter = LetterUtils.getLetterData(itemstack);
 		if (letter == null) {
-			list.add(Component.literal("<")
+			list.accept(Component.literal("<")
 				.append(Component.translatable("for.gui.blank").append(">"))
 				.withStyle(ChatFormatting.GRAY));
 			return;
 		}
 
-		letter.addTooltip(list);
+		letter.addTooltip(new TooltipLines(list));
 	}
 
 	@Override

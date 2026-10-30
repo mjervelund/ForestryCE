@@ -1,5 +1,7 @@
 package forestry.core.content.decorative;
 
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.LevelReader;
 import forestry.api.ForestryTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -61,7 +63,7 @@ public class BlockJumboCandle extends Block {
 	}
 
 	@Override
-	protected BlockState updateShape(BlockState state, Direction direction, BlockState neighbourState, LevelAccessor level, BlockPos pos, BlockPos neighbourPos) {
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos, Direction direction, BlockPos neighbourPos, BlockState neighbourState, RandomSource random) {
 		BlockState newState;
 
 		// Reads the tag rather than the block, so candles of different colours stack
@@ -87,7 +89,7 @@ public class BlockJumboCandle extends Block {
 
 		boolean hasFluid = !fluidState.isEmpty();
 		boolean isLava = fluidState.is(FluidTags.LAVA);
-		boolean isSolid = aboveState.isSolidRender(level, pos.above());
+		boolean isSolid = aboveState.isSolidRender();
 
 		if (state.getValue(LIT)) {
 			if ((hasFluid && !isLava) || isSolid) {
@@ -110,7 +112,7 @@ public class BlockJumboCandle extends Block {
 		if (!state.getValue(LIT)) return;
 		if (state.getValue(SHAPE) == CandleShape.BOTTOM || state.getValue(SHAPE) == CandleShape.MIDDLE) return;
 
-		addParticlesAndSound(level, pos.getCenter().add(0, 0.6875f, 0), random, this.flame);
+		addParticlesAndSound(level, Vec3.atCenterOf(pos).add(0, 0.6875f, 0), random, this.flame);
 	}
 
 	// Lifted from the vanilla candle code
@@ -136,12 +138,12 @@ public class BlockJumboCandle extends Block {
 			&& state.getValue(SHAPE) != CandleShape.BOTTOM
 			&& state.getValue(SHAPE) != CandleShape.MIDDLE
 			&& !player.isShiftKeyDown()
-			&& !level.getBlockState(pos.above()).isSolidRender(level, pos.above())) {
+			&& !level.getBlockState(pos.above()).isSolidRender()) {
 
 			if (stack.is(Items.FLINT_AND_STEEL)) {
 				if (!level.isClientSide()) {
 					level.setBlock(pos, state.setValue(LIT, true), 3);
-					stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
+					stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
 				}
 				level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
 				return InteractionResult.SUCCESS;

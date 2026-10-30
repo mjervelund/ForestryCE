@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.core.platform.util.EmptyIngredient;
 import net.minecraft.world.item.crafting.CraftingInput;
 import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
@@ -26,11 +27,11 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 		Identifier.CODEC.fieldOf("id").forGetter(FabricatorRecipe::getId),
 		// "plan" is optional: many fabricator recipes (e.g. electron tubes) require no plan.
 		// Ingredient.CODEC rejects empty ingredients at serialization, so we map
-		// Ingredient.EMPTY to absent and back.
+		// EmptyIngredient.EMPTY to absent and back.
 		Ingredient.CODEC.optionalFieldOf("plan").forGetter(r -> r.plan.isEmpty() ? java.util.Optional.<Ingredient>empty() : java.util.Optional.of(r.plan)),
 		FluidStack.CODEC.fieldOf("molten").forGetter(FabricatorRecipe::getResultFluid),
 		ShapedRecipe.SERIALIZER.codec().codec().fieldOf("recipe").forGetter(FabricatorRecipe::getCraftingGridRecipe)
-	).apply(instance, (id, plan, molten, recipe) -> new FabricatorRecipe(id, plan.orElse(Ingredient.EMPTY), molten, recipe)));
+	).apply(instance, (id, plan, molten, recipe) -> new FabricatorRecipe(id, plan.orElse(EmptyIngredient.EMPTY), molten, recipe)));
 	private static final StreamCodec<RegistryFriendlyByteBuf, FabricatorRecipe> STREAM_CODEC = StreamCodec.of(
 		Serializer::toNetwork,
 		Serializer::fromNetwork

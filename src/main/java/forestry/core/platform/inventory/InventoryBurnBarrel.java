@@ -1,5 +1,6 @@
 package forestry.core.platform.inventory;
 
+import forestry.core.platform.util.FuelUtil;
 import forestry.api.ForestryTags;
 import forestry.core.content.burnbarrel.BlockBurnBarrel;
 import forestry.core.content.burnbarrel.TileBurnBarrel;
@@ -21,11 +22,11 @@ public class InventoryBurnBarrel extends InventoryAdapterTile<TileBurnBarrel> {
 		super(tile, SLOT_INPUT_COUNT + SLOT_OUTPUT_COUNT, "Items");
 	}
 
-	// Deviation from 1.20.1: burn times came from ForgeHooks.getBurnTime, which NeoForge moved onto the stack
+	// Deviation from 1.20.1: burn times came from ForgeHooks.getBurnTime; 26.x has the COOKING_FUEL component
 	@Override
 	public boolean canSlotAccept(int slotIndex, ItemStack stack) {
 		if (SlotUtil.isSlotInRange(slotIndex, SLOT_INPUT_1, SLOT_INPUT_COUNT)) {
-			return !stack.is(ForestryTags.Items.BURN_BARREL_BLACKLIST) && stack.getBurnTime(null) > 0;
+			return !stack.is(ForestryTags.Items.BURN_BARREL_BLACKLIST) && FuelUtil.isFuel(stack);
 		}
 		return false;
 	}

@@ -355,7 +355,7 @@ public final class MultiblockDebugCommand {
 					send(source, Component.literal("round " + round + ": ABORTED (no block entity at member " + str(m) + ")").withStyle(ChatFormatting.RED));
 					break;
 				}
-				CompoundTag tag = be.saveWithId(level.registryAccess());
+				CompoundTag tag = be.saveWithFullMetadata(level.registryAccess());
 				BlockState state = level.getBlockState(m);
 				BlockEntity recreated = BlockEntity.loadStatic(m, state, tag, level.registryAccess());
 				if (recreated == null) {

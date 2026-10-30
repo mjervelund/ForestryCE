@@ -1,5 +1,6 @@
 package forestry.apiculture.bees;
 
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,10 +57,10 @@ public class BlockWax extends Block {
 	}
 
 	@Override
-	public void onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction direction, @Nullable LivingEntity igniter) {
-		super.onCaughtFire(state, level, pos, direction, igniter);
+	public boolean onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction direction, @Nullable LivingEntity igniter, ItemStack ignitionItem) {
 		if (this.meltable && this.meltingFluid != null) {
 			level.setBlock(pos, this.meltingFluid.get().defaultFluidState().createLegacyBlock(), 3);
 		}
+		return true;
 	}
 }

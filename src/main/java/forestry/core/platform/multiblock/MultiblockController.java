@@ -1,5 +1,6 @@
 package forestry.core.platform.multiblock;
 
+import net.minecraft.world.entity.ContainerUser;
 import com.mojang.authlib.GameProfile;
 import forestry.api.IForestryApi;
 import forestry.api.core.IErrorLogic;
@@ -441,12 +442,12 @@ public abstract class MultiblockController implements IMultiblockController, Wor
 	}
 
 	@Override
-	public final void startOpen(Player player) {
+	public final void startOpen(ContainerUser player) {
 		getInternalInventory().startOpen(player);
 	}
 
 	@Override
-	public final void stopOpen(Player player) {
+	public final void stopOpen(ContainerUser player) {
 		getInternalInventory().stopOpen(player);
 	}
 
@@ -519,7 +520,7 @@ public abstract class MultiblockController implements IMultiblockController, Wor
 	public static void markChunkDirty(Level level, BlockPos pos) {
 		net.minecraft.world.level.chunk.LevelChunk chunk = level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
 		if (chunk != null) {
-			chunk.setUnsaved(true);
+			chunk.markUnsaved();
 		}
 	}
 

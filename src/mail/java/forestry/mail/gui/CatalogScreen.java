@@ -136,7 +136,7 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 				ITradeStationInfo info = this.menu.getTradeInfo();
 				if (info != null) {
 					SessionVars.setStringVar("mail.letter.recipient", info.address().getName());
-					SessionVars.setStringVar("mail.letter.carrier", PostalCarriers.TRADER.getKey().location().toString());
+					SessionVars.setStringVar("mail.letter.carrier", PostalCarriers.TRADER.getKey().identifier().toString());
 				}
 				player.displayClientMessage(Component.translatable("for.gui.mail.catalogue.save_info"), false);
 				player.closeContainer();

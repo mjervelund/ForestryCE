@@ -14,7 +14,6 @@ import forestry.apiculture.bees.EnumPropolis;
 import forestry.core.platform.block.BlockTypeCoreTesr;
 import forestry.core.features.CoreBlocks;
 import forestry.core.features.CoreItems;
-import forestry.core.platform.villager.VillagerTrade.*;
 import forestry.core.platform.util.SpeciesUtil;
 import forestry.core.platform.registration.FeatureProvider;
 import forestry.core.platform.registration.IFeatureRegistry;

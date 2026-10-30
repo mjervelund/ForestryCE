@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.core.platform.util.EmptyIngredient;
 import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
@@ -63,7 +64,7 @@ public class FermenterRecipe implements IFermenterRecipe {
 		Preconditions.checkNotNull(fluidResource, "Fermenter liquid cannot be null!");
 
 		this.id = id;
-		this.resource = Ingredient.EMPTY;
+		this.resource = EmptyIngredient.EMPTY;
 		this.fermentationValue = fermentationValue;
 		this.modifier = modifier;
 		this.output = output;

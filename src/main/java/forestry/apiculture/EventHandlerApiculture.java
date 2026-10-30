@@ -58,8 +58,8 @@ public class EventHandlerApiculture {
 
 	@SubscribeEvent
 	public static void serverAboutToStart(ServerAboutToStartEvent event) {
-		Registry<StructureTemplatePool> pools = event.getServer().registryAccess().registry(Registries.TEMPLATE_POOL).orElseThrow();
-		Registry<StructureProcessorList> processors = event.getServer().registryAccess().registry(Registries.PROCESSOR_LIST).orElseThrow();
+		Registry<StructureTemplatePool> pools = event.getServer().registryAccess().lookup(Registries.TEMPLATE_POOL).orElseThrow();
+		Registry<StructureProcessorList> processors = event.getServer().registryAccess().lookup(Registries.PROCESSOR_LIST).orElseThrow();
 
 		VillagerJigsaw.init(pools, processors);
 	}

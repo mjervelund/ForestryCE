@@ -1,5 +1,6 @@
 package forestry.core.content.machines.tiles;
 
+import forestry.core.platform.util.NBTUtilForestry;
 import forestry.api.IForestryApi;
 import forestry.api.core.circuits.ForestryCircuitSocketTypes;
 import forestry.api.core.circuits.ICircuitBoard;
@@ -73,7 +74,7 @@ public class TileCentrifuge extends TilePowered implements ISocketable, WorldlyC
 		ListTag nbttaglist = compound.getListOrEmpty("PendingProducts");
 		for (int i = 0; i < nbttaglist.size(); i++) {
 			CompoundTag CompoundNBT1 = nbttaglist.getCompoundOrEmpty(i);
-			this.pendingProducts.add(ItemStack.parse(registries, CompoundNBT1).orElse(ItemStack.EMPTY));
+			this.pendingProducts.add(NBTUtilForestry.parseStack(registries, CompoundNBT1));
 		}
 		this.sockets.read(compound, registries);
 

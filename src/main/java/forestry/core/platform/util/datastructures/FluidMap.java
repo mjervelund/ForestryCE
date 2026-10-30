@@ -30,10 +30,10 @@ public class FluidMap<T> extends StackMap<Fluid, T> {
 			return (Fluid) key;
 		}
 		if (key instanceof String) {
-			return BuiltInRegistries.FLUID.get(Identifier.parse((String) key));
+			return BuiltInRegistries.FLUID.getValue(Identifier.parse((String) key));
 		}
 		if (key instanceof Identifier) {
-			return BuiltInRegistries.FLUID.get((Identifier) key);
+			return BuiltInRegistries.FLUID.getValue((Identifier) key);
 		}
 		return null;
 	}

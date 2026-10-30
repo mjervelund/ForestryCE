@@ -20,7 +20,7 @@ public class AdvancementHelper {
 	public static void tryUnlock(Player player, Identifier id) {
 		if (player instanceof ServerPlayer serverPlayer) {
 			// Deviation from 1.20.1: getAdvancement(id) became get(id) and returns an AdvancementHolder
-			AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(id);
+			AdvancementHolder advancement = serverPlayer.level().getServer().getAdvancements().get(id);
 
 			if (advancement != null) {
 				AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);

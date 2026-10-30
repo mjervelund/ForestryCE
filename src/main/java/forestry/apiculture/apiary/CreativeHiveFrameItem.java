@@ -1,5 +1,7 @@
 package forestry.apiculture.apiary;
 
+import java.util.function.Consumer;
+import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
 import java.util.List;
 
@@ -46,19 +48,19 @@ public class CreativeHiveFrameItem extends ItemForestry implements IHiveFrame {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag advanced) {
-		super.appendHoverText(stack, context, tooltip, advanced);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
+		super.appendHoverText(stack, context, display, tooltip, advanced);
 
-		tooltip.add(Component.translatable("item.forestry.bee.modifier.production", Modifier.PRODUCTION));
-		tooltip.add(Component.translatable("item.forestry.bee.modifier.genetic.decay", Modifier.GENETIC_DECAY));
+		tooltip.accept(Component.translatable("item.forestry.bee.modifier.production", Modifier.PRODUCTION));
+		tooltip.accept(Component.translatable("item.forestry.bee.modifier.genetic.decay", Modifier.GENETIC_DECAY));
 
 		Identifier forced = getForcedMutation(stack);
 		if (forced != null) {
-			tooltip.add(Component.literal("Forces mutation: " + forced).withStyle(ChatFormatting.LIGHT_PURPLE));
+			tooltip.accept(Component.literal("Forces mutation: " + forced).withStyle(ChatFormatting.LIGHT_PURPLE));
 		} else if (hasForceMutations(stack)) {
-			tooltip.add(Component.literal("Maximum mutation chances").withStyle(ChatFormatting.LIGHT_PURPLE));
+			tooltip.accept(Component.literal("Maximum mutation chances").withStyle(ChatFormatting.LIGHT_PURPLE));
 		} else {
-			tooltip.add(Component.literal("Base mutation chances").withStyle(ChatFormatting.GRAY));
+			tooltip.accept(Component.literal("Base mutation chances").withStyle(ChatFormatting.GRAY));
 		}
 	}
 

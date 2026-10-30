@@ -1,5 +1,6 @@
 package forestry.core.data.recipe;
 
+import forestry.core.platform.util.EmptyIngredient;
 import forestry.api.ForestryTags;
 import forestry.api.IForestryApi;
 import forestry.api.apiculture.ForestryBeeSpecies;
@@ -1333,7 +1334,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(50)
 			.setLiquid(ForestryFluids.SEED_OIL.getFluid(250))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.IMPREGNATED_CASING)
 				.pattern("###")
 				.pattern("# #")
@@ -1343,7 +1344,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(50)
 			.setLiquid(ForestryFluids.SEED_OIL.getFluid(500))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreBlocks.BASE.get(BlockTypeCoreTesr.ESCRITOIRE).item())
 				.pattern("#  ")
 				.pattern("###")
@@ -1353,7 +1354,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(50)
 			.setLiquid(ForestryFluids.SEED_OIL.getFluid(100))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.CRAFTING_MATERIALS.item(EnumCraftingMaterial.IMPREGNATED_STICK), 2)
 				.pattern("#")
 				.pattern("#")
@@ -1361,13 +1362,13 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "impregnated_stick"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 250))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, CoreItems.CRAFTING_MATERIALS.item(EnumCraftingMaterial.WOOD_PULP), 4)
 				.requires(ItemTags.LOGS))
 			.build(consumer, id("carpenter", "wood_pulp"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreBlocks.HUMUS, 9)
 				.pattern("###")
 				.pattern("#X#")
@@ -1377,7 +1378,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "humus"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreBlocks.BOG_EARTH, 8)
 				.pattern("#X#")
 				.pattern("XYX")
@@ -1389,7 +1390,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(75)
 			.setLiquid(new FluidStack(Fluids.WATER, 5000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.HARDENED_CASING)
 				.pattern("X X")
 				.pattern(" Y ")
@@ -1399,7 +1400,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "hardened_casing"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.IODINE_CHARGE)
 				.pattern("Z#Z")
 				.pattern("#Y#")
@@ -1411,7 +1412,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "iodine_charge"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.DISSIPATION_CHARGE)
 				.pattern("Z#Z")
 				.pattern("#Y#")
@@ -1423,7 +1424,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "dissipation_charge"));
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(100)
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.ENDER_PEARL)
 				.pattern(" # ")
 				.pattern("###")
@@ -1433,34 +1434,34 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(10)
 			.setLiquid(new FluidStack(Fluids.WATER, 500))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.CRAFTING_MATERIALS.get(EnumCraftingMaterial.WOVEN_SILK))
 				.pattern("XX")
 				.pattern("XX")
 				.define('X', CoreItems.CRAFTING_MATERIALS.get(EnumCraftingMaterial.SILK_WISP)))
 			.build(consumer, id("carpenter", "woven_silk"));
 		new CarpenterRecipeBuilder()
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, CoreItems.BRONZE_INGOT, 2)
 				.requires(CoreItems.BROKEN_SURVIVALISTS_PICKAXE))
 			.build(consumer, id("carpenter", "reclaim_bronze_pickaxe"));
 		new CarpenterRecipeBuilder()
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, CoreItems.BRONZE_INGOT, 1)
 				.requires(CoreItems.BROKEN_SURVIVALISTS_SHOVEL))
 			.build(consumer, id("carpenter", "reclaim_bronze_shovel"));
 		new CarpenterRecipeBuilder()
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, CoreItems.BRONZE_INGOT, 2)
 				.requires(CoreItems.BROKEN_SURVIVALISTS_AXE))
 			.build(consumer, id("carpenter", "reclaim_bronze_axe"));
 		new CarpenterRecipeBuilder()
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, CoreItems.BRONZE_INGOT, 1)
 				.requires(CoreItems.BROKEN_SURVIVALISTS_SWORD))
 			.build(consumer, id("carpenter", "reclaim_bronze_sword"));
 		new CarpenterRecipeBuilder()
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, CoreItems.BRONZE_INGOT, 1)
 				.requires(CoreItems.BROKEN_SURVIVALISTS_HOE))
 			.build(consumer, id("carpenter", "reclaim_bronze_hoe"));
@@ -1468,7 +1469,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(50)
 			.setLiquid(ForestryFluids.HONEY.getFluid(500))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.CRAFTING_MATERIALS.get(EnumCraftingMaterial.SCENTED_PANELING))
 				.pattern(" J ")
 				.pattern("###")
@@ -1481,7 +1482,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(100)
 			.setLiquid(new FluidStack(Fluids.WATER, 2000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CoreItems.PORTABLE_ANALYZER)
 				.pattern("X#X")
 				.pattern("X#X")
@@ -1544,7 +1545,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(40)
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CoreItems.SOLDERING_IRON)
 				.pattern(" # ")
 				.pattern("# #")
@@ -1554,7 +1555,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "soldering_iron"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 250))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.PAPER)
 				.pattern("#")
 				.pattern("#")
@@ -1562,7 +1563,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "paper"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.CARTON, 2)
 				.pattern(" # ")
 				.pattern("# #")
@@ -1572,7 +1573,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(5)
 			.setLiquid(new FluidStack(Fluids.WATER, 50))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ASH_BRICK, 1)
 				.pattern("##")
 				.define('#', CoreItems.ASH.item()))
@@ -1586,7 +1587,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(20)
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.override(basic)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.CIRCUITBOARDS.get(EnumCircuitBoardType.BASIC))
 				.pattern("R R")
@@ -1598,7 +1599,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(40)
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.override(enhanced)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.CIRCUITBOARDS.get(EnumCircuitBoardType.ENHANCED))
 				.pattern("R#R")
@@ -1610,7 +1611,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(80)
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.override(refined)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.CIRCUITBOARDS.get(EnumCircuitBoardType.REFINED))
 				.pattern("R#R")
@@ -1622,7 +1623,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(80)
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.override(intricate)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.CIRCUITBOARDS.get(EnumCircuitBoardType.INTRICATE))
 				.pattern("R#R")
@@ -1632,7 +1633,7 @@ public class ForestryRecipeProvider {
 				.define('R', Tags.Items.DUSTS_REDSTONE))
 			.build(consumer, id("carpenter", "circuits", "intricate"));
 		new CarpenterRecipeBuilder()
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.CANDLE, 4)
 				.pattern("# #")
 				.pattern(" X ")
@@ -1644,7 +1645,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(20)
 			.setLiquid(new FluidStack(Fluids.WATER, 100))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, CoreBlocks.TURF_BLOCK, 4)
 				.pattern("XX")
 				.pattern("XX")
@@ -1652,7 +1653,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "turf_blocks"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 100))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, CoreBlocks.PLYWOOD_SHEET, 24)
 				.pattern("___")
 				.pattern("^^^")
@@ -1661,7 +1662,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "plywood"));
 		new CarpenterRecipeBuilder()
 			.setLiquid(new FluidStack(Fluids.WATER, 200))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, CoreBlocks.CORK, 4)
 				.pattern("**")
 				.pattern("**")
@@ -1672,7 +1673,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(20)
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CrateItems.CRATE, 24)
 				.pattern(" # ")
 				.pattern("# #")
@@ -1769,7 +1770,7 @@ public class ForestryRecipeProvider {
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(200)
 			.setLiquid(new FluidStack(Fluids.WATER, 1000))
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, tier2)
 				.pattern("WXW")
 				.pattern("WTW")
@@ -1796,7 +1797,7 @@ public class ForestryRecipeProvider {
 			.build(consumer, id("carpenter", "crates", "pack", name.getNamespace(), name.getPath()));
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(Constants.CARPENTER_UNCRATING_CYCLES)
-			.setBox(Ingredient.EMPTY)
+			.setBox(EmptyIngredient.EMPTY)
 			.recipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, contained.getItem(), 9).requires(crated))
 			.build(consumer, id("carpenter", "crates", "unpack", name.getNamespace(), name.getPath()));
 	}
@@ -1939,7 +1940,7 @@ public class ForestryRecipeProvider {
 		FluidStack liquidGlass = ForestryFluids.GLASS.getFluid(500);
 
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.IRON), 4)
 				.pattern(" X ")
@@ -1949,7 +1950,7 @@ public class ForestryRecipeProvider {
 				.define('X', Tags.Items.INGOTS_IRON))
 			.build(consumer, id("fabricator", "electron_tubes", "iron"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.GOLD), 4)
 				.pattern(" X ")
@@ -1959,7 +1960,7 @@ public class ForestryRecipeProvider {
 				.define('X', Tags.Items.INGOTS_GOLD))
 			.build(consumer, id("fabricator", "electron_tubes", "gold"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.DIAMOND), 4)
 				.pattern(" X ")
@@ -1969,7 +1970,7 @@ public class ForestryRecipeProvider {
 				.define('X', Tags.Items.GEMS_DIAMOND))
 			.build(consumer, id("fabricator", "electron_tubes", "diamond"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.OBSIDIAN), 4)
 				.pattern(" X ")
@@ -1979,7 +1980,7 @@ public class ForestryRecipeProvider {
 				.define('X', Items.OBSIDIAN))
 			.build(consumer, id("fabricator", "electron_tubes", "obsidian"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.BLAZE), 4)
 				.pattern(" X ")
@@ -1989,7 +1990,7 @@ public class ForestryRecipeProvider {
 				.define('X', Items.BLAZE_POWDER))
 			.build(consumer, id("fabricator", "electron_tubes", "blaze"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.EMERALD), 4)
 				.pattern(" X ")
@@ -1999,7 +2000,7 @@ public class ForestryRecipeProvider {
 				.define('X', Tags.Items.GEMS_EMERALD))
 			.build(consumer, id("fabricator", "electron_tubes", "emerald"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.LAPIS), 4)
 				.pattern(" X ")
@@ -2009,7 +2010,7 @@ public class ForestryRecipeProvider {
 				.define('X', Tags.Items.GEMS_LAPIS))
 			.build(consumer, id("fabricator", "electron_tubes", "lapis"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.ENDER), 4)
 				.pattern(" X ")
@@ -2019,7 +2020,7 @@ public class ForestryRecipeProvider {
 				.define('X', Items.END_STONE))
 			.build(consumer, id("fabricator", "electron_tubes", "ender"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.COPPER), 4)
 				.pattern(" X ")
@@ -2029,7 +2030,7 @@ public class ForestryRecipeProvider {
 				.define('X', Tags.Items.INGOTS_COPPER))
 			.build(consumer, id("fabricator", "electron_tubes", "copper"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.TIN), 4)
 				.pattern(" X ")
@@ -2039,7 +2040,7 @@ public class ForestryRecipeProvider {
 				.define('X', ForestryTags.Items.INGOTS_TIN))
 			.build(consumer, id("fabricator", "electron_tubes", "tin"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.BRONZE), 4)
 				.pattern(" X ")
@@ -2049,7 +2050,7 @@ public class ForestryRecipeProvider {
 				.define('X', ForestryTags.Items.INGOTS_BRONZE))
 			.build(consumer, id("fabricator", "electron_tubes", "bronze"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.APATITE), 4)
 				.pattern(" X ")
@@ -2059,7 +2060,7 @@ public class ForestryRecipeProvider {
 				.define('X', ForestryTags.Items.GEMS_APATITE))
 			.build(consumer, id("fabricator", "electron_tubes", "apatite"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.AMBER), 2)
 				.pattern(" X ")
@@ -2069,7 +2070,7 @@ public class ForestryRecipeProvider {
 				.define('X', ForestryTags.Items.GEMS_AMBER))
 			.build(consumer, id("fabricator", "electron_tubes", "amber"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.ELECTRON_TUBES.get(EnumElectronTube.SILICON), 4)
 				.pattern(" X ")
@@ -2079,7 +2080,7 @@ public class ForestryRecipeProvider {
 				.define('X', ForestryTags.Items.SILICON))
 			.build(consumer, id("fabricator", "electron_tubes", "silicon"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(ForestryFluids.GLASS.getFluid(50))
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.SOLAR_CELL)
 				.pattern(" T ")
@@ -2091,7 +2092,7 @@ public class ForestryRecipeProvider {
 				.define('T', ForestryTags.Items.NUGGETS_TIN))
 			.build(consumer, id("fabricator", "solar_cell"));
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.MISC, CoreItems.FLEXIBLE_CASING)
 				.pattern("#E#")
@@ -2129,7 +2130,7 @@ public class ForestryRecipeProvider {
 
 	private static void metalPlating(RecipeOutput consumer, BlockTypeMetalPlating type, ItemLike base) {
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(ForestryFluids.WAX.getFluid(50))
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, CoreBlocks.METAL_PLATING.get(type), 8)
 				.pattern("###")
@@ -2141,7 +2142,7 @@ public class ForestryRecipeProvider {
 
 	private static void lacqueredMetalPlating(RecipeOutput consumer, BlockTypeMetalPlating type, TagKey<Item> dye) {
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(ForestryFluids.WAX.getFluid(50))
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, CoreBlocks.METAL_PLATING.get(type), 8)
 				.pattern("###")
@@ -2161,7 +2162,7 @@ public class ForestryRecipeProvider {
 		for (WoodBlockKind woodKind : logLike) {
 			try {
 				new FabricatorRecipeBuilder()
-					.setPlan(Ingredient.EMPTY)
+					.setPlan(EmptyIngredient.EMPTY)
 					.setMolten(liquidGlass)
 					.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, woodAccess.getBlock(type, woodKind, true).getBlock(), 2)
 						.pattern("   ")
@@ -2175,7 +2176,7 @@ public class ForestryRecipeProvider {
 		}
 
 		new FabricatorRecipeBuilder()
-			.setPlan(Ingredient.EMPTY)
+			.setPlan(EmptyIngredient.EMPTY)
 			.setMolten(liquidGlass)
 			.recipe(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, woodAccess.getBlock(type, WoodBlockKind.PLANKS, true).getBlock(), 8)
 				.pattern("XXX")
