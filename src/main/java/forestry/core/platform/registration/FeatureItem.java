@@ -14,7 +14,7 @@ public class FeatureItem<I extends Item> extends ModFeature implements IItemFeat
 
 	public FeatureItem(IFeatureRegistry registry, Identifier moduleId, String identifier, Supplier<I> constructor) {
 		super(moduleId, identifier);
-		this.itemObject = registry.getRegistry(Registries.ITEM).register(identifier, constructor);
+		this.itemObject = registry.getRegistry(Registries.ITEM).register(identifier, id -> RegistrationIds.withItemId(id, constructor));
 	}
 
 	@Override

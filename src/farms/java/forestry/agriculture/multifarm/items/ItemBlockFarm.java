@@ -1,5 +1,6 @@
 package forestry.agriculture.multifarm.items;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.client.Minecraft;
 import forestry.core.platform.util.TranslationKeys;
 import forestry.core.platform.item.ItemBlockForestry;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class ItemBlockFarm extends ItemBlockForestry<MultifarmBlock> {
 	public ItemBlockFarm(MultifarmBlock block) {
-		super(block, new Item.Properties());
+		super(block, RegistrationIds.item());
 	}
 
 	@Override

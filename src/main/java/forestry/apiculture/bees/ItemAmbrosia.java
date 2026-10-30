@@ -1,5 +1,6 @@
 package forestry.apiculture.bees;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.item.ItemForestryFood;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -11,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 public class ItemAmbrosia extends ItemForestryFood {
 
 	public ItemAmbrosia() {
-		super(new Item.Properties()
+		super(RegistrationIds.item()
 			.food(new FoodProperties.Builder()
 				.alwaysEdible()
 				.nutrition(Constants.FOOD_AMBROSIA_HEAL)

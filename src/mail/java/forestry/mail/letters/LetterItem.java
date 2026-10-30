@@ -1,5 +1,6 @@
 package forestry.mail.letters;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import forestry.api.core.IItemSubtype;
 import forestry.core.platform.item.WithScreenItem;
@@ -43,7 +44,7 @@ public class LetterItem extends WithScreenItem {
 	private final State state;
 
 	public LetterItem(Size size, State state) {
-		super(new Item.Properties().stacksTo(64));
+		super(RegistrationIds.item().stacksTo(64));
 		this.size = size;
 		this.state = state;
 	}

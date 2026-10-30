@@ -1,5 +1,6 @@
 package forestry.arboriculture.features;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.modules.ForestryModuleIds;
 import forestry.arboriculture.charcoal.AshBlock;
 import forestry.arboriculture.charcoal.DecorativeLogPileBlock;
@@ -21,7 +22,7 @@ public class CharcoalBlocks {
 
 	public static final FeatureBlock<Block, ItemBlockForestry<Block>> CHARCOAL = REGISTRY.block(
 		Block::new,
-		() -> BlockBehaviour.Properties.of().strength(5.0f, 10.0f).sound(SoundType.STONE),
+		() -> RegistrationIds.block().strength(5.0f, 10.0f).sound(SoundType.STONE),
 		ItemBlockForestry::new,
 		Item.Properties::new,
 		"charcoal_block"

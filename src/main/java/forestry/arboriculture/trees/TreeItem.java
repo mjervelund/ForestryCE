@@ -1,5 +1,6 @@
 package forestry.arboriculture.trees;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.arboriculture.genetics.ITree;
@@ -32,7 +33,7 @@ import javax.annotation.Nullable;
 
 public class TreeItem extends ItemGE implements IVariableFermentable, ITintedItem {
 	public TreeItem(TreeLifeStage type) {
-		super(new Item.Properties(), type);
+		super(RegistrationIds.item(), type);
 	}
 
 	@Override

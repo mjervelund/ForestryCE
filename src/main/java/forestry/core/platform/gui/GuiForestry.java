@@ -1,5 +1,6 @@
 package forestry.core.platform.gui;
 
+import forestry.core.platform.registration.RegistrationIds;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.LinkedListMultimap;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -246,7 +247,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 
 	private static LinkedListMultimap<String, String> readDefaultHints() {
 		LinkedListMultimap<String, String> map = LinkedListMultimap.create();
-		Properties prop = new Properties();
+		Properties prop = RegistrationIds.item();
 
 		try {
 			InputStream hintStream = GuiForestry.class.getResourceAsStream("/config/forestry/hints.properties");

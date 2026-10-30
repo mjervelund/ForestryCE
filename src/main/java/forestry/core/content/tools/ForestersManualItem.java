@@ -1,5 +1,6 @@
 package forestry.core.content.tools;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,7 +14,7 @@ import vazkii.patchouli.api.PatchouliAPI;
 
 public class ForestersManualItem extends Item {
 	public ForestersManualItem() {
-		super(new Item.Properties().stacksTo(1));
+		super(RegistrationIds.item().stacksTo(1));
 	}
 
 	@Override

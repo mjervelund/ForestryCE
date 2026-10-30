@@ -1,5 +1,6 @@
 package forestry.core.platform.item;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.neoforged.neoforge.transfer.access.ItemAccess;
 import forestry.core.platform.fluids.ForestryFluids;
 import forestry.core.platform.models.FluidContainerModel;
@@ -34,7 +35,7 @@ public class FluidContainerItem extends ItemForestry implements ITintedItem {
 	private final FluidContainerType type;
 
 	public FluidContainerItem(FluidContainerType type) {
-		super(new Item.Properties());
+		super(RegistrationIds.item());
 		this.type = type;
 	}
 

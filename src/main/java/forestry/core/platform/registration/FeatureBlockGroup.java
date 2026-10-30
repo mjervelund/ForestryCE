@@ -24,7 +24,7 @@ public class FeatureBlockGroup<B extends Block, S extends IBlockSubtype> extends
 	@Override
 	protected FeatureBlock<B, BlockItem> createFeature(Builder<B, S> builder, S type) {
 		String identifier = builder.getIdentifier(type);
-		BlockBehaviour.Properties properties = builder.blockProperties != null ? builder.blockProperties.apply(BlockBehaviour.Properties.of(), type) : BlockBehaviour.Properties.of();
+		BlockBehaviour.Properties properties = builder.blockProperties != null ? builder.blockProperties.apply(RegistrationIds.block(), type) : RegistrationIds.block();
 		return builder.registry.block(
 			(blockProperties) -> builder.blockConstructor.apply(blockProperties, type),
 			() -> properties,

@@ -1,5 +1,6 @@
 package forestry.apiculture.bees;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.item.ItemForestry;
 import forestry.core.platform.item.ITintedItem;
 import net.minecraft.world.item.Item;
@@ -9,7 +10,7 @@ public class ItemHoneyComb extends ItemForestry implements ITintedItem {
 	private final EnumHoneyComb type;
 
 	public ItemHoneyComb(EnumHoneyComb type) {
-		super(new Item.Properties());
+		super(RegistrationIds.item());
 
 		this.type = type;
 	}

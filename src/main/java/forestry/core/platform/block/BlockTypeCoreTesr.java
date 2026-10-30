@@ -1,5 +1,6 @@
 package forestry.core.platform.block;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.features.CoreTiles;
 import forestry.core.content.analyzer.TileAnalyzer;
 import forestry.core.content.escritoire.TileEscritoire;
@@ -17,9 +18,9 @@ public enum BlockTypeCoreTesr implements IBlockType {
 
 	// Neither IRON_BLOCK nor CRAFTING_TABLE calls dropsLike, so ofFullCopy carries a null `drops`
 	// and cannot steal a vanilla loot table id (1.20.1's Properties.copy left drops alone regardless)
-	ANALYZER(createAnalyzerProperties(CoreTiles.ANALYZER, "analyzer"), BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()),
+	ANALYZER(createAnalyzerProperties(CoreTiles.ANALYZER, "analyzer"), RegistrationIds.block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)).noOcclusion()),
 
-	ESCRITOIRE(createEscritoireProperties(CoreTiles.ESCRITOIRE, "escritoire"), BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE).noOcclusion());
+	ESCRITOIRE(createEscritoireProperties(CoreTiles.ESCRITOIRE, "escritoire"), RegistrationIds.block(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE)).noOcclusion());
 
 	private final BlockBehaviour.Properties properties;
 	private final IMachineProperties<?> machineProperties;

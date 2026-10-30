@@ -1,5 +1,6 @@
 package forestry.agriculture.multifarm.blocks;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.block.BlockStructure;
 import forestry.agriculture.multifarm.tiles.*;
 import net.minecraft.core.BlockPos;
@@ -21,7 +22,7 @@ public class MultifarmBlock extends BlockStructure implements EntityBlock {
 	public static final BooleanProperty BAND = BooleanProperty.create("band");
 
 	public MultifarmBlock(MultifarmBlockType type, MultifarmMaterialType farmMaterial) {
-		super(Block.Properties.of().strength(1.0f));
+		super(RegistrationIds.block().strength(1.0f));
 		this.type = type;
 		this.farmMaterial = farmMaterial;
 	}

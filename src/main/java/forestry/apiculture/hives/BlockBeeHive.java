@@ -1,5 +1,6 @@
 package forestry.apiculture.hives;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryTags;
 import forestry.api.IForestryApi;
 import forestry.api.apiculture.genetics.BeeLifeStage;
@@ -52,7 +53,7 @@ public class BlockBeeHive extends Block implements EntityBlock {
 	}
 
 	public BlockBeeHive(Identifier speciesId) {
-		super(Properties.of().sound(SoundType.WOOD).lightLevel(state -> 7).strength(2.5f));
+		super(RegistrationIds.block().sound(SoundType.WOOD).lightLevel(state -> 7).strength(2.5f));
 		this.speciesId = speciesId;
 	}
 

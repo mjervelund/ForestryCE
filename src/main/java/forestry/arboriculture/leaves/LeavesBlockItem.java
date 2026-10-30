@@ -1,5 +1,6 @@
 package forestry.arboriculture.leaves;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.arboriculture.genetics.ITree;
 import forestry.api.core.genetics.ISpecies;
 import forestry.core.platform.item.ItemBlockForestry;
@@ -20,7 +21,7 @@ public class LeavesBlockItem extends ItemBlockForestry<AbstractLeavesBlock> impl
 	}
 
 	public LeavesBlockItem(AbstractLeavesBlock block) {
-		this(block, new Item.Properties());
+		this(block, RegistrationIds.item());
 	}
 
 	@Override

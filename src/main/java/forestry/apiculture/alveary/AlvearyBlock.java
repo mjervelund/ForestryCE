@@ -1,5 +1,6 @@
 package forestry.apiculture.alveary;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.client.Minecraft;
 import forestry.api.core.IBlockSubtype;
 import forestry.apiculture.features.ApicultureTiles;
@@ -58,7 +59,7 @@ public class AlvearyBlock extends BlockStructure implements EntityBlock {
 	private final Type type;
 
 	public AlvearyBlock(Type type) {
-		super(Block.Properties.of().strength(1f).sound(SoundType.WOOD));
+		super(RegistrationIds.block().strength(1f).sound(SoundType.WOOD));
 		this.type = type;
 		BlockState defaultState = this.getStateDefinition().any();
 		if (type == Type.PLAIN) {

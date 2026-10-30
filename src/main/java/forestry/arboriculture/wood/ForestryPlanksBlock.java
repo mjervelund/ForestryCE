@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.arboriculture.IWoodType;
 import forestry.api.arboriculture.WoodBlockKind;
 import net.minecraft.core.BlockPos;
@@ -11,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ForestryPlanksBlock extends Block implements IWoodTyped {
 	public static Properties createWoodProperties(IWoodType woodType) {
-		return Block.Properties.of().strength(woodType.getHardness(), woodType.getHardness() * 1.5F).sound(SoundType.WOOD);
+		return RegistrationIds.block().strength(woodType.getHardness(), woodType.getHardness() * 1.5F).sound(SoundType.WOOD);
 	}
 
 	private final boolean fireproof;

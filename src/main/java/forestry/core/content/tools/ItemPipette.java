@@ -1,5 +1,6 @@
 package forestry.core.content.tools;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.core.IToolPipette;
 import forestry.core.features.CoreDataComponents;
 import forestry.core.platform.fluids.PipetteContents;
@@ -18,7 +19,7 @@ import forestry.core.platform.item.ItemForestry;
 
 public class ItemPipette extends ItemForestry implements IToolPipette, ITintedItem {
 	public ItemPipette() {
-		super(new Properties().stacksTo(1));
+		super(RegistrationIds.item().stacksTo(1));
 	}
 
 	@Override

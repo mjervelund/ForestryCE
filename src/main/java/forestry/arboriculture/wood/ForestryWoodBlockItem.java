@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.item.ItemBlockForestry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -12,7 +13,7 @@ public class ForestryWoodBlockItem<B extends Block & IWoodTyped> extends ItemBlo
 	private final IWoodTyped wood;
 
 	public ForestryWoodBlockItem(B block) {
-		super(block, new Item.Properties());
+		super(block, RegistrationIds.item());
 
 		// Safeguard against Diagonal Fence's registry replacements causing crashes
 		this.wood = block;

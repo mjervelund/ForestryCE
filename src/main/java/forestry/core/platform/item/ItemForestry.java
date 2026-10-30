@@ -1,5 +1,6 @@
 package forestry.core.platform.item;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.util.ItemTooltipUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class ItemForestry extends Item {
 	public ItemForestry() {
-		this(new Properties());
+		this(RegistrationIds.item());
 	}
 
 	public ItemForestry(Item.Properties properties) {

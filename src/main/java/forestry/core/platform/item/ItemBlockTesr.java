@@ -1,5 +1,6 @@
 package forestry.core.platform.item;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class ItemBlockTesr<B extends Block> extends ItemBlockForestry<B> {
 	}
 
 	public ItemBlockTesr(B block) {
-		this(block, new Properties());
+		this(block, RegistrationIds.item());
 	}
 
 	public static List<ItemBlockTesr<?>> getInstances() {

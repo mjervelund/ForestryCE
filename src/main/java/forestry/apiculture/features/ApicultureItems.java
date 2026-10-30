@@ -17,7 +17,7 @@ import forestry.apiculture.apiarist.ItemSmoker;
 import forestry.core.platform.item.ItemForestry;
 import forestry.core.platform.item.ItemForestryFood;
 import forestry.core.platform.registration.*;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.item.Item;
 
 @FeatureProvider
@@ -60,10 +60,10 @@ public class ApicultureItems {
 	public static final FeatureItem<ItemForestryFood> AMBROSIA = REGISTRY.item(() -> new ItemAmbrosia().setIsDrink(), "ambrosia");
 
 	// / APIARIST'S CLOTHES
-	public static final FeatureItem<ItemArmorApiarist> APIARIST_HELMET = REGISTRY.item(() -> new ItemArmorApiarist(ArmorItem.Type.HELMET), "apiarists_hat");
-	public static final FeatureItem<ItemArmorApiarist> APIARIST_CHEST = REGISTRY.item(() -> new ItemArmorApiarist(ArmorItem.Type.CHESTPLATE), "apiarists_shirt");
-	public static final FeatureItem<ItemArmorApiarist> APIARIST_LEGS = REGISTRY.item(() -> new ItemArmorApiarist(ArmorItem.Type.LEGGINGS), "apiarists_pants");
-	public static final FeatureItem<ItemArmorApiarist> APIARIST_BOOTS = REGISTRY.item(() -> new ItemArmorApiarist(ArmorItem.Type.BOOTS), "apiarists_shoes");
+	public static final FeatureItem<ItemArmorApiarist> APIARIST_HELMET = REGISTRY.item(() -> new ItemArmorApiarist(ArmorType.HELMET), "apiarists_hat");
+	public static final FeatureItem<ItemArmorApiarist> APIARIST_CHEST = REGISTRY.item(() -> new ItemArmorApiarist(ArmorType.CHESTPLATE), "apiarists_shirt");
+	public static final FeatureItem<ItemArmorApiarist> APIARIST_LEGS = REGISTRY.item(() -> new ItemArmorApiarist(ArmorType.LEGGINGS), "apiarists_pants");
+	public static final FeatureItem<ItemArmorApiarist> APIARIST_BOOTS = REGISTRY.item(() -> new ItemArmorApiarist(ArmorType.BOOTS), "apiarists_shoes");
 
 	// TOOLS
 	public static final FeatureItem<ItemSmoker> SMOKER = REGISTRY.item(ItemSmoker::new, "bee_smoker");

@@ -1,5 +1,6 @@
 package forestry.core.content.machines.blocks;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.block.BlockBase;
 import forestry.core.platform.block.IMachineProperties;
 import net.minecraft.core.BlockPos;
@@ -22,7 +23,7 @@ public class BlockFactoryPlain extends BlockBase<BlockTypeFactoryPlain> {
 	private static final ThreadLocal<BlockTypeFactoryPlain> CACHE_TYPE = new ThreadLocal<>();
 
 	private BlockFactoryPlain(BlockTypeFactoryPlain type) {
-		super(Properties.of(), type);
+		super(RegistrationIds.block(), type);
 	}
 
 	public static void setMachineType(BlockTypeFactoryPlain type) {

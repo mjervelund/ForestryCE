@@ -1,5 +1,6 @@
 package forestry.core.content.energy.blocks;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.block.BlockBase;
 import forestry.core.platform.tile.TileUtil;
 import forestry.core.content.energy.EnergyHelper;
@@ -38,7 +39,7 @@ public class EngineBlock extends BlockBase<EngineBlockType> {
 	}
 
 	public EngineBlock(EngineBlockType blockType) {
-		super(Properties.of().sound(SoundType.METAL), blockType);
+		super(RegistrationIds.block().sound(SoundType.METAL), blockType);
 
 		registerDefaultState(getStateDefinition().any().setValue(VERTICAL_FACING, Direction.UP));
 	}

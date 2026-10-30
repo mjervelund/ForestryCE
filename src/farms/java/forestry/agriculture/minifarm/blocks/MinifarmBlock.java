@@ -1,5 +1,6 @@
 package forestry.agriculture.minifarm.blocks;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.block.BlockBase;
 import forestry.core.platform.render.ParticleRender;
 import forestry.agriculture.minifarm.tiles.AbstractMinifarmBlockEntity;
@@ -13,7 +14,7 @@ public class MinifarmBlock extends BlockBase<MinifarmBlockType> {
 	private final boolean manual;
 
 	public MinifarmBlock(MinifarmBlockType type, boolean manual) {
-		super(Properties.of().noOcclusion(), type);
+		super(RegistrationIds.block().noOcclusion(), type);
 		this.manual = manual;
 	}
 

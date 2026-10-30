@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.arboriculture.IWoodType;
 import forestry.api.arboriculture.WoodBlockKind;
 import net.minecraft.world.level.block.Block;
@@ -10,7 +11,7 @@ public class ForestryDoorBlock extends DoorBlock implements IWoodTyped {
 	private final ForestryWoodType woodType;
 
 	public ForestryDoorBlock(ForestryWoodType woodType) {
-		super(woodType.getBlockSetType(), Block.Properties.of().strength(woodType.getHardness(), woodType.getHardness() * 1.5F).sound(SoundType.WOOD).noOcclusion());
+		super(woodType.getBlockSetType(), RegistrationIds.block().strength(woodType.getHardness(), woodType.getHardness() * 1.5F).sound(SoundType.WOOD).noOcclusion());
 		this.woodType = woodType;
 	}
 

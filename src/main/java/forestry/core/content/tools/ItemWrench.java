@@ -1,5 +1,6 @@
 package forestry.core.content.tools;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +15,7 @@ import forestry.core.platform.item.ItemForestry;
 
 public class ItemWrench extends ItemForestry {
 	public ItemWrench() {
-		super(new Properties());
+		super(RegistrationIds.item());
 	}
 
 	@Override

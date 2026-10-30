@@ -1,5 +1,6 @@
 package forestry.lepidopterology.butterflies;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.core.genetics.ISpeciesType;
 import forestry.api.lepidopterology.IButterflyNursery;
 import forestry.api.lepidopterology.genetics.ButterflyLifeStage;
@@ -31,7 +32,7 @@ public class ItemButterflyGE extends ItemGE implements ITintedItem {
 	public static final String NBT_AGE = "Age";
 
 	public ItemButterflyGE(ButterflyLifeStage stage) {
-		super(new Properties(), stage);
+		super(RegistrationIds.item(), stage);
 	}
 
 	@Override

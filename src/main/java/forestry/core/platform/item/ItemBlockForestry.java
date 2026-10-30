@@ -1,5 +1,6 @@
 package forestry.core.platform.item;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.util.ItemTooltipUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -18,7 +19,7 @@ public class ItemBlockForestry<B extends Block> extends BlockItem {
 	}
 
 	public ItemBlockForestry(B block) {
-		this(block, new Item.Properties());
+		this(block, RegistrationIds.item());
 	}
 
 	@Override

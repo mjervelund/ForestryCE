@@ -1,5 +1,6 @@
 package forestry.arboriculture.trees;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryTags;
 import forestry.api.arboriculture.IToolGrafter;
 import forestry.core.platform.item.ItemForestry;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class GrafterItem extends ItemForestry implements IToolGrafter {
 	public GrafterItem(int maxDamage) {
-		super(new Item.Properties().durability(maxDamage));
+		super(RegistrationIds.item().durability(maxDamage));
 	}
 
 	@Override

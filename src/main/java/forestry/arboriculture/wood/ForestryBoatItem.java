@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import forestry.arboriculture.entities.ForestryBoat;
 import forestry.arboriculture.entities.ForestryChestBoat;
@@ -28,7 +29,7 @@ public class ForestryBoatItem extends ItemForestry {
 	private final boolean hasChest;
 
 	public ForestryBoatItem(ForestryWoodType type, boolean hasChest) {
-		super(new Properties().stacksTo(1));
+		super(RegistrationIds.item().stacksTo(1));
 
 		this.type = type;
 		this.hasChest = hasChest;

@@ -1,5 +1,6 @@
 package forestry.apiculture.features;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.modules.ForestryModuleIds;
 import forestry.apiculture.alveary.AlvearyBlock;
 import forestry.apiculture.apiary.ApicultureBlockType;
@@ -49,13 +50,13 @@ public class ApicultureBlocks {
 
 	public static final FeatureBlock<BlockWax, BlockItem> WAX_BLOCK = REGISTRY.block(
 		properties -> new BlockWax(properties, true, ForestryFluids.WAX::getFluid),
-		() -> Block.Properties.ofFullCopy(Blocks.HONEYCOMB_BLOCK).sound(SoundType.HONEY_BLOCK).mapColor(MapColor.COLOR_YELLOW).ignitedByLava(),
+		() -> RegistrationIds.block(Block.Properties.ofFullCopy(Blocks.HONEYCOMB_BLOCK)).sound(SoundType.HONEY_BLOCK).mapColor(MapColor.COLOR_YELLOW).ignitedByLava(),
 		ItemBlockForestry::new,
 		"wax_block"
 	);
 	public static final FeatureBlock<BlockWax, BlockItem> REFRACTORY_WAX_BLOCK = REGISTRY.block(
 		properties -> new BlockWax(properties, false, null),
-		() -> Block.Properties.ofFullCopy(Blocks.HONEYCOMB_BLOCK).sound(SoundType.HONEY_BLOCK).mapColor(MapColor.COLOR_RED).ignitedByLava(),
+		() -> RegistrationIds.block(Block.Properties.ofFullCopy(Blocks.HONEYCOMB_BLOCK)).sound(SoundType.HONEY_BLOCK).mapColor(MapColor.COLOR_RED).ignitedByLava(),
 		ItemBlockForestry::new,
 		"refractory_wax_block"
 	);

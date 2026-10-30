@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.arboriculture.WoodBlockKind;
 import forestry.arboriculture.features.ArboricultureTiles;
 import net.minecraft.core.BlockPos;
@@ -19,7 +20,7 @@ public class ForestryStandingSignBlock extends StandingSignBlock implements IWoo
 	private final ForestryWoodType type;
 
 	public ForestryStandingSignBlock(ForestryWoodType type) {
-		super(type.getWoodType(), Properties.of().mapColor(MapColor.WOOD).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).ignitedByLava());
+		super(type.getWoodType(), RegistrationIds.block().mapColor(MapColor.WOOD).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).ignitedByLava());
 
 		this.type = type;
 	}

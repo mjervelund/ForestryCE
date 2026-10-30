@@ -1,5 +1,6 @@
 package forestry.core.engine.genetics;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import com.mojang.authlib.GameProfile;
 import forestry.api.IForestryApi;
@@ -35,7 +36,7 @@ public class ItemResearchNote extends ItemForestry {
 	private static final String NBT_INNER = "INN";
 
 	public ItemResearchNote() {
-		super(new Item.Properties());
+		super(RegistrationIds.item());
 	}
 
 	@Override

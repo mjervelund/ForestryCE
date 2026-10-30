@@ -1,5 +1,6 @@
 package forestry.mail.tradestation;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.item.WithScreenItem;
 import forestry.mail.gui.CatalogMenu;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +12,7 @@ import javax.annotation.Nullable;
 
 public class CatalogItem extends WithScreenItem {
 	public CatalogItem() {
-		super(new Item.Properties());
+		super(RegistrationIds.item());
 	}
 
 	@Nullable

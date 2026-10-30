@@ -1,5 +1,6 @@
 package forestry.core.platform.fluids;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryConstants;
 import forestry.api.modules.ForestryModuleIds;
 import forestry.core.platform.client.ForestryColors;
@@ -109,7 +110,7 @@ public enum ForestryFluids {
 			.bucket(this::getBucket)
 			.create();
 		this.bucket = registry
-			.item(() -> new BucketItem(getFluid(), new Item.Properties()
+			.item(() -> new BucketItem(getFluid(), RegistrationIds.item()
 					.craftRemainder(Items.BUCKET)
 					.stacksTo(1)),
 				"bucket_" + fluidId

@@ -1,5 +1,6 @@
 package forestry.core.content.tools;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryTags;
 import forestry.api.apiculture.ForestryBeeSpecies;
 import forestry.api.apiculture.genetics.BeeLifeStage;
@@ -26,9 +27,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class ItemScoop extends TieredItem {
+public class ItemScoop extends Item {
 	public ItemScoop(int durability) {
-		super(Tiers.WOOD, new Item.Properties().durability(durability));
+		super(RegistrationIds.item().durability(durability));
 	}
 
 	@Override

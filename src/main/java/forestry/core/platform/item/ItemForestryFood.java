@@ -1,5 +1,6 @@
 package forestry.core.platform.item;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
@@ -17,12 +18,12 @@ public class ItemForestryFood extends Item {
 
 	//Simplified constructor for only declaring heal amount and saturation
 	public ItemForestryFood(int heal, float saturation) {
-		this(heal, saturation, new Item.Properties());
+		this(heal, saturation, RegistrationIds.item());
 	}
 
 	//Simplified constructor for declaring heal amount, saturation, and overriding use time
 	public ItemForestryFood(int heal, float saturation, int useTime) {
-		this(heal, saturation, new Item.Properties());
+		this(heal, saturation, RegistrationIds.item());
 		this.useTime = useTime;
 	}
 

@@ -1,5 +1,6 @@
 package forestry.apiculture.apiary;
 
+import forestry.core.platform.registration.RegistrationIds;
 import java.util.List;
 
 import net.minecraft.ChatFormatting;
@@ -36,7 +37,7 @@ public class CreativeHiveFrameItem extends ItemForestry implements IHiveFrame {
 	public static final String NBT_FORCED_MUTATION = "forced_mutation";
 
 	public CreativeHiveFrameItem() {
-		super(new Item.Properties().rarity(Rarity.EPIC));
+		super(RegistrationIds.item().rarity(Rarity.EPIC));
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package forestry.core.platform.item;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.core.IItemSubtype;
 import forestry.apiculture.bees.PollenClusterItem;
 import forestry.apiculture.bees.PropolisItem;
@@ -24,7 +25,7 @@ public class TwoTintItem extends ItemForestry implements ITintedItem {
 	protected final ITwoTintItemSubtype type;
 
 	public TwoTintItem(ITwoTintItemSubtype type) {
-		this(type, new Item.Properties());
+		this(type, RegistrationIds.item());
 	}
 
 	public TwoTintItem(ITwoTintItemSubtype type, Properties properties) {

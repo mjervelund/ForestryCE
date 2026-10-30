@@ -1,39 +1,42 @@
 package forestry.apiculture.apiarist;
 
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.equipment.EquipmentAssets;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.IBeeProtection;
 import forestry.api.apiculture.genetics.IBeeEffect;
-import forestry.core.features.CoreItems;
 import forestry.core.content.resources.EnumCraftingMaterial;
-import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Map;
 
-public class ItemArmorApiarist extends ArmorItem {
-	private static final Holder<ArmorMaterial> APIARIST_ARMOR_MATERIAL = Holder.direct(new ArmorMaterial(
+public class ItemArmorApiarist extends Item {
+	// 1.21.1 apiarist armor had no durability; 26.x armor always has one, so use leather's
+	private static final ArmorMaterial APIARIST_ARMOR_MATERIAL = new ArmorMaterial(
+		5,
 		Map.of(
-			ArmorItem.Type.BOOTS, 1,
-			ArmorItem.Type.LEGGINGS, 2,
-			ArmorItem.Type.CHESTPLATE, 3,
-			ArmorItem.Type.HELMET, 1,
-			ArmorItem.Type.BODY, 3
+			ArmorType.BOOTS, 1,
+			ArmorType.LEGGINGS, 2,
+			ArmorType.CHESTPLATE, 3,
+			ArmorType.HELMET, 1,
+			ArmorType.BODY, 3
 		),
 		15,
 		SoundEvents.ARMOR_EQUIP_LEATHER,
-		() -> Ingredient.of(CoreItems.CRAFTING_MATERIALS.get(EnumCraftingMaterial.WOVEN_SILK).get()),
-		List.of(new ArmorMaterial.Layer(ForestryConstants.forestry("apiarist_armor"))),
 		0.0F,
-		0.0F
-	));
+		0.0F,
+		TagKey.create(Registries.ITEM, ForestryConstants.forestry("repairs_apiarist_armor")),
+		ResourceKey.create(EquipmentAssets.ROOT_ID, ForestryConstants.forestry("apiarist_armor"))
+	);
 
 	public enum BeeProtection implements IBeeProtection {
 		INSTANCE;
@@ -44,7 +47,7 @@ public class ItemArmorApiarist extends ArmorItem {
 		}
 	}
 
-	public ItemArmorApiarist(ArmorItem.Type type) {
-		super(APIARIST_ARMOR_MATERIAL, type, new Item.Properties());
+	public ItemArmorApiarist(ArmorType type) {
+		super(RegistrationIds.item().humanoidArmor(APIARIST_ARMOR_MATERIAL, type));
 	}
 }

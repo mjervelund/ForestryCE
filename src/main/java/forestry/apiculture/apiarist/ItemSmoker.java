@@ -1,5 +1,6 @@
 package forestry.apiculture.apiarist;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.apiculture.hives.IHiveTile;
 import forestry.core.platform.item.ItemForestry;
 import forestry.core.platform.render.ParticleRender;
@@ -18,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 
 public class ItemSmoker extends ItemForestry {
 	public ItemSmoker() {
-		super(new Properties().stacksTo(1));
+		super(RegistrationIds.item().stacksTo(1));
 	}
 
 	@Override

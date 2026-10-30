@@ -1,5 +1,6 @@
 package forestry.apiculture.apiary;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.apiculture.IBeeHousing;
 import forestry.api.apiculture.IBeeModifier;
 import forestry.api.apiculture.genetics.IBee;
@@ -17,7 +18,7 @@ public class HiveFrameItem extends ItemForestry implements IHiveFrame {
 	private final HiveFrameBeeModifier beeModifier;
 
 	public HiveFrameItem(int maxDamage, float geneticDecay) {
-		super(new Item.Properties().durability(maxDamage));
+		super(RegistrationIds.item().durability(maxDamage));
 
 		this.beeModifier = new HiveFrameBeeModifier(geneticDecay);
 	}

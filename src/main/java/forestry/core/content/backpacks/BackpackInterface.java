@@ -1,5 +1,6 @@
 package forestry.core.content.backpacks;
 
+import forestry.core.platform.registration.RegistrationIds;
 import com.google.common.base.Preconditions;
 import forestry.api.core.backpacks.EnumBackpackType;
 import forestry.api.core.backpacks.IBackpackDefinition;
@@ -23,7 +24,7 @@ public class BackpackInterface implements IBackpackInterface {
 		Preconditions.checkNotNull(type, "type must not be null");
 		Preconditions.checkArgument(type != EnumBackpackType.NATURALIST, "type must not be NATURALIST. Use createNaturalistBackpack instead.");
 
-		return new BackpackItem(definition, type, new Item.Properties()
+		return new BackpackItem(definition, type, RegistrationIds.item()
 			.stacksTo(1)
 			.component(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
 	}
@@ -33,7 +34,7 @@ public class BackpackInterface implements IBackpackInterface {
 		Preconditions.checkNotNull(definition, "definition must not be null");
 		Preconditions.checkNotNull(speciesTypeId, "rootUid must not be null");
 
-		return new NaturalistBackpackItem(speciesTypeId, definition, new Item.Properties()
+		return new NaturalistBackpackItem(speciesTypeId, definition, RegistrationIds.item()
 			.stacksTo(1)
 			.component(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
 	}

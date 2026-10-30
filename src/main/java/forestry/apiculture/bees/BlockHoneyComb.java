@@ -1,5 +1,6 @@
 package forestry.apiculture.bees;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.apiculture.bees.EnumHoneyComb;
 import forestry.core.platform.block.IColoredBlock;
 import net.minecraft.core.BlockPos;
@@ -16,7 +17,7 @@ public class BlockHoneyComb extends Block implements IColoredBlock {
 	public final EnumHoneyComb type;
 
 	public BlockHoneyComb(EnumHoneyComb type) {
-		super(Block.Properties.of().sound(SoundType.CORAL_BLOCK).strength(1F));
+		super(RegistrationIds.block().sound(SoundType.CORAL_BLOCK).strength(1F));
 		this.type = type;
 	}
 

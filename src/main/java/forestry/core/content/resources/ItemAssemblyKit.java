@@ -1,5 +1,6 @@
 package forestry.core.content.resources;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -15,7 +16,7 @@ public class ItemAssemblyKit extends ItemForestry {
 	private final Supplier<ItemStack> assembled;
 
 	public ItemAssemblyKit(Supplier<ItemStack> assembled) {
-		super(new Item.Properties().stacksTo(24));
+		super(RegistrationIds.item().stacksTo(24));
 		this.assembled = assembled;
 	}
 

@@ -1,5 +1,6 @@
 package forestry.core.features;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.modules.ForestryModuleIds;
 import forestry.core.platform.block.NaturalistChestBlockType;
 import forestry.core.platform.block.*;
@@ -49,7 +50,7 @@ public class CoreBlocks {
 
 	// Deviation from 1.20.1: the barrel built its own properties inside its constructor. Here the registry owns them.
 	// Blocks.FURNACE is safe to ofFullCopy, it sets no dropsLike, so the copy cannot steal a vanilla loot table id
-	public static final FeatureBlock<BlockBurnBarrel, ItemBlockForestry<?>> BURN_BARREL = REGISTRY.block(BlockBurnBarrel::new, () -> Properties.ofFullCopy(Blocks.FURNACE)
+	public static final FeatureBlock<BlockBurnBarrel, ItemBlockForestry<?>> BURN_BARREL = REGISTRY.block(BlockBurnBarrel::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.FURNACE))
 		.mapColor(MapColor.COLOR_GRAY)
 		.sound(SoundType.METAL)
 		.lightLevel(state -> state.getValue(BlockBurnBarrel.LIT) ? 15 : 0), ItemBlockForestry::new, "burn_barrel");
@@ -58,43 +59,43 @@ public class CoreBlocks {
 	public static final FeatureBlock<BlockPeat, ItemBlockForestry<?>> PEAT = REGISTRY.block(BlockPeat::new, null, "peat");
 	public static final FeatureBlock<BlockHumus, ItemBlockForestry<?>> HUMUS = REGISTRY.block(BlockHumus::new, ItemBlockForestry::new, "humus");
 	public static final FeatureBlockGroup<BlockResourceStorage, EnumResourceType> RESOURCE_STORAGE = REGISTRY.blockGroup(BlockResourceStorage::new, List.of(EnumResourceType.values())).item(ItemBlockForestry::new).identifier("block", FeatureGroup.IdentifierType.SUFFIX).create();
-	public static final FeatureBlock<Block, BlockItem> APATITE_ORE = REGISTRY.block((properties) -> new DropExperienceBlock(UniformInt.of(0, 4), properties), () -> Properties.ofFullCopy(Blocks.COAL_ORE), ItemBlockForestry::new, "apatite_ore");
-	public static final FeatureBlock<Block, BlockItem> DEEPSLATE_APATITE_ORE = REGISTRY.block((properties) -> new DropExperienceBlock(UniformInt.of(0, 4), properties), () -> Properties.ofFullCopy(APATITE_ORE.block()).mapColor(MapColor.DEEPSLATE).strength(4.5f, 3.0f).sound(SoundType.DEEPSLATE), ItemBlockForestry::new, "deepslate_apatite_ore");
-	public static final FeatureBlock<Block, BlockItem> TIN_ORE = REGISTRY.block(Block::new, () -> Properties.ofFullCopy(Blocks.COPPER_ORE), ItemBlockForestry::new, "tin_ore");
-	public static final FeatureBlock<Block, BlockItem> DEEPSLATE_TIN_ORE = REGISTRY.block(Block::new, () -> Properties.ofFullCopy(TIN_ORE.block()).mapColor(MapColor.DEEPSLATE).strength(4.5f, 3.0f).sound(SoundType.DEEPSLATE), ItemBlockForestry::new, "deepslate_tin_ore");
-	public static final FeatureBlock<Block, BlockItem> RAW_TIN_BLOCK = REGISTRY.block(Block::new, () -> Properties.ofFullCopy(Blocks.RAW_COPPER_BLOCK), ItemBlockForestry::new, "raw_tin_block");
+	public static final FeatureBlock<Block, BlockItem> APATITE_ORE = REGISTRY.block((properties) -> new DropExperienceBlock(UniformInt.of(0, 4), properties), () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.COAL_ORE)), ItemBlockForestry::new, "apatite_ore");
+	public static final FeatureBlock<Block, BlockItem> DEEPSLATE_APATITE_ORE = REGISTRY.block((properties) -> new DropExperienceBlock(UniformInt.of(0, 4), properties), () -> RegistrationIds.block(Properties.ofFullCopy(APATITE_ORE.block())).mapColor(MapColor.DEEPSLATE).strength(4.5f, 3.0f).sound(SoundType.DEEPSLATE), ItemBlockForestry::new, "deepslate_apatite_ore");
+	public static final FeatureBlock<Block, BlockItem> TIN_ORE = REGISTRY.block(Block::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.COPPER_ORE)), ItemBlockForestry::new, "tin_ore");
+	public static final FeatureBlock<Block, BlockItem> DEEPSLATE_TIN_ORE = REGISTRY.block(Block::new, () -> RegistrationIds.block(Properties.ofFullCopy(TIN_ORE.block())).mapColor(MapColor.DEEPSLATE).strength(4.5f, 3.0f).sound(SoundType.DEEPSLATE), ItemBlockForestry::new, "deepslate_tin_ore");
+	public static final FeatureBlock<Block, BlockItem> RAW_TIN_BLOCK = REGISTRY.block(Block::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.RAW_COPPER_BLOCK)), ItemBlockForestry::new, "raw_tin_block");
 
 	/* Turf */
 	// Blocks.GRASS_BLOCK is safe to ofFullCopy, it sets no dropsLike, so the copy cannot steal a vanilla loot
 	// table id. It does carry randomTicks(), which 1.20.1 copied too. Spreading lives in GrassBlock rather than
 	// in the properties, and neither block below is one, so neither spreads and the tick reaches nothing
-	public static final FeatureBlock<Block, BlockItem> TURF_BLOCK = REGISTRY.block(Block::new, () -> Properties.ofFullCopy(Blocks.GRASS_BLOCK), ItemBlockForestry::new, "turf_block");
-	public static final FeatureBlock<CarpetBlock, BlockItem> TURF = REGISTRY.block(CarpetBlock::new, () -> Properties.ofFullCopy(Blocks.GRASS_BLOCK), ItemBlockForestry::new, "turf");
+	public static final FeatureBlock<Block, BlockItem> TURF_BLOCK = REGISTRY.block(Block::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)), ItemBlockForestry::new, "turf_block");
+	public static final FeatureBlock<CarpetBlock, BlockItem> TURF = REGISTRY.block(CarpetBlock::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)), ItemBlockForestry::new, "turf");
 
 	/* Plywood and cork */
 	// Deviation from 1.20.1: the sheet and the cork built their properties inside their constructors, and all
 	// three block items carried new ItemProperties().burnTime(n). The registry owns the properties here, and
 	// the burn times moved to the neoforge:furnace_fuels data map in ForestryDataMapProvider
 	// todo sheet blocks can only be wood
-	public static final FeatureBlock<BlockSheet, BlockItem> PLYWOOD_SHEET = REGISTRY.block(BlockSheet::new, () -> Properties.ofFullCopy(Blocks.OAK_PLANKS), ItemBlockForestry::new, "plywood");
-	public static final FeatureBlock<BlockPlywoodBlock, BlockItem> PLYWOOD_BLOCK = REGISTRY.block(BlockPlywoodBlock::new, () -> Properties.ofFullCopy(Blocks.OAK_PLANKS).ignitedByLava(), ItemBlockForestry::new, "plywood_block");
-	public static final FeatureBlock<CorkBlock, BlockItem> CORK = REGISTRY.block(CorkBlock::new, () -> Properties.ofFullCopy(Blocks.OAK_PLANKS).sound(SoundType.CHERRY_WOOD).strength(2.0f, 3.0f).ignitedByLava(), ItemBlockForestry::new, "cork");
+	public static final FeatureBlock<BlockSheet, BlockItem> PLYWOOD_SHEET = REGISTRY.block(BlockSheet::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.OAK_PLANKS)), ItemBlockForestry::new, "plywood");
+	public static final FeatureBlock<BlockPlywoodBlock, BlockItem> PLYWOOD_BLOCK = REGISTRY.block(BlockPlywoodBlock::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.OAK_PLANKS)).ignitedByLava(), ItemBlockForestry::new, "plywood_block");
+	public static final FeatureBlock<CorkBlock, BlockItem> CORK = REGISTRY.block(CorkBlock::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.OAK_PLANKS)).sound(SoundType.CHERRY_WOOD).strength(2.0f, 3.0f).ignitedByLava(), ItemBlockForestry::new, "cork");
 
 	/* Lighting */
 	// Deviation from 1.20.1: block properties now come from the registry's Supplier<Properties> overload
 	// (Properties.copy was renamed ofFullCopy), and block items take a BiFunction<B, Item.Properties, I>.
-	public static final FeatureBlock<ChainBlock, BlockItem> TIN_CHAIN = REGISTRY.block(ChainBlock::new, () -> Properties.ofFullCopy(Blocks.CHAIN), ItemBlockForestry::new, "tin_chain");
-	public static final FeatureBlock<LanternBlock, BlockItem> PHOSPHOR_LANTERN = REGISTRY.block(LanternBlock::new, () -> Properties.ofFullCopy(Blocks.SOUL_LANTERN).lightLevel(state -> 13), ItemBlockForestry::new, "phosphor_lantern");
+	public static final FeatureBlock<ChainBlock, BlockItem> TIN_CHAIN = REGISTRY.block(ChainBlock::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.CHAIN)), ItemBlockForestry::new, "tin_chain");
+	public static final FeatureBlock<LanternBlock, BlockItem> PHOSPHOR_LANTERN = REGISTRY.block(LanternBlock::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.SOUL_LANTERN)).lightLevel(state -> 13), ItemBlockForestry::new, "phosphor_lantern");
 	// The torch's item is registered separately in CoreItems as a StandingAndWallBlockItem covering both blocks
-	public static final FeatureBlock<BlockWaterloggableTorch, ItemBlockForestry<?>> PHOSPHOR_TORCH = REGISTRY.block(BlockWaterloggableTorch::new, () -> Properties.ofFullCopy(Blocks.SOUL_TORCH).lightLevel(state -> 13), null, "phosphor_torch");
+	public static final FeatureBlock<BlockWaterloggableTorch, ItemBlockForestry<?>> PHOSPHOR_TORCH = REGISTRY.block(BlockWaterloggableTorch::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.SOUL_TORCH)).lightLevel(state -> 13), null, "phosphor_torch");
 	// Deviation from 1.20.1: copies SOUL_TORCH rather than SOUL_WALL_TORCH. 1.20.1's Properties.copy left the loot
 	// table alone, but 1.21.1's ofFullCopy also copies `drops`, and vanilla's soul wall torch sets dropsLike(SOUL_TORCH).
 	// Copying it would give this block the minecraft:blocks/soul_torch loot table, so it would drop a vanilla soul
 	// torch in game and make the loot datagen write forestry's table into the minecraft namespace. Vanilla's soul wall
 	// torch properties are otherwise identical to soul torch's, so copying the standing torch reproduces 1.20.1 exactly.
-	public static final FeatureBlock<BlockWaterloggableWallTorch, ItemBlockForestry<?>> PHOSPHOR_WALL_TORCH = REGISTRY.block(BlockWaterloggableWallTorch::new, () -> Properties.ofFullCopy(Blocks.SOUL_TORCH).lightLevel(state -> 13), null, "phosphor_wall_torch");
+	public static final FeatureBlock<BlockWaterloggableWallTorch, ItemBlockForestry<?>> PHOSPHOR_WALL_TORCH = REGISTRY.block(BlockWaterloggableWallTorch::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.SOUL_TORCH)).lightLevel(state -> 13), null, "phosphor_wall_torch");
 
-	public static final FeatureBlockGroup<BlockTesr<NaturalistChestBlockType>, NaturalistChestBlockType> NATURALIST_CHEST = REGISTRY.blockGroup(type -> new BlockTesr<>(type, Properties.of().sound(SoundType.WOOD)), List.of(NaturalistChestBlockType.values())).item(ItemBlockTesr::new).create();
+	public static final FeatureBlockGroup<BlockTesr<NaturalistChestBlockType>, NaturalistChestBlockType> NATURALIST_CHEST = REGISTRY.blockGroup(type -> new BlockTesr<>(type, RegistrationIds.block().sound(SoundType.WOOD)), List.of(NaturalistChestBlockType.values())).item(ItemBlockTesr::new).create();
 
 	/* Decorative stone and brick block sets */
 	// Deviation from 1.20.1: that tree registered all 68 of these by hand and left a "//TODO: Helper method?"
@@ -128,7 +129,7 @@ public class CoreBlocks {
 	// properties in its constructor. The registry owns them here, so the subclass is gone and the group
 	// registers plain Blocks
 	public static final FeatureBlockGroup<Block, BlockTypeMetalPlating> METAL_PLATING = REGISTRY.<Block, BlockTypeMetalPlating>blockGroup((properties, type) -> new Block(properties), List.of(BlockTypeMetalPlating.values()))
-		.blockProperties((properties, type) -> Properties.ofFullCopy(Blocks.WAXED_COPPER_BLOCK).mapColor(type.getMapColor()))
+		.blockProperties((properties, type) -> RegistrationIds.block(Properties.ofFullCopy(Blocks.WAXED_COPPER_BLOCK)).mapColor(type.getMapColor()))
 		.item(ItemBlockForestry::new)
 		.identifier("metal_plating")
 		.create();
@@ -137,7 +138,7 @@ public class CoreBlocks {
 	// Vanilla candles are built straight from Properties.of and never call dropsLike, so ofFullCopy carries
 	// a null `drops` and cannot steal a vanilla loot table id
 	public static final FeatureBlockGroup<BlockJumboCandle, BlockTypeJumboCandle> JUMBO_CANDLES = REGISTRY.blockGroup(BlockJumboCandle::new, List.of(BlockTypeJumboCandle.values()))
-		.blockProperties((properties, type) -> Properties.ofFullCopy(Blocks.CANDLE)
+		.blockProperties((properties, type) -> RegistrationIds.block(Properties.ofFullCopy(Blocks.CANDLE))
 			.mapColor(type.getMapColor())
 			.lightLevel(state -> candleLight(state.getValue(BlockJumboCandle.LIT), type == BlockTypeJumboCandle.REFRACTORY)))
 		.item(ItemBlockForestry::new)
@@ -147,14 +148,14 @@ public class CoreBlocks {
 	// Deviation from 1.20.1: the big candles carried no map color there, so every one of them mapped as the
 	// vanilla candle's sand. They keep that here, since BlockTypeBigCandle names no colors
 	public static final FeatureBlockGroup<BlockBigCandle, BlockTypeBigCandle> BIG_CANDLES = REGISTRY.blockGroup(BlockBigCandle::new, List.of(BlockTypeBigCandle.values()))
-		.blockProperties((properties, type) -> Properties.ofFullCopy(Blocks.CANDLE)
+		.blockProperties((properties, type) -> RegistrationIds.block(Properties.ofFullCopy(Blocks.CANDLE))
 			.lightLevel(state -> candleLight(state.getValue(BlockBigCandle.LIT), type == BlockTypeBigCandle.REFRACTORY)))
 		.item(ItemBlockForestry::new)
 		.identifier("big_candle")
 		.create();
 
-	public static final FeatureBlock<CandleBlock, BlockItem> RAINBOW_CANDLE = REGISTRY.block(CandleBlock::new, () -> Properties.ofFullCopy(Blocks.MAGENTA_CANDLE), ItemBlockForestry::new, "rainbow_candle");
-	public static final FeatureBlock<CandleRefractory, BlockItem> REFRACTORY_CANDLE = REGISTRY.block(CandleRefractory::new, () -> Properties.ofFullCopy(Blocks.RED_CANDLE)
+	public static final FeatureBlock<CandleBlock, BlockItem> RAINBOW_CANDLE = REGISTRY.block(CandleBlock::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.MAGENTA_CANDLE)), ItemBlockForestry::new, "rainbow_candle");
+	public static final FeatureBlock<CandleRefractory, BlockItem> REFRACTORY_CANDLE = REGISTRY.block(CandleRefractory::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.RED_CANDLE))
 		.lightLevel(state -> state.getValue(CandleBlock.LIT) ? state.getValue(CandleBlock.CANDLES) * 2 : 0), ItemBlockForestry::new, "refractory_candle");
 	// todo the cake variants are still missing
 
@@ -305,6 +306,6 @@ public class CoreBlocks {
 	private static Supplier<Properties> mudBrickProperties(Block copyFrom, MapColor color, SoundType sound) {
 		// The four vanilla mud brick blocks never call dropsLike, so ofFullCopy carries a null `drops` and
 		// cannot steal a vanilla loot table id the way it would for a block built with one
-		return () -> Properties.ofFullCopy(copyFrom).mapColor(color).sound(sound);
+		return () -> RegistrationIds.block(Properties.ofFullCopy(copyFrom)).mapColor(color).sound(sound);
 	}
 }

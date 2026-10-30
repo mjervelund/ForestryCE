@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.arboriculture.IWoodType;
 import forestry.api.arboriculture.WoodBlockKind;
 import net.minecraft.world.level.block.ButtonBlock;
@@ -9,7 +10,7 @@ public class ForestryButtonBlock extends ButtonBlock implements IWoodTyped {
 	private final ForestryWoodType type;
 
 	public ForestryButtonBlock(ForestryWoodType type) {
-		super(type.getBlockSetType(), 30, Properties.of().noCollision().strength(0.5f).pushReaction(PushReaction.POPPED));
+		super(type.getBlockSetType(), 30, RegistrationIds.block().noCollision().strength(0.5f).pushReaction(PushReaction.POPPED));
 
 		this.type = type;
 	}

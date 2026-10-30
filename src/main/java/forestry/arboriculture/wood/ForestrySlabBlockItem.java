@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -9,7 +10,7 @@ import javax.annotation.Nullable;
 
 public class ForestrySlabBlockItem extends BlockItem {
 	public ForestrySlabBlockItem(ForestrySlabBlock block) {
-		super(block, new Item.Properties());
+		super(block, RegistrationIds.item());
 	}
 
 	@Override

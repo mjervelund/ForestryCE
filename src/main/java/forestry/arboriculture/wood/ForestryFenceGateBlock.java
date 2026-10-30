@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.arboriculture.IWoodType;
 import forestry.api.arboriculture.WoodBlockKind;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,7 @@ public class ForestryFenceGateBlock extends FenceGateBlock implements IWoodTyped
 
 	private static Properties createBlockProperties(boolean fireproof, IWoodType woodType) {
 		// todo add mapColor
-		var props = Block.Properties.of()
+		var props = RegistrationIds.block()
 			.forceSolidOn()
 			.strength(woodType.getHardness(), woodType.getHardness() * 1.5F)
 			.instrument(NoteBlockInstrument.BASS)

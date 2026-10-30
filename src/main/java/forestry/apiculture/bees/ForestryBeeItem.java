@@ -1,5 +1,6 @@
 package forestry.apiculture.bees;
 
+import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.apiculture.genetics.BeeLifeStage;
 import forestry.api.apiculture.genetics.IBee;
 import forestry.api.apiculture.genetics.IBeeSpecies;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class ForestryBeeItem extends ItemGE implements ITintedItem {
 	public ForestryBeeItem(BeeLifeStage type) {
-		super(type != BeeLifeStage.DRONE ? new Item.Properties().stacksTo(1) : new Item.Properties(), type);
+		super(type != BeeLifeStage.DRONE ? RegistrationIds.item().stacksTo(1) : RegistrationIds.item(), type);
 	}
 
 	@Override
