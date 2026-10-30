@@ -160,6 +160,13 @@ public class FluidContainerItem extends ItemForestry implements ITintedItem {
 
 	@Override
 	public int getColorFromItemStack(ItemStack stack, int tintIndex) {
-		return FluidContainerModel.DYNAMIC_COLOR.getColor(stack, tintIndex);
+		// 26.x: the fluid layer is tint index 1, coloured by the contained fluid's model tint
+		// (NeoForge's DynamicFluidContainerModel has no colour helper any more)
+		if (tintIndex != 1) {
+			return -1;
+		}
+		return FluidUtil.getFluidContained(stack)
+			.map(forestry.core.platform.util.ResourceUtil::getFluidTint)
+			.orElse(-1);
 	}
 }

@@ -4,9 +4,9 @@ import net.minecraft.world.InteractionResult;
 import forestry.core.platform.item.ItemForestry;
 import forestry.core.platform.item.ITintedItem;
 import forestry.core.platform.util.ItemStackUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -59,13 +59,20 @@ public class ItemCrated extends ItemForestry implements ITintedItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int renderPass) {
-		ItemColors colors = Minecraft.getInstance().getItemColors();
 		ItemStack contained = this.contained.get();
 
 		if (contained.isEmpty() || renderPass == 0) {
 			return -1;
 		}
 
-		return colors.getColor(contained, renderPass - 1);
+		// 26.x has no ItemColors registry: ask the contained item itself, special-casing the
+		// vanilla tinted blocks Forestry crates (grass uses the default grass colour)
+		if (contained.getItem() instanceof ITintedItem tinted) {
+			return tinted.getColorFromItemStack(contained, renderPass - 1);
+		}
+		if (renderPass == 1 && contained.is(Items.GRASS_BLOCK)) {
+			return GrassColor.getDefaultColor();
+		}
+		return -1;
 	}
 }

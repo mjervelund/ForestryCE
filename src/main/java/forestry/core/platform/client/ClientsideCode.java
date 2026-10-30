@@ -43,7 +43,11 @@ public class ClientsideCode {
 	}
 
 	public static void markForUpdate(BlockPos pos) {
-		Minecraft.getInstance().levelRenderer.setBlocksDirty(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ());
+		// 26.x: LevelRenderer has no setBlocksDirty; go through the level (an air old state forces the re-render)
+		var level = Minecraft.getInstance().level;
+		if (level != null) {
+			level.setBlocksDirty(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState(), level.getBlockState(pos));
+		}
 	}
 
 	public static RegistryAccess getRegistryAccess() {

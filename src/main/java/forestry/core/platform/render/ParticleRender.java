@@ -4,7 +4,7 @@ import forestry.core.platform.config.ForestryConfig;
 import forestry.core.platform.entities.ParticleIgnition;
 import forestry.core.platform.entities.ParticleSmoke;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.ParticleStatus;
+import net.minecraft.server.level.ParticleStatus;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
@@ -14,12 +14,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import org.joml.Vector3f;
 
 
 @OnlyIn(Dist.CLIENT)
 public class ParticleRender {
-	private static final DustParticleOptions HONEY_DUST = new DustParticleOptions(new Vector3f(0.9F, 0.75F, 0.0F), 1.0F);
+	private static final DustParticleOptions HONEY_DUST = new DustParticleOptions(0xE5BF00, 1.0F);
 
 	public static boolean shouldSpawnParticle(Level world) {
 		if (!ForestryConfig.CLIENT.showParticles.get()) {
@@ -83,16 +82,11 @@ public class ParticleRender {
 			return;
 		}
 
-		float red = (color >> 16 & 255) / 255.0F;
-		float green = (color >> 8 & 255) / 255.0F;
-		float blue = (color & 255) / 255.0F;
-
 		ParticleEngine effectRenderer = Minecraft.getInstance().particleEngine;
 		//TODO - maybe EFFECT?
-		//TODO particle data
-		Particle particle = effectRenderer.createParticle(DustParticleOptions.REDSTONE, x, y, z, 0, 0, 0);
+		// 26.x: Particle has no colour setter; the dust options carry the colour
+		Particle particle = effectRenderer.createParticle(new DustParticleOptions(color & 0xFFFFFF, 1.0F), x, y, z, 0, 0, 0);
 		if (particle != null) {
-			particle.setColor(red, green, blue);
 			effectRenderer.add(particle);
 		}
 	}

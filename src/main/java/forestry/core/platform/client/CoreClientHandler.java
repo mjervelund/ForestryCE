@@ -61,6 +61,7 @@ public class CoreClientHandler implements IClientModuleHandler {
 		modBus.addListener(SpectacleHighlightRenderer::registerPipelines);
 		modBus.addListener(CoreClientHandler::setupLayers);
 		modBus.addListener(CoreClientHandler::clientSetupRenderers);
+		modBus.addListener(CoreClientHandler::registerSpecialModelRenderers);
 		modBus.addListener(CoreClientHandler::registerReloadListeners);
 		modBus.addListener(CoreClientHandler::registerBlockColors);
 		modBus.addListener(CoreClientHandler::registerParticleFactory);
@@ -119,6 +120,13 @@ public class CoreClientHandler implements IClientModuleHandler {
 		event.registerBlockEntityRenderer(EnergyTiles.SOLAR_ENGINE.tileType(), ctx -> new RenderEngine(ctx, Constants.TEXTURE_PATH_BLOCK + "/engine_tin_"));
 		// Factory
 		event.registerBlockEntityRenderer(FactoryTiles.RAINMAKER.tileType(), ctx -> new RenderMill(ctx, Constants.TEXTURE_PATH_BLOCK + "/rainmaker_"));
+	}
+
+	// item models of the BER-rendered blocks (replaces the 1.21.1 ForestryBewlr)
+	private static void registerSpecialModelRenderers(RegisterSpecialModelRendererEvent event) {
+		event.register(ForestryConstants.forestry("naturalist_chest"), ForestrySpecialModelRenderers.ChestSpecialRenderer.Unbaked.MAP_CODEC);
+		event.register(ForestryConstants.forestry("engine"), ForestrySpecialModelRenderers.EngineSpecialRenderer.Unbaked.MAP_CODEC);
+		event.register(ForestryConstants.forestry("mill"), ForestrySpecialModelRenderers.MillSpecialRenderer.Unbaked.MAP_CODEC);
 	}
 
 	private static void registerReloadListeners(AddClientReloadListenersEvent event) {

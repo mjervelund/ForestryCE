@@ -1,7 +1,6 @@
 package forestry.core.content.machines;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import forestry.api.ForestryConstants;
 import forestry.core.content.machines.TileMill;
@@ -12,17 +11,24 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import forestry.core.platform.render.ForestryModelLayers;
 
 // This is called Mill because it used to be for the Forester and Treetap blocks in older versions of Forestry
-public class RenderMill implements BlockEntityRenderer<TileMill> {
+public class RenderMill implements BlockEntityRenderer<TileMill, RenderMill.MillRenderState> {
 	private enum Textures {PEDESTAL, EXTENSION, BLADE, CHARGE}
 
 	private final Identifier[] textures;
@@ -32,8 +38,10 @@ public class RenderMill implements BlockEntityRenderer<TileMill> {
 	private final ModelPart blade;
 
 	public RenderMill(BlockEntityRendererProvider.Context ctx, String baseTexture) {
-		ModelPart root = ctx.bakeLayer(ForestryModelLayers.MILL_LAYER);
+		this(ctx.bakeLayer(ForestryModelLayers.MILL_LAYER), baseTexture);
+	}
 
+	public RenderMill(ModelPart root, String baseTexture) {
 		this.pedestal = root.getChild(Textures.PEDESTAL.name());
 		this.column = root.getChild(Textures.CHARGE.name());
 		this.extension = root.getChild(Textures.EXTENSION.name());
@@ -67,27 +75,57 @@ public class RenderMill implements BlockEntityRenderer<TileMill> {
 	}
 
 	@Override
-	public void render(TileMill mill, float partialTick, PoseStack stack, MultiBufferSource buffers, int light, int overlay) {
+	public MillRenderState createRenderState() {
+		return new MillRenderState();
+	}
+
+	@Override
+	public void extractRenderState(TileMill mill, MillRenderState state, float partialTick, Vec3 camera, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+		BlockEntityRenderer.super.extractRenderState(mill, state, partialTick, camera, breakProgress);
+		state.charge = mill.charge;
+		state.bladeStep = getBladeStep(mill, partialTick);
+	}
+
+	@Override
+	public void submit(MillRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera) {
+		submitMill(this.pedestal, this.column, this.extension, this.blade, this.textures, state.charge, state.bladeStep, stack, collector, state.lightCoords);
+	}
+
+	// item/special model render: a resting mill
+	public void submitIdle(PoseStack stack, SubmitNodeCollector collector, int light) {
+		submitMill(this.pedestal, this.column, this.extension, this.blade, this.textures, 0, 0.0f, stack, collector, light);
+	}
+
+	public void getItemExtents(java.util.function.Consumer<org.joml.Vector3fc> output) {
+		PoseStack stack = new PoseStack();
+		this.pedestal.getExtentsForGui(stack, output);
+		this.column.getExtentsForGui(stack, output);
+		this.extension.getExtentsForGui(stack, output);
+		this.blade.getExtentsForGui(stack, output);
+	}
+
+	static void submitMill(ModelPart pedestal, ModelPart column, ModelPart extension, ModelPart blade, Identifier[] textures, int charge, float bladeStep, PoseStack stack, SubmitNodeCollector collector, int light) {
 		stack.pushPose();
 
 		// todo implement and add rotated voxel shape
 		Direction orientation = Direction.SOUTH;//mill.getBlockState().getValue(BlockBase.FACING);
 		RenderUtil.rotateByHorizontalDirection(stack, orientation);
 
-		this.pedestal.render(stack, buffers.getBuffer(RenderType.entityCutout(this.textures[Textures.PEDESTAL.ordinal()])), light, overlay, 0xFFFFFFFF);
-		this.column.render(stack, buffers.getBuffer(RenderType.entityCutout(this.textures[Textures.CHARGE.ordinal() + mill.charge])), light, overlay, 0xFFFFFFFF);
-		this.extension.render(stack, buffers.getBuffer(RenderType.entityCutout(this.textures[Textures.EXTENSION.ordinal()])), light, overlay, 0xFFFFFFFF);
+		int overlay = OverlayTexture.NO_OVERLAY;
+		collector.submitModelPart(pedestal, stack, RenderTypes.entityCutout(textures[Textures.PEDESTAL.ordinal()]), light, overlay, null);
+		collector.submitModelPart(column, stack, RenderTypes.entityCutout(textures[Textures.CHARGE.ordinal() + charge]), light, overlay, null);
+		collector.submitModelPart(extension, stack, RenderTypes.entityCutout(textures[Textures.EXTENSION.ordinal()]), light, overlay, null);
 
-		float step = getBladeStep(mill, partialTick) / 16f;
-		VertexConsumer buffer = buffers.getBuffer(RenderType.entityCutout(this.textures[Textures.BLADE.ordinal()]));
+		float step = bladeStep / 16f;
+		RenderType bladeType = RenderTypes.entityCutout(textures[Textures.BLADE.ordinal()]);
 		stack.pushPose();
 		stack.translate(step, 0, 0);
-		this.blade.render(stack, buffer, light, overlay, 0xFFFFFFFF);
+		collector.submitModelPart(blade, stack, bladeType, light, overlay, null);
 		stack.popPose();
 		stack.translate(1, 0, 1);
-		stack.mulPose(Axis.YP.rotation(Mth.PI));
+		stack.rotate(Axis.YP, Mth.PI);
 		stack.translate(step, 0, 0);
-		this.blade.render(stack, buffer, light, overlay, 0xFFFFFFFF);
+		collector.submitModelPart(blade, stack, bladeType, light, overlay, null);
 
 		stack.popPose();
 	}
@@ -110,5 +148,10 @@ public class RenderMill implements BlockEntityRenderer<TileMill> {
 		} else {
 			return progress * 2f * 3.99f;
 		}
+	}
+
+	public static class MillRenderState extends BlockEntityRenderState {
+		public int charge;
+		public float bladeStep;
 	}
 }

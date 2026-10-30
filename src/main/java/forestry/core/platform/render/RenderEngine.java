@@ -1,7 +1,6 @@
 package forestry.core.platform.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import forestry.api.ForestryConstants;
 import forestry.core.platform.config.Constants;
@@ -14,15 +13,21 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
-public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity> {
+public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity, RenderEngine.EngineRenderState> {
 	private static final float[] ANGLE_MAP = new float[6];
 
 	private enum Textures {
@@ -45,8 +50,10 @@ public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity> {
 	}
 
 	public RenderEngine(BlockEntityRendererProvider.Context ctx, String baseTexture) {
-		ModelPart root = ctx.bakeLayer(ForestryModelLayers.ENGINE_LAYER);
+		this(ctx.bakeLayer(ForestryModelLayers.ENGINE_LAYER), baseTexture);
+	}
 
+	public RenderEngine(ModelPart root, String baseTexture) {
 		this.boiler = root.getChild("boiler");
 		this.trunk = root.getChild("trunk");
 		this.piston = root.getChild("piston");
@@ -81,46 +88,73 @@ public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity> {
 	}
 
 	@Override
-	public void render(EngineBlockEntity engine, float partialTick, PoseStack stack, MultiBufferSource buffers, int light, int overlay) {
+	public EngineRenderState createRenderState() {
+		return new EngineRenderState();
+	}
+
+	@Override
+	public void extractRenderState(EngineBlockEntity engine, EngineRenderState state, float partialTick, Vec3 camera, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+		BlockEntityRenderer.super.extractRenderState(engine, state, partialTick, camera, breakProgress);
+		state.orientation = engine.getBlockState().getValue(EngineBlock.VERTICAL_FACING);
+		state.pistonStep = getPistonStep(engine, partialTick);
+		state.temperature = engine.hasLevel() ? engine.getTemperatureState() : TemperatureState.COOL;
+	}
+
+	@Override
+	public void submit(EngineRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera) {
+		submitEngine(this.boiler, this.trunk, this.piston, this.extension, this.textures, state.orientation, state.pistonStep, state.temperature, stack, collector, state.lightCoords);
+	}
+
+	// item/special model render: a resting engine pointing up
+	public void submitIdle(PoseStack stack, SubmitNodeCollector collector, int light, float step) {
+		submitEngine(this.boiler, this.trunk, this.piston, this.extension, this.textures, Direction.UP, step, TemperatureState.COOL, stack, collector, light);
+	}
+
+	public void getItemExtents(java.util.function.Consumer<org.joml.Vector3fc> output) {
+		PoseStack stack = new PoseStack();
+		this.boiler.getExtentsForGui(stack, output);
+		this.trunk.getExtentsForGui(stack, output);
+		this.piston.getExtentsForGui(stack, output);
+		this.extension.getExtentsForGui(stack, output);
+	}
+
+	static void submitEngine(ModelPart boiler, ModelPart trunk, ModelPart piston, ModelPart extension, Identifier[] textures, Direction orientation, float step, TemperatureState temperature, PoseStack stack, SubmitNodeCollector collector, int light) {
 		stack.pushPose();
 
 		// apply direction rotation
 		stack.translate(0.5, 0.5, 0.5);
-		Direction orientation = engine.getBlockState().getValue(EngineBlock.VERTICAL_FACING);
 		switch (orientation) {
-			case EAST, WEST, DOWN -> stack.mulPose(Axis.ZP.rotation(ANGLE_MAP[orientation.ordinal()]));
-			default -> stack.mulPose(Axis.XP.rotation(ANGLE_MAP[orientation.ordinal()]));
+			case EAST, WEST, DOWN -> stack.rotate(Axis.ZP, ANGLE_MAP[orientation.ordinal()]);
+			default -> stack.rotate(Axis.XP, ANGLE_MAP[orientation.ordinal()]);
 		}
 		stack.translate(-0.5, -0.5, -0.5);
 
+		int overlay = OverlayTexture.NO_OVERLAY;
+
 		// render base
-		this.boiler.render(stack, buffers.getBuffer(RenderType.entityCutout(this.textures[Textures.BASE.ordinal()])), light, overlay, 0xFFFFFFFF);
+		collector.submitModelPart(boiler, stack, RenderTypes.entityCutout(textures[Textures.BASE.ordinal()]), light, overlay, null);
 
 		// render piston with smooth lerp
-		float step = getPistonStep(engine, partialTick);
 		float tfactor = step / 16;
 		stack.translate(0, tfactor, 0);
-		this.piston.render(stack, buffers.getBuffer(RenderType.entityCutout(this.textures[Textures.PISTON.ordinal()])), light, overlay, 0xFFFFFFFF);
+		collector.submitModelPart(piston, stack, RenderTypes.entityCutout(textures[Textures.PISTON.ordinal()]), light, overlay, null);
 		stack.translate(0, -tfactor, 0);
 
 		// render trunk with color based on heat
-		TemperatureState state = engine.hasLevel() ? engine.getTemperatureState() : TemperatureState.COOL;
-		Identifier texture = switch (state) {
-			case OVERHEATING -> this.textures[Textures.TRUNK_HIGHEST.ordinal()];
-			case RUNNING_HOT -> this.textures[Textures.TRUNK_HIGHER.ordinal()];
-			case OPERATING_TEMPERATURE -> this.textures[Textures.TRUNK_HIGH.ordinal()];
-			case WARMED_UP -> this.textures[Textures.TRUNK_MEDIUM.ordinal()];
-			default -> this.textures[Textures.TRUNK_LOW.ordinal()];
+		Identifier texture = switch (temperature) {
+			case OVERHEATING -> textures[Textures.TRUNK_HIGHEST.ordinal()];
+			case RUNNING_HOT -> textures[Textures.TRUNK_HIGHER.ordinal()];
+			case OPERATING_TEMPERATURE -> textures[Textures.TRUNK_HIGH.ordinal()];
+			case WARMED_UP -> textures[Textures.TRUNK_MEDIUM.ordinal()];
+			default -> textures[Textures.TRUNK_LOW.ordinal()];
 		};
-		this.trunk.render(stack, buffers.getBuffer(RenderType.entityCutout(texture)), light, overlay, 0xFFFFFFFF);
+		collector.submitModelPart(trunk, stack, RenderTypes.entityCutout(texture), light, overlay, null);
 
 		// render piston sleeve
 		float chamberf = 2F / 16F;
 		if (step > 0) {
-			VertexConsumer buffer = buffers.getBuffer(RenderType.entityCutout(this.textures[Textures.EXTENSION.ordinal()]));
-
 			for (int i = 0; i <= step + 2; i += 2) {
-				this.extension.render(stack, buffer, light, overlay, 0xFFFFFFFF);
+				collector.submitModelPart(extension, stack, RenderTypes.entityCutout(textures[Textures.EXTENSION.ordinal()]), light, overlay, null);
 				stack.translate(0, chamberf, 0);
 			}
 		}
@@ -146,5 +180,11 @@ public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity> {
 		} else {
 			return progress * 2f * 6f;
 		}
+	}
+
+	public static class EngineRenderState extends BlockEntityRenderState {
+		public Direction orientation = Direction.UP;
+		public float pistonStep;
+		public TemperatureState temperature = TemperatureState.COOL;
 	}
 }
