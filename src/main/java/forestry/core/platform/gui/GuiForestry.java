@@ -1,10 +1,10 @@
 package forestry.core.platform.gui;
 
-import forestry.core.platform.registration.RegistrationIds;
+import org.joml.Matrix3x2fStack;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.LinkedListMultimap;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import forestry.Forestry;
 import forestry.api.ForestryConstants;
 import forestry.api.core.climate.IClimateProvider;
@@ -38,6 +38,8 @@ import java.util.Properties;
 public abstract class GuiForestry<C extends AbstractContainerMenu> extends AbstractContainerScreen<C> implements IGuiSizable {
 	// Used to display "Did you know?" ledgers in GUI
 	public static final LinkedListMultimap<String, String> HINTS = readDefaultHints();
+	public static final int DEFAULT_IMAGE_WIDTH = 176;
+	public static final int DEFAULT_IMAGE_HEIGHT = 166;
 
 	public final Identifier textureFile;
 	protected final WidgetManager widgetManager;
@@ -49,7 +51,16 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 	}
 
 	protected GuiForestry(Identifier texture, C menu, Inventory inv, Component title) {
-		super(menu, inv, title);
+		this(texture, menu, inv, title, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT);
+	}
+
+	// 26.x: imageWidth/imageHeight are final and set through the constructor
+	protected GuiForestry(String texture, C menu, Inventory inv, Component title, int imageWidth, int imageHeight) {
+		this(ForestryConstants.forestry(texture), menu, inv, title, imageWidth, imageHeight);
+	}
+
+	protected GuiForestry(Identifier texture, C menu, Inventory inv, Component title, int imageWidth, int imageHeight) {
+		super(menu, inv, title, imageWidth, imageHeight);
 
 		this.widgetManager = new WidgetManager(this);
 		this.ledgerManager = new LedgerManager(this);
@@ -73,19 +84,15 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 	}
 
 	@Override
-	public void resize(Minecraft mc, int width, int height) {
-		super.resize(mc, width, height);
-	}
-
-	@Override
 	public void containerTick() {
 		super.containerTick();
 	}
 
+	// 26.x: the background (renderBg in 1.21.1) is extracted in its own stratum before the slots and labels
 	@Override
-	public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
-		super.render(graphics, mouseX, mouseY, partialTicks);
-		renderTooltip(graphics, mouseX, mouseY);
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+		super.extractBackground(graphics, mouseX, mouseY, partialTicks);
+		renderBg(graphics, partialTicks, mouseX, mouseY);
 	}
 
 	protected abstract void addLedgers();
@@ -140,19 +147,19 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 	}
 
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
 		// / Handle ledger clicks
-		this.ledgerManager.handleMouseClicked(mouseX, mouseY, mouseButton);
-		this.widgetManager.handleMouseClicked(mouseX, mouseY, mouseButton);
-		return super.mouseClicked(mouseX, mouseY, mouseButton);
+		this.ledgerManager.handleMouseClicked(event.x(), event.y(), event.button());
+		this.widgetManager.handleMouseClicked(event.x(), event.y(), event.button());
+		return super.mouseClicked(event, doubleClick);
 	}
 
 	@Override
-	public boolean mouseReleased(double mouseX, double mouseY, int mouseButton) {
-		if (this.widgetManager.handleMouseRelease(mouseX, mouseY, mouseButton)) {
+	public boolean mouseReleased(MouseButtonEvent event) {
+		if (this.widgetManager.handleMouseRelease(event.x(), event.y(), event.button())) {
 			return true;
 		}
-		return super.mouseReleased(mouseX, mouseY, mouseButton);
+		return super.mouseReleased(event);
 	}
 
 	@Nullable
@@ -183,7 +190,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 	}
 
 	@Override
-	protected void renderLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+	protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         this.ledgerManager.drawTooltips(graphics, mouseX, mouseY);
 
 		if (this.menu.getCarried().isEmpty()) {
@@ -198,18 +205,15 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 
         this.widgetManager.updateWidgets(mouseX - this.leftPos, mouseY - this.topPos);
 
-		graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-		PoseStack transform = graphics.pose();
-		transform.pushPose();
-		transform.translate(this.leftPos, this.topPos, 0.0F);
+		Matrix3x2fStack transform = graphics.pose();
+		transform.pushMatrix();
+		transform.translate(this.leftPos, this.topPos);
 		drawWidgets(graphics);
-		transform.popPose();
-
-		bindTexture(this.textureFile);
+		transform.popMatrix();
 	}
 
 	protected void drawBackground(GuiGraphicsExtractor transform) {
-		transform.blit(this.textureFile, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		transform.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 	}
 
 	protected void drawWidgets(GuiGraphicsExtractor graphics) {
@@ -217,9 +221,18 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
         this.widgetManager.drawWidgets(graphics);
 	}
 
+	// 26.x: textures are passed to each blit; kept for subclasses
 	protected void bindTexture(Identifier texturePath) {
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, texturePath);
+	}
+
+	@Override
+	public int getGuiLeft() {
+		return this.leftPos;
+	}
+
+	@Override
+	public int getGuiTop() {
+		return this.topPos;
 	}
 
 	@Override
@@ -247,7 +260,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 
 	private static LinkedListMultimap<String, String> readDefaultHints() {
 		LinkedListMultimap<String, String> map = LinkedListMultimap.create();
-		Properties prop = RegistrationIds.item();
+		Properties prop = new Properties();
 
 		try {
 			InputStream hintStream = GuiForestry.class.getResourceAsStream("/config/forestry/hints.properties");

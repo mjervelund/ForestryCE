@@ -1,5 +1,6 @@
 package forestry.core.content.sorting.gui.widgets;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import com.google.common.collect.ImmutableSet;
 import forestry.api.IForestryApi;
 import forestry.api.client.IForestryClientApi;
@@ -40,7 +41,7 @@ public class RuleWidget extends Widget implements ISelectableProvider<IFilterRul
 		draw(this.manager.gui, rule, graphics, y, x);
 
 		if (this.gui.selection.isSame(this)) {
-			graphics.blit(SelectionWidget.TEXTURE, x - 1, y - 1, 212, 0, 18, 18);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, SelectionWidget.TEXTURE, x - 1, y - 1, 212, 0, 18, 18, 256, 256);
 		}
 	}
 
@@ -52,7 +53,7 @@ public class RuleWidget extends Widget implements ISelectableProvider<IFilterRul
 	@Override
 	public void draw(GuiForestry<?> gui, IFilterRuleType selectable, GuiGraphicsExtractor graphics, int y, int x) {
 		TextureAtlasSprite sprite = IForestryClientApi.INSTANCE.getTextureManager().getSprite(selectable.getSprite());
-		graphics.blit(x, y, 0, 16, 16, sprite);
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, x, y, 16, 16);
 	}
 
 	@Override

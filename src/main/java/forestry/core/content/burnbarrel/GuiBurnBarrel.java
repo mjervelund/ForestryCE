@@ -1,5 +1,6 @@
 package forestry.core.content.burnbarrel;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -10,9 +11,8 @@ public class GuiBurnBarrel extends GuiForestryTitled<ContainerBurnBarrel> {
 	private final TileBurnBarrel tile;
 
 	public GuiBurnBarrel(ContainerBurnBarrel container, Inventory inventory, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/burn_barrel.png", container, inventory, title);
+		super(Constants.TEXTURE_PATH_GUI + "/burn_barrel.png", container, inventory, title, DEFAULT_IMAGE_WIDTH, 202);
 		this.tile = container.getTile();
-		this.imageHeight = 202;
 	}
 
 	@Override
@@ -22,20 +22,18 @@ public class GuiBurnBarrel extends GuiForestryTitled<ContainerBurnBarrel> {
 		// Display the progress arrows
 		if (this.tile.getAshProductionTimer() > 0) {
 			int ashProgress = this.tile.getValueScaled(this.tile.getAshProductionTimer(), TileBurnBarrel.ASH_PRODUCTION_TIME, 18);
-			graphics.blit(this.textureFile,
-				this.leftPos + 68, this.topPos + 65, // where to draw thing
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 68, this.topPos + 65, // where to draw thing
 				176, 14, // coordinates of thing to be drawn
-				38, ashProgress); // width and height of thing to be drawn
+				38, ashProgress, 256, 256); // width and height of thing to be drawn
 		}
 
 		// Display the burning flame icon
 		if (this.tile.getBurnTime() > 0) {
 			int burnTimeRemaining = this.tile.getValueScaled(this.tile.getBurnTime(), this.tile.getCurrentMaxBurnTime(), 14);
 			burnTimeRemaining = Math.min(burnTimeRemaining + 1, 14);
-			graphics.blit(this.textureFile,
-				this.leftPos + 80, this.topPos + 67 + (14 - burnTimeRemaining), // where to draw thing
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 80, this.topPos + 67 + (14 - burnTimeRemaining), // where to draw thing
 				176, 14 - burnTimeRemaining, // coordinates of thing to be drawn
-				14, burnTimeRemaining); // width and height of thing to be drawn
+				14, burnTimeRemaining, 256, 256); // width and height of thing to be drawn
 		}
 	}
 

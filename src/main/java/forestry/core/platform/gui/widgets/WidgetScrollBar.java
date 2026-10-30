@@ -98,7 +98,6 @@ public class WidgetScrollBar extends Widget {
 		if (!isVisible()) {
 			return;
 		}
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		if (this.background != null) {
             this.background.draw(graphics, startY + this.yPos, startX + this.xPos);
 		}

@@ -1,27 +1,23 @@
 package forestry.core.platform.render;
 
-import forestry.api.ForestryConstants;
-import forestry.api.client.ForestrySprites;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.resources.TextureAtlasHolder;
+import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
 
 /**
- * Uploads the forestry gui icon texture sprites to the forestry gui atlas texture.
+ * Looks up the forestry gui icon sprites.
+ * <p>
+ * 26.x: TextureAtlasHolder is gone. The icons (textures/forestry/atlas/gui) are added to vanilla's gui sprite atlas
+ * by assets/minecraft/atlases/gui.json, with the same sprite ids the forestry gui atlas had, so they can also be
+ * drawn with GuiGraphicsExtractor#blitSprite and used as slot backgrounds.
  *
  * @see ForestryTextureManager
  */
-public class ForestrySpriteUploader extends TextureAtlasHolder {
-	public static final Identifier ATLAS_PATH = ForestryConstants.forestry("gui");
+public class ForestrySpriteUploader {
+	public static final Identifier ATLAS_PATH = AtlasIds.GUI;
 
-	public ForestrySpriteUploader(TextureManager manager) {
-		super(manager, ForestrySprites.TEXTURE_ATLAS, ATLAS_PATH);
-	}
-
-	// Public override
-	@Override
 	public TextureAtlasSprite getSprite(Identifier location) {
-		return super.getSprite(location);
+		return Minecraft.getInstance().getAtlasManager().getAtlasOrThrow(AtlasIds.GUI).getSprite(location);
 	}
 }

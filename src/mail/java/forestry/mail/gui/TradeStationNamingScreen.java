@@ -1,5 +1,6 @@
 package forestry.mail.gui;
 
+import net.minecraft.client.input.KeyEvent;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestry;
 import forestry.core.platform.render.ColourProperties;
@@ -18,10 +19,8 @@ public class TradeStationNamingScreen extends GuiForestry<TradeStationNamingMenu
 	private EditBox addressNameField;
 
 	public TradeStationNamingScreen(TradeStationNamingMenu container, Inventory inv, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/trade_station_naming.png", container, inv, title);
+		super(Constants.TEXTURE_PATH_GUI + "/trade_station_naming.png", container, inv, title, 176, 90);
 		this.tile = container.getTile();
-		this.imageWidth = 176;
-		this.imageHeight = 90;
 	}
 
 	@Override
@@ -41,7 +40,8 @@ public class TradeStationNamingScreen extends GuiForestry<TradeStationNamingMenu
 	}
 
 	@Override
-	public boolean keyPressed(int key, int scanCode, int modifiers) {
+	public boolean keyPressed(KeyEvent event) {
+		int key = event.key();
 		if (key == GLFW.GLFW_KEY_ESCAPE) {
 			this.minecraft.player.closeContainer();
 		}
@@ -51,9 +51,9 @@ public class TradeStationNamingScreen extends GuiForestry<TradeStationNamingMenu
 			return true;
 		}
 
-		return this.addressNameField.keyPressed(key, scanCode, modifiers)
+		return this.addressNameField.keyPressed(event)
 			|| this.addressNameField.canConsumeInput()
-			|| super.keyPressed(key, scanCode, modifiers);
+			|| super.keyPressed(event);
 	}
 
 	@Override

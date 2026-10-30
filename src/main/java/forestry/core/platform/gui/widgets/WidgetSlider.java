@@ -32,7 +32,6 @@ public class WidgetSlider extends Widget {
 
 	@Override
 	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         this.texture.draw(graphics, startY + this.yPos + this.yOffset, startX + this.xPos + this.xOffset);
 	}
 

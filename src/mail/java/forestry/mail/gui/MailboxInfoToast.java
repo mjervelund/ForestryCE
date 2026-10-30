@@ -1,5 +1,7 @@
 package forestry.mail.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
+import forestry.core.platform.client.ForestryColors;
 import com.mojang.blaze3d.systems.RenderSystem;
 import forestry.api.ForestryConstants;
 import forestry.core.platform.config.Constants;
@@ -37,7 +39,7 @@ public class MailboxInfoToast implements Toast {
 		}
 
 		// todo verify this works
-		graphics.blit(BACKGROUND_SPRITE, 0, 0, 0, 0, width(), height());
+		graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND_SPRITE, 0, 0, 0, 0, width(), height(), 256, 256);
 
 		List<Icons> icons = new ArrayList<>(2);
 		if (!this.poBox.hasMail()) {
@@ -52,15 +54,8 @@ public class MailboxInfoToast implements Toast {
 		}
 		icons.get((int) (timeSinceLastVisible / ICON_TIME % (long) icons.size())).render(graphics, 6, 8);
 		Font font = Minecraft.getInstance().font;
-		graphics.drawString(font, this.title, 36, 7, 0xFFFFFF, false);
-		graphics.drawString(
-			font,
-			Component.translatable("for.gui.mail.toast.message", this.poBox.playerLetters() + this.poBox.tradeLetters()),
-			36,
-			18,
-			0xFFFFFF,
-			false
-		);
+		graphics.text(font, this.title, 36, 7, ForestryColors.textColor(0xFFFFFF), false);
+		graphics.text(font, Component.translatable("for.gui.mail.toast.message", this.poBox.playerLetters() + this.poBox.tradeLetters()), 36, 18, ForestryColors.textColor(0xFFFFFF), false);
 
 		return timeSinceLastVisible >= DISPLAY_TIME || !this.poBox.hasMail() ? Visibility.HIDE : Visibility.SHOW;
 	}
@@ -89,10 +84,8 @@ public class MailboxInfoToast implements Toast {
 		}
 
 		public void render(GuiGraphicsExtractor graphics, int pX, int pY) {
-			RenderSystem.enableBlend();
 			// todo verify this sprite is correct
-			graphics.blit(BACKGROUND_SPRITE, pX, pY, 176 + this.x * 26, this.y * 15, 26, 15);
-			RenderSystem.enableBlend();
+			graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND_SPRITE, pX, pY, 176 + this.x * 26, this.y * 15, 26, 15, 256, 256);
 		}
 	}
 }

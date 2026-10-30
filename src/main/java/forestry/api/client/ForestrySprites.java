@@ -11,7 +11,8 @@ public class ForestrySprites {
 	/**
 	 * Used for menu rendering with {@link com.mojang.blaze3d.systems.RenderSystem#setShaderTexture(int, Identifier)}
 	 */
-	public static final Identifier TEXTURE_ATLAS = ForestryConstants.forestry("textures/atlas/gui.png");
+	// 26.x: the icons are in vanilla's gui sprite atlas (see ForestrySpriteUploader)
+	public static final Identifier TEXTURE_ATLAS = Identifier.withDefaultNamespace("textures/atlas/gui.png");
 
 	public static final Identifier HABITAT_DESERT = ForestryConstants.forestry("habitats/desert");
 	public static final Identifier HABITAT_END = ForestryConstants.forestry("habitats/end");

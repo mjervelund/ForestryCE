@@ -1,5 +1,6 @@
 package forestry.core.content.analyzer;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.widgets.TankWidget;
 import forestry.core.platform.render.EnumTankLevel;
@@ -14,9 +15,8 @@ public class GuiAnalyzer extends GuiForestryTitled<ContainerAnalyzer> {
 	private final TileAnalyzer tile;
 
 	public GuiAnalyzer(ContainerAnalyzer analyzer, Inventory inventory, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/alyzer.png", analyzer, inventory, title);
+		super(Constants.TEXTURE_PATH_GUI + "/alyzer.png", analyzer, inventory, title, DEFAULT_IMAGE_WIDTH, 176);
 		this.tile = analyzer.getTile();
-		this.imageHeight = 176;
 		this.widgetManager.add(new TankWidget(this.widgetManager, 95, 24, 0));
 	}
 
@@ -30,7 +30,7 @@ public class GuiAnalyzer extends GuiForestryTitled<ContainerAnalyzer> {
 		int i = 176 + rated.getLevelScaled(16);
 		int k = 60;
 
-		graphics.blit(this.textureFile, x, y + 46 - height, i, k + 46 - height, 4, height);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, x, y + 46 - height, i, k + 46 - height, 4, height, 256, 256);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package forestry.core.content.energy.screen;
 
+import net.minecraft.client.renderer.RenderPipelines;
+import forestry.core.platform.client.ForestryColors;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.config.ForestryConfig;
 import forestry.core.platform.render.ColourProperties;
@@ -54,12 +56,12 @@ public class SolarEngineScreen extends EngineScreen<SolarEngineMenu, SolarEngine
 		if (active > 0) {
 			// show a sun when we have insolation, a moon when we don't
 			int decalU = insolation > 0.0 ? SUN_U : SUN_U + 16;
-			graphics.blit(this.textureFile, this.leftPos + 14, this.topPos + 38, decalU, SUN_V, SUN_SIZE, SUN_SIZE);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 14, this.topPos + 38, decalU, SUN_V, SUN_SIZE, SUN_SIZE, 256, 256);
 		}
 	}
 
 	private void drawRow(GuiGraphicsExtractor graphics, int row, int offset, Component text, int colour) {
-		graphics.drawString(this.font, text, this.leftPos + TEXT_X, this.topPos + TEXT_TOP + offset + row * TEXT_LINE_HEIGHT, colour, false);
+		graphics.text(this.font, text, this.leftPos + TEXT_X, this.topPos + TEXT_TOP + offset + row * TEXT_LINE_HEIGHT, ForestryColors.textColor(colour), false);
 	}
 
 	private static Component arraySize(int active, int total) {

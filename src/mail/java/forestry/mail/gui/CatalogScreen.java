@@ -1,5 +1,6 @@
 package forestry.mail.gui;
 
+import forestry.core.platform.client.ForestryColors;
 import forestry.api.mail.ITradeStationInfo;
 import forestry.core.platform.config.SessionVars;
 import forestry.core.platform.gui.GuiForestry;
@@ -36,10 +37,8 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 	private final List<ItemStackWidget> tradeInfoWidgets = new ArrayList<>();
 
 	public CatalogScreen(CatalogMenu container, Inventory inv, Component title) {
-		super(Identifier.parse("textures/gui/book.png"), container, inv, title);
+		super(Identifier.parse("textures/gui/book.png"), container, inv, title, 192, 192);
 
-		this.imageWidth = 192;
-		this.imageHeight = 192;
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
-		graphics.drawString(this.font, String.format("%s / %s", this.menu.getPageNumber(), this.menu.getPageCount()), this.leftPos + this.imageWidth - 72, this.topPos + 12, ColourProperties.INSTANCE.get("gui.book"), false);
+		graphics.text(this.font, String.format("%s / %s", this.menu.getPageNumber(), this.menu.getPageCount()), this.leftPos + this.imageWidth - 72, this.topPos + 12, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 
 		clearTradeInfoWidgets();
 
@@ -84,18 +83,18 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 	}
 
 	private void drawNoTrade(GuiGraphicsExtractor graphics, int x, int y) {
-		graphics.drawWordWrap(this.font, Component.translatable("for.gui.mail.notrades"), x, y + 18, 119, ColourProperties.INSTANCE.get("gui.book"));
+		graphics.textWithWordWrap(this.font, Component.translatable("for.gui.mail.notrades"), x, y + 18, 119, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 	}
 
 	private void drawTradePreview(GuiGraphicsExtractor graphics, ITradeStationInfo tradeInfo, int x, int y) {
 		Font font = this.font;
-		graphics.drawString(font, BOLD_UNDERLINE + tradeInfo.address().getName(), x, y, ColourProperties.INSTANCE.get("gui.book"), false);
+		graphics.text(font, BOLD_UNDERLINE + tradeInfo.address().getName(), x, y, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 
-		graphics.drawString(font, Component.translatable("for.gui.mail.willtrade", tradeInfo.owner().getName()), x, y + 18, ColourProperties.INSTANCE.get("gui.book"), false);
+		graphics.text(font, Component.translatable("for.gui.mail.willtrade", tradeInfo.owner().getName()), x, y + 18, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 
 		addTradeInfoWidget(new ItemStackWidget(this.widgetManager, x - this.leftPos, y - this.topPos + 28, tradeInfo.tradegood()));
 
-		graphics.drawString(font, Component.translatable("for.gui.mail.tradefor"), x, y + 46, ColourProperties.INSTANCE.get("gui.book"), false);
+		graphics.text(font, Component.translatable("for.gui.mail.tradefor"), x, y + 46, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 
 		for (int i = 0; i < tradeInfo.required().size(); i++) {
 			ItemStack itemStack = tradeInfo.required().get(i);
@@ -104,9 +103,9 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 
 		//TODO: Fix later
 		if (tradeInfo.state().isOk()) {
-			graphics.drawWordWrap(font, ((MutableComponent) tradeInfo.state().getDescription()).withStyle(ChatFormatting.DARK_GREEN), x, y + 82, 119, ColourProperties.INSTANCE.get("gui.book"));
+			graphics.textWithWordWrap(font, ((MutableComponent) tradeInfo.state().getDescription()).withStyle(ChatFormatting.DARK_GREEN), x, y + 82, 119, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 		} else {
-			graphics.drawWordWrap(font, ((MutableComponent) tradeInfo.state().getDescription()).withStyle(ChatFormatting.DARK_RED), x, y + 82, 119, ColourProperties.INSTANCE.get("gui.book"));
+			graphics.textWithWordWrap(font, ((MutableComponent) tradeInfo.state().getDescription()).withStyle(ChatFormatting.DARK_RED), x, y + 82, 119, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 		}
 	}
 

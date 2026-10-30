@@ -1,5 +1,6 @@
 package forestry.core.content.machines.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.SocketWidget;
@@ -22,8 +23,8 @@ public class GuiCentrifuge extends GuiForestryTitled<ContainerCentrifuge> {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		int progress = this.tile.getProgressScaled(16);
-		graphics.blit(this.textureFile, this.leftPos + 43, this.topPos + 36 + 17 - progress, 176, 17 - progress, 4, progress);
-		graphics.blit(this.textureFile, this.leftPos + 67, this.topPos + 36 + 17 - progress, 176, 17 - progress, 4, progress);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 43, this.topPos + 36 + 17 - progress, 176, 17 - progress, 4, progress, 256, 256);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 67, this.topPos + 36 + 17 - progress, 176, 17 - progress, 4, progress, 256, 256);
 	}
 
 	@Override

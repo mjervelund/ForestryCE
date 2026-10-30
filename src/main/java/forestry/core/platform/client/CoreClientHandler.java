@@ -197,7 +197,6 @@ public class CoreClientHandler implements IClientModuleHandler {
 	}
 
 	private static void registerReloadListeners(AddClientReloadListenersEvent event) {
-		event.addListener(ForestryConstants.forestry("sprites"), ((ForestryTextureManager) IForestryClientApi.INSTANCE.getTextureManager()).getSpriteUploader());
 		event.addListener(ForestryConstants.forestry("colours"), ColourProperties.INSTANCE);
 
 		event.addListener(ForestryConstants.forestry("model_cache"), (sharedState, taskExecutor, barrier, reloadExecutor) -> {

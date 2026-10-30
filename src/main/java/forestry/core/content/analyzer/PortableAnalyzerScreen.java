@@ -27,11 +27,9 @@ public class PortableAnalyzerScreen extends GuiForestry<PortableAnalyzerMenu> {
 	private final PortableAnalyzerInventory itemInventory;
 
 	public PortableAnalyzerScreen(PortableAnalyzerMenu container, Inventory playerInv, Component name) {
-		super(Constants.TEXTURE_PATH_GUI + "/portablealyzer.png", container, playerInv, name);
+		super(Constants.TEXTURE_PATH_GUI + "/portablealyzer.png", container, playerInv, name, 247, 238);
 
 		this.itemInventory = container.getItemInventory();
-		this.imageWidth = 247;
-		this.imageHeight = 238;
 	}
 
 	public static int getColorCoding(boolean dominant) {
@@ -96,7 +94,7 @@ public class PortableAnalyzerScreen extends GuiForestry<PortableAnalyzerMenu> {
 		this.textLayout.drawCenteredLine(graphics, title, 8, 208, ColourProperties.INSTANCE.get("gui.screen"));
 		this.textLayout.newLine();
 
-		graphics.drawWordWrap(this.font, Component.translatable("for.gui.portablealyzer.help"), this.leftPos + 0 + 16, this.topPos + 42, 200, ColourProperties.INSTANCE.get("gui.screen"));
+		graphics.textWithWordWrap(this.font, Component.translatable("for.gui.portablealyzer.help"), this.leftPos + 0 + 16, this.topPos + 42, 200, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.screen")), false);
 		this.textLayout.newLine();
 		this.textLayout.newLine();
 		this.textLayout.newLine();

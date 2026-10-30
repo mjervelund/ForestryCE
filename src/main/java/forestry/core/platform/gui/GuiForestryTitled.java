@@ -17,6 +17,14 @@ public abstract class GuiForestryTitled<C extends AbstractContainerMenu> extends
 		super(texture, container, inv, title);
 	}
 
+	protected GuiForestryTitled(String texture, C container, Inventory inv, Component title, int imageWidth, int imageHeight) {
+		super(texture, container, inv, title, imageWidth, imageHeight);
+	}
+
+	protected GuiForestryTitled(Identifier texture, C container, Inventory inv, Component title, int imageWidth, int imageHeight) {
+		super(texture, container, inv, title, imageWidth, imageHeight);
+	}
+
 	@Override
 	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
@@ -27,8 +35,6 @@ public abstract class GuiForestryTitled<C extends AbstractContainerMenu> extends
 		} else {
             this.textLayout.drawLine(graphics, this.title.getString(), 8, ColourProperties.INSTANCE.get("gui.title"));
 		}
-		// todo get rid of this and make sure nothing breaks
-		bindTexture(this.textureFile);
 	}
 
 	protected boolean centeredTitle() {

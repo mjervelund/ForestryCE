@@ -7,13 +7,8 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class GuiBackpack extends GuiForestry<ContainerBackpack> {
 	public GuiBackpack(ContainerBackpack container, Inventory inv, Component title) {
-		super(getTextureString(container), container, inv, title);
-		ContainerBackpack.Size size = container.getSize();
-
-		if (size == ContainerBackpack.Size.T2) {
-            this.imageWidth = 176;
-            this.imageHeight = 192;
-		}
+		super(getTextureString(container), container, inv, title, DEFAULT_IMAGE_WIDTH,
+			container.getSize() == ContainerBackpack.Size.T2 ? 192 : DEFAULT_IMAGE_HEIGHT);
 	}
 
 	private static String getTextureString(ContainerBackpack container) {

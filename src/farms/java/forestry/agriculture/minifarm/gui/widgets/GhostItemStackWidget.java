@@ -1,5 +1,8 @@
 package forestry.agriculture.minifarm.gui.widgets;
 
+import net.minecraft.util.ARGB;
+import net.minecraft.client.renderer.RenderPipelines;
+import forestry.core.platform.client.ForestryColors;
 import com.mojang.blaze3d.systems.RenderSystem;
 import forestry.api.core.tooltips.ToolTip;
 import forestry.api.agriculture.HorizontalDirection;
@@ -30,21 +33,16 @@ public class GhostItemStackWidget extends ItemStackWidget {
 			super.draw(graphics, startX, startY);
 		}
 		// RenderSystem.disableLighting();
-		RenderSystem.disableDepthTest();
-		RenderSystem.enableBlend();
 
 		Component directionString = getDirectionString();
 		if (directionString != null) {
 			Font font = this.manager.minecraft.font;
-			graphics.drawString(font, directionString, this.xPos + startX + 5, this.yPos + startY + 4, ColourProperties.INSTANCE.get("gui.screen"));
+			graphics.text(font, directionString, this.xPos + startX + 5, this.yPos + startY + 4, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.screen")));
 		}
 
-		graphics.setColor(1.0f, 1.0f, 1.0f, 0.5f);
+		// 26.x: the half transparency is passed to blit instead of the shader colour
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.manager.gui.textureFile, this.xPos + startX, this.yPos + startY, 206, 0, 16, 16, 256, 256, ARGB.white(0.5f));
 
-		graphics.blit(this.manager.gui.textureFile, this.xPos + startX, this.yPos + startY, 206, 0, 16, 16);
-
-		RenderSystem.disableBlend();
-		RenderSystem.enableDepthTest();
 		// RenderSystem.enableLighting();
 	}
 

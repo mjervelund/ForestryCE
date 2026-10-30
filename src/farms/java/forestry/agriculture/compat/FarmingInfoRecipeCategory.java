@@ -104,15 +104,15 @@ public class FarmingInfoRecipeCategory extends ForestryRecipeCategory<FarmingInf
 		Font font = Minecraft.getInstance().font;
 		ICircuit circuit = recipe.circuit();
 		int textX = (recipeWidth - font.width(circuit.getDisplayName().getString())) / 2;
-		graphics.drawString(font, circuit.getDisplayName(), textX, 3, ForestryColors.DARK_GRAY, false);
+		graphics.text(font, circuit.getDisplayName(), textX, 3, ForestryColors.textColor(ForestryColors.DARK_GRAY), false);
 
 		Component soilName = Component.translatable("for.jei.farming.soil");
-		graphics.drawString(font, soilName, 18 - (font.width(soilName.getString())) / 2, 45, ForestryColors.DARK_GRAY, false);
+		graphics.text(font, soilName, 18 - (font.width(soilName.getString())) / 2, 45, ForestryColors.textColor(ForestryColors.DARK_GRAY), false);
 
 		Component germlingsName = Component.translatable("for.jei.farming.germlings");
-		graphics.drawString(font, germlingsName, (recipeWidth - font.width(germlingsName.getString())) / 2, 45, ForestryColors.DARK_GRAY, false);
+		graphics.text(font, germlingsName, (recipeWidth - font.width(germlingsName.getString())) / 2, 45, ForestryColors.textColor(ForestryColors.DARK_GRAY), false);
 
 		Component productsName = Component.translatable("for.jei.farming.products");
-		graphics.drawString(font, productsName, 126 - (font.width(productsName.getString())) / 2, 45, ForestryColors.DARK_GRAY, false);
+		graphics.text(font, productsName, 126 - (font.width(productsName.getString())) / 2, 45, ForestryColors.textColor(ForestryColors.DARK_GRAY), false);
 	}
 }

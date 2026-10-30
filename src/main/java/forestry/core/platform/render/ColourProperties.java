@@ -1,6 +1,5 @@
 package forestry.core.platform.render;
 
-import forestry.core.platform.registration.RegistrationIds;
 import forestry.Forestry;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -13,8 +12,8 @@ import java.util.Properties;
 public enum ColourProperties implements ResourceManagerReloadListener {
 	INSTANCE;
 
-	private final Properties defaultMappings = RegistrationIds.item();
-	private final Properties mappings = RegistrationIds.item();
+	private final Properties defaultMappings = new Properties();
+	private final Properties mappings = new Properties();
 
 	public int get(String key) {
 		return Integer.parseInt(this.mappings.getProperty(key, this.defaultMappings.getProperty(key, "d67fff")), 16);

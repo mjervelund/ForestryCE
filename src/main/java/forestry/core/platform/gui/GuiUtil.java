@@ -1,7 +1,7 @@
 package forestry.core.platform.gui;
 
+import org.joml.Matrix3x2fStack;
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.vertex.PoseStack;
 import forestry.api.core.tooltips.IToolTipProvider;
 import forestry.api.core.tooltips.ToolTip;
 import net.minecraft.client.Minecraft;
@@ -22,25 +22,25 @@ public class GuiUtil {
 
 	// todo replace with AbstractContainerScreen#renderFloatingItem
 	public static void drawItemStack(GuiGraphicsExtractor graphics, Font font, ItemStack stack, int xPos, int yPos) {
-		PoseStack itemRendererStack = graphics.pose();
-		itemRendererStack.pushPose();
-		graphics.renderItem(stack, xPos, yPos);
-		graphics.renderItemDecorations(font, stack, xPos, yPos, null);
-		itemRendererStack.popPose();
+		Matrix3x2fStack itemRendererStack = graphics.pose();
+		itemRendererStack.pushMatrix();
+		graphics.item(stack, xPos, yPos);
+		graphics.itemDecorations(font, stack, xPos, yPos, null);
+		itemRendererStack.popMatrix();
 	}
 
 
 	public static void drawToolTips(GuiGraphicsExtractor graphics, GuiForestry<?> screen, IToolTipProvider provider, ToolTip toolTips, int mouseX, int mouseY) {
 		if (!toolTips.isEmpty()) {
-			PoseStack pose = graphics.pose();
-			pose.pushPose();
+			Matrix3x2fStack pose = graphics.pose();
+			pose.pushMatrix();
 			if (provider == null || provider.isRelativeToGui()) {
-				pose.translate(-screen.getGuiLeft(), -screen.getGuiTop(), 0);
+				pose.translate(-screen.getGuiLeft(), -screen.getGuiTop());
 			}
 			Window window = Minecraft.getInstance().getWindow();    //TODO - more resolution stuff to check
-			graphics.renderTooltip(screen.font(), toolTips.getLines(), Optional.empty(), mouseX, mouseY);
+			graphics.setTooltipForNextFrame(screen.font(), toolTips.getLines(), Optional.empty(), mouseX, mouseY);
 			//GuiUtils.drawHoveringText(transform, toolTips.getLines(), mouseX, mouseY, window.getGuiScaledWidth(), window.getGuiScaledHeight(), -1, gui.getGameInstance().font);
-			pose.popPose();
+			pose.popMatrix();
 		}
 	}
 

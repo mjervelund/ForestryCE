@@ -1,5 +1,6 @@
 package forestry.core.engine.circuits;
 
+import forestry.core.platform.client.ForestryColors;
 import forestry.api.IForestryApi;
 import forestry.api.core.circuits.ForestryCircuitSocketTypes;
 import forestry.api.core.circuits.ICircuit;
@@ -22,11 +23,9 @@ public class GuiSolderingIron extends GuiForestry<ContainerSolderingIron> {
 	private final SolderingIronInventory itemInventory;
 
 	public GuiSolderingIron(ContainerSolderingIron container, Inventory inv, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/solder.png", container, inv, title);
+		super(Constants.TEXTURE_PATH_GUI + "/solder.png", container, inv, title, 176, 205);
 
 		this.itemInventory = container.getItemInventory();
-		this.imageWidth = 176;
-		this.imageHeight = 205;
 	}
 
 	@Override
@@ -35,7 +34,7 @@ public class GuiSolderingIron extends GuiForestry<ContainerSolderingIron> {
 
 		ICircuitLayout layout = this.menu.getLayout();
 		Component title = layout.getName();
-		graphics.drawString(this.font, title, this.leftPos + 8 + this.textLayout.getCenteredOffset(title, 138), this.topPos + 16, ColourProperties.INSTANCE.get("gui.screen"), false);
+		graphics.text(this.font, title, this.leftPos + 8 + this.textLayout.getCenteredOffset(title, 138), this.topPos + 16, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.screen")), false);
 
 		for (int i = 0; i < 4; i++) {
 			Component description;
@@ -48,14 +47,14 @@ public class GuiSolderingIron extends GuiForestry<ContainerSolderingIron> {
 			}
 
 			int row = i * 20;
-			graphics.drawString(this.font, description, this.leftPos + 32, this.topPos + 36 + row, ColourProperties.INSTANCE.get("gui.screen"), false);
+			graphics.text(this.font, description, this.leftPos + 32, this.topPos + 36 + row, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.screen")), false);
 
 			if (tube.isEmpty()) {
 				if (ForestryCircuitSocketTypes.FARM == layout.getSocketType()) {
 					Direction farmDirection = HorizontalDirection.VALUES.get(i);
 					String farmDirectionString = farmDirection.toString().toLowerCase(Locale.ENGLISH);
 					Component localizedDirection = Component.translatable("for.gui.solder." + farmDirectionString);
-					graphics.drawString(this.font, localizedDirection, this.leftPos + 17, this.topPos + 36 + row, ColourProperties.INSTANCE.get("gui.screen"), false);
+					graphics.text(this.font, localizedDirection, this.leftPos + 17, this.topPos + 36 + row, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.screen")), false);
 				}
 			}
 		}

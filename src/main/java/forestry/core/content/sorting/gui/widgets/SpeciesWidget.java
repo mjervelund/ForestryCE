@@ -1,7 +1,7 @@
 package forestry.core.content.sorting.gui.widgets;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import com.google.common.collect.ImmutableSet;
-import com.mojang.blaze3d.systems.RenderSystem;
 import forestry.api.IForestryApi;
 import forestry.api.core.tooltips.ToolTip;
 import forestry.api.core.genetics.IBreedingTracker;
@@ -69,8 +69,7 @@ public class SpeciesWidget extends Widget implements ISelectableProvider<ISpecie
 		}
 
 		if (this.gui.selection.isSame(this)) {
-			RenderSystem.setShaderTexture(0, SelectionWidget.TEXTURE);
-			graphics.blit(SelectionWidget.TEXTURE, x - 1, y - 1, 212, 0, 18, 18);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, SelectionWidget.TEXTURE, x - 1, y - 1, 212, 0, 18, 18, 256, 256);
 		}
 	}
 

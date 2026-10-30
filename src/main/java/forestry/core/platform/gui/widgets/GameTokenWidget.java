@@ -1,6 +1,7 @@
 package forestry.core.platform.gui.widgets;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.util.ARGB;
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.api.client.ForestrySprites;
 import forestry.api.client.IForestryClientApi;
 import forestry.api.core.tooltips.ToolTip;
@@ -46,14 +47,8 @@ public class GameTokenWidget extends Widget {
 
 		int tokenColour = token.getTokenColour();
 
-		float colorR = (tokenColour >> 16 & 255) / 255.0F;
-		float colorG = (tokenColour >> 8 & 255) / 255.0F;
-		float colorB = (tokenColour & 255) / 255.0F;
-
-		RenderSystem.enableDepthTest();
-		RenderSystem.setShaderColor(colorR, colorG, colorB, 1.0f);
-		graphics.blit(this.manager.gui.textureFile, startX + this.xPos, startY + this.yPos, 228, 0, 22, 22);
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		// 26.x: the tint is passed to blit instead of the shader colour
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.manager.gui.textureFile, startX + this.xPos, startY + this.yPos, 228, 0, 22, 22, 256, 256, ARGB.opaque(tokenColour));
 
 		ItemStack tokenStack = this.HIDDEN_TOKEN;
 		if (token.isVisible()) {
@@ -65,11 +60,8 @@ public class GameTokenWidget extends Widget {
 		Identifier overlayToken = token.getOverlayToken();
 
 		if (overlayToken != null) {
-			RenderSystem.disableDepthTest();
-			RenderSystem.setShaderTexture(0, ForestrySprites.TEXTURE_ATLAS);
 			TextureAtlasSprite icon = IForestryClientApi.INSTANCE.getTextureManager().getSprite(overlayToken);
-			graphics.blit(startX + this.xPos + 3, startY + this.yPos + 3, 0, 16, 16, icon);
-			RenderSystem.enableDepthTest();
+			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, icon, startX + this.xPos + 3, startY + this.yPos + 3, 16, 16);
 		}
 	}
 

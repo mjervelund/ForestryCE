@@ -1,5 +1,6 @@
 package forestry.agriculture.minifarm.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.features.CoreItems;
 import forestry.core.platform.gui.GuiForestryTitled;
@@ -19,10 +20,8 @@ public class MinifarmScreen extends GuiForestryTitled<MinifarmMenu> {
 	private final AbstractMinifarmBlockEntity tile;
 
 	public MinifarmScreen(MinifarmMenu container, Inventory playerInventory, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/planter.png", container, playerInventory, title);
+		super(Constants.TEXTURE_PATH_GUI + "/planter.png", container, playerInventory, title, 202, 192);
 		this.tile = container.getTile();
-		this.imageWidth = 202;
-		this.imageHeight = 192;
 
 		List<ItemStack> resourceStacks = this.tile.createResourceStacks();
 		List<ItemStack> germlingStacks = this.tile.createGermlingStacks();
@@ -79,7 +78,7 @@ public class MinifarmScreen extends GuiForestryTitled<MinifarmMenu> {
 		// Fuel remaining
 		int fertilizerRemain = this.tile.getStoredFertilizerScaled(16);
 		if (fertilizerRemain > 0) {
-			graphics.blit(this.textureFile, this.leftPos + 101, this.topPos + 21 + 17 - fertilizerRemain, this.imageWidth, 17 - fertilizerRemain, 4, fertilizerRemain);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 101, this.topPos + 21 + 17 - fertilizerRemain, this.imageWidth, 17 - fertilizerRemain, 4, fertilizerRemain, 256, 256);
 		}
 	}
 }

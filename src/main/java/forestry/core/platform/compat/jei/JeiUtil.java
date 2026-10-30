@@ -1,5 +1,6 @@
 package forestry.core.platform.compat.jei;
 
+import forestry.core.platform.client.ForestryColors;
 import forestry.Forestry;
 import forestry.api.core.genetics.ILifeStage;
 import forestry.api.core.genetics.ISpecies;
@@ -152,7 +153,7 @@ public class JeiUtil {
 	private static void drawCentered(GuiGraphicsExtractor graphics, Font font, String line, float x, float y, int color) {
 		int width = font.width(line);
 
-		graphics.drawString(font, line, x - (width / 2f), y, color, false);
+		graphics.text(font, line, x - (width / 2f), y, ForestryColors.textColor(color), false);
 	}
 	// End of JEI Bees
 

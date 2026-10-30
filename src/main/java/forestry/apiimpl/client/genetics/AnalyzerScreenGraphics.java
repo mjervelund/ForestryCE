@@ -1,5 +1,6 @@
 package forestry.apiimpl.client.genetics;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.api.client.ForestrySprites;
 import forestry.api.client.IForestryClientApi;
 import forestry.api.client.InteractableTextOptions;
@@ -147,7 +148,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 				int x = this.currentX + (active ? COLUMN_1 : COLUMN_2) + this.font.width(newText) - 3;
 				int y = this.currentY - 5;
 
-				this.graphics.blit(x, y, 0, 16, 16, sprite);
+				this.graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, x, y, 16, 16);
 
 				return newText;
 			}
@@ -197,7 +198,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 				});
 				int x = this.currentX - 16 + (right ? COLUMN_2 : COLUMN_1);
 				int y = this.currentY - 4;
-				this.graphics.blit(x, y, 0, 16, 16, sprite);
+				this.graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, x, y, 16, 16);
 
 				// format text
 				options.setColor(PortableAnalyzerScreen.getColorCoding(allele.dominant()));
@@ -282,7 +283,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 			text = withStyle(text, options.applyStyle(Style.EMPTY));
 		}
 
-		this.graphics.drawString(this.font, text, minX, minY, color, dropShadow);
+		this.graphics.text(this.font, text, minX, minY, ForestryColors.textColor(color), dropShadow);
 	}
 
 	@Override
@@ -308,7 +309,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 			}
 		}
 
-		this.graphics.renderTooltip(this.font, styledTooltip, Optional.empty(), x, y);
+		this.graphics.setTooltipForNextFrame(this.font, styledTooltip, Optional.empty(), x, y);
 	}
 
 	@Override
@@ -381,8 +382,8 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 			drawIcon(34, 0, mutation.getResult().cast(), iconGetter);
 		} else {
 			// draw question marks
-			this.graphics.blit(this.texture, this.currentX, this.currentY, 78, 240, 16, 16);
-			this.graphics.blit(this.texture, this.currentX + 33, this.currentY, 78, 240, 16, 16);
+			this.graphics.blit(RenderPipelines.GUI_TEXTURED, this.texture, this.currentX, this.currentY, 78, 240, 16, 16, 256, 256);
+			this.graphics.blit(RenderPipelines.GUI_TEXTURED, this.texture, this.currentX + 33, this.currentY, 78, 240, 16, 16, 256, 256);
 		}
 
 		// draw arrow
@@ -394,7 +395,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 			case LOWEST -> 5;
 			default -> 0;
 		};
-		this.graphics.blit(this.texture, this.currentX + 18, this.currentY + 4, textureU, 247, 15, 9);
+		this.graphics.blit(RenderPipelines.GUI_TEXTURED, this.texture, this.currentX + 18, this.currentY + 4, textureU, 247, 15, 9, 256, 256);
 		if (researched) {
 			addVerticalSpacing(5);
 			drawText(Component.literal("+"), 27, new InteractableTextOptions().setColor(ForestryColors.BLACK));

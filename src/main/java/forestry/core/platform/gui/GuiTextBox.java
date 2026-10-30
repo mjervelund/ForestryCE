@@ -1,5 +1,6 @@
 package forestry.core.platform.gui;
 
+import forestry.core.platform.client.ForestryColors;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
@@ -78,7 +79,7 @@ public class GuiTextBox extends EditBox {
 				break;
 			}
 
-			graphics.drawString(this.font, line, startX, lineY, textColour);
+			graphics.text(this.font, line, startX, lineY, ForestryColors.textColor(textColour));
 			lineY += this.font.lineHeight;
 
 			count++;

@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 public class SocketWidget extends Widget {
 
@@ -63,7 +63,7 @@ public class SocketWidget extends Widget {
 		ItemStack itemstack = Minecraft.getInstance().player.containerMenu.getCarried();
 
 		if (itemstack.isEmpty()) {
-			if (mouseButton == GLFW.GLFW_MOUSE_BUTTON_MIDDLE) {
+			if (mouseButton == InputConstants.MOUSE_BUTTON_MIDDLE) {
 
 			}
 			return;

@@ -1,5 +1,6 @@
 package forestry.core.platform.gui.widgets;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.api.core.tooltips.ToolTip;
 import forestry.core.content.escritoire.GuiEscritoire;
 import forestry.core.platform.network.packets.PacketGuiSelectRequest;
@@ -22,8 +23,7 @@ public class ProbeButton extends Widget {
 
 	@Override
 	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
-		graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-		graphics.blit(this.manager.gui.textureFile, startX + this.xPos, startY + this.yPos, 228, this.pressed ? 47 : 22, this.width, this.height);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.manager.gui.textureFile, startX + this.xPos, startY + this.yPos, 228, this.pressed ? 47 : 22, this.width, this.height, 256, 256);
 	}
 
 	@Override

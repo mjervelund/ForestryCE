@@ -1,15 +1,15 @@
 package forestry.core.platform.gui.buttons;
 
+import net.minecraft.util.ARGB;
+import net.minecraft.client.renderer.RenderPipelines;
 import com.mojang.blaze3d.systems.RenderSystem;
 import forestry.api.ForestryConstants;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.util.RenderUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.Mth;
 
 public class GuiBetterButton extends Button {
 	public static final Identifier TEXTURE = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/buttons.png");
@@ -21,21 +21,14 @@ public class GuiBetterButton extends Button {
 		this.texture = texture;
 	}
 
+	// 26.x: Button is abstract; the content is drawn here (the label is always empty)
 	@Override
-	public void renderWidget(GuiGraphicsExtractor graphics, int mX, int mY, float partialTick) {
+	protected void extractContents(GuiGraphicsExtractor graphics, int mX, int mY, float partialTick) {
 		int xOffset = this.texture.getX();
 		int yOffset = this.texture.getY();
 		int h = this.height;
 		int w = this.width;
 
-		// VANILLA COPY EXCEPT FOR TEXTURE AND COORDINATES
-		Minecraft minecraft = Minecraft.getInstance();
-		graphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
-		RenderSystem.enableBlend();
-		RenderSystem.enableDepthTest();
-		graphics.blit(TEXTURE, getX(), getY(), xOffset, yOffset + RenderUtil.getYImage(this) * h, w, h);
-		graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-		int i = getFGColor();
-		this.renderString(graphics, minecraft.font, i | Mth.ceil(this.alpha * 255.0F) << 24);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, getX(), getY(), xOffset, yOffset + RenderUtil.getYImage(this) * h, w, h, 256, 256, ARGB.white(this.alpha));
 	}
 }

@@ -54,11 +54,11 @@ public class RainmakerRecipeCategory extends ForestryRecipeCategory<RainmakerJei
 		Component speed = Component.translatable("for.jei.rainmaker.speed", recipe.fuel().speed());
 
 		Font font = Minecraft.getInstance().font;
-		graphics.drawString(font, effect, 24, 0, ForestryColors.DARK_GRAY, false);
-		graphics.drawString(font, speed, 24, 10, ForestryColors.GRAY, false);
+		graphics.text(font, effect, 24, 0, ForestryColors.textColor(ForestryColors.DARK_GRAY), false);
+		graphics.text(font, speed, 24, 10, ForestryColors.textColor(ForestryColors.GRAY), false);
 		if (!recipe.fuel().reverse()) {
 			Component duration = Component.translatable("for.jei.rainmaker.duration", recipe.fuel().duration());
-			graphics.drawString(font, duration, 24, 20, ForestryColors.GRAY, false);
+			graphics.text(font, duration, 24, 20, ForestryColors.textColor(ForestryColors.GRAY), false);
 		}
 	}
 

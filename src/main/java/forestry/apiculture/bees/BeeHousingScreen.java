@@ -1,5 +1,6 @@
 package forestry.apiculture.bees;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.render.EnumTankLevel;
@@ -23,9 +24,8 @@ public class BeeHousingScreen extends GuiForestryTitled<BeeHousingMenu> {
 	}
 
 	public BeeHousingScreen(BeeHousingMenu container, Inventory inv, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + container.getIcon().path, container, inv, title);
+		super(Constants.TEXTURE_PATH_GUI + container.getIcon().path, container, inv, title, DEFAULT_IMAGE_WIDTH, 190);
 		this.delegate = container.getDelegate();
-		this.imageHeight = 190;
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class BeeHousingScreen extends GuiForestryTitled<BeeHousingMenu> {
 		int i = 176 + rated.getLevelScaled(16);
 		int k = 0;
 
-		graphics.blit(this.textureFile, x, y + 46 - height, i, k + 46 - height, 4, height);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, x, y + 46 - height, i, k + 46 - height, 4, height, 256, 256);
 	}
 
 	@Override

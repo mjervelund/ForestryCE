@@ -1,5 +1,7 @@
 package forestry.core.platform.gui;
 
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import com.google.common.collect.ImmutableList;
 import forestry.api.apiculture.IApiaristTracker;
 import forestry.api.core.genetics.*;
@@ -48,11 +50,9 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 	private boolean scrolling;
 
 	public GuiNaturalistInventory(C menu, Inventory playerInv, Component name) {
-		super(Constants.TEXTURE_PATH_GUI + "/naturalistinventory.png", menu, playerInv, name);
+		super(Constants.TEXTURE_PATH_GUI + "/naturalistinventory.png", menu, playerInv, name, 176, 189);
 
 		this.speciesType = menu.getSpeciesType();
-		this.imageWidth = 176;
-		this.imageHeight = 189;
 
 		// todo have one place where icon stacks are stored
 		for (ISpecies species : this.speciesType.getAllSpecies()) {
@@ -71,28 +71,33 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 	}
 
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+		double mouseX = event.x();
+		double mouseY = event.y();
+		int mouseButton = event.button();
 		if (mouseButton == 0 && isOverScrollBar(mouseX, mouseY)) {
 			this.scrolling = true;
 			scrollTo(mouseY);
 			return true;
 		}
-		return super.mouseClicked(mouseX, mouseY, mouseButton);
+		return super.mouseClicked(event, doubleClick);
 	}
 
 	@Override
-	public boolean mouseDragged(double mouseX, double mouseY, int mouseButton, double dragX, double dragY) {
+	public boolean mouseDragged(MouseButtonEvent event, double dragX, double dragY) {
+		double mouseY = event.y();
+		int mouseButton = event.button();
 		if (this.scrolling && mouseButton == 0) {
 			scrollTo(mouseY);
 			return true;
 		}
-		return super.mouseDragged(mouseX, mouseY, mouseButton, dragX, dragY);
+		return super.mouseDragged(event, dragX, dragY);
 	}
 
 	@Override
-	public boolean mouseReleased(double mouseX, double mouseY, int mouseButton) {
+	public boolean mouseReleased(MouseButtonEvent event) {
 		this.scrolling = false;
-		return super.mouseReleased(mouseX, mouseY, mouseButton);
+		return super.mouseReleased(event);
 	}
 
 	@Override
@@ -105,19 +110,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 	}
 
 	private void drawScrollBar(GuiGraphicsExtractor graphics) {
-		graphics.blit(
-			this.textureFile,
-			this.leftPos + SCROLL_X + 1,
-			this.topPos + SCROLL_Y,
-			SCROLL_WIDTH,
-			SCROLL_HEIGHT,
-			SCROLL_U,
-			SCROLL_V,
-			SCROLL_WIDTH,
-			SCROLL_HEIGHT,
-			256,
-			256
-		);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + SCROLL_X + 1, this.topPos + SCROLL_Y, SCROLL_U, SCROLL_V, SCROLL_WIDTH, SCROLL_HEIGHT, SCROLL_WIDTH, SCROLL_HEIGHT, 256, 256);
 
 		int range = SCROLL_HEIGHT - SCROLLER_HEIGHT - 2;
 		int offset = 1 + Math.round(
@@ -127,6 +120,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 		);
 
 		graphics.blitSprite(
+			RenderPipelines.GUI_TEXTURED,
 			SCROLLER_SPRITE,
 			this.leftPos + SCROLL_X + 2,
 			this.topPos + SCROLL_Y + offset,
@@ -198,7 +192,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 			column = 196;
 		}
 
-		graphics.blit(this.textureFile, x, y, column, line, 16, 16);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, x, y, column, line, 16, 16, 256, 256);
 	}
 
 	private static List<List<? extends IMutation<?>>> splitMutations(List<? extends IMutation<?>> mutations, int maxMutationCount) {

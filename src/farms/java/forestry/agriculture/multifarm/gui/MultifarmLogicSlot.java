@@ -1,6 +1,5 @@
 package forestry.agriculture.multifarm.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import forestry.api.core.tooltips.ToolTip;
 import forestry.api.agriculture.IFarmLogic;
 import forestry.api.agriculture.IFarmType;
@@ -41,7 +40,6 @@ public class MultifarmLogicSlot extends Widget {
 	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		if (!getStackIndex().isEmpty()) {
 			Minecraft minecraft = Minecraft.getInstance();
-			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 			GuiUtil.drawItemStack(graphics, minecraft.font, getStackIndex(), startX + this.xPos, startY + this.yPos);
 		}
 	}

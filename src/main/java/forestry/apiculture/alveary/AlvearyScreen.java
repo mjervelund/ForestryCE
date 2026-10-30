@@ -1,5 +1,6 @@
 package forestry.apiculture.alveary;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.apiculture.alveary.multiblock.IAlvearyControllerInternal;
 import forestry.apiculture.alveary.multiblock.AbstractAlvearyBlockEntity;
 import forestry.core.platform.config.Constants;
@@ -13,9 +14,8 @@ public class AlvearyScreen extends GuiForestryTitled<AlvearyMenu> {
 	private final AbstractAlvearyBlockEntity tile;
 
 	public AlvearyScreen(AlvearyMenu container, Inventory inventory, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/alveary.png", container, inventory, title);
+		super(Constants.TEXTURE_PATH_GUI + "/alveary.png", container, inventory, title, DEFAULT_IMAGE_WIDTH, 190);
 		this.tile = container.getTile();
-		this.imageHeight = 190;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class AlvearyScreen extends GuiForestryTitled<AlvearyMenu> {
 		int i = 176 + rated.getLevelScaled(16);
 		int k = 0;
 
-		graphics.blit(this.textureFile, x, y + 46 - height, i, k + 46 - height, 4, height);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, x, y + 46 - height, i, k + 46 - height, 4, height, 256, 256);
 	}
 
 	@Override

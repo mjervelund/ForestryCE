@@ -1,5 +1,6 @@
 package forestry.core.platform.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
@@ -40,13 +41,11 @@ public class Drawable {
 	}
 
 	public void draw(GuiGraphicsExtractor graphics, int yOffset, int width, int height, int xOffset) {
-		RenderSystem.setShaderTexture(0, this.textureLocation);
 
 		// Enable correct lighting.
 		// RenderSystem.enableAlphaTest();
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-		graphics.blit(this.textureLocation, xOffset, yOffset, width, height, this.u, this.v, this.uWidth, this.vHeight, this.textureWidth, this.textureHeight);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureLocation, xOffset, yOffset, this.u, this.v, width, height, this.uWidth, this.vHeight, this.textureWidth, this.textureHeight);
 		// RenderSystem.disableAlphaTest();
 	}
 }

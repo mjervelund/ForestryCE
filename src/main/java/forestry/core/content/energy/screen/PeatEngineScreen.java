@@ -1,5 +1,6 @@
 package forestry.core.content.energy.screen;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.widgets.SocketWidget;
 import forestry.core.content.energy.menu.PeatEngineMenu;
@@ -20,7 +21,7 @@ public class PeatEngineScreen extends EngineScreen<PeatEngineMenu, PeatEngineBlo
 
 		if (this.engine.isBurning()) {
 			int progress = this.engine.getBurnTimeRemainingScaled(12);
-			graphics.blit(this.textureFile, this.leftPos + 45, this.topPos + 27 + 12 - progress, 176, 12 - progress, 14, progress + 2);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 45, this.topPos + 27 + 12 - progress, 176, 12 - progress, 14, progress + 2, 256, 256);
 		}
 	}
 }

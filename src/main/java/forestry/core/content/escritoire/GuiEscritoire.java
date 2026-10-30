@@ -1,6 +1,6 @@
 package forestry.core.content.escritoire;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import org.joml.Matrix3x2fStack;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.widgets.GameTokenWidget;
 import forestry.core.platform.gui.widgets.ProbeButton;
@@ -24,11 +24,9 @@ public class GuiEscritoire extends GuiForestry<ContainerEscritoire> {
 	private final TileEscritoire tile;
 
 	public GuiEscritoire(ContainerEscritoire container, Inventory inv, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/escritoire.png", container, inv, title);
+		super(Constants.TEXTURE_PATH_GUI + "/escritoire.png", container, inv, title, 228, 235);
 
 		this.tile = container.getTile();
-		this.imageWidth = 228;
-		this.imageHeight = 235;
 
 		this.widgetManager.add(new ProbeButton(this, this.widgetManager, 14, 16));
 
@@ -81,9 +79,9 @@ public class GuiEscritoire extends GuiForestry<ContainerEscritoire> {
 
         this.textLayout.startPage(graphics);
 		{
-			PoseStack stack = graphics.pose();
-			stack.scale(0.5F, 0.5F, 0.5F);
-			stack.translate(this.leftPos + 170, this.topPos + 10, 0.0);
+			Matrix3x2fStack stack = graphics.pose();
+			stack.scale(0.5F, 0.5F);
+			stack.translate(this.leftPos + 170, this.topPos + 10);
 
             this.textLayout.newLine();
             this.textLayout.newLine();

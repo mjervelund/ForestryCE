@@ -12,6 +12,14 @@ public class ForestryColors {
 	public static final int RECESSIVE_BLUE = 0x3687ec;
 	public static final int BLACK = 0x000000;
 
+	/**
+	 * 26.x draws text in ARGB and skips a colour with zero alpha. 1.21.1's Font made colours with alpha below
+	 * 4 opaque (Font#adjustColor), and Forestry's text colours are plain RGB, so this restores that.
+	 */
+	public static int textColor(int color) {
+		return (color & 0xFC000000) == 0 ? color | 0xFF000000 : color;
+	}
+
 	public static int color(int r, int g, int b) {
 		return (0xff << 24) | ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
 	}

@@ -1,5 +1,6 @@
 package forestry.core.content.machines.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.SocketWidget;
@@ -23,7 +24,7 @@ public class GuiSqueezer extends GuiForestryTitled<ContainerSqueezer> {
 	protected void drawWidgets(GuiGraphicsExtractor graphics) {
 		//TODO: Make this more consistent
 		int progress = this.tile.getProgressScaled(43);
-		graphics.blit(this.textureFile, 75, 41, 176, 60, progress, 18);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, 75, 41, 176, 60, progress, 18, 256, 256);
 
 		super.drawWidgets(graphics);
 	}

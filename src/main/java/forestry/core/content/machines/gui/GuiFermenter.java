@@ -1,5 +1,6 @@
 package forestry.core.content.machines.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.TankWidget;
@@ -25,13 +26,13 @@ public class GuiFermenter extends GuiForestryTitled<ContainerFermenter> {
 		// Fuel remaining
 		int fuelRemain = this.tile.getBurnTimeRemainingScaled(16);
 		if (fuelRemain > 0) {
-			graphics.blit(this.textureFile, this.leftPos + 98, this.topPos + 46 + 17 - fuelRemain, 176, 78 + 17 - fuelRemain, 4, fuelRemain);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 98, this.topPos + 46 + 17 - fuelRemain, 176, 78 + 17 - fuelRemain, 4, fuelRemain, 256, 256);
 		}
 
 		// Raw bio mush remaining
 		int bioRemain = this.tile.getFermentationProgressScaled(16);
 		if (bioRemain > 0) {
-			graphics.blit(this.textureFile, this.leftPos + 74, this.topPos + 32 + 17 - bioRemain, 176, 60 + 17 - bioRemain, 4, bioRemain);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 74, this.topPos + 32 + 17 - bioRemain, 176, 60 + 17 - bioRemain, 4, bioRemain, 256, 256);
 		}
 	}
 

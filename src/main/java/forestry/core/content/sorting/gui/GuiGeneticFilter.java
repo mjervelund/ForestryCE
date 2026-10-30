@@ -1,5 +1,7 @@
 package forestry.core.content.sorting.gui;
 
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.KeyEvent;
 import com.mojang.blaze3d.systems.RenderSystem;
 import forestry.api.core.genetics.filter.IFilterLogic;
 import forestry.core.platform.config.Constants;
@@ -29,9 +31,7 @@ public class GuiGeneticFilter extends GuiForestryTitled<ContainerGeneticFilter> 
 	private EditBox searchField;
 
 	public GuiGeneticFilter(ContainerGeneticFilter container, Inventory inventory, Component title) {
-		super(Constants.TEXTURE_PATH_GUI + "/filter.png", container, inventory, title);
-        this.imageHeight = 222;
-        this.imageWidth = 212;
+		super(Constants.TEXTURE_PATH_GUI + "/filter.png", container, inventory, title, 212, 222);
 		this.tile = container.getTile();
 
 		for (int i = 0; i < 6; i++) {
@@ -106,20 +106,19 @@ public class GuiGeneticFilter extends GuiForestryTitled<ContainerGeneticFilter> 
 	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		if (this.searchField != null) {
-			this.searchField.render(graphics, mouseX, mouseY, partialTicks);
+			this.searchField.extractRenderState(graphics, mouseX, mouseY, partialTicks);
 		}
 	}
 
 	@Override
-	public boolean keyPressed(int key, int scanCode, int modifiers) {
-		if (this.searchField != null && this.searchField.keyPressed(key, scanCode, modifiers)) {
+	public boolean keyPressed(KeyEvent event) {
+		if (this.searchField != null && this.searchField.keyPressed(event)) {
             this.scrollBar.setValue(0);
             this.selection.filterEntries(this.searchField.getValue());
 			return true;
 		} else {
-			return super.keyPressed(key, scanCode, modifiers);
+			return super.keyPressed(event);
 		}
 	}
 
@@ -134,13 +133,15 @@ public class GuiGeneticFilter extends GuiForestryTitled<ContainerGeneticFilter> 
 	}
 
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-		if (super.mouseClicked(mouseX, mouseY, mouseButton)) {
+	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+		double mouseX = event.x();
+		double mouseY = event.y();
+		if (super.mouseClicked(event, doubleClick)) {
 			return true;
 		}
 
 		if (this.searchField != null) {
-            this.searchField.mouseClicked(mouseX, mouseY, mouseButton);
+            this.searchField.mouseClicked(event, doubleClick);
 		}
 		Widget widget = this.widgetManager.getAtPosition(mouseX - this.leftPos, mouseY - this.topPos);
 		if (widget == null) {

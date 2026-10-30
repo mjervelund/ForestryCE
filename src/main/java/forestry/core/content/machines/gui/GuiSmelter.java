@@ -1,5 +1,6 @@
 package forestry.core.content.machines.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.content.machines.tiles.TileSmelter;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
@@ -23,17 +24,13 @@ public class GuiSmelter extends GuiForestryTitled<ContainerSmelter> {
 
 		// Smelting progress bar
 		int progress = this.tile.getProgressScaled(50);
-		graphics.blit(this.textureFile,
-			this.leftPos + 81, this.topPos + 39, // where to draw thing
+		graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 81, this.topPos + 39, // where to draw thing
 			176, 52, // coordinates of thing to be drawn
-			progress, 16); // width and height of thing to be drawn
+			progress, 16, 256, 256); // width and height of thing to be drawn
 
 		// Status indicator. Kinda redundant but it's a nice visual indicator
 		if (!this.tile.getErrorLogic().hasErrors()) {
-			graphics.blit(this.textureFile,
-				this.leftPos + 96, this.topPos + 58,
-				176, 68,
-				14, 14);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 96, this.topPos + 58, 176, 68, 14, 14, 256, 256);
 		}
 	}
 

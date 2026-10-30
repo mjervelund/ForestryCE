@@ -1,5 +1,7 @@
 package forestry.core.content.sorting.gui.widgets;
 
+import net.minecraft.client.renderer.RenderPipelines;
+import forestry.core.platform.client.ForestryColors;
 import forestry.api.ForestryConstants;
 import forestry.api.core.tooltips.ToolTip;
 import forestry.core.platform.config.Constants;
@@ -52,10 +54,10 @@ public class SelectionWidget extends Widget {
 			return;
 		}
 
-		graphics.blit(TEXTURE, startX + this.xPos, startY + this.yPos, 0, 0, this.width, this.height);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, startX + this.xPos, startY + this.yPos, 0, 0, this.width, this.height, 256, 256);
         this.logic.draw(graphics);
 
-		graphics.drawString(this.gui.font(), Component.translatable("for.gui.filter.seletion"), startX + this.xPos + 12, startY + this.yPos + 4, this.manager.gui.getFontColor().get("gui.title"));
+		graphics.text(this.gui.font(), Component.translatable("for.gui.filter.seletion"), startX + this.xPos + 12, startY + this.yPos + 4, ForestryColors.textColor(this.manager.gui.getFontColor().get("gui.title")));
 	}
 
 	@Override

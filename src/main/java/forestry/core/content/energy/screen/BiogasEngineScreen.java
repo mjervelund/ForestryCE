@@ -1,5 +1,6 @@
 package forestry.core.content.energy.screen;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.widgets.SocketWidget;
 import forestry.core.platform.gui.widgets.TankWidget;
@@ -30,7 +31,7 @@ public class BiogasEngineScreen extends EngineScreen<BiogasEngineMenu, BiogasEng
 			temperature = 16;
 		}
 		if (temperature > 0) {
-			graphics.blit(this.textureFile, this.leftPos + 53, this.topPos + 47 + 16 - temperature, 176, 60 + 16 - temperature, 4, temperature);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, this.textureFile, this.leftPos + 53, this.topPos + 47 + 16 - temperature, 176, 60 + 16 - temperature, 4, temperature, 256, 256);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package forestry.core.platform.gui;
 
+import forestry.core.platform.client.ForestryColors;
 import forestry.core.platform.render.ColourProperties;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -25,7 +26,7 @@ public class TextLayoutHelper {
 
 	public void startPage(GuiGraphicsExtractor matrices) {
         this.line = LINE_HEIGHT;
-		matrices.pose().pushPose();
+		matrices.pose().pushMatrix();
 	}
 
 	public void startPage(GuiGraphicsExtractor matrices, int column0, int column1, int column2) {
@@ -53,7 +54,7 @@ public class TextLayoutHelper {
 	}
 
 	public void endPage(GuiGraphicsExtractor graphics) {
-		graphics.pose().popPose();
+		graphics.pose().popMatrix();
 	}
 
 	public void drawRow(GuiGraphicsExtractor graphics, Component text0, Component text1, Component text2, int colour0, int colour1, int colour2) {
@@ -80,7 +81,7 @@ public class TextLayoutHelper {
 	}
 
 	public void drawCenteredLine(GuiGraphicsExtractor graphics, Component text, int x, int y, int width, int color) {
-		graphics.drawString(this.font, text, this.screen.getGuiLeft() + x + getCenteredOffset(text, width), this.screen.getGuiTop() + y + this.line, color, false);
+		graphics.text(this.font, text, this.screen.getGuiLeft() + x + getCenteredOffset(text, width), this.screen.getGuiTop() + y + this.line, ForestryColors.textColor(color), false);
 	}
 
 	public void drawLine(GuiGraphicsExtractor graphics, String text, int x, int color) {
@@ -92,11 +93,11 @@ public class TextLayoutHelper {
 	}
 
 	public void drawLine(GuiGraphicsExtractor graphics, String text, int x, int y, int color) {
-		graphics.drawString(this.font, text, this.screen.getGuiLeft() + x, this.screen.getGuiTop() + y + this.line, color, false);
+		graphics.text(this.font, text, this.screen.getGuiLeft() + x, this.screen.getGuiTop() + y + this.line, ForestryColors.textColor(color), false);
 	}
 
 	public void drawLine(GuiGraphicsExtractor graphics, Component text, int x, int y, int color) {
-		graphics.drawString(this.font, text, this.screen.getGuiLeft() + x, this.screen.getGuiTop() + y + this.line, color, false);
+		graphics.text(this.font, text, this.screen.getGuiLeft() + x, this.screen.getGuiTop() + y + this.line, ForestryColors.textColor(color), false);
 	}
 
 	public void drawSplitLine(GuiGraphicsExtractor graphics, String text, int x, int maxWidth, int color) {
@@ -104,7 +105,7 @@ public class TextLayoutHelper {
 	}
 
 	public void drawSplitLine(GuiGraphicsExtractor graphics, Component text, int x, int maxWidth, int color) {
-		graphics.drawWordWrap(this.font, text, this.screen.getGuiLeft() + x, this.screen.getGuiTop() + this.line, maxWidth, color);
+		graphics.textWithWordWrap(this.font, text, this.screen.getGuiLeft() + x, this.screen.getGuiTop() + this.line, maxWidth, ForestryColors.textColor(color), false);
 	}
 
 	public int getCenteredOffset(Component text) {
