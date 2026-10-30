@@ -27,7 +27,7 @@ public class VillagerJigsaw {
 	}
 
 	private static void addVillagerHouse(Registry<StructureTemplatePool> pools, Registry<StructureProcessorList> processors, String biome, int weight) {
-		addToJigsawPattern(pools, Identifier.parse("village/" + biome + "/houses"), new ApiaristPoolElement(Either.left(ForestryConstants.forestry("village/apiarist_house_" + biome + "_1")), processors.getHolderOrThrow(EMPTY_PROCESSOR_LIST_KEY), StructureTemplatePool.Projection.RIGID, Optional.empty()), weight);
+		addToJigsawPattern(pools, Identifier.parse("village/" + biome + "/houses"), new ApiaristPoolElement(Either.left(ForestryConstants.forestry("village/apiarist_house_" + biome + "_1")), processors.getOrThrow(EMPTY_PROCESSOR_LIST_KEY), StructureTemplatePool.Projection.RIGID, Optional.empty()), weight);
 	}
 
 	public static void addToJigsawPattern(Registry<StructureTemplatePool> pools, Identifier pool, StructurePoolElement newPiece, int weight) {

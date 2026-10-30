@@ -50,7 +50,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
@@ -179,9 +179,9 @@ public class ModuleCore extends BlankForestryModule {
 		}
 	}
 
-	private static void onAddReloadListeners(AddReloadListenerEvent event) {
-		event.addListener((prepBarrier, resourceManager, prepProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> {
-			return prepBarrier.wait(Unit.INSTANCE).thenRunAsync(() -> {
+	private static void onAddReloadListeners(AddServerReloadListenersEvent event) {
+		event.addListener(ForestryConstants.forestry("recipe_caches"), (sharedState, taskExecutor, barrier, reloadExecutor) -> {
+			return barrier.wait(Unit.INSTANCE).thenRunAsync(() -> {
 				RecipeManagers.invalidateCaches();
 				NetworkUtil.sendToAllPlayers(new RecipeCachePacket());
 			});
@@ -190,11 +190,11 @@ public class ModuleCore extends BlankForestryModule {
 		// Load datapack taxa from the "taxon" folder and merge them onto the code-registered taxonomy. Registered
 		// before any module's species loader: a species' genus is resolved to a taxon as it is projected, so taxa
 		// must exist first.
-		event.addListener(TaxonManager.INSTANCE);
+		event.addListener(ForestryConstants.forestry("taxa"), TaxonManager.INSTANCE);
 		// Flower types are shared by bees and butterflies, so base loads them. They must be in place
 		// before any pollinating species is projected, which is why this sits with the taxa rather
 		// than in apiculture's listener
-		event.addListener(FlowerTypeManager.INSTANCE);
+		event.addListener(ForestryConstants.forestry("flower_types"), FlowerTypeManager.INSTANCE);
 
 		// Modules load in dependency order (see ForestryModuleManager), which is also the order their data
 		// depends on: core's taxa, then apiculture's flower types/effects/species, then arboriculture's
@@ -211,8 +211,8 @@ public class ModuleCore extends BlankForestryModule {
 		// after vanilla ones (and the reload barrier applies listeners in order), so by the apply phase the vanilla
 		// RecipeMap is fully populated. Run on the game executor since this mutates shared species-type state.
 		RecipeManager recipeManager = event.getServerResources().getRecipeManager();
-		event.addListener((prepBarrier, resourceManager, prepProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> {
-			return prepBarrier.wait(Unit.INSTANCE).thenRunAsync(() -> GeneticsReloadHandler.rebuildMutations(recipeManager.recipeMap()), gameExecutor);
+		event.addListener(ForestryConstants.forestry("mutations"), (sharedState, taskExecutor, barrier, reloadExecutor) -> {
+			return barrier.wait(Unit.INSTANCE).thenRunAsync(() -> GeneticsReloadHandler.rebuildMutations(recipeManager.recipeMap()), reloadExecutor);
 		});
 	}
 

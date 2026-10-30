@@ -16,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -106,12 +106,12 @@ public class FluidContainerItem extends ItemForestry implements ITintedItem {
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack itemstack) {
+	public ItemUseAnimation getUseAnimation(ItemStack itemstack) {
 		DrinkProperties drinkProperties = getDrinkProperties(itemstack);
 		if (drinkProperties != null) {
-			return UseAnim.DRINK;
+			return ItemUseAnimation.DRINK;
 		} else {
-			return UseAnim.NONE;
+			return ItemUseAnimation.NONE;
 		}
 	}
 

@@ -4,7 +4,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 
 public class ItemForestryFood extends Item {
 	private boolean isDrink = false;
@@ -41,11 +41,11 @@ public class ItemForestryFood extends Item {
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack itemstack) {
+	public ItemUseAnimation getUseAnimation(ItemStack itemstack) {
 		if (this.isDrink) {
-			return UseAnim.DRINK;
+			return ItemUseAnimation.DRINK;
 		} else {
-			return UseAnim.EAT;
+			return ItemUseAnimation.EAT;
 		}
 	}
 

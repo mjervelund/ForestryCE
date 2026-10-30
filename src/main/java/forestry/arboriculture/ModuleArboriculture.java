@@ -7,7 +7,7 @@ import forestry.api.ForestryConstants;
 import forestry.arboriculture.trees.genetics.TreeSpeciesManager;
 import forestry.arboriculture.network.TreeSpeciesSyncPacket;
 import forestry.core.platform.util.NetworkUtil;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import forestry.arboriculture.network.ArboriculturePacketIds;
 
@@ -78,11 +78,11 @@ public class ModuleArboriculture extends BlankForestryModule {
 	}
 
 	@Override
-	public void registerReloadListeners(AddReloadListenerEvent event) {
+	public void registerReloadListeners(AddServerReloadListenersEvent event) {
 		// Load tree species from the "tree_species" datapack folder and rebuild the live species map from
 		// them. Core registers the mutation rebuild after every module, and mutations must resolve
 		// species that already exist in the live map.
-		event.addListener(TreeSpeciesManager.INSTANCE);
+		event.addListener(ForestryConstants.forestry("tree_species"), TreeSpeciesManager.INSTANCE);
 	}
 
 	@Override

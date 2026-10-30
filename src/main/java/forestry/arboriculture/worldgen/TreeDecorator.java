@@ -81,7 +81,7 @@ public class TreeDecorator implements Feature {
 		// correctly dedupe ITree instances with map instead of using set
 		IdentityHashMap<ITreeSpecies, ITree> treeInstances = new IdentityHashMap<>(allSpecies.size());
 
-		level.registryAccess().registryOrThrow(Registries.BIOME).holders().forEach(biome -> {
+		level.registryAccess().lookupOrThrow(Registries.BIOME).holders().forEach(biome -> {
 			List<ITree> trees = BIOME_CACHE.computeIfAbsent(biome.key(), k -> new ArrayList<>());
 			TemperatureType temperature = manager.getTemperature(biome);
 			HumidityType humidity = manager.getHumidity(biome);

@@ -196,12 +196,12 @@ public class CoreClientHandler implements IClientModuleHandler {
 		event.registerBlockEntityRenderer(FactoryTiles.RAINMAKER.tileType(), ctx -> new RenderMill(ctx, Constants.TEXTURE_PATH_BLOCK + "/rainmaker_"));
 	}
 
-	private static void registerReloadListeners(RegisterClientReloadListenersEvent event) {
-		event.registerReloadListener(((ForestryTextureManager) IForestryClientApi.INSTANCE.getTextureManager()).getSpriteUploader());
-		event.registerReloadListener(ColourProperties.INSTANCE);
+	private static void registerReloadListeners(AddClientReloadListenersEvent event) {
+		event.addListener(ForestryConstants.forestry("sprites"), ((ForestryTextureManager) IForestryClientApi.INSTANCE.getTextureManager()).getSpriteUploader());
+		event.addListener(ForestryConstants.forestry("colours"), ColourProperties.INSTANCE);
 
-		event.registerReloadListener((prepBarrier, resourceManager, prepProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> {
-			return prepBarrier.wait(Unit.INSTANCE).thenRunAsync(ModelBlockCached::clear, gameExecutor);
+		event.addListener(ForestryConstants.forestry("model_cache"), (sharedState, taskExecutor, barrier, reloadExecutor) -> {
+			return barrier.wait(Unit.INSTANCE).thenRunAsync(ModelBlockCached::clear, reloadExecutor);
 		});
 	}
 

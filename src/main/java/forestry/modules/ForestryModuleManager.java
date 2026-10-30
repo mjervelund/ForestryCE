@@ -110,7 +110,7 @@ public class ForestryModuleManager implements IModuleManager {
 			module.registerEvents(modBus);
 			modBus.addListener((RegisterPayloadHandlersEvent event) -> module.registerPackets(new PacketRegistry(event.registrar(mod.getModInfo().getVersion().toString()))));
 
-			if (FMLEnvironment.dist == Dist.CLIENT) {
+			if (FMLEnvironment.getDist() == Dist.CLIENT) {
 				module.registerClientHandler(handler -> handler.registerEvents(modBus));
 			}
 		}

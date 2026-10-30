@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 // Rule of thumb for safely calling client code: client classes must be in the body of a static method
-// in another class (like this one), guarded by an if statement checking FMLEnvironment.dist == Dist.CLIENT
+// in another class (like this one), guarded by an if statement checking FMLEnvironment.getDist() == Dist.CLIENT
 // Calls to this class must be guarded by an if statement.
 // DistExecutor will be deprecated for removal in 1.20, and it doesn't work anyway.
 public class ClientsideCode {
@@ -39,7 +39,7 @@ public class ClientsideCode {
 	}
 
 	public static Registry<Fluid> getFluidRegistry() {
-		return Minecraft.getInstance().level.registryAccess().registryOrThrow(Registries.FLUID);
+		return Minecraft.getInstance().level.registryAccess().lookupOrThrow(Registries.FLUID);
 	}
 
 	public static void markForUpdate(BlockPos pos) {

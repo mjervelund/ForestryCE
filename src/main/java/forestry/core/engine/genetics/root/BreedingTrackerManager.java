@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 public enum BreedingTrackerManager implements IBreedingTrackerManager {
 	INSTANCE;
 
-	private static final SidedHandler BREEDING_HANDLER = FMLEnvironment.dist == Dist.CLIENT ? ClientsideCode.newBreedingHandler() : new ServerBreedingHandler();
+	private static final SidedHandler BREEDING_HANDLER = FMLEnvironment.getDist() == Dist.CLIENT ? ClientsideCode.newBreedingHandler() : new ServerBreedingHandler();
 
 	@Override
 	public <T extends IBreedingTracker> T getTracker(ISpeciesType<?, ?> type, LevelAccessor level, @Nullable GameProfile profile) {

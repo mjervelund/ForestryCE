@@ -1,11 +1,12 @@
 package forestry.core.engine.genetics;
 
+import net.minecraft.resources.FileToIdConverter;
+import net.minecraft.util.ExtraCodecs;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
@@ -18,7 +19,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 
 import forestry.Forestry;
 
-public abstract class SpeciesManager<D extends ISpeciesDefinition> extends SimpleJsonResourceReloadListener {
+public abstract class SpeciesManager<D extends ISpeciesDefinition> extends SimpleJsonResourceReloadListener<JsonElement> {
 	private final String folder;
 	// a supplier because the codec needs the karyotype, which does not exist at class init
 	private final Supplier<Codec<D>> codec;
@@ -27,7 +28,8 @@ public abstract class SpeciesManager<D extends ISpeciesDefinition> extends Simpl
 	private Map<Identifier, D> definitions = Map.of();
 
 	protected SpeciesManager(String folder, Supplier<Codec<D>> codec, Consumer<Map<Identifier, D>> rebuild) {
-		super(new Gson(), folder);
+		// raw JSON: apply() parses each entry with registry ops and skips bad ones
+		super(ExtraCodecs.JSON, FileToIdConverter.json(folder));
 		this.folder = folder;
 		this.codec = codec;
 		this.rebuild = rebuild;

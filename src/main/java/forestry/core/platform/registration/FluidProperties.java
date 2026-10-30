@@ -39,7 +39,7 @@ public class FluidProperties {
 	}
 
 	public static boolean resourceExists(Identifier location) {
-		if (FMLEnvironment.dist == Dist.DEDICATED_SERVER || DatagenModLoader.isRunningDataGen()) {
+		if (FMLEnvironment.getDist() == Dist.DEDICATED_SERVER || DatagenModLoader.isRunningDataGen()) {
 			return true;
 		}
 		return ClientsideCode.getResource(location.withPath(path -> "textures/" + path + ".png")).isPresent();

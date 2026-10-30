@@ -4,7 +4,7 @@ import forestry.api.client.IClientModuleHandler;
 import forestry.api.client.plugin.IClientRegistration;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
 import java.util.List;
@@ -69,7 +69,7 @@ public interface IForestryModule {
 	 *
 	 * @param event The reload listener registration event
 	 */
-	default void registerReloadListeners(AddReloadListenerEvent event) {
+	default void registerReloadListeners(AddServerReloadListenersEvent event) {
 	}
 
 	/**

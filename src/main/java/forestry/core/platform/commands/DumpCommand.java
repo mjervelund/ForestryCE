@@ -65,7 +65,7 @@ public class DumpCommand {
 	}
 
 	private static int climates(CommandContext<CommandSourceStack> ctx) {
-		List<Holder.Reference<Biome>> biomes = ctx.getSource().getLevel().registryAccess().registryOrThrow(Registries.BIOME).holders()
+		List<Holder.Reference<Biome>> biomes = ctx.getSource().getLevel().registryAccess().lookupOrThrow(Registries.BIOME).holders()
 			.toList();
 		Forestry.LOGGER.debug("Listing Forestry climates for {} biomes", biomes.size());
 
@@ -92,7 +92,7 @@ public class DumpCommand {
 	}
 
 	private static Table<HumidityType, TemperatureType, List<Identifier>> createClimatesTable(CommandContext<CommandSourceStack> ctx) {
-		List<Holder.Reference<Biome>> biomes = ctx.getSource().getLevel().registryAccess().registryOrThrow(Registries.BIOME).holders().toList();
+		List<Holder.Reference<Biome>> biomes = ctx.getSource().getLevel().registryAccess().lookupOrThrow(Registries.BIOME).holders().toList();
 		Table<HumidityType, TemperatureType, List<Identifier>> climates = HashBasedTable.create(HumidityType.VALUES.size(), TemperatureType.VALUES.size());
 		IClimateManager manager = IForestryApi.INSTANCE.getClimateManager();
 
@@ -128,7 +128,7 @@ public class DumpCommand {
 			Predicate<ItemStack> filter = backpack.get().getDefinition().getFilter();
 			ArrayList<Item> allowedItems = new ArrayList<>();
 
-			for (Item item : ctx.getSource().registryAccess().registryOrThrow(Registries.ITEM)) {
+			for (Item item : ctx.getSource().registryAccess().lookupOrThrow(Registries.ITEM)) {
 				if (filter.test(new ItemStack(item))) {
 					allowedItems.add(item);
 				}

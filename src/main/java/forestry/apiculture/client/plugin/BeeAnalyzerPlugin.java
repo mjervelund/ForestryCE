@@ -62,7 +62,7 @@ public class BeeAnalyzerPlugin implements IAnalyzerPlugin<IBeeSpecies, IBee> {
 
 				if (Minecraft.getInstance().hasShiftDown()) {
 					ClientLevel level = Minecraft.getInstance().level;
-					level.registryAccess().registryOrThrow(Registries.BLOCK).getTag(type.acceptableFlowers()).ifPresent(list -> {
+					level.registryAccess().lookupOrThrow(Registries.BLOCK).getTag(type.acceptableFlowers()).ifPresent(list -> {
 						int length = list.size();
 						int entries = Math.min(5, length);
 						boolean cycle = length > 5;

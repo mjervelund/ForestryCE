@@ -38,7 +38,7 @@ public class RecipeUtils {
 	@Nullable
 	public static RecipeMap getRecipeMap() {
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-		return server == null ? (FMLEnvironment.dist == Dist.CLIENT ? ClientsideCode.getRecipeMap() : null) : server.getRecipeManager().recipeMap();
+		return server == null ? (FMLEnvironment.getDist() == Dist.CLIENT ? ClientsideCode.getRecipeMap() : null) : server.getRecipeManager().recipeMap();
 	}
 
 	/**
@@ -49,18 +49,18 @@ public class RecipeUtils {
 		if (level.recipeAccess() instanceof RecipeManager manager) {
 			return manager.recipeMap();
 		}
-		RecipeMap map = FMLEnvironment.dist == Dist.CLIENT ? ClientsideCode.getRecipeMap() : null;
+		RecipeMap map = FMLEnvironment.getDist() == Dist.CLIENT ? ClientsideCode.getRecipeMap() : null;
 		return map != null ? map : RecipeMap.EMPTY;
 	}
 
 	public static RegistryAccess getRegistryAccess() {
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-		return server == null ? (FMLEnvironment.dist == Dist.CLIENT ? ClientsideCode.getRegistryAccess() : null) : server.registryAccess();
+		return server == null ? (FMLEnvironment.getDist() == Dist.CLIENT ? ClientsideCode.getRegistryAccess() : null) : server.registryAccess();
 	}
 
 	public static Registry<Fluid> getFluidRegistry() {
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-		return server == null ? (FMLEnvironment.dist == Dist.CLIENT ? ClientsideCode.getFluidRegistry() : null) : server.registryAccess().registryOrThrow(Registries.FLUID);
+		return server == null ? (FMLEnvironment.getDist() == Dist.CLIENT ? ClientsideCode.getFluidRegistry() : null) : server.registryAccess().lookupOrThrow(Registries.FLUID);
 	}
 
 	@Nullable

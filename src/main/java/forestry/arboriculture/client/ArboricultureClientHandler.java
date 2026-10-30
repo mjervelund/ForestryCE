@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
+import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -35,7 +35,7 @@ public class ArboricultureClientHandler implements IClientModuleHandler {
 		modBus.addListener(ArboricultureClientHandler::beforeResourceLoad);
 	}
 
-	private static void beforeResourceLoad(RegisterClientReloadListenersEvent event) {
+	private static void beforeResourceLoad(AddClientReloadListenersEvent event) {
 		for (ForestryWoodType type : ForestryWoodType.VALUES) {
 			Sheets.addWoodType(type.getWoodType());
 		}
