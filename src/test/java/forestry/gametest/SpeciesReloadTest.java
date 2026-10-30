@@ -73,7 +73,7 @@ public class SpeciesReloadTest {
 		// Species and mutations are always rebuilt together in production (species-before-mutations, since the
 		// mutation index keys species by object identity - see GeneticsReloadHandler's class doc). Re-pairing them
 		// here keeps the live state consistent for any other GameTest that runs later in this same server session.
-		GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+		GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 
 		IBeeSpeciesType type = SpeciesUtil.BEE_TYPE.get();
 		List<IBeeSpecies> allSpecies = type.getAllSpecies();

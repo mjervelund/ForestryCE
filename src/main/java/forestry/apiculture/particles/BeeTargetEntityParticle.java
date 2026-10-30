@@ -1,17 +1,17 @@
 package forestry.apiculture.particles;
 
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 
-public class BeeTargetEntityParticle extends TextureSheetParticle {
+public class BeeTargetEntityParticle extends SingleQuadParticle {
 	private final Vec3 origin;
 	private final Entity entity;
 
-	public BeeTargetEntityParticle(ClientLevel world, double x, double y, double z, Entity entity, int color) {
-		super(world, x, y, z, 0.0D, 0.0D, 0.0D);
+	public BeeTargetEntityParticle(ClientLevel world, double x, double y, double z, Entity entity, int color, TextureAtlasSprite sprite) {
+		super(world, x, y, z, 0.0D, 0.0D, 0.0D, sprite);
 		this.origin = new Vec3(x, y, z);
 		this.entity = entity;
 
@@ -73,8 +73,8 @@ public class BeeTargetEntityParticle extends TextureSheetParticle {
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	protected SingleQuadParticle.Layer getLayer() {
+		return SingleQuadParticle.Layer.OPAQUE;
 	}
 
 	// avoid calculating collisions
@@ -86,7 +86,7 @@ public class BeeTargetEntityParticle extends TextureSheetParticle {
 
 	// avoid calculating lighting for bees, it is too much processing
 	@Override
-	public int getLightColor(float p_189214_1_) {
+	public int getLightCoords(float p_189214_1_) {
 		return 15728880;
 	}
 }

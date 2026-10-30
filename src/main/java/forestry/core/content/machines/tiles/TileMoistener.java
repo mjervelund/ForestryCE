@@ -32,7 +32,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerListener;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
@@ -236,7 +236,7 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 	}
 
 	public void checkRecipe() {
-		RecipeManager manager = RecipeUtils.getRecipeManager();
+		RecipeMap manager = RecipeUtils.getRecipeMap();
 		IMoistenerRecipe sameRec = null;
 		if (manager != null) {
 			sameRec = RecipeUtils.getMoistenerRecipe(manager, getInternalInventory().getItem(InventoryMoistener.SLOT_RESOURCE));

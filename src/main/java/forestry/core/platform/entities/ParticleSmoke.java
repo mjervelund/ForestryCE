@@ -19,7 +19,6 @@ public class ParticleSmoke extends Particle {
 		this.yd *= 0.8;
 		this.zd *= 0.8;
 		this.yd = this.random.nextFloat() * 0.2F + 0.05F;
-		this.rCol = this.gCol = this.bCol = 1.0F;
 		//TODO - think width and height have to be changed now
 		//TODO - or multipleParticleScaleBy()
 		//		this.particleScale *= this.rand.nextFloat() / 4;
@@ -28,12 +27,6 @@ public class ParticleSmoke extends Particle {
 		//		this.setParticleTextureIndex(49);
 	}
 
-	@Override
-	public int getLightColor(float p_70070_1_) {
-		int i = super.getLightColor(p_70070_1_);
-		int j = i >> 16 & 255;
-		return 240 | j << 16;
-	}
 
 	/*@Override
 	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
@@ -44,14 +37,11 @@ public class ParticleSmoke extends Particle {
 		//TODO now abstract
 	}*/
 
-	@Override
-	public void render(VertexConsumer iVertexBuilder, Camera activeRenderInfo, float v) {
-
-	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;    //TODO renderType
+	public ParticleRenderType getGroup() {
+		// only spawns vanilla particles
+		return ParticleRenderType.NO_RENDER;
 	}
 
 	/**

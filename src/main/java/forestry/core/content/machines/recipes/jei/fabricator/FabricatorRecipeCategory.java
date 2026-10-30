@@ -49,7 +49,7 @@ public class FabricatorRecipeCategory extends ForestryRecipeCategory<IFabricator
 
 	private static Map<Fluid, List<IFabricatorSmeltingRecipe>> getSmeltingInputs() {
 		Map<Fluid, List<IFabricatorSmeltingRecipe>> smeltingInputs = new HashMap<>();
-		RecipeUtils.getRecipes(RecipeUtils.getRecipeManager(), FactoryRecipeTypes.FABRICATOR_SMELTING)
+		RecipeUtils.getRecipes(RecipeUtils.getRecipeMap(), FactoryRecipeTypes.FABRICATOR_SMELTING)
 			.forEach(smelting -> {
 				Fluid fluid = smelting.getResultFluid().getFluid();
 				if (!smeltingInputs.containsKey(fluid)) {

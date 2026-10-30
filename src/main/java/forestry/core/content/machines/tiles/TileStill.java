@@ -143,7 +143,7 @@ public class TileStill extends TilePowered implements WorldlyContainer, ILiquidT
 
 		if (this.currentRecipe == null || !this.currentRecipe.matches(recipeLiquid)) {
 			Level level = Objects.requireNonNull(this.level);
-			this.currentRecipe = RecipeUtils.getStillRecipe(level.getRecipeManager(), recipeLiquid);
+			this.currentRecipe = RecipeUtils.getStillRecipe(RecipeUtils.recipes(level), recipeLiquid);
 
 			int recipeTime = this.currentRecipe == null ? 0 : this.currentRecipe.getCyclesPerUnit();
 			setEnergyPerWorkCycle(ENERGY_PER_RECIPE_TIME * recipeTime);

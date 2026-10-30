@@ -184,7 +184,7 @@ public class TileFermenter extends TilePowered implements WorldlyContainer, ILiq
 		FluidStack fluid = this.resourceTank.getFluid();
 
 		if (!fluid.isEmpty()) {
-            this.currentRecipe = RecipeUtils.getFermenterRecipe(this.level.getRecipeManager(), resource, fluid);
+            this.currentRecipe = RecipeUtils.getFermenterRecipe(RecipeUtils.recipes(this.level), resource, fluid);
 		}
 
         this.fermentationTotalTime = this.fermentationTime = this.currentRecipe == null ? 0 : this.currentRecipe.getFermentationValue();

@@ -52,11 +52,11 @@ public class ApicultureClientHandler implements IClientModuleHandler {
 	}
 
 	private static void registerParticleFactory(RegisterParticleProvidersEvent event) {
-		event.registerSprite(ApicultureParticles.BEE_EXPLORER_PARTICLE.value(), (data, level, x, y, z, xSpeed, ySpeed, zSpeed) -> new BeeExploreParticle(level, x, y, z, data.destination(), data.color()));
-		event.registerSprite(ApicultureParticles.BEE_ROUND_TRIP_PARTICLE.value(), (data, level, x, y, z, xSpeed, ySpeed, zSpeed) -> new BeeRoundTripParticle(level, x, y, z, data.destination(), data.color()));
-		event.registerSprite(ApicultureParticles.BEE_TARGET_ENTITY_PARTICLE.value(), (data, level, x, y, z, xSpeed, ySpeed, zSpeed) -> {
+		event.registerSpriteSet(ApicultureParticles.BEE_EXPLORER_PARTICLE.value(), sprites -> (data, level, x, y, z, xSpeed, ySpeed, zSpeed, random) -> new BeeExploreParticle(level, x, y, z, data.destination(), data.color(), sprites.get(random)));
+		event.registerSpriteSet(ApicultureParticles.BEE_ROUND_TRIP_PARTICLE.value(), sprites -> (data, level, x, y, z, xSpeed, ySpeed, zSpeed, random) -> new BeeRoundTripParticle(level, x, y, z, data.destination(), data.color(), sprites.get(random)));
+		event.registerSpriteSet(ApicultureParticles.BEE_TARGET_ENTITY_PARTICLE.value(), sprites -> (data, level, x, y, z, xSpeed, ySpeed, zSpeed, random) -> {
 			Entity entity = level.getEntity(data.entity());
-			return entity == null ? null : new BeeTargetEntityParticle(level, x, y, z, entity, data.color());
+			return entity == null ? null : new BeeTargetEntityParticle(level, x, y, z, entity, data.color(), sprites.get(random));
 		});
 	}
 

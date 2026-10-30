@@ -31,7 +31,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -220,7 +220,7 @@ public class TileSmelter extends TilePowered implements WorldlyContainer, ISocke
 	}
 
 	public boolean checkRecipe() {
-		RecipeManager manager = RecipeUtils.getRecipeManager();
+		RecipeMap manager = RecipeUtils.getRecipeMap();
 
 		// Look for a recipe if the manager exists
 		if (manager != null) {

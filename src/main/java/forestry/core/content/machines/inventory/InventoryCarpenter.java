@@ -26,7 +26,7 @@ public class InventoryCarpenter extends InventoryAdapterTile<TileCarpenter> {
 		if (slotIndex == SLOT_CAN_INPUT) {
 			return FluidUtil.getFluidContained(stack).filter(f -> this.tile.getTankManager().canFillFluidType(f)).isPresent();
 		} else if (slotIndex == SLOT_BOX) {
-			return RecipeUtils.isCarpenterBox(this.tile.getLevel().getRecipeManager(), stack);
+			return RecipeUtils.isCarpenterBox(RecipeUtils.recipes(this.tile.getLevel()), stack);
 		} else if (canSlotAccept(SLOT_CAN_INPUT, stack) || canSlotAccept(SLOT_BOX, stack)) {
 			return false;
 		}

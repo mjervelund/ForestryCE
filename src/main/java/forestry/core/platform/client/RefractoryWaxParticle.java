@@ -1,5 +1,6 @@
 package forestry.core.platform.client;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.GlowParticle;
 import net.minecraft.client.particle.Particle;
@@ -14,7 +15,7 @@ public class RefractoryWaxParticle implements ParticleProvider<SimpleParticleTyp
 		this.sprite = sprites;
 	}
 
-	public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+	public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
 		GlowParticle particle = new GlowParticle(level, x, y, z, 0, 0, 0, this.sprite);
 		particle.setColor(0.74509805f, 0.16470589f, 0.16470589f);
 		particle.setParticleSpeed(xSpeed * 0.01 / 2, ySpeed * 0.01, zSpeed * 0.01 / 2);

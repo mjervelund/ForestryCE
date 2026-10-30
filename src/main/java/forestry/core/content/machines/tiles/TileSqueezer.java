@@ -180,13 +180,13 @@ public class TileSqueezer extends TilePowered implements ISocketable, WorldlyCon
 			if (this.currentRecipe != null && containsSets) {
 				matchingRecipe = this.currentRecipe;
 			} else {
-				matchingRecipe = RecipeUtils.getSqueezerRecipe(getLevel().getRecipeManager(), resources);
+				matchingRecipe = RecipeUtils.getSqueezerRecipe(RecipeUtils.recipes(getLevel()), resources);
 			}
 
 			if (matchingRecipe == null) {
 				for (ItemStack resource : resources) {
 					if (matchingRecipe == null) {
-						matchingRecipe = RecipeUtils.getSqueezerContainerRecipe(getLevel().getRecipeManager(), resource);
+						matchingRecipe = RecipeUtils.getSqueezerContainerRecipe(RecipeUtils.recipes(getLevel()), resource);
 					}
 				}
 			}

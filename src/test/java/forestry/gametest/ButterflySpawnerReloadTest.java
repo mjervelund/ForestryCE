@@ -86,7 +86,7 @@ public class ButterflySpawnerReloadTest {
 			// mutation index with the restored species (rebuildMutations rebuilds all species types, mirroring
 			// TreeSpeciesReloadTest / ButterflySpeciesReloadTest).
 			((SpeciesType<IButterflySpecies, ?>) type).setSpecies(snapshot);
-			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 		}
 
 		helper.succeed();

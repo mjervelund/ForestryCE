@@ -50,21 +50,21 @@ public final class LegacyCapabilities {
 		return new DeferredResourceHandlers.Energy(storage);
 	}
 
-	public static <T extends BlockEntity> void registerItems(RegisterCapabilitiesEvent event, BlockEntityType<T> type, BiFunction<T, @Nullable Direction, @Nullable IItemHandler> provider) {
+	public static <T extends BlockEntity> void registerItems(RegisterCapabilitiesEvent event, BlockEntityType<T> type, BiFunction<T, Direction, IItemHandler> provider) {
 		event.registerBlockEntity(Capabilities.Item.BLOCK, type, (tile, side) -> {
 			IItemHandler handler = provider.apply(tile, side);
 			return handler == null ? null : items(handler);
 		});
 	}
 
-	public static <T extends BlockEntity> void registerFluids(RegisterCapabilitiesEvent event, BlockEntityType<T> type, BiFunction<T, @Nullable Direction, @Nullable IFluidHandler> provider) {
+	public static <T extends BlockEntity> void registerFluids(RegisterCapabilitiesEvent event, BlockEntityType<T> type, BiFunction<T, Direction, IFluidHandler> provider) {
 		event.registerBlockEntity(Capabilities.Fluid.BLOCK, type, (tile, side) -> {
 			IFluidHandler handler = provider.apply(tile, side);
 			return handler == null ? null : fluids(handler);
 		});
 	}
 
-	public static <T extends BlockEntity> void registerEnergy(RegisterCapabilitiesEvent event, BlockEntityType<T> type, BiFunction<T, @Nullable Direction, @Nullable IEnergyStorage> provider) {
+	public static <T extends BlockEntity> void registerEnergy(RegisterCapabilitiesEvent event, BlockEntityType<T> type, BiFunction<T, Direction, IEnergyStorage> provider) {
 		event.registerBlockEntity(Capabilities.Energy.BLOCK, type, (tile, side) -> {
 			IEnergyStorage storage = provider.apply(tile, side);
 			return storage == null ? null : energy(storage);

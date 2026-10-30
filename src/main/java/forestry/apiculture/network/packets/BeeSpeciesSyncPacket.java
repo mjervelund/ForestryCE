@@ -1,5 +1,6 @@
 package forestry.apiculture.network.packets;
 
+import forestry.core.platform.client.ClientsideCode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public record BeeSpeciesSyncPacket(Map<Identifier, BeeSpeciesDefinition> definit
 		}
 		BeeSpeciesManager.INSTANCE.setDefinitions(msg.definitions);
 		ApicultureReloadHandler.rebuildSpecies(msg.definitions);
-		GeneticsReloadHandler.rebuildMutations(Minecraft.getInstance().getConnection().getRecipeManager());
+		GeneticsReloadHandler.rebuildMutations(ClientsideCode.getRecipeMap());
 	}
 
 	private static StreamCodec<RegistryFriendlyByteBuf, Map<Identifier, BeeSpeciesDefinition>> definitionsStreamCodec() {

@@ -28,7 +28,7 @@ public class InventoryMoistener extends InventoryAdapterTile<TileMoistener> {
 	@Override
 	public boolean canSlotAccept(int slotIndex, ItemStack stack) {
 		if (slotIndex == SLOT_RESOURCE) {
-			return RecipeUtils.getMoistenerRecipe(this.tile.getLevel().getRecipeManager(), stack) != null;
+			return RecipeUtils.getMoistenerRecipe(RecipeUtils.recipes(this.tile.getLevel()), stack) != null;
 		}
 
 		if (SlotUtil.isSlotInRange(slotIndex, SLOT_STASH_1, SLOT_STASH_COUNT)) {

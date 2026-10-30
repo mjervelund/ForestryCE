@@ -108,7 +108,7 @@ public class TileCarpenter extends TilePowered implements WorldlyContainer, ILiq
 		}
 
 		if (this.currentRecipe == null || !this.currentRecipe.matches(this.resourceTank.getFluid(), getBoxStack(), this.craftingInventory, this.level)) {
-			ICarpenterRecipe recipe = RecipeUtils.getCarpenterRecipe(this.level.getRecipeManager(), this.resourceTank.getFluid(), getBoxStack(), this.craftingInventory, this.level);
+			ICarpenterRecipe recipe = RecipeUtils.getCarpenterRecipe(RecipeUtils.recipes(this.level), this.resourceTank.getFluid(), getBoxStack(), this.craftingInventory, this.level);
 			this.currentRecipe = recipe;
 
 			if (recipe != null) {

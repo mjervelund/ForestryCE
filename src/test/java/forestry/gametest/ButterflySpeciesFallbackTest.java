@@ -147,7 +147,7 @@ public class ButterflySpeciesFallbackTest {
 			// mutation assertions) still see the full built-in butterfly species set, and re-pair the mutation index
 			// with the restored species (rebuildMutations rebuilds all species types, mirroring TreeSpeciesFallbackTest).
 			((SpeciesType<IButterflySpecies, ?>) type).setSpecies(snapshot);
-			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 		}
 
 		helper.succeed();

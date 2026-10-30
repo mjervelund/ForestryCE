@@ -41,7 +41,7 @@ import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import forestry.core.platform.legacy.fluids.FluidUtil;
 
 import java.util.Comparator;
@@ -78,7 +78,7 @@ public class FactoryJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registry) {
-		RecipeManager manager = ClientsideCode.getRecipeManager();
+		RecipeMap manager = ClientsideCode.getRecipeMap();
 
 		registry.addRecipes(ForestryRecipeType.CARPENTER, RecipeUtils.getRecipes(manager, FactoryRecipeTypes.CARPENTER).toList());
 		registry.addRecipes(ForestryRecipeType.CENTRIFUGE, RecipeUtils.getRecipes(manager, FactoryRecipeTypes.CENTRIFUGE).toList());

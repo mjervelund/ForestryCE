@@ -90,7 +90,7 @@ public class TreeSpeciesFallbackTest {
 			// mutation assertions) still see the full built-in tree species set, and re-pair the mutation index with
 			// the restored species (rebuildMutations rebuilds all species types, mirroring TreeSpeciesReloadTest).
 			((SpeciesType<ITreeSpecies, ?>) type).setSpecies(snapshot);
-			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 		}
 
 		helper.succeed();

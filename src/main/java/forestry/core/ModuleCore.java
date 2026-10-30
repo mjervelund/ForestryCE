@@ -1,5 +1,7 @@
 package forestry.core;
 
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.neoforge.fluids.FluidType;
 import forestry.core.features.CoreDataComponents;
 import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
@@ -207,14 +209,19 @@ public class ModuleCore extends BlankForestryModule {
 
 		// Rebuild each species type's mutation index from the (re)loaded mutation recipes. Mod reload listeners run
 		// after vanilla ones (and the reload barrier applies listeners in order), so by the apply phase the vanilla
-		// RecipeManager is fully populated. Run on the game executor since this mutates shared species-type state.
+		// RecipeMap is fully populated. Run on the game executor since this mutates shared species-type state.
 		RecipeManager recipeManager = event.getServerResources().getRecipeManager();
 		event.addListener((prepBarrier, resourceManager, prepProfiler, reloadProfiler, backgroundExecutor, gameExecutor) -> {
-			return prepBarrier.wait(Unit.INSTANCE).thenRunAsync(() -> GeneticsReloadHandler.rebuildMutations(recipeManager), gameExecutor);
+			return prepBarrier.wait(Unit.INSTANCE).thenRunAsync(() -> GeneticsReloadHandler.rebuildMutations(recipeManager.recipeMap()), gameExecutor);
 		});
 	}
 
 	private static void onDatapackSync(OnDatapackSyncEvent event) {
+		// 26.x no longer syncs recipes; GUIs, JEI and the client mutation index need Forestry's
+		event.sendRecipes(BuiltInRegistries.RECIPE_TYPE.stream()
+			.filter(type -> BuiltInRegistries.RECIPE_TYPE.getKey(type).getNamespace().startsWith(ForestryConstants.MOD_ID))
+			.<RecipeType<?>>map(type -> type)
+			.toList());
 		TaxonSyncPacket taxa = new TaxonSyncPacket(TaxonManager.INSTANCE.getDefinitions());
 		FlowerTypeSyncPacket flowerTypes = new FlowerTypeSyncPacket(FlowerTypeManager.INSTANCE.getDefinitions());
 

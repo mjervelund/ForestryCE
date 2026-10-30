@@ -1,5 +1,6 @@
 package forestry.arboriculture.network;
 
+import forestry.core.platform.client.ClientsideCode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +56,7 @@ public record TreeSpeciesSyncPacket(Map<Identifier, TreeSpeciesDefinition> defin
 		}
 		TreeSpeciesManager.INSTANCE.setDefinitions(msg.definitions);
 		ArboricultureReloadHandler.rebuildTreeSpecies(msg.definitions);
-		GeneticsReloadHandler.rebuildMutations(Minecraft.getInstance().getConnection().getRecipeManager());
+		GeneticsReloadHandler.rebuildMutations(ClientsideCode.getRecipeMap());
 	}
 
 	private static StreamCodec<RegistryFriendlyByteBuf, Map<Identifier, TreeSpeciesDefinition>> definitionsStreamCodec() {

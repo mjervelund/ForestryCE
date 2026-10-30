@@ -70,7 +70,7 @@ public class ButterflySpeciesReloadTest {
 			// mutation index with the restored species (rebuildMutations rebuilds all species types, mirroring
 			// TreeSpeciesReloadTest).
 			((SpeciesType<IButterflySpecies, ?>) type).setSpecies(snapshot);
-			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 		}
 
 		helper.succeed();
@@ -113,7 +113,7 @@ public class ButterflySpeciesReloadTest {
 			// mutation index with the restored species (rebuildMutations rebuilds all species types, mirroring
 			// TreeSpeciesReloadTest).
 			((SpeciesType<IButterflySpecies, ?>) type).setSpecies(snapshot);
-			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 		}
 
 		helper.succeed();

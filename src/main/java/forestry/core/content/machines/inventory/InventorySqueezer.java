@@ -15,7 +15,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
@@ -48,7 +48,7 @@ public class InventorySqueezer extends InventoryAdapterTile<TileSqueezer> {
 				return false;
 			}
 
-			RecipeManager recipeManager = this.tile.getLevel().getRecipeManager();
+			RecipeMap recipeManager = RecipeUtils.recipes(this.tile.getLevel());
 			return RecipeUtils.isSqueezerIngredient(recipeManager, stack) || RecipeUtils.getSqueezerContainerRecipe(recipeManager, stack) != null;
 		}
 

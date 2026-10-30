@@ -2,7 +2,7 @@ package forestry.gametest;
 
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
@@ -23,7 +23,7 @@ import forestry.core.content.machines.features.FactoryRecipeTypes;
 public class SqueezerRecipeLoadTest {
 	@GameTest(template = "empty")
 	public static void squeezerRecipesResolveOutput(GameTestHelper helper) {
-		RecipeManager manager = helper.getLevel().getRecipeManager();
+		RecipeMap manager = RecipeUtils.recipes(helper.getLevel());
 
 		long count = RecipeUtils.getRecipes(manager, FactoryRecipeTypes.SQUEEZER).count();
 		if (count == 0) {

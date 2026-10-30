@@ -26,7 +26,7 @@ public class InventoryFermenter extends InventoryAdapterTile<TileFermenter> {
 	@Override
 	public boolean canSlotAccept(int slotIndex, ItemStack stack) {
 		if (slotIndex == SLOT_RESOURCE) {
-			return RecipeUtils.isFermenterInput(this.tile.getLevel().getRecipeManager(), stack);
+			return RecipeUtils.isFermenterInput(RecipeUtils.recipes(this.tile.getLevel()), stack);
 		} else if (slotIndex == SLOT_INPUT) {
 			Optional<FluidStack> fluid = FluidUtil.getFluidContained(stack);
 			return fluid.map(f -> this.tile.getTankManager().canFillFluidType(f)).orElse(false);

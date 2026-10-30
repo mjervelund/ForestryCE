@@ -67,7 +67,7 @@ public class TreeSpeciesReloadTest {
 			// mutation assertions) still see the full built-in tree species set, and re-pair the mutation index with
 			// the restored species (rebuildMutations rebuilds all species types, mirroring SpeciesFallbackTest).
 			((SpeciesType<ITreeSpecies, ?>) type).setSpecies(snapshot);
-			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 		}
 
 		helper.succeed();
@@ -109,7 +109,7 @@ public class TreeSpeciesReloadTest {
 			// mutation assertions) still see the full built-in tree species set, and re-pair the mutation index with
 			// the restored species (rebuildMutations rebuilds all species types, mirroring SpeciesFallbackTest).
 			((SpeciesType<ITreeSpecies, ?>) type).setSpecies(snapshot);
-			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 		}
 
 		helper.succeed();

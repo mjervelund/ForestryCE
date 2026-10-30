@@ -20,7 +20,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
@@ -151,7 +151,7 @@ public class CentrifugeProductDispatchTest {
 	/** The built-in centrifuge recipes must still expose and resolve their products through the migrated path. */
 	@GameTest(template = "empty")
 	public static void centrifugeRecipesResolveProducts(GameTestHelper helper) {
-		RecipeManager manager = helper.getLevel().getRecipeManager();
+		RecipeMap manager = RecipeUtils.recipes(helper.getLevel());
 
 		ICentrifugeRecipe honeyComb = RecipeUtils.getRecipes(manager, FactoryRecipeTypes.CENTRIFUGE)
 			.filter(recipe -> recipe.getId().equals(ForestryConstants.forestry("centrifuge/honey_comb")))

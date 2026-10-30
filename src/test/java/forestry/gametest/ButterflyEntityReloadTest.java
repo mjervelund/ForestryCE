@@ -74,7 +74,7 @@ public class ButterflyEntityReloadTest {
 				entity.discard();
 			}
 			((SpeciesType<IButterflySpecies, ?>) type).setSpecies(snapshot);
-			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager());
+			GeneticsReloadHandler.rebuildMutations(helper.getLevel().getServer().getRecipeManager().recipeMap());
 		}
 
 		helper.succeed();

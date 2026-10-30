@@ -1,5 +1,6 @@
 package forestry.core.platform.client;
 
+import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import forestry.core.features.CoreItems;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -97,7 +98,7 @@ public class CoreClientHandler implements IClientModuleHandler {
 		modBus.addListener(CoreClientHandler::registerClientExtensions);
 		NeoForge.EVENT_BUS.addListener(CoreClientHandler::onClientTick);
 		// HIGH priority so the client mutation index is rebuilt before NORMAL-priority consumers (e.g. JEI, which can
-		// start synchronously during RecipesUpdatedEvent on a dedicated-server connection) read it.
+		// start synchronously during RecipesReceivedEvent on a dedicated-server connection) read it.
 		NeoForge.EVENT_BUS.addListener(EventPriority.HIGH, CoreClientHandler::onRecipesUpdated);
 
 		ModuleUtil.getModBus(ForestryConstants.MOD_ID).addListener(EventPriority.HIGHEST, ((ForestryClientApiImpl) IForestryClientApi.INSTANCE)::initializeTextureManager);
@@ -297,10 +298,11 @@ public class CoreClientHandler implements IClientModuleHandler {
 
 	}
 
-	private static void onRecipesUpdated(RecipesUpdatedEvent event) {
-		// Recipes sync to the client automatically; rebuild the client-side mutation index for JEI/analyzer display.
-		// Species (BeeSpeciesSyncPacket) arrive separately and are rebuilt there, always before this fires.
-		GeneticsReloadHandler.rebuildMutations(event.getRecipeManager());
+	private static void onRecipesUpdated(RecipesReceivedEvent event) {
+		// Forestry's recipe types are synced by ModuleCore#onDatapackSync; rebuild the client-side mutation index
+		// for JEI/analyzer display. Species (BeeSpeciesSyncPacket) arrive separately and are rebuilt there.
+		ClientsideCode.setRecipeMap(event.getRecipeMap());
+		GeneticsReloadHandler.rebuildMutations(event.getRecipeMap());
 	}
 
 	private static void onClientTick(RenderLevelStageEvent event) {

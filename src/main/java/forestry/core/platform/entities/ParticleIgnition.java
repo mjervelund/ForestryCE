@@ -20,7 +20,6 @@ public class ParticleIgnition extends Particle {
 		this.yd *= 0.8;
 		this.zd *= 0.8;
 		this.yd = this.random.nextFloat() * 0.4F + 0.05F;
-		this.rCol = this.gCol = this.bCol = 1.0F;
 		//TODO particle stuff
 		//		this.particleScale *= this.rand.nextFloat() / 2 + 0.3F;
 		this.ignitionParticleScale = 1.0f;//this.particleScale;
@@ -28,13 +27,6 @@ public class ParticleIgnition extends Particle {
 		//		this.setParticleTextureIndex(49);
 	}
 
-	@Override
-	public int getLightColor(float p_70070_1_) {
-		int i = super.getLightColor(p_70070_1_);
-		short short1 = 240;
-		int j = i >> 16 & 255;
-		return short1 | j << 16;
-	}
 
 	/*@Override
 	public void renderParticle(BufferBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
@@ -43,14 +35,11 @@ public class ParticleIgnition extends Particle {
 		//		super.renderParticle(buffer, renderInfo, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
 	}*/
 
-	@Override
-	public void render(VertexConsumer iVertexBuilder, Camera activeRenderInfo, float v) {
-
-	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+	public ParticleRenderType getGroup() {
+		// only spawns vanilla particles
+		return ParticleRenderType.NO_RENDER;
 	}
 
 	/**

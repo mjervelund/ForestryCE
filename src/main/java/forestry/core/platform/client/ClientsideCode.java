@@ -10,7 +10,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.material.Fluid;
 
 import javax.annotation.Nullable;
@@ -26,12 +26,16 @@ public class ClientsideCode {
 	}
 
 	@Nullable
-	public static RecipeManager getRecipeManager() {
-		ClientPacketListener connection = Minecraft.getInstance().getConnection();
-		if (connection != null) {
-			return connection.getRecipeManager();
-		}
-		return null;
+	private static RecipeMap recipeMap;
+
+	/** The Forestry recipe types the server synced (see {@code ModuleCore#onDatapackSync}), or null before the first sync. */
+	@Nullable
+	public static RecipeMap getRecipeMap() {
+		return Minecraft.getInstance().getConnection() != null ? recipeMap : null;
+	}
+
+	public static void setRecipeMap(RecipeMap map) {
+		recipeMap = map;
 	}
 
 	public static Registry<Fluid> getFluidRegistry() {

@@ -1,5 +1,6 @@
 package forestry.lepidopterology.network;
 
+import forestry.core.platform.client.ClientsideCode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public record ButterflySpeciesSyncPacket(Map<Identifier, ButterflySpeciesDefinit
 		}
 		ButterflySpeciesManager.INSTANCE.setDefinitions(msg.definitions);
 		LepidopterologyReloadHandler.rebuildButterflySpecies(msg.definitions);
-		GeneticsReloadHandler.rebuildMutations(Minecraft.getInstance().getConnection().getRecipeManager());
+		GeneticsReloadHandler.rebuildMutations(ClientsideCode.getRecipeMap());
 	}
 
 	private static StreamCodec<RegistryFriendlyByteBuf, Map<Identifier, ButterflySpeciesDefinition>> definitionsStreamCodec() {
