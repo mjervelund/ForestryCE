@@ -1,5 +1,7 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
+import forestry.arboriculture.entities.IForestryBoat;
 import forestry.core.platform.registration.RegistrationIds;
 import net.minecraft.world.InteractionResult;
 import forestry.arboriculture.entities.ForestryBoat;
@@ -59,8 +61,9 @@ public class ForestryBoatItem extends ItemForestry {
 			}
 
 			if (hit.getType() == HitResult.Type.BLOCK) {
-				ForestryBoat boat = getBoat(level, hit);
-				boat.setWoodType(this.type);
+				IForestryBoat forestryBoat = getBoat(level, hit);
+				forestryBoat.setWoodType(this.type);
+				AbstractBoat boat = forestryBoat.asBoat();
 				boat.setYRot(player.getYRot());
 				if (!level.noCollision(boat, boat.getBoundingBox())) {
 					return InteractionResult.FAIL;
@@ -82,7 +85,7 @@ public class ForestryBoatItem extends ItemForestry {
 		}
 	}
 
-	private ForestryBoat getBoat(Level level, HitResult hit) {
+	private IForestryBoat getBoat(Level level, HitResult hit) {
 		Vec3 location = hit.getLocation();
 		return this.hasChest ? new ForestryChestBoat(level, location.x, location.y, location.z) : new ForestryBoat(level, location.x, location.y, location.z);
 	}

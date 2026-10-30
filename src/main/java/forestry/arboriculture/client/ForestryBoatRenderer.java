@@ -2,7 +2,7 @@ package forestry.arboriculture.client;
 
 import com.mojang.datafixers.util.Pair;
 import forestry.arboriculture.wood.ForestryWoodType;
-import forestry.arboriculture.entities.ForestryBoat;
+import forestry.arboriculture.entities.IForestryBoat;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.ListModel;
@@ -47,6 +47,6 @@ public class ForestryBoatRenderer extends BoatRenderer {
 
 	@Override
 	public Pair<Identifier, ListModel<Boat>> getModelWithLocation(Boat boat) {
-		return boat instanceof ForestryBoat forestryBoat ? this.boatResources.get(forestryBoat.getWoodType()) : super.getModelWithLocation(boat);
+		return boat instanceof IForestryBoat forestryBoat ? this.boatResources.get(forestryBoat.getWoodType()) : super.getModelWithLocation(boat);
 	}
 }

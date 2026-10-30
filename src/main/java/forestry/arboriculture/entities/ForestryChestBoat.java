@@ -1,43 +1,32 @@
 package forestry.arboriculture.entities;
 
+import java.util.function.Supplier;
+
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.vehicle.boat.ChestBoat;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+
 import forestry.arboriculture.features.ArboricultureEntities;
 import forestry.arboriculture.features.ArboricultureItems;
-import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.Containers;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.HasCustomInventoryScreen;
-import net.minecraft.world.entity.SlotAccess;
-import net.minecraft.world.entity.monster.piglin.PiglinAi;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.boat.Boat;
-import net.minecraft.world.entity.vehicle.ContainerEntity;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
+import forestry.arboriculture.wood.ForestryWoodType;
 
-import javax.annotation.Nullable;
+public class ForestryChestBoat extends ChestBoat implements IForestryBoat {
+	private static final EntityDataAccessor<Integer> DATA_ID_WOOD_TYPE = SynchedEntityData.defineId(ForestryChestBoat.class, EntityDataSerializers.INT);
 
-public class ForestryChestBoat extends ForestryBoat implements HasCustomInventoryScreen, ContainerEntity {
-	private static final int CONTAINER_SIZE = 27;
+	public ForestryChestBoat(EntityType<? extends ChestBoat> type, Level level) {
+		this(type, level, new DropItem());
+	}
 
-	private NonNullList<ItemStack> items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
-	@Nullable
-	private ResourceKey<LootTable> lootTable;
-	private long lootTableSeed;
-
-	public ForestryChestBoat(EntityType<? extends Boat> type, Level level) {
-		super(type, level);
+	// 26.x boats take their drop item as a constructor supplier; ours depends on the synced wood type
+	private ForestryChestBoat(EntityType<? extends ChestBoat> type, Level level, DropItem dropItem) {
+		super(type, level, dropItem);
+		dropItem.boat = this;
 	}
 
 	public ForestryChestBoat(Level level, double x, double y, double z) {
@@ -50,160 +39,45 @@ public class ForestryChestBoat extends ForestryBoat implements HasCustomInventor
 	}
 
 	@Override
-	public Item getDropItem() {
-		return ArboricultureItems.CHEST_BOAT.item(getWoodType());
-	}
-
-	// <editor-fold desc="Vanilla copy from ChestBoat">
-	@Override
-	protected float getSinglePassengerXOffset() {
-		return 0.15F;
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_ID_WOOD_TYPE, ForestryWoodType.CAMELTHORN.ordinal());
 	}
 
 	@Override
-	protected int getMaxPassengers() {
-		return 1;
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
+		output.putString("type", getWoodType().name());
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
-		addChestVehicleSaveData(pCompound, level().registryAccess());
-	}
-
-	@Override
-	protected void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
-		readChestVehicleSaveData(pCompound, level().registryAccess());
-	}
-
-	@Override
-	public void destroy(DamageSource pDamageSource) {
-		super.destroy(pDamageSource);
-		chestVehicleDestroyed(pDamageSource, level(), this);
-	}
-
-	@Override
-	public void remove(Entity.RemovalReason reason) {
-		if (!level().isClientSide() && reason.shouldDestroy()) {
-			Containers.dropContents(level(), this, this);
-		}
-
-		super.remove(reason);
-	}
-
-	@Override
-	public InteractionResult interact(Player player, InteractionHand hand) {
-		if (canAddPassenger(player) && !player.isSecondaryUseActive()) {
-			return super.interact(player, hand);
-		} else {
-			InteractionResult interactionresult = interactWithContainerVehicle(player);
-			if (interactionresult.consumesAction()) {
-				gameEvent(GameEvent.CONTAINER_OPEN, player);
-				PiglinAi.angerNearbyPiglins(player, true);
+	protected void readAdditionalSaveData(ValueInput input) {
+		super.readAdditionalSaveData(input);
+		input.getString("type").ifPresent(name -> {
+			try {
+				setWoodType(ForestryWoodType.valueOf(name));
+			} catch (IllegalArgumentException e) {
+				setWoodType(ForestryWoodType.CAMELTHORN);
 			}
+		});
+	}
 
-			return interactionresult;
+	@Override
+	public void setWoodType(ForestryWoodType woodType) {
+		this.entityData.set(DATA_ID_WOOD_TYPE, woodType.ordinal());
+	}
+
+	@Override
+	public ForestryWoodType getWoodType() {
+		return ForestryWoodType.VALUES[this.entityData.get(DATA_ID_WOOD_TYPE)];
+	}
+
+	private static final class DropItem implements Supplier<Item> {
+		private ForestryChestBoat boat;
+
+		@Override
+		public Item get() {
+			return ArboricultureItems.CHEST_BOAT.item(this.boat.getWoodType());
 		}
-	}
-
-	@Override
-	public void openCustomInventoryScreen(Player player) {
-		player.openMenu(this);
-		if (!player.level().isClientSide()) {
-			this.gameEvent(GameEvent.CONTAINER_OPEN, player);
-			PiglinAi.angerNearbyPiglins(player, true);
-		}
-	}
-
-	@Override
-	public void clearContent() {
-		clearChestVehicleContent();
-	}
-
-	@Override
-	public int getContainerSize() {
-		return CONTAINER_SIZE;
-	}
-
-	@Override
-	public ItemStack getItem(int slot) {
-		return getChestVehicleItem(slot);
-	}
-
-	@Override
-	public ItemStack removeItem(int slot, int amount) {
-		return removeChestVehicleItem(slot, amount);
-	}
-
-	@Override
-	public ItemStack removeItemNoUpdate(int slot) {
-		return removeChestVehicleItemNoUpdate(slot);
-	}
-
-	@Override
-	public void setItem(int slot, ItemStack stack) {
-		setChestVehicleItem(slot, stack);
-	}
-
-	@Override
-	public SlotAccess getSlot(int slot) {
-		return getChestVehicleSlot(slot);
-	}
-
-	@Override
-	public void setChanged() {
-	}
-
-	@Override
-	public boolean stillValid(Player player) {
-		return isChestVehicleStillValid(player);
-	}
-
-	@Nullable
-	@Override
-	public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-		if (this.lootTable != null && player.isSpectator()) {
-			return null;
-		} else {
-			unpackChestVehicleLootTable(playerInv.player);
-			return ChestMenu.threeRows(windowId, playerInv, this);
-		}
-	}
-
-	@Nullable
-	@Override
-	public ResourceKey<LootTable> getLootTable() {
-		return this.lootTable;
-	}
-
-	@Override
-	public void setLootTable(@Nullable ResourceKey<LootTable> lootTable) {
-		this.lootTable = lootTable;
-	}
-
-	@Override
-	public long getLootTableSeed() {
-		return this.lootTableSeed;
-	}
-
-	@Override
-	public void setLootTableSeed(long lootTableSeed) {
-		this.lootTableSeed = lootTableSeed;
-	}
-
-	@Override
-	public NonNullList<ItemStack> getItemStacks() {
-		return this.items;
-	}
-
-	@Override
-	public void clearItemStacks() {
-		this.items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
-	}
-	// </editor-fold>
-
-	public void stopOpen(Player player) {
-		level().gameEvent(GameEvent.CONTAINER_CLOSE, position(), GameEvent.Context.of(player));
 	}
 }

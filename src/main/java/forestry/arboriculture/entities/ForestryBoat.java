@@ -1,27 +1,32 @@
 package forestry.arboriculture.entities;
 
-import forestry.arboriculture.wood.ForestryWoodType;
-import forestry.arboriculture.features.ArboricultureBlocks;
-import forestry.arboriculture.features.ArboricultureEntities;
-import forestry.arboriculture.features.ArboricultureItems;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
+import java.util.function.Supplier;
+
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-public class ForestryBoat extends Boat {
+import forestry.arboriculture.features.ArboricultureEntities;
+import forestry.arboriculture.features.ArboricultureItems;
+import forestry.arboriculture.wood.ForestryWoodType;
+
+public class ForestryBoat extends Boat implements IForestryBoat {
 	private static final EntityDataAccessor<Integer> DATA_ID_WOOD_TYPE = SynchedEntityData.defineId(ForestryBoat.class, EntityDataSerializers.INT);
 
 	public ForestryBoat(EntityType<? extends Boat> type, Level level) {
-		super(type, level);
+		this(type, level, new DropItem());
+	}
+
+	// 26.x boats take their drop item as a constructor supplier; ours depends on the synced wood type
+	private ForestryBoat(EntityType<? extends Boat> type, Level level, DropItem dropItem) {
+		super(type, level, dropItem);
+		dropItem.boat = this;
 	}
 
 	public ForestryBoat(Level level, double x, double y, double z) {
@@ -40,67 +45,39 @@ public class ForestryBoat extends Boat {
 	}
 
 	@Override
-	public Item getDropItem() {
-		return ArboricultureItems.BOAT.item(getWoodType());
-	}
-
-	// Copied from vanilla
-	@Override
-	protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
-		this.lastYd = getDeltaMovement().y;
-		if (!isPassenger()) {
-			Level level = level();
-
-			if (onGround) {
-				if (this.fallDistance > 3f) {
-					if (this.status != Boat.Status.ON_LAND) {
-						resetFallDistance();
-						return;
-					}
-
-					causeFallDamage(this.fallDistance, 1f, damageSources().fall());
-					if (!level.isClientSide() && !isRemoved()) {
-						this.kill();
-						if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-							for (int i = 0; i < 3; ++i) {
-								spawnAtLocation(ArboricultureBlocks.PLANKS.get(getWoodType()));
-							}
-
-							for (int j = 0; j < 2; ++j) {
-								spawnAtLocation(Items.STICK);
-							}
-						}
-					}
-				}
-
-				resetFallDistance();
-			} else if (!canBoatInFluid(level.getFluidState(blockPosition().below())) && y < 0) {
-				this.fallDistance -= (float) y;
-			}
-		}
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
+		output.putString("type", getWoodType().name());
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag nbt) {
-		nbt.putString("type", getWoodType().name());
-	}
-
-	@Override
-	protected void readAdditionalSaveData(CompoundTag nbt) {
-		if (nbt.contains("type")) {
+	protected void readAdditionalSaveData(ValueInput input) {
+		super.readAdditionalSaveData(input);
+		input.getString("type").ifPresent(name -> {
 			try {
-				setWoodType(ForestryWoodType.valueOf(nbt.getStringOr("type", "")));
+				setWoodType(ForestryWoodType.valueOf(name));
 			} catch (IllegalArgumentException e) {
 				setWoodType(ForestryWoodType.CAMELTHORN);
 			}
-		}
+		});
 	}
 
+	@Override
 	public void setWoodType(ForestryWoodType woodType) {
 		this.entityData.set(DATA_ID_WOOD_TYPE, woodType.ordinal());
 	}
 
+	@Override
 	public ForestryWoodType getWoodType() {
 		return ForestryWoodType.VALUES[this.entityData.get(DATA_ID_WOOD_TYPE)];
+	}
+
+	private static final class DropItem implements Supplier<Item> {
+		private ForestryBoat boat;
+
+		@Override
+		public Item get() {
+			return ArboricultureItems.BOAT.item(this.boat.getWoodType());
+		}
 	}
 }

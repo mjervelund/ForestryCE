@@ -1,5 +1,7 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
+import forestry.arboriculture.entities.IForestryBoat;
 import forestry.arboriculture.wood.ForestryWoodType;
 import forestry.arboriculture.entities.ForestryBoat;
 import forestry.arboriculture.entities.ForestryChestBoat;
@@ -33,8 +35,9 @@ public class ForestryBoatDispenserBehavior extends DefaultDispenseItemBehavior {
 		double y = center.y() + (double) ((float) direction.getStepY() * 1.125F);
 		double z = center.z() + (double) direction.getStepZ() * offset;
 		BlockPos blockpos = source.pos().relative(direction);
-		ForestryBoat boat = (this.hasChest ? new ForestryChestBoat(level, x, y, z) : new ForestryBoat(level, x, y, z));
-		boat.setWoodType(this.type);
+		IForestryBoat forestryBoat = this.hasChest ? new ForestryChestBoat(level, x, y, z) : new ForestryBoat(level, x, y, z);
+		forestryBoat.setWoodType(this.type);
+		AbstractBoat boat = forestryBoat.asBoat();
 		boat.setYRot(direction.toYRot());
 		double yOffset;
 		if (boat.canBoatInFluid(level.getFluidState(blockpos))) {
