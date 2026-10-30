@@ -37,7 +37,6 @@ import forestry.api.arboriculture.genetics.TreeLifeStage;
 import forestry.api.lepidopterology.IButterflyNursery;
 import forestry.api.lepidopterology.genetics.IButterfly;
 import forestry.api.lepidopterology.genetics.IButterflySpecies;
-import forestry.core.platform.compat.curios.CuriosCompat;
 import forestry.api.core.genetics.capability.IIndividualHandlerItem;
 import forestry.core.engine.genetics.ItemGE;
 import forestry.core.platform.tile.TileUtil;
@@ -78,7 +77,8 @@ public class GeneticsUtil {
 	}
 
 	public static boolean hasNaturalistEye(Player player) {
-		return hasNaturalistEye(player, player.getItemBySlot(EquipmentSlot.HEAD)) || (CuriosCompat.IS_LOADED && CuriosCompat.hasNaturalistEye(player));
+		// 26.3 port: Curios compat is excluded (no 26.3 Curios), so only the head slot counts
+		return hasNaturalistEye(player, player.getItemBySlot(EquipmentSlot.HEAD));
 	}
 
 	public static boolean hasNaturalistEye(Player player, ItemStack armorItemStack) {

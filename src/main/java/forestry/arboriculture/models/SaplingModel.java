@@ -7,117 +7,96 @@ import forestry.api.client.arboriculture.ITreeClientManager;
 import forestry.api.core.genetics.IIndividual;
 import forestry.api.core.genetics.capability.IIndividualHandlerItem;
 import forestry.arboriculture.sapling.SaplingBlockEntity;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.*;
-import net.minecraft.core.Direction;
+import forestry.core.platform.models.SpeciesItemModel;
+import forestry.core.platform.util.ResourceUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
-import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
+import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.model.DynamicBlockStateModel;
+import net.neoforged.neoforge.client.model.standalone.SimpleUnbakedStandaloneModel;
+import net.neoforged.neoforge.client.model.standalone.StandaloneModelKey;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.Set;
 
-public class SaplingModel implements IUnbakedGeometry<SaplingModel> {
+/**
+ * The genetic sapling: one block and item model per species.
+ * <p>
+ * 26.x: the block model is a {@link DynamicBlockStateModel} over standalone-baked models (was a geometry loader
+ * with a BakedModel), the item model a {@link SpeciesItemModel} kind ({@code forestry:sapling}).
+ */
+public class SaplingModel implements DynamicBlockStateModel {
+	private static final Map<Identifier, StandaloneModelKey<BlockStateModelPart>> BLOCK_MODELS = new HashMap<>();
+
+	public static final SpeciesItemModel.Kind ITEM = new SpeciesItemModel.Kind(
+		() -> treeManager().getAllSaplingModels().stream().map(Pair::getSecond).toList(),
+		stack -> {
+			IIndividual individual = IIndividualHandlerItem.getIndividual(stack);
+			ITreeClientManager treeManager = treeManager();
+			return individual == null ? treeManager.getDefaultSaplingModels().getSecond() : treeManager.getSaplingModels((ITreeSpecies) individual.getSpecies()).getSecond();
+		},
+		() -> treeManager().getDefaultSaplingModels().getSecond()
+	);
+
+	private static ITreeClientManager treeManager() {
+		return IForestryClientApi.INSTANCE.getTreeManager();
+	}
+
+	public static void registerStandaloneModels(ModelEvent.RegisterStandalone event) {
+		Set<Identifier> ids = new LinkedHashSet<>();
+		for (Pair<Identifier, Identifier> pair : treeManager().getAllSaplingModels()) {
+			ids.add(pair.getFirst());
+		}
+		ids.add(treeManager().getDefaultSaplingModels().getFirst());
+		for (Identifier id : ids) {
+			StandaloneModelKey<BlockStateModelPart> key = BLOCK_MODELS.computeIfAbsent(id, i -> new StandaloneModelKey<>(i::toString));
+			event.register(key, SimpleUnbakedStandaloneModel.simpleModelWrapper(id));
+		}
+	}
+
+	@Nullable
+	private static BlockStateModelPart blockModelFor(@Nullable ITreeSpecies species) {
+		ITreeClientManager treeManager = treeManager();
+		Pair<Identifier, Identifier> pair = species != null ? treeManager.getSaplingModels(species) : treeManager.getDefaultSaplingModels();
+		StandaloneModelKey<BlockStateModelPart> key = BLOCK_MODELS.get(pair.getFirst());
+		if (key == null) {
+			key = BLOCK_MODELS.get(treeManager.getDefaultSaplingModels().getFirst());
+		}
+		return key == null ? null : Minecraft.getInstance().getModelManager().getStandaloneModel(key);
+	}
+
 	@Override
-	public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
-		ITreeClientManager treeManager = IForestryClientApi.INSTANCE.getTreeManager();
-		Map<Identifier, BakedModel> baked = new HashMap<>();
-
-		for (Pair<Identifier, Identifier> pair : treeManager.getAllSaplingModels()) {
-			bakeInto(baked, baker, spriteGetter, pair.getFirst());
-			bakeInto(baked, baker, spriteGetter, pair.getSecond());
-		}
-		// ensure the default pair is baked even if no species registered a model
-		Pair<Identifier, Identifier> def = treeManager.getDefaultSaplingModels();
-		bakeInto(baked, baker, spriteGetter, def.getFirst());
-		bakeInto(baked, baker, spriteGetter, def.getSecond());
-
-		return new Baked(treeManager, baked);
-	}
-
-	private static void bakeInto(Map<Identifier, BakedModel> baked, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, Identifier location) {
-		if (!baked.containsKey(location)) {
-			BakedModel model = baker.bake(location, BlockModelRotation.X0_Y0, spriteGetter);
-			if (model != null) {
-				baked.put(location, model);
-			}
+	public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
+		BlockStateModelPart model = blockModelFor(level.getModelData(pos).get(SaplingBlockEntity.TREE_SPECIES));
+		if (model != null) {
+			parts.add(model);
 		}
 	}
 
-	public static class Baked implements BakedModel {
-		private final ITreeClientManager treeManager;
-		private final Map<Identifier, BakedModel> baked;
-		@Nullable
-		private ItemOverrides overrideList;
+	@Override
+	public Material.Baked particleMaterial(BlockAndTintGetter level, BlockPos pos, BlockState state) {
+		BlockStateModelPart model = blockModelFor(level.getModelData(pos).get(SaplingBlockEntity.TREE_SPECIES));
+		return model != null ? model.particleMaterial() : particleMaterial();
+	}
 
-		public Baked(ITreeClientManager treeManager, Map<Identifier, BakedModel> baked) {
-			this.treeManager = treeManager;
-			this.baked = baked;
-		}
+	@Override
+	public Material.Baked particleMaterial() {
+		BlockStateModelPart model = blockModelFor(null);
+		return model != null ? model.particleMaterial() : new Material.Baked(ResourceUtil.getMissingTexture(), false);
+	}
 
-		private BakedModel blockModelFor(@Nullable ITreeSpecies species) {
-			Pair<Identifier, Identifier> pair = species != null ? this.treeManager.getSaplingModels(species) : this.treeManager.getDefaultSaplingModels();
-			BakedModel model = this.baked.get(pair.getFirst());
-			return model != null ? model : this.baked.get(this.treeManager.getDefaultSaplingModels().getFirst());
-		}
-
-		private BakedModel itemModelFor(ITreeSpecies species) {
-			Pair<Identifier, Identifier> pair = this.treeManager.getSaplingModels(species);
-			BakedModel model = this.baked.get(pair.getSecond());
-			return model != null ? model : this.baked.get(this.treeManager.getDefaultSaplingModels().getSecond());
-		}
-
-		@Override
-		public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand, ModelData extraData, @Nullable RenderType renderType) {
-			return blockModelFor(extraData.get(SaplingBlockEntity.TREE_SPECIES)).getQuads(state, side, rand);
-		}
-
-		@Override
-		public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand) {
-			return getQuads(state, side, rand, ModelData.EMPTY, null);
-		}
-
-		@Override public boolean useAmbientOcclusion() { return blockModelFor(null).useAmbientOcclusion(); }
-		@Override public boolean isGui3d() { return blockModelFor(null).isGui3d(); }
-		@Override public boolean usesBlockLight() { return false; }
-		@Override public boolean isCustomRenderer() { return false; }
-		@Override public TextureAtlasSprite getParticleIcon() { return blockModelFor(null).getParticleIcon(); }
-
-		@Override
-		public TextureAtlasSprite getParticleIcon(ModelData data) {
-			return blockModelFor(data.get(SaplingBlockEntity.TREE_SPECIES)).getParticleIcon();
-		}
-
-		@Override
-		public ItemOverrides getOverrides() {
-			if (this.overrideList == null) {
-				this.overrideList = new OverrideList();
-			}
-			return this.overrideList;
-		}
-
-		public class OverrideList extends ItemOverrides {
-			@Nullable
-			@Override
-			public BakedModel resolve(BakedModel model, ItemStack stack, @Nullable ClientLevel world, @Nullable LivingEntity entity, int seed) {
-				IIndividual individual = IIndividualHandlerItem.getIndividual(stack);
-				if (individual == null) {
-					return model;
-				}
-				return itemModelFor((ITreeSpecies) individual.getSpecies());
-			}
-		}
+	@Override
+	public int materialFlags() {
+		return 0;
 	}
 }

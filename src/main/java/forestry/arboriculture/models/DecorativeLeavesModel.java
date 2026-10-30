@@ -9,20 +9,16 @@ import forestry.api.core.genetics.alleles.TreeChromosomes;
 import forestry.arboriculture.leaves.AbstractLeavesBlock;
 import forestry.arboriculture.leaves.DecorativeLeavesBlock;
 import forestry.core.platform.models.ModelBlockCached;
-import forestry.core.platform.models.ModelTransforms;
 import forestry.core.platform.models.baker.ModelBaker;
-import forestry.core.platform.models.baker.ModelBakerModel;
 import forestry.core.platform.util.ResourceUtil;
 import forestry.core.platform.util.SpeciesUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.model.data.ModelData;
 
 public class DecorativeLeavesModel<B extends Block> extends ModelBlockCached<B, DefaultLeavesModel.Key> {
 	public DecorativeLeavesModel(Class<B> blockClass) {
@@ -34,7 +30,7 @@ public class DecorativeLeavesModel<B extends Block> extends ModelBlockCached<B, 
 		Block block = Block.byItem(stack.getItem());
 		Preconditions.checkArgument(block instanceof DecorativeLeavesBlock, "ItemStack must be for decorative leaves.");
 		DecorativeLeavesBlock bBlock = (DecorativeLeavesBlock) block;
-		return new DefaultLeavesModel.Key(bBlock.getSpeciesId(), Minecraft.useFancyGraphics());
+		return new DefaultLeavesModel.Key(bBlock.getSpeciesId(), Minecraft.getInstance().options.cutoutLeaves().get());
 	}
 
 	@Override
@@ -42,7 +38,7 @@ public class DecorativeLeavesModel<B extends Block> extends ModelBlockCached<B, 
 		Block block = state.getBlock();
 		Preconditions.checkArgument(block instanceof DecorativeLeavesBlock, "state must be for decorative leaves.");
 		DecorativeLeavesBlock bBlock = (DecorativeLeavesBlock) block;
-		return new DefaultLeavesModel.Key(bBlock.getSpeciesId(), Minecraft.useFancyGraphics());
+		return new DefaultLeavesModel.Key(bBlock.getSpeciesId(), Minecraft.getInstance().options.cutoutLeaves().get());
 	}
 
 	@Override
@@ -82,21 +78,4 @@ public class DecorativeLeavesModel<B extends Block> extends ModelBlockCached<B, 
 		baker.setParticleSprite(particleSprite);
 	}
 
-	@Override
-	protected BakedModel bakeModel(BlockState state, DefaultLeavesModel.Key key, B block, ModelData extraData) {
-		ModelBaker baker = new ModelBaker();
-
-		bakeBlock(block, extraData, key, baker, false);
-
-		// return the local, not the field: another worker thread may overwrite blockModel mid-bake
-		ModelBakerModel model = baker.bake(false);
-		onCreateModel(model);
-		this.blockModel = model;
-		return model;
-	}
-
-	@Override
-	public ItemTransforms getTransforms() {
-		return ModelTransforms.BLOCK;
-	}
 }

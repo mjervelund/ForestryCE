@@ -7,22 +7,18 @@ import forestry.api.client.arboriculture.ILeafSprite;
 import forestry.arboriculture.leaves.AbstractLeavesBlock;
 import forestry.arboriculture.leaves.DefaultLeavesBlock;
 import forestry.core.platform.models.ModelBlockCached;
-import forestry.core.platform.models.ModelTransforms;
 import forestry.core.platform.models.baker.ModelBaker;
-import forestry.core.platform.models.baker.ModelBakerModel;
 import forestry.core.platform.util.ResourceUtil;
 import forestry.core.platform.util.SpeciesUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.model.data.ModelData;
 
 import java.util.Objects;
 
@@ -64,14 +60,14 @@ public class DefaultLeavesModel extends ModelBlockCached<DefaultLeavesBlock, Def
 		Block block = Block.byItem(stack.getItem());
 		Preconditions.checkArgument(block instanceof DefaultLeavesBlock, "ItemStack must be for default leaves.");
 		DefaultLeavesBlock bBlock = (DefaultLeavesBlock) block;
-		return new Key(bBlock.getSpeciesId(), Minecraft.useFancyGraphics());
+		return new Key(bBlock.getSpeciesId(), Minecraft.getInstance().options.cutoutLeaves().get());
 	}
 
 	@Override
 	protected DefaultLeavesModel.Key getWorldKey(BlockState state, ModelData extraData) {
 		if (state.getBlock() instanceof DefaultLeavesBlock block) {
 			Identifier treeDefinition = block.getSpeciesId();
-			return new DefaultLeavesModel.Key(treeDefinition, Minecraft.useFancyGraphics());
+			return new DefaultLeavesModel.Key(treeDefinition, Minecraft.getInstance().options.cutoutLeaves().get());
 		} else {
 			throw new IllegalArgumentException("state must be for default leaves.");
 		}
@@ -103,22 +99,4 @@ public class DefaultLeavesModel extends ModelBlockCached<DefaultLeavesBlock, Def
 		baker.setParticleSprite(leafSprite);
 	}
 
-
-	@Override
-	protected BakedModel bakeModel(BlockState state, Key key, DefaultLeavesBlock block, ModelData extraData) {
-		ModelBaker baker = new ModelBaker();
-
-		bakeBlock(block, extraData, key, baker, false);
-
-		// return the local, not the field: another worker thread may overwrite blockModel mid-bake
-		ModelBakerModel model = baker.bake(false);
-		onCreateModel(model);
-		this.blockModel = model;
-		return model;
-	}
-
-	@Override
-	public ItemTransforms getTransforms() {
-		return ModelTransforms.BLOCK;
-	}
 }

@@ -1,12 +1,12 @@
 package forestry.apiculture.proxy;
 
+import forestry.api.apiculture.genetics.BeeLifeStage;
+import net.neoforged.neoforge.client.event.RegisterItemModelsEvent;
+import forestry.core.platform.models.ForestryTints;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import forestry.core.platform.models.ClientManager;
-import forestry.apiculture.features.ApicultureItems;
 import forestry.api.ForestryConstants;
 import forestry.api.client.IClientModuleHandler;
 import forestry.apiculture.features.ApicultureBlocks;
-import forestry.apiculture.features.ApicultureCrates;
 import forestry.apiculture.features.ApicultureMenuTypes;
 import forestry.apiculture.alveary.AlvearyScreen;
 import forestry.apiculture.alveary.AlvearyHygroregulatorScreen;
@@ -15,32 +15,21 @@ import forestry.apiculture.alveary.AlvearySwarmerScreen;
 import forestry.apiculture.bees.BeeHousingScreen;
 import forestry.apiculture.models.ModelBee;
 import forestry.apiculture.particles.*;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.entity.Entity;
-import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.event.TextureAtlasStitchedEvent;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ApicultureClientHandler implements IClientModuleHandler {
 	@Override
 	public void registerEvents(IEventBus modBus) {
 		modBus.addListener(ApicultureClientHandler::registerBlockColors);
-		modBus.addListener(ApicultureClientHandler::registerItemColors);
-		modBus.addListener(ApicultureClientHandler::setupClient);
 		modBus.addListener(ApicultureClientHandler::registerMenus);
 		modBus.addListener(ApicultureClientHandler::registerParticleFactory);
 		modBus.addListener(ApicultureClientHandler::handleSprites);
 		modBus.addListener(ApicultureClientHandler::registerModelLoaders);
-	}
-
-	private static void setupClient(FMLClientSetupEvent event) {
-		// todo use JSON render_type field
-		event.enqueueWork(() -> ApicultureBlocks.COMB_BLOCK.getList().forEach((block) -> ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout())));
 	}
 
 	private static void registerMenus(RegisterMenuScreensEvent event) {
@@ -69,33 +58,14 @@ public class ApicultureClientHandler implements IClientModuleHandler {
 		}
 	}
 
-	private static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
-		event.register(ForestryConstants.forestry("bee_ge"), new ModelBee.Loader());
+	private static void registerModelLoaders(RegisterItemModelsEvent event) {
+		for (BeeLifeStage stage : BeeLifeStage.values()) {
+			event.register(ModelBee.typeId(stage), ModelBee.kind(stage).codec());
+		}
 	}
 
-	private static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-		event.register(ClientManager.FORESTRY_BLOCK_COLOR, ApicultureBlocks.COMB_BLOCK.blockArray());
-	}
-
-	private static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-		event.register(ClientManager.FORESTRY_ITEM_COLOR, ApicultureBlocks.COMB_BLOCK.blockArray());
-		event.register(ClientManager.FORESTRY_ITEM_COLOR,
-			ApicultureItems.BEE_QUEEN.item(),
-			ApicultureItems.BEE_DRONE.item(),
-			ApicultureItems.BEE_PRINCESS.item(),
-			ApicultureItems.BEE_LARVAE.item()
-		);
-		event.register(ClientManager.FORESTRY_ITEM_COLOR, ApicultureItems.PROPOLIS.itemArray());
-		event.register(ClientManager.FORESTRY_ITEM_COLOR, ApicultureItems.POLLEN_CLUSTER.itemArray());
-		event.register(ClientManager.FORESTRY_ITEM_COLOR, ApicultureItems.BEE_COMBS.itemArray());
-
-		// Crates for bee products. Registered here rather than in CoreClientHandler so the base
-		// artifact does not name a bee item
-		event.register(ClientManager.FORESTRY_ITEM_COLOR, ApicultureCrates.CRATED_BEE_COMBS.itemArray());
-		event.register(ClientManager.FORESTRY_ITEM_COLOR,
-			ApicultureCrates.CRATED_POLLEN_CLUSTER_NORMAL.item(),
-			ApicultureCrates.CRATED_POLLEN_CLUSTER_CRYSTALLINE.item(),
-			ApicultureCrates.CRATED_PROPOLIS.item());
+	private static void registerBlockColors(RegisterColorHandlersEvent.BlockTintSources event) {
+		event.register(ForestryTints.BLOCK, ApicultureBlocks.COMB_BLOCK.blockArray());
 	}
 
 }

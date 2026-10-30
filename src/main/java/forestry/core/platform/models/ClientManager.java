@@ -1,90 +1,40 @@
 package forestry.core.platform.models;
 
-import forestry.core.platform.block.IColoredBlock;
-import forestry.core.platform.item.ITintedItem;
-import forestry.core.platform.render.TankRenderInfo;
-import forestry.core.platform.tile.IRenderableTile;
-import forestry.core.platform.util.ModUtil;
-import forestry.core.platform.util.RenderUtil;
-import forestry.core.platform.util.ResourceUtil;
 import forestry.core.platform.registration.FeatureBlock;
 import forestry.core.platform.registration.FeatureGroup;
 import forestry.core.platform.registration.FeatureItem;
 import forestry.core.platform.registration.FeatureTable;
-import net.minecraft.client.color.block.BlockColor;
-import net.minecraft.client.color.item.ItemColor;
-import net.minecraft.client.renderer.block.BlockModelShaper;
-import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.client.resources.model.ModelState;
+import forestry.core.platform.util.ModUtil;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.event.ModelEvent;
-import net.neoforged.neoforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Installs Forestry's code-built models into the model baking result.
+ * <p>
+ * 26.x: block state models and item models (keyed by item id) replace the BakedModels that 1.21.1 put into the
+ * model registry by ModelResourceLocation. Block and item colours are {@link ForestryTints}.
+ */
 public enum ClientManager {
 	INSTANCE;
 
-	public static final ItemColor FORESTRY_ITEM_COLOR = (stack, tintIndex) -> {
-		Item item = stack.getItem();
-		int color = 0xffffff;
-		if (item instanceof ITintedItem tintedItem) {
-			color = tintedItem.getColorFromItemStack(stack, tintIndex);
-		}
-		// 1.21 ItemRenderer reads ARGB; legacy IColoredItem returns 0xRRGGBB (alpha 0),
-		// which renders as fully transparent. Force alpha to 0xff so opaque-tint multiply
-		// passes the texture through unchanged.
-		return color | 0xff000000;
-	};
-	public static final BlockColor FORESTRY_BLOCK_COLOR = (state, level, pos, tintIndex) -> {
-		Block block = state.getBlock();
-		if (level == null || pos == null) {
-			return 0xffffff;
-		}
-		if (block instanceof IColoredBlock coloredBlock) {
-			return coloredBlock.colorMultiplier(state, level, pos, tintIndex);
-		}
-
-		// Packaging machine tank slices. tintIndex 0 is the resource tank, tintIndex 1 the product tank
-		BlockEntity blockEntity = level.getBlockEntity(pos);
-		if (blockEntity instanceof IRenderableTile tile) {
-			TankRenderInfo tankInfo = tintIndex == 0 ? tile.getResourceTankInfo() : tile.getProductTankInfo();
-			FluidStack fluidStack = tankInfo.getFluidStack();
-			if (!fluidStack.isEmpty()) {
-				return RenderUtil.getFluidColor(fluidStack.getFluid());
-			}
-			return 0x000000;
-		}
-
-		return 0xffffff;
-	};
-
 	/* CUSTOM MODELS*/
-	// Keyed, not appended: models are registered on ModelEvent.RegisterGeometryLoaders, which is posted once per
-	// resource reload, so registering the same block again must replace its entry instead of growing these
+	// Keyed, not appended: models are registered once per resource reload, so registering the same block again
+	// must replace its entry instead of growing these
 	private final Map<Block, BlockModelEntry> customBlockModels = new LinkedHashMap<>();
-	private final Map<ModelResourceLocation, BakedModel> customModels = new LinkedHashMap<>();
-	/* DEFAULT ITEM AND BLOCK MODEL STATES*/
-	@Nullable
-	private ModelState defaultBlockState;
+	private final Map<Item, ItemModel> customItemModels = new LinkedHashMap<>();
 
-	public ModelState getDefaultBlockState() {
-		if (this.defaultBlockState == null) {
-            this.defaultBlockState = ResourceUtil.loadTransform(Identifier.parse("block/block"));
-		}
-		return this.defaultBlockState;
-	}
-
-	public void registerModel(BakedModel model, Object feature) {
+	public void registerModel(ModelBlockDefault<?, ?> model, Object feature) {
 		if (feature instanceof FeatureGroup<?, ?, ?> group) {
 			group.getFeatures().forEach(f -> registerModel(model, f));
 		} else if (feature instanceof FeatureTable<?, ?, ?, ?> group) {
@@ -92,41 +42,46 @@ public enum ClientManager {
 		} else if (feature instanceof FeatureBlock<?, ?> block) {
 			registerModel(model, block.block(), block.item());
 		} else if (feature instanceof FeatureItem<?> item) {
-			registerModel(model, item.item());
+			registerItemModel(model.itemModel(), item.item());
 		}
 	}
 
-	public void registerModel(BakedModel model, Block block, @Nullable BlockItem item) {
+	public void registerModel(ModelBlockDefault<?, ?> model, Block block, @Nullable BlockItem item) {
 		registerModel(model, block, item, block.getStateDefinition().getPossibleStates());
 	}
 
-	public void registerModel(BakedModel model, Block block, @Nullable BlockItem item, Collection<BlockState> states) {
-        this.customBlockModels.put(block, new BlockModelEntry(model, item, states));
+	public void registerModel(ModelBlockDefault<?, ?> model, Block block, @Nullable BlockItem item, Collection<BlockState> states) {
+		this.customBlockModels.put(block, new BlockModelEntry(model, states));
+		if (item != null) {
+			registerItemModel(model.itemModel(), item);
+		}
 	}
 
-	public void registerModel(BakedModel model, Item item) {
-        this.customModels.put(new ModelResourceLocation(ModUtil.getRegistryName(item), "inventory"), model);
+	public void registerBlockModel(BlockStateModel model, Block block) {
+		this.customBlockModels.put(block, new BlockModelEntry(model, block.getStateDefinition().getPossibleStates()));
+	}
+
+	public void registerItemModel(ItemModel model, Item item) {
+		this.customItemModels.put(item, model);
 	}
 
 	public void onBakeModels(ModelEvent.ModifyBakingResult event) {
-		//register custom models
-		Map<ModelResourceLocation, BakedModel> registry = event.getModels();
-		for (final BlockModelEntry entry : this.customBlockModels.values()) {
+		Map<BlockState, BlockStateModel> blockStateModels = event.getBakingResult().blockStateModels();
+		for (BlockModelEntry entry : this.customBlockModels.values()) {
 			for (BlockState state : entry.states) {
-				registry.put(BlockModelShaper.stateToModelLocation(state), entry.model);
-			}
-			if (entry.item != null) {
-				Identifier registryName = ModUtil.getRegistryName(entry.item);
-				if (registryName == null) {
-					continue;
-				}
-				registry.put(ModelResourceLocation.inventory(registryName), entry.model);
+				blockStateModels.put(state, entry.model);
 			}
 		}
 
-		registry.putAll(this.customModels);
+		Map<Identifier, ItemModel> itemModels = event.getBakingResult().itemStackModels();
+		this.customItemModels.forEach((item, model) -> {
+			Identifier registryName = ModUtil.getRegistryName(item);
+			if (registryName != null) {
+				itemModels.put(registryName, model);
+			}
+		});
 	}
 
-	private record BlockModelEntry(BakedModel model, @Nullable BlockItem item, Collection<BlockState> states) {
+	private record BlockModelEntry(BlockStateModel model, Collection<BlockState> states) {
 	}
 }

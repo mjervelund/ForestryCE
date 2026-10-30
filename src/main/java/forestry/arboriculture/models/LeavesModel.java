@@ -8,25 +8,20 @@ import forestry.arboriculture.leaves.BlockForestryLeaves;
 import forestry.arboriculture.features.ArboricultureBlocks;
 import forestry.arboriculture.leaves.LeavesBlockEntity;
 import forestry.core.platform.models.ModelBlockCached;
-import forestry.core.platform.models.ModelTransforms;
 import forestry.core.platform.models.baker.ModelBaker;
 import forestry.core.platform.util.NBTUtilForestry;
 import forestry.core.platform.util.ResourceUtil;
 import forestry.core.platform.util.SpeciesUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.client.ChunkRenderTypeSet;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.model.data.ModelData;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -85,7 +80,7 @@ public class LeavesModel extends ModelBlockCached<BlockForestryLeaves, LeavesMod
 	}
 
 	private Key getKey(ModelData extraData) {
-		boolean fancy = Minecraft.useFancyGraphics();
+		boolean fancy = Minecraft.getInstance().options.cutoutLeaves().get();
 
 		ITreeSpecies species = extraData.get(LeavesBlockEntity.PROPERTY_SPECIES);
 		if (species == null) {
@@ -115,13 +110,4 @@ public class LeavesModel extends ModelBlockCached<BlockForestryLeaves, LeavesMod
 		baker.setParticleSprite(key.leafSprite);
 	}
 
-	@Override
-	public ChunkRenderTypeSet getRenderTypes(BlockState state, RandomSource rand, ModelData data) {
-		return getKey(data).fruitSprite != null ? ChunkRenderTypeSet.of(RenderType.cutoutMipped()) : super.getRenderTypes(state, rand, data);
-	}
-
-	@Override
-	public ItemTransforms getTransforms() {
-		return ModelTransforms.BLOCK;
-	}
 }
