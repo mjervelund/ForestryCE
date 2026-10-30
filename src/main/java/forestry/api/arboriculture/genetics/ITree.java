@@ -12,7 +12,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -54,7 +53,7 @@ public interface ITree extends IIndividual, IProductProducer, ISpecialtyProducer
 	 */
 	int getResilience();
 
-	Feature<NoneFeatureConfiguration> getTreeGenerator(WorldGenLevel level, BlockPos pos, boolean wasBonemealed);
+	Feature getTreeGenerator(WorldGenLevel level, BlockPos pos, boolean wasBonemealed);
 
 	ITree copy();
 

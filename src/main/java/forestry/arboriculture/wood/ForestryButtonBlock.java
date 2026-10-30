@@ -9,7 +9,7 @@ public class ForestryButtonBlock extends ButtonBlock implements IWoodTyped {
 	private final ForestryWoodType type;
 
 	public ForestryButtonBlock(ForestryWoodType type) {
-		super(type.getBlockSetType(), 30, Properties.of().noCollission().strength(0.5f).pushReaction(PushReaction.DESTROY));
+		super(type.getBlockSetType(), 30, Properties.of().noCollision().strength(0.5f).pushReaction(PushReaction.POPPED));
 
 		this.type = type;
 	}

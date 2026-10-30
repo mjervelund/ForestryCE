@@ -1,5 +1,6 @@
 package forestry.apiculture.features;
 
+import com.mojang.serialization.MapCodec;
 import forestry.api.ForestryConstants;
 import forestry.api.modules.ForestryModuleIds;
 import forestry.apiculture.hives.HiveDecorator;
@@ -9,7 +10,6 @@ import forestry.core.platform.registration.IFeatureRegistry;
 import forestry.core.platform.registration.ModFeatureRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
@@ -20,12 +20,12 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ApicultureFeatures {
 	private static final IFeatureRegistry REGISTRY = ModFeatureRegistry.get(ForestryModuleIds.APICULTURE);
 
-	public static final DeferredRegister<Feature<?>> FEATURES = REGISTRY.getRegistry(Registries.FEATURE);
+	public static final DeferredRegister<MapCodec<? extends Feature>> FEATURES = REGISTRY.getRegistry(Registries.FEATURE_TYPE);
 	public static final DeferredRegister<StructurePoolElementType<?>> POOL_ELEMENT_TYPES = REGISTRY.getRegistry(Registries.STRUCTURE_POOL_ELEMENT);
 
-	public static final DeferredHolder<Feature<?>, HiveDecorator> HIVE = FEATURES.register("hive", HiveDecorator::new);
+	public static final DeferredHolder<MapCodec<? extends Feature>, MapCodec<HiveDecorator>> HIVE = FEATURES.register("hive", () -> HiveDecorator.CODEC);
 	public static final DeferredHolder<StructurePoolElementType<?>, StructurePoolElementType<ApiaristPoolElement>> APIARIST_POOL_ELEMENT_TYPE = POOL_ELEMENT_TYPES.register("apiarist", () -> () -> ApiaristPoolElement.CODEC);
 
-	public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_HIVE = ResourceKey.create(Registries.CONFIGURED_FEATURE, ForestryConstants.forestry("hive"));
+	public static final ResourceKey<Feature> CONFIGURED_HIVE = ResourceKey.create(Registries.FEATURE, ForestryConstants.forestry("hive"));
 	public static final ResourceKey<PlacedFeature> PLACED_HIVE = ResourceKey.create(Registries.PLACED_FEATURE, ForestryConstants.forestry("hive"));
 }

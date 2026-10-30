@@ -51,7 +51,7 @@ public class TileMillRainmaker extends TileMill {
 			ItemStack heldItem = player.getItemInHand(hand);
 
 			// We don't have a gui, but we can be activated
-			RainmakerSubstrate substrate = heldItem.getItemHolder().getData(ForestryDataMaps.RAINMAKER_FUELS);
+			RainmakerSubstrate substrate = heldItem.typeHolder().getData(ForestryDataMaps.RAINMAKER_FUELS);
 			if (substrate != null && this.charge == 0) {
 				addCharge(substrate);
 				if (!player.isCreative()) {

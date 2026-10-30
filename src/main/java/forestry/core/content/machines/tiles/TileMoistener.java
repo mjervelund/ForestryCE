@@ -208,7 +208,7 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 					return;
 				}
 
-				MoistenerFuel res = getItem(InventoryMoistener.SLOT_WORKING).getItemHolder().getData(ForestryDataMaps.MOISTENER_FUELS);
+				MoistenerFuel res = getItem(InventoryMoistener.SLOT_WORKING).typeHolder().getData(ForestryDataMaps.MOISTENER_FUELS);
 				if (res != null) {
                     this.burnTime = this.totalTime = res.moistenerValue();
 				}
@@ -310,7 +310,7 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 				continue;
 			}
 
-			MoistenerFuel res = slotStack.getItemHolder().getData(ForestryDataMaps.MOISTENER_FUELS);
+			MoistenerFuel res = slotStack.typeHolder().getData(ForestryDataMaps.MOISTENER_FUELS);
 			if (res == null) {
 				continue;
 			}
@@ -331,7 +331,7 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 		if (!getItem(InventoryMoistener.SLOT_WORKING).isEmpty()) {
 			// Get the result of the consumed item in the working slot
 			ItemStack deposit;
-			MoistenerFuel res = getItem(InventoryMoistener.SLOT_WORKING).getItemHolder().getData(ForestryDataMaps.MOISTENER_FUELS);
+			MoistenerFuel res = getItem(InventoryMoistener.SLOT_WORKING).typeHolder().getData(ForestryDataMaps.MOISTENER_FUELS);
 			if (res != null) {
 				deposit = res.product().copy();
 			} else {
@@ -376,7 +376,7 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 				continue;
 			}
 
-			if (getItem(i).getItemHolder().getData(ForestryDataMaps.MOISTENER_FUELS) == null) {
+			if (getItem(i).typeHolder().getData(ForestryDataMaps.MOISTENER_FUELS) == null) {
 				slotsToShift.add(i);
 			}
 		}
@@ -431,7 +431,7 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 				max += 64;
 				continue;
 			}
-			if (inventory.getItem(i).getItemHolder().getData(ForestryDataMaps.MOISTENER_FUELS) != null) {
+			if (inventory.getItem(i).typeHolder().getData(ForestryDataMaps.MOISTENER_FUELS) != null) {
 				max += 64;
 				avail += inventory.getItem(i).getCount();
 			}

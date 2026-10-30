@@ -171,7 +171,7 @@ public class CombustionEngineBlockEntity extends EngineBlockEntity implements Wo
 	 */
 	private static int determineFuelValue(@Nullable FluidStack fluidStack) {
 		if (fluidStack != null) {
-			BiogasEngineFuel fuel = fluidStack.getFluidHolder().getData(ForestryDataMaps.COMBUSTION_FUELS);
+			BiogasEngineFuel fuel = fluidStack.typeHolder().getData(ForestryDataMaps.COMBUSTION_FUELS);
 			if (fuel != null) {
 				return fuel.powerPerCycle();
 			}
@@ -184,7 +184,7 @@ public class CombustionEngineBlockEntity extends EngineBlockEntity implements Wo
 	 */
 	private static int determineBurnTime(@Nullable FluidStack fluidStack) {
 		if (fluidStack != null) {
-			BiogasEngineFuel fuel = fluidStack.getFluidHolder().getData(ForestryDataMaps.COMBUSTION_FUELS);
+			BiogasEngineFuel fuel = fluidStack.typeHolder().getData(ForestryDataMaps.COMBUSTION_FUELS);
 			if (fuel != null) {
 				return fuel.burnDuration();
 			}
@@ -194,7 +194,7 @@ public class CombustionEngineBlockEntity extends EngineBlockEntity implements Wo
 
 	private static int determineCoolantTime(@Nullable FluidStack fluidStack) {
 		if (fluidStack != null) {
-			BiogasEngineFuel fuel = fluidStack.getFluidHolder().getData(ForestryDataMaps.COMBUSTION_COOLANTS);
+			BiogasEngineFuel fuel = fluidStack.typeHolder().getData(ForestryDataMaps.COMBUSTION_COOLANTS);
 			if (fuel != null) {
 				return fuel.burnDuration();
 			}
@@ -204,7 +204,7 @@ public class CombustionEngineBlockEntity extends EngineBlockEntity implements Wo
 
 	private static int determineCoolantModifier(@Nullable FluidStack fluidStack) {
 		if (fluidStack != null) {
-			BiogasEngineFuel fuel = fluidStack.getFluidHolder().getData(ForestryDataMaps.COMBUSTION_COOLANTS);
+			BiogasEngineFuel fuel = fluidStack.typeHolder().getData(ForestryDataMaps.COMBUSTION_COOLANTS);
 			if (fuel != null) {
 				return fuel.dissipationMultiplier();
 			}

@@ -1,5 +1,6 @@
 package forestry.core.platform.fluids;
 
+import net.minecraft.client.Minecraft;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Suppliers;
 import forestry.api.core.tooltips.ToolTip;
@@ -53,7 +54,7 @@ public class FilteredTank extends StandardTank {
 		this.filters = () -> BuiltInRegistries.FLUID.getDataMap(dataMap).keySet().stream()
 				.map(ResourceKey::location)
 				.collect(Collectors.toSet());
-		setValidator(stack -> !stack.isEmpty() && stack.getFluidHolder().getData(dataMap) != null);
+		setValidator(stack -> !stack.isEmpty() && stack.typeHolder().getData(dataMap) != null);
 		return this;
 	}
 
@@ -82,7 +83,7 @@ public class FilteredTank extends StandardTank {
 		toolTip.clear();
 		Set<Identifier> filters = this.filters.get();
 
-		if (Screen.hasShiftDown() || filters.size() < 5) {
+		if (Minecraft.getInstance().hasShiftDown() || filters.size() < 5) {
 			for (Identifier filterName : filters) {
 				Fluid fluidFilter = BuiltInRegistries.FLUID.get(filterName);
 				if (fluidFilter == Fluids.EMPTY) {

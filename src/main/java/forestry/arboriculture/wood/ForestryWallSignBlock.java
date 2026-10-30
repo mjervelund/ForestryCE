@@ -20,7 +20,7 @@ public class ForestryWallSignBlock extends WallSignBlock implements IWoodTyped {
 	private final ForestryWoodType type;
 
 	public ForestryWallSignBlock(ForestryWoodType type) {
-		super(type.getWoodType(), Properties.of().forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollission().strength(1.0F).lootFrom(ArboricultureBlocks.SIGN.get(type)::block).ignitedByLava());
+		super(type.getWoodType(), Properties.of().forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).lootFrom(ArboricultureBlocks.SIGN.get(type)::block).ignitedByLava());
 
 		this.type = type;
 	}

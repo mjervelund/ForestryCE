@@ -65,7 +65,7 @@ public class BlockSheet extends BlockBurnable {
 
 	@Override
 	public PushReaction getPistonPushReaction(BlockState state) {
-		return PushReaction.DESTROY;
+		return PushReaction.POPPED;
 	}
 
 	// A sheet only burns on the face it lies flat against, the one face it fills

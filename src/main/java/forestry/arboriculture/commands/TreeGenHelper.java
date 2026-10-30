@@ -10,16 +10,13 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class TreeGenHelper {
 	public static boolean generateTree(ITreeSpecies tree, @Nullable IGenome genome, WorldGenLevel level, RandomSource random, BlockPos pos) {
-		Feature<NoneFeatureConfiguration> gen = tree.getGenerator().getTreeFeature(tree);
+		Feature gen = tree.getGenerator().getTreeFeature(tree);
 
 		BlockState state = level.getBlockState(pos);
 		if (BlockUtil.canPlaceTree(state, level, pos)) {
@@ -30,7 +27,7 @@ public class TreeGenHelper {
 				}
 				return base.place(genome, level, random, pos, true);
 			} else {
-				return gen.place(new FeaturePlaceContext<>(Optional.empty(), level, ((ServerChunkCache) level.getChunkSource()).getGenerator(), random, pos, FeatureConfiguration.NONE));
+				return gen.place(level, ((ServerChunkCache) level.getChunkSource()).getGenerator(), random, pos);
 			}
 		}
 		return false;

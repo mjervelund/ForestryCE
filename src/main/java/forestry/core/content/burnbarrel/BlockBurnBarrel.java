@@ -139,7 +139,7 @@ public class BlockBurnBarrel extends BlockForestry implements EntityBlock {
 	// IBlockExtension, where returning null means "use the value from the block properties"
 	@Override
 	public PushReaction getPistonPushReaction(BlockState state) {
-		return PushReaction.DESTROY;
+		return PushReaction.POPPED;
 	}
 
 	@Override

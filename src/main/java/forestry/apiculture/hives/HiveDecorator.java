@@ -1,12 +1,14 @@
 package forestry.apiculture.hives;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import forestry.api.IForestryApi;
 import forestry.api.apiculture.hives.IHive;
 import forestry.api.core.HumidityType;
 import forestry.api.core.TemperatureType;
 import forestry.core.platform.config.ForestryConfig;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
@@ -15,12 +17,17 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class HiveDecorator extends Feature<NoneFeatureConfiguration> {
-	public HiveDecorator() {
-		super(NoneFeatureConfiguration.CODEC);
+public class HiveDecorator implements Feature {
+	public static final HiveDecorator INSTANCE = new HiveDecorator();
+	public static final MapCodec<HiveDecorator> CODEC = MapCodec.unit(INSTANCE);
+
+	private HiveDecorator() {
+	}
+
+	@Override
+	public MapCodec<HiveDecorator> codec() {
+		return CODEC;
 	}
 
 	public static boolean tryGenHive(WorldGenLevel world, RandomSource rand, int posX, int posZ, IHive hive) {
@@ -74,10 +81,7 @@ public class HiveDecorator extends Feature<NoneFeatureConfiguration> {
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-		WorldGenLevel level = context.level();
-		RandomSource rand = context.random();
-		BlockPos pos = context.origin();
+	public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource rand, BlockPos pos) {
 
 		ObjectArrayList<IHive> hives = new ObjectArrayList<>(IForestryApi.INSTANCE.getHiveManager().getHives());
 		int numTries = (int) Math.ceil(hives.size() / 2f);

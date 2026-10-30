@@ -26,7 +26,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -82,7 +81,7 @@ public class Tree extends Individual<ITreeSpecies, ITree, ITreeSpeciesType> impl
 
 	/* GROWTH */
 	@Override
-	public Feature<NoneFeatureConfiguration> getTreeGenerator(WorldGenLevel level, BlockPos pos, boolean wasBonemealed) {
+	public Feature getTreeGenerator(WorldGenLevel level, BlockPos pos, boolean wasBonemealed) {
 		return this.species.getGenerator().getTreeFeature(getSpecies());
 	}
 

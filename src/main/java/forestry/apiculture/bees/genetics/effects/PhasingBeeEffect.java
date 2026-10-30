@@ -45,7 +45,7 @@ public class PhasingBeeEffect extends ThrottledBeeEffect {
 
 			for (int i = 0; i < 16; i++) {
 				double targetX = x + (random.nextDouble() - 0.5) * 16;
-				double targetY = Mth.clamp(y + (double) (random.nextInt(16) - 8), level.getMinBuildHeight(), level.getMinBuildHeight() + level.getLogicalHeight() - 1);
+				double targetY = Mth.clamp(y + (double) (random.nextInt(16) - 8), level.getMinY(), level.getMinY() + level.getLogicalHeight() - 1);
 				double targetZ = z + (random.nextDouble() - 0.5) * 16;
 
 				if (entity.isPassenger()) {

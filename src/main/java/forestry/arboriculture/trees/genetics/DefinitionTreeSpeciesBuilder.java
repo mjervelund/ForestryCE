@@ -8,7 +8,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import forestry.api.arboriculture.ITreeGenData;
 import forestry.api.arboriculture.ITreeGenerator;
@@ -46,7 +45,7 @@ public class DefinitionTreeSpeciesBuilder
 	@Override public ItemStack getDecorativeLeaves() { return bindings.decorativeLeaves(); }
 
 	// --- tree-specific mutators (all throw) ---
-	@Override public ITreeSpeciesBuilder setTreeFeature(Function<ITreeGenData, Feature<NoneFeatureConfiguration>> factory) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
+	@Override public ITreeSpeciesBuilder setTreeFeature(Function<ITreeGenData, Feature> factory) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 	@Override public ITreeSpeciesBuilder setGenerator(ITreeGenerator generator) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 	@Override public ITreeSpeciesBuilder addVanillaStates(Collection<BlockState> states) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 	@Override public ITreeSpeciesBuilder addVanillaSapling(Item sapling) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }

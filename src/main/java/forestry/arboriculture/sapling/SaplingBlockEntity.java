@@ -18,9 +18,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
 
@@ -80,7 +77,7 @@ public class SaplingBlockEntity extends TileTreeContainer implements IOwnedTile 
 			return true;
 		}
 
-		Feature<NoneFeatureConfiguration> generator = tree.getTreeGenerator((ServerLevel) this.level, getBlockPos(), true);
+		Feature generator = tree.getTreeGenerator((ServerLevel) this.level, getBlockPos(), true);
 		if (generator instanceof AbstractArboricultureFeature arboricultureGenerator) {
 			arboricultureGenerator.preGenerate(getTree().getGenome(), this.level, rand, getBlockPos());
 			return arboricultureGenerator.getValidGrowthPos(this.level, getBlockPos()) != null;
@@ -104,13 +101,13 @@ public class SaplingBlockEntity extends TileTreeContainer implements IOwnedTile 
 			return;
 		}
 
-		Feature<NoneFeatureConfiguration> generator = tree.getTreeGenerator((ServerLevel) this.level, getBlockPos(), boneMealed);
+		Feature generator = tree.getTreeGenerator((ServerLevel) this.level, getBlockPos(), boneMealed);
 		final boolean generated;
 		if (generator instanceof AbstractForestryFeature base) {
 			generated = base.place(tree.getGenome(), this.level, random, getBlockPos(), false);
 		} else {
 			ServerLevel level = (ServerLevel) this.level;
-			generated = generator.place(new FeaturePlaceContext<>(Optional.empty(), level, level.getChunkSource().getGenerator(), random, getBlockPos(), FeatureConfiguration.NONE));
+			generated = generator.place(level, level.getChunkSource().getGenerator(), random, getBlockPos());
 		}
 
 		if (generated) {

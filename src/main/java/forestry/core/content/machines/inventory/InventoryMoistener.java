@@ -32,7 +32,7 @@ public class InventoryMoistener extends InventoryAdapterTile<TileMoistener> {
 		}
 
 		if (SlotUtil.isSlotInRange(slotIndex, SLOT_STASH_1, SLOT_STASH_COUNT)) {
-			return stack.getItemHolder().getData(ForestryDataMaps.MOISTENER_FUELS) != null;
+			return stack.typeHolder().getData(ForestryDataMaps.MOISTENER_FUELS) != null;
 		}
 
 		if (slotIndex == SLOT_PRODUCT) {
@@ -50,7 +50,7 @@ public class InventoryMoistener extends InventoryAdapterTile<TileMoistener> {
 		}
 
 		if (SlotUtil.isSlotInRange(slotIndex, SLOT_STASH_1, SLOT_STASH_COUNT + SLOT_RESERVOIR_COUNT)) {
-			return itemstack.getItemHolder().getData(ForestryDataMaps.MOISTENER_FUELS) == null;
+			return itemstack.typeHolder().getData(ForestryDataMaps.MOISTENER_FUELS) == null;
 		}
 
 		return false;

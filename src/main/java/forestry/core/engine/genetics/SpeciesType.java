@@ -7,7 +7,7 @@ import forestry.api.core.genetics.*;
 import forestry.api.core.genetics.alleles.IKaryotype;
 import forestry.api.plugin.ISpeciesTypeBuilder;
 import it.unimi.dsi.fastutil.objects.Reference2FloatOpenHashMap;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;

@@ -1,5 +1,6 @@
 package forestry.arboriculture.features;
 
+import com.mojang.serialization.MapCodec;
 import forestry.api.ForestryConstants;
 import forestry.api.modules.ForestryModuleIds;
 import forestry.arboriculture.worldgen.TreeDecorator;
@@ -9,7 +10,6 @@ import forestry.core.platform.registration.IFeatureRegistry;
 import forestry.core.platform.registration.ModFeatureRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -19,11 +19,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ArboricultureFeatures {
 	private static final IFeatureRegistry REGISTRY = ModFeatureRegistry.get(ForestryModuleIds.ARBORICULTURE);
 
-	public static final DeferredRegister<Feature<?>> FEATURES = REGISTRY.getRegistry(Registries.FEATURE);
+	public static final DeferredRegister<MapCodec<? extends Feature>> FEATURES = REGISTRY.getRegistry(Registries.FEATURE_TYPE);
 
-	public static final DeferredHolder<Feature<?>, TreeDecorator> TREE_DECORATOR = FEATURES.register("tree", TreeDecorator::new);
-	public static final ResourceKey<ConfiguredFeature<?, ?>> CONFIGURED_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, ForestryConstants.forestry("tree"));
+	public static final DeferredHolder<MapCodec<? extends Feature>, MapCodec<TreeDecorator>> TREE_DECORATOR = FEATURES.register("tree", () -> TreeDecorator.CODEC);
+	public static final ResourceKey<Feature> CONFIGURED_TREE = ResourceKey.create(Registries.FEATURE, ForestryConstants.forestry("tree"));
 	public static final ResourceKey<PlacedFeature> PLACED_TREE = ResourceKey.create(Registries.PLACED_FEATURE, ForestryConstants.forestry("tree"));
 
-	public static final DeferredHolder<Feature<?>, ForestryTreeFeature> CUSTOM_TREE = FEATURES.register("custom_tree", ForestryTreeFeature::new);
+	public static final DeferredHolder<MapCodec<? extends Feature>, MapCodec<ForestryTreeFeature>> CUSTOM_TREE = FEATURES.register("custom_tree", () -> ForestryTreeFeature.CODEC);
 }

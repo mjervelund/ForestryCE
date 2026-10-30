@@ -42,7 +42,7 @@ public class ArboricultureResearchTrigger extends SimpleCriterionTrigger<Arboric
 			return;
 		}
 
-		Player player = serverLevel.getPlayerByUUID(profile.getId());
+		Player player = serverLevel.getPlayerByUUID(profile.id());
 		if (player instanceof ServerPlayer serverPlayer) {
 			trigger(serverPlayer, instance -> instance.check(researchCompletion));
 		}

@@ -17,7 +17,7 @@ import forestry.agriculture.farmlogic.IFarmHousingInternal;
 import forestry.agriculture.multifarm.multiblock.FarmFertilizerManager;
 import forestry.agriculture.multifarm.multiblock.FarmHydrationManager;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

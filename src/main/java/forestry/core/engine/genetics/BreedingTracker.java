@@ -75,8 +75,8 @@ public abstract class BreedingTracker extends SavedData implements IBreedingTrac
 
 	// Sends the given species and mutations to client. Use to sync serverside breeding updates to the client.
 	private void sendUpdate(Collection<Identifier> discoveredSpecies, Collection<String> discoveredMutations, Collection<String> researchedMutations) {
-		if (this.level != null && this.username != null && this.username.getName() != null) {
-			Player player = this.level.getPlayerByUUID(this.username.getId());
+		if (this.level != null && this.username != null && this.username.name() != null) {
+			Player player = this.level.getPlayerByUUID(this.username.id());
 
 			if (player instanceof ServerPlayer && !(player instanceof FakePlayer)) {
 				CompoundTag nbt = new CompoundTag();

@@ -1,5 +1,7 @@
 package forestry.arboriculture.worldgen;
 
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import com.mojang.serialization.MapCodec;
 import forestry.api.IForestryApi;
 import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.arboriculture.genetics.ITree;
@@ -22,19 +24,24 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
 
-public class TreeDecorator extends Feature<NoneFeatureConfiguration> {
+public class TreeDecorator implements Feature {
+	public static final TreeDecorator INSTANCE = new TreeDecorator();
+	public static final MapCodec<TreeDecorator> CODEC = MapCodec.unit(INSTANCE);
+
 	private static final IdentityHashMap<ResourceKey<Biome>, List<ITree>> BIOME_CACHE = new IdentityHashMap<>();
 
-	public TreeDecorator() {
-		super(NoneFeatureConfiguration.CODEC);
+	private TreeDecorator() {
+	}
+
+	@Override
+	public MapCodec<TreeDecorator> codec() {
+		return CODEC;
 	}
 
 	@Nullable
@@ -91,10 +98,7 @@ public class TreeDecorator extends Feature<NoneFeatureConfiguration> {
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-		WorldGenLevel level = context.level();
-		RandomSource rand = context.random();
-		BlockPos pos = context.origin();
+	public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource rand, BlockPos pos) {
 
 		double globalRarity = ForestryConfig.SERVER.treesSpawnNaturally.get();
 		if (globalRarity <= 0.0) {

@@ -10,7 +10,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -21,7 +20,7 @@ public interface ITreeSpeciesBuilder extends ISpeciesBuilder<ITreeSpeciesType, I
 	/**
 	 * Shortcut to create a tree generator using the tree generator built into Forestry.
 	 */
-	ITreeSpeciesBuilder setTreeFeature(Function<ITreeGenData, Feature<NoneFeatureConfiguration>> factory);
+	ITreeSpeciesBuilder setTreeFeature(Function<ITreeGenData, Feature> factory);
 
 	/**
 	 * Sets the tree generator instance used to generate trees when growing from a sapling or being placed in the world.

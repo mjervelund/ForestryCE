@@ -1,5 +1,6 @@
 package forestry.agriculture.multifarm.items;
 
+import net.minecraft.client.Minecraft;
 import forestry.core.platform.util.TranslationKeys;
 import forestry.core.platform.item.ItemBlockForestry;
 import forestry.agriculture.multifarm.blocks.MultifarmBlock;
@@ -18,7 +19,7 @@ public class ItemBlockFarm extends ItemBlockForestry<MultifarmBlock> {
 
 	@Override
 	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-		if (Screen.hasShiftDown()) {
+		if (Minecraft.getInstance().hasShiftDown()) {
 			tooltip.add(Component.translatable("block.forestry.farm.tooltip").withStyle(ChatFormatting.GRAY));
 		} else {
 			tooltip.add(Component.translatable(TranslationKeys.HOLD_SHIFT_FOR_DETAILS).withStyle(ChatFormatting.GRAY));

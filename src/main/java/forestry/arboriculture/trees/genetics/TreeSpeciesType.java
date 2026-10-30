@@ -266,7 +266,7 @@ public class TreeSpeciesType extends SpeciesType<ITreeSpecies, ITree> implements
 
 	@Override
 	public String getBreedingTrackerFile(@Nullable GameProfile profile) {
-		return "ArboristTracker." + (profile == null ? "common" : profile.getId());
+		return "ArboristTracker." + (profile == null ? "common" : profile.id());
 	}
 
 	@Override

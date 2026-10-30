@@ -1,9 +1,10 @@
 package forestry.core.platform.util;
 
+import net.minecraft.core.UUIDUtil;
 import com.mojang.authlib.GameProfile;
 import forestry.core.platform.network.IStreamable;
 import io.netty.buffer.Unpooled;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
@@ -52,7 +53,7 @@ public abstract class NBTUtilForestry {
 			return null;
 		}
 
-		UUID id = nbt.hasUUID(GAME_PROFILE_ID) ? nbt.getUUID(GAME_PROFILE_ID) : null;
+		UUID id = nbt.read(GAME_PROFILE_ID, UUIDUtil.CODEC).orElse(null);
 		String name = nbt.contains(GAME_PROFILE_NAME) ? nbt.getString(GAME_PROFILE_NAME) : null;
 		if (id == null && (name == null || name.isEmpty())) {
 			return null;
@@ -63,11 +64,11 @@ public abstract class NBTUtilForestry {
 	}
 
 	public static CompoundTag writeGameProfile(CompoundTag nbt, GameProfile profile) {
-		if (profile.getId() != null) {
-			nbt.putUUID(GAME_PROFILE_ID, profile.getId());
+		if (profile.id() != null) {
+			nbt.store(GAME_PROFILE_ID, UUIDUtil.CODEC, profile.id());
 		}
-		if (profile.getName() != null) {
-			nbt.putString(GAME_PROFILE_NAME, profile.getName());
+		if (profile.name() != null) {
+			nbt.putString(GAME_PROFILE_NAME, profile.name());
 		}
 		return nbt;
 	}

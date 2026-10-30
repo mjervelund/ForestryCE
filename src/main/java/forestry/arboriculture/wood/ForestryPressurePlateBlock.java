@@ -11,7 +11,7 @@ public class ForestryPressurePlateBlock extends PressurePlateBlock implements IW
 	private final ForestryWoodType type;
 
 	public ForestryPressurePlateBlock(ForestryWoodType type) {
-		super(type.getBlockSetType(), Properties.of().mapColor(MapColor.WOOD).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollission().strength(0.5f).ignitedByLava().pushReaction(PushReaction.DESTROY));
+		super(type.getBlockSetType(), Properties.of().mapColor(MapColor.WOOD).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(0.5f).ignitedByLava().pushReaction(PushReaction.POPPED));
 
 		this.type = type;
 	}

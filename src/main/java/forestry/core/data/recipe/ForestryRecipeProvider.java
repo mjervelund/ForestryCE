@@ -56,7 +56,7 @@ import forestry.core.content.backpacks.features.CrateItems;
 import forestry.core.content.backpacks.items.ItemCrated;
 import forestry.core.content.worktable.features.WorktableBlocks;
 import it.unimi.dsi.fastutil.objects.ObjectIntPair;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;

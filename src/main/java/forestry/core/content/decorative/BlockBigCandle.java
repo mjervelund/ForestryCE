@@ -135,6 +135,6 @@ public class BlockBigCandle extends Block implements SimpleWaterloggedBlock {
 
 	@Override
 	public PushReaction getPistonPushReaction(BlockState state) {
-		return PushReaction.DESTROY;
+		return PushReaction.POPPED;
 	}
 }

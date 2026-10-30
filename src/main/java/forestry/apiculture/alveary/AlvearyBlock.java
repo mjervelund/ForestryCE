@@ -1,5 +1,6 @@
 package forestry.apiculture.alveary;
 
+import net.minecraft.client.Minecraft;
 import forestry.api.core.IBlockSubtype;
 import forestry.apiculture.features.ApicultureTiles;
 import forestry.apiculture.alveary.multiblock.AbstractAlvearyBlockEntity;
@@ -151,7 +152,7 @@ public class AlvearyBlock extends BlockStructure implements EntityBlock {
 
 	@Override
 	public void appendHoverText(ItemStack stack, Item.TooltipContext level, List<Component> tooltip, TooltipFlag flag) {
-		if (Screen.hasShiftDown()) {
+		if (Minecraft.getInstance().hasShiftDown()) {
 			tooltip.add(Component.translatable("block.forestry.alveary_tooltip"));
 		} else {
 			ItemTooltipUtil.addShiftInformation(tooltip);

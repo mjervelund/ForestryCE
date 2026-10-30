@@ -147,7 +147,7 @@ public class BiogasEngineBlockEntity extends EngineBlockEntity implements Worldl
 		}
 		FluidStack fuel = this.burnTank.getFluidAmount() > 0 ? this.burnTank.getFluid() : this.fuelTank.getFluid();
 		if (!fuel.isEmpty()) {
-			BiogasEngineFuel fuel2 = fuel.getFluidHolder().getData(ForestryDataMaps.BIOGAS_FUELS);
+			BiogasEngineFuel fuel2 = fuel.typeHolder().getData(ForestryDataMaps.BIOGAS_FUELS);
 			return fuel2 != null && fuel2.dissipationMultiplier() == 1;
 		}
 		return false;
@@ -178,7 +178,7 @@ public class BiogasEngineBlockEntity extends EngineBlockEntity implements Worldl
 		if (this.burnTank.getFluidAmount() > 0 && this.currentOutput > 0) {
 			FluidStack fuelFluidStack = this.burnTank.getFluid();
 			if (!fuelFluidStack.isEmpty()) {
-				BiogasEngineFuel fuel = fuelFluidStack.getFluidHolder().getData(ForestryDataMaps.BIOGAS_FUELS);
+				BiogasEngineFuel fuel = fuelFluidStack.typeHolder().getData(ForestryDataMaps.BIOGAS_FUELS);
 				if (fuel != null) {
 					loss = loss * (fuel.dissipationMultiplier() + this.heatBonus);
 				}
@@ -205,7 +205,7 @@ public class BiogasEngineBlockEntity extends EngineBlockEntity implements Worldl
 	 */
 	private static int determineFuelValue(@Nullable FluidStack fluidStack) {
 		if (fluidStack != null) {
-			BiogasEngineFuel fuel = fluidStack.getFluidHolder().getData(ForestryDataMaps.BIOGAS_FUELS);
+			BiogasEngineFuel fuel = fluidStack.typeHolder().getData(ForestryDataMaps.BIOGAS_FUELS);
 			if (fuel != null) {
 				return fuel.powerPerCycle();
 			}
@@ -218,7 +218,7 @@ public class BiogasEngineBlockEntity extends EngineBlockEntity implements Worldl
 	 */
 	private static int determineBurnTime(@Nullable FluidStack fluidStack) {
 		if (fluidStack != null) {
-			BiogasEngineFuel fuel = fluidStack.getFluidHolder().getData(ForestryDataMaps.BIOGAS_FUELS);
+			BiogasEngineFuel fuel = fluidStack.typeHolder().getData(ForestryDataMaps.BIOGAS_FUELS);
 			if (fuel != null) {
 				return fuel.burnDuration();
 			}

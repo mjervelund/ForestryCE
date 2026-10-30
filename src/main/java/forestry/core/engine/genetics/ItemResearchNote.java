@@ -45,7 +45,7 @@ public class ItemResearchNote extends ItemForestry {
 		if (note.researcher == null) {
 			researcherName = "Sengir";
 		} else {
-			researcherName = note.researcher.getName();
+			researcherName = note.researcher.name();
 		}
 		return Component.translatable(getDescriptionId(itemstack), researcherName);
 	}

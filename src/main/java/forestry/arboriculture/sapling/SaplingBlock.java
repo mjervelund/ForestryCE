@@ -32,7 +32,7 @@ public class SaplingBlock extends Block implements BonemealableBlock, EntityBloc
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 12.0D, 14.0D);
 
 	public SaplingBlock(Block.Properties properties) {
-		super(properties.noCollission().strength(0.0F).sound(SoundType.GRASS).randomTicks());
+		super(properties.noCollision().strength(0.0F).sound(SoundType.GRASS).randomTicks());
 	}
 
 	@Override

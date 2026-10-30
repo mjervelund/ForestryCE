@@ -60,7 +60,7 @@ public class BeeAnalyzerPlugin implements IAnalyzerPlugin<IBeeSpecies, IBee> {
 				ArrayList<TextOptions> lineOptions = Lists.newArrayList(null, new TextOptions().setColor(ForestryColors.LIGHT_GRAY));
 				TextOptions gray = new TextOptions().setColor(ForestryColors.GRAY);
 
-				if (Screen.hasShiftDown()) {
+				if (Minecraft.getInstance().hasShiftDown()) {
 					ClientLevel level = Minecraft.getInstance().level;
 					level.registryAccess().registryOrThrow(Registries.BLOCK).getTag(type.acceptableFlowers()).ifPresent(list -> {
 						int length = list.size();

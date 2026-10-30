@@ -15,7 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -49,7 +48,7 @@ public class TreeSpeciesBuilder extends SpeciesBuilder<ITreeSpeciesType, ITreeSp
 	}
 
 	@Override
-	public ITreeSpeciesBuilder setTreeFeature(Function<ITreeGenData, Feature<NoneFeatureConfiguration>> factory) {
+	public ITreeSpeciesBuilder setTreeFeature(Function<ITreeGenData, Feature> factory) {
 		Preconditions.checkState(this.woodType != null, "Must call setWoodType before setTreeFeature");
 
 		return setGenerator(new DefaultTreeGenerator(factory, this.woodType));

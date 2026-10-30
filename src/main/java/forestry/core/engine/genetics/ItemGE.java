@@ -1,5 +1,6 @@
 package forestry.core.engine.genetics;
 
+import net.minecraft.client.Minecraft;
 import forestry.Forestry;
 import forestry.api.core.genetics.IGenome;
 import forestry.api.core.genetics.IIndividual;
@@ -155,7 +156,7 @@ public abstract class ItemGE extends ItemForestry implements IIndividualItem {
 		IIndividual individual = getIndividual(stack);
 		if (individual != null) {
 			if (individual.isAnalyzed()) {
-				if (Screen.hasShiftDown()) {
+				if (Minecraft.getInstance().hasShiftDown()) {
 					((ISpecies<IIndividual>) individual.getSpecies()).addTooltip(individual, tooltip);
 				} else {
 					tooltip.add(Component.translatable("for.gui.tooltip.tmi", "< %s >").withStyle(style -> style.withColor(ChatFormatting.GRAY).withItalic(true)));

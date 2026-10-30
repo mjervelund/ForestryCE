@@ -18,7 +18,7 @@ public class FarmingManager implements IFarmingManager {
 
 	@Override
 	public int getFertilizeValue(ItemStack stack) {
-		Integer value = stack.getItemHolder().getData(ForestryDataMaps.FARM_FERTILIZERS);
+		Integer value = stack.typeHolder().getData(ForestryDataMaps.FARM_FERTILIZERS);
 		return value != null ? value : 0;
 	}
 

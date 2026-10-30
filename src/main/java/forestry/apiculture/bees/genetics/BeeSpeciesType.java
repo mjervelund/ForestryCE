@@ -125,7 +125,7 @@ public class BeeSpeciesType extends SpeciesType<IBeeSpecies, IBee> implements IB
 
 	@Override
 	public String getBreedingTrackerFile(@Nullable GameProfile profile) {
-		return "ApiaristTracker." + (profile == null ? "common" : profile.getId());
+		return "ApiaristTracker." + (profile == null ? "common" : profile.id());
 	}
 
 	@Override

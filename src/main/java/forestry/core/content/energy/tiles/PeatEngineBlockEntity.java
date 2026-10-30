@@ -202,7 +202,7 @@ public class PeatEngineBlockEntity extends EngineBlockEntity implements WorldlyC
 	 * Returns the fuel value (power per cycle) an item of the passed ItemStack provides
 	 */
 	private static int determineFuelValue(ItemStack fuel) {
-		PeatEngineFuel peatFuel = fuel.getItemHolder().getData(ForestryDataMaps.PEAT_FUELS);
+		PeatEngineFuel peatFuel = fuel.typeHolder().getData(ForestryDataMaps.PEAT_FUELS);
 		return peatFuel != null ? peatFuel.powerPerCycle() : 0;
 	}
 
@@ -210,7 +210,7 @@ public class PeatEngineBlockEntity extends EngineBlockEntity implements WorldlyC
 	 * Returns the fuel value (power per cycle) an item of the passed ItemStack provides
 	 */
 	private static int determineBurnDuration(ItemStack fuel) {
-		PeatEngineFuel peatFuel = fuel.getItemHolder().getData(ForestryDataMaps.PEAT_FUELS);
+		PeatEngineFuel peatFuel = fuel.typeHolder().getData(ForestryDataMaps.PEAT_FUELS);
 		return peatFuel != null ? peatFuel.burnDuration() : 0;
 	}
 

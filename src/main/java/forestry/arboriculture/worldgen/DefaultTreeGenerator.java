@@ -20,21 +20,20 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.function.Function;
 
 public class DefaultTreeGenerator implements ITreeGenerator {
-	private final Function<ITreeGenData, Feature<NoneFeatureConfiguration>> factory;
+	private final Function<ITreeGenData, Feature> factory;
 	private final IWoodType woodType;
 
-	public DefaultTreeGenerator(Function<ITreeGenData, Feature<NoneFeatureConfiguration>> factory, IWoodType woodType) {
+	public DefaultTreeGenerator(Function<ITreeGenData, Feature> factory, IWoodType woodType) {
 		this.factory = factory;
 		this.woodType = Preconditions.checkNotNull(woodType);
 	}
 
 	@Override
-	public Feature<NoneFeatureConfiguration> getTreeFeature(ITreeGenData tree) {
+	public Feature getTreeFeature(ITreeGenData tree) {
 		return this.factory.apply(tree);
 	}
 

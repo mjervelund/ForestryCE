@@ -59,7 +59,7 @@ public class RadioactiveBeeEffect extends ThrottledBeeEffect {
 			BlockPos randomPos = VecUtil.getRandomPositionInArea(rand, area);
 			BlockPos posBlock = randomPos.offset(posHousing).offset(VecUtil.center(area));
 
-			if (posBlock.getY() <= 1 || posBlock.getY() >= level.getMaxBuildHeight()) {
+			if (posBlock.getY() <= 1 || posBlock.getY() >= (level.getMaxY() + 1)) {
 				continue;
 			}
 

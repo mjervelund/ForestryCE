@@ -304,7 +304,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 
 		int highestFilledSection = chunk.getHighestFilledSectionIndex();
 		int top = highestFilledSection == -1
-				? chunk.getMinBuildHeight()
+				? chunk.getMinY()
 				: net.minecraft.core.SectionPos.sectionToBlockCoord(chunk.getSectionYFromSectionIndex(highestFilledSection));
 		for (int y = top + 15; y > 0; --y) {
 			BlockState blockState = chunk.getBlockState(cursor.setY(y));

@@ -41,7 +41,7 @@ public class BlockForestryFluid extends LiquidBlock {
 	}
 
 	private static BlockBehaviour.Properties createBlockProperties(BlockBehaviour.Properties blockProperties, FluidProperties properties) {
-		blockProperties.liquid().noCollission().noLootTable().replaceable();
+		blockProperties.liquid().noCollision().noLootTable().replaceable();
 
 		if (properties.luminosity > 0) {
 			var luminosity = properties.luminosity;

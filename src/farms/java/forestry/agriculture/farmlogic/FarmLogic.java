@@ -110,7 +110,7 @@ public abstract class FarmLogic implements IFarmLogic {
 
 		int maxY = max.getY();
 		if (toWorldHeight) {
-			maxY = world.getMaxBuildHeight();
+			maxY = (world.getMaxY() + 1);
 		}
 
 		return new AABB(min.getX(), min.getY(), min.getZ(), max.getX(), maxY, max.getZ());

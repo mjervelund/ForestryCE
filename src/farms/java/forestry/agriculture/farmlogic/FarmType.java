@@ -3,7 +3,7 @@ package forestry.agriculture.farmlogic;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import forestry.api.agriculture.*;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;

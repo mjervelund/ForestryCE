@@ -1,5 +1,6 @@
 package forestry.core.engine.circuits;
 
+import net.minecraft.client.Minecraft;
 import forestry.api.IForestryApi;
 import forestry.api.core.circuits.ICircuit;
 import forestry.api.core.circuits.ICircuitBoard;
@@ -64,7 +65,7 @@ public class CircuitBoard implements ICircuitBoard {
 				}
 			}
 
-			if (Screen.hasShiftDown() || extendedTooltip.size() <= 4) {
+			if (Minecraft.getInstance().hasShiftDown() || extendedTooltip.size() <= 4) {
 				list.addAll(extendedTooltip);
 			} else {
 				list.add(Component.literal("<").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.GRAY)

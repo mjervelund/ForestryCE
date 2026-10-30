@@ -10,7 +10,7 @@ import forestry.api.ForestryTags;
 import forestry.api.apiculture.FlowerTypeType;
 import forestry.api.apiculture.IFlowerType;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
