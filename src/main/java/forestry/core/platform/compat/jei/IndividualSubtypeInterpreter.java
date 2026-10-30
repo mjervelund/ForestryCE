@@ -12,11 +12,7 @@ public class IndividualSubtypeInterpreter implements ISubtypeInterpreter<ItemSta
 	@Nullable
 	@Override
 	public Object getSubtypeData(ItemStack ingredient, UidContext context) {
-		return getLegacyStringSubtypeInfo(ingredient, context);
-	}
-
-	@Override
-	public String getLegacyStringSubtypeInfo(ItemStack ingredient, UidContext context) {
+		// JEI 31 dropped getLegacyStringSubtypeInfo, which held this
 		IIndividual individual = IIndividualHandlerItem.getIndividual(ingredient);
 		return individual != null ? individual.getGenome().getActiveSpecies().getBinomial() : "";
 	}

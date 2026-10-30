@@ -1,5 +1,6 @@
 package forestry.core.platform.util;
 
+import java.util.Optional;
 import forestry.core.platform.client.ForestryColors;
 import forestry.Forestry;
 import forestry.api.core.genetics.IIndividual;
@@ -111,12 +112,16 @@ public class JeiUtil {
 			width = shapedRecipe.getWidth();
 			height = shapedRecipe.getHeight();
 		}
-		setCraftingItems(craftingSlots, craftingGridRecipe.getIngredients(), width, height, craftingGridHelper);
+		// 26.x: only shaped recipes keep their grid (with empty slots); others list their placement ingredients
+		List<Optional<Ingredient>> ingredients = craftingGridRecipe instanceof ShapedRecipe shapedRecipe
+			? shapedRecipe.getIngredients()
+			: craftingGridRecipe.placementInfo().ingredients().stream().map(Optional::of).toList();
+		setCraftingItems(craftingSlots, ingredients, width, height, craftingGridHelper);
 	}
 
-	public static void setCraftingItems(List<IRecipeSlotBuilder> craftingSlots, List<Ingredient> ingredients, int width, int height, ICraftingGridHelper craftingGridHelper) {
+	public static void setCraftingItems(List<IRecipeSlotBuilder> craftingSlots, List<Optional<Ingredient>> ingredients, int width, int height, ICraftingGridHelper craftingGridHelper) {
 		List<List<ItemStack>> itemStacks = ingredients.stream()
-			.map(ingredient -> List.of(ingredient.getItems()))
+			.map(ingredient -> ingredient.map(JeiUtil::getItemStacks).orElse(List.of()))
 			.toList();
 		craftingGridHelper.setInputs(craftingSlots, VanillaTypes.ITEM_STACK, itemStacks, width, height);
 	}
@@ -144,12 +149,6 @@ public class JeiUtil {
 				IIndividual individual = IIndividualHandlerItem.getIndividual(stack);
 				return individual != null ? individual.getGenome().<S>resolveActive(species).getBinomial() : null;
 			}
-
-			@Override
-			public String getLegacyStringSubtypeInfo(ItemStack stack, UidContext context) {
-				Object data = getSubtypeData(stack, context);
-				return data == null ? "" : data.toString();
-			}
 		};
 
 		for (ILifeStage stage : type.getLifeStages()) {
@@ -171,7 +170,7 @@ public class JeiUtil {
 	private static void drawCentered(GuiGraphicsExtractor graphics, Font font, String line, float x, float y, int color) {
 		int width = font.width(line);
 
-		graphics.text(font, line, x - (width / 2f), y, ForestryColors.textColor(color), false);
+		graphics.text(font, line, (int) (x - (width / 2f)), (int) y, ForestryColors.textColor(color), false);
 	}
 	// End of JEI Bees
 
@@ -185,4 +184,9 @@ public class JeiUtil {
 		return FORMATTER.format(probability * 100);
 	}
 	// End of Ex Deorum
+
+	// 26.x: Ingredient#getItems is gone
+	public static List<ItemStack> getItemStacks(Ingredient ingredient) {
+		return ingredient.items().map(ItemStack::new).toList();
+	}
 }

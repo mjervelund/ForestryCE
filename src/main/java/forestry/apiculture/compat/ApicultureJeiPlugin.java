@@ -70,11 +70,6 @@ public class ApicultureJeiPlugin implements IModPlugin {
 			public Object getSubtypeData(ItemStack stack, UidContext context) {
 				return CreativeHiveFrameItem.hasForceMutations(stack);
 			}
-
-			@Override
-			public String getLegacyStringSubtypeInfo(ItemStack stack, UidContext context) {
-				return String.valueOf(CreativeHiveFrameItem.hasForceMutations(stack));
-			}
 		});
 	}
 

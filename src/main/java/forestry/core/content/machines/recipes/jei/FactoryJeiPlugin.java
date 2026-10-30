@@ -150,11 +150,6 @@ public class FactoryJeiPlugin implements IModPlugin {
 			public Object getSubtypeData(ItemStack itemStack, UidContext context) {
 				return currentFluidId(itemStack).orElse(null);
 			}
-
-			@Override
-			public String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
-				return currentFluidId(itemStack).map(Identifier::toString).orElse("");
-			}
 		};
 
 		for (Item container : FluidsItems.CONTAINERS.itemArray()) {

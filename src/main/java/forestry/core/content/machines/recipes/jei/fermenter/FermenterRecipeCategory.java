@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes.jei.fermenter;
 
+import forestry.core.platform.util.JeiUtil;
 import forestry.api.ForestryConstants;
 import forestry.api.core.machines.IFermenterRecipe;
 import forestry.api.core.machines.IVariableFermentable;
@@ -77,7 +78,7 @@ public class FermenterRecipeCategory extends ForestryRecipeCategory<IFermenterRe
 
 		final int baseAmount = Math.round(recipe.getFermentationValue() * recipe.getModifier());
 		List<FluidStack> outputs =
-			Arrays.stream(recipe.getInputItem().getItems())
+			JeiUtil.getItemStacks(recipe.getInputItem()).stream()
 				.map(fermentable -> {
 					int amount = baseAmount;
 					if (fermentable.getItem() instanceof IVariableFermentable variableFermentable) {

@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes.jei.squeezer;
 
+import java.util.Optional;
 import forestry.api.ForestryConstants;
 import forestry.api.core.machines.ISqueezerRecipe;
 import forestry.core.content.machines.blocks.BlockTypeFactoryPlain;
@@ -60,7 +61,7 @@ public class SqueezerRecipeCategory extends ForestryRecipeCategory<ISqueezerReci
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, ISqueezerRecipe recipe, IFocusGroup focuses) {
 		List<IRecipeSlotBuilder> craftingSlots = JeiUtil.layoutSlotGrid(builder, RecipeIngredientRole.INPUT, 3, 3, 8, 5, 18);
-		JeiUtil.setCraftingItems(craftingSlots, recipe.getInputs(), 3, 3, this.craftingGridHelper);
+		JeiUtil.setCraftingItems(craftingSlots, recipe.getInputs().stream().map(Optional::of).toList(), 3, 3, this.craftingGridHelper);
 
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 88, 44)
 			.addRichTooltipCallback(new ChanceTooltipCallback(recipe.getRemnantsChance()))

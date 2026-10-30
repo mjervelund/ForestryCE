@@ -1,5 +1,6 @@
 package forestry.core.content.worktable.compat;
 
+import mezz.jei.api.recipe.types.IRecipeType;
 import forestry.core.platform.compat.jei.JeiUtil;
 import forestry.core.platform.util.RecipeUtils;
 import forestry.core.content.worktable.features.WorktableMenus;
@@ -35,7 +36,7 @@ class WorktableRecipeTransferHandler implements IRecipeTransferHandler<Worktable
 	}
 
 	@Override
-	public RecipeType<RecipeHolder<CraftingRecipe>> getRecipeType() {
+	public IRecipeType<RecipeHolder<CraftingRecipe>> getRecipeType() {
 		return RecipeTypes.CRAFTING;
 	}
 

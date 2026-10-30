@@ -61,9 +61,8 @@ public class SmelterRecipeCategory extends ForestryRecipeCategory<ISmelterRecipe
 		int oY = 5;
 
 		for (SizedIngredient input : recipe.getInputs()) {
-			// getItems already applies the count. Copy anyway, the array behind it is cached
 			builder.addSlot(RecipeIngredientRole.INPUT, oX + cellX, oY + cellY).addItemStacks(
-				Arrays.stream(input.getItems()).map(ItemStack::copy).toList()
+				input.ingredient().items().map(item -> new ItemStack(item, input.count())).toList()
 			);
 
 			cellX += 18;

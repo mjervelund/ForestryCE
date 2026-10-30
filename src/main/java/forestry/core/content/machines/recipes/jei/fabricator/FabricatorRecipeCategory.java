@@ -79,7 +79,7 @@ public class FabricatorRecipeCategory extends ForestryRecipeCategory<IFabricator
 		Fluid recipeFluid = recipeLiquid.getFluid();
 		List<IFabricatorSmeltingRecipe> smeltingRecipes = getSmeltingInputs().get(recipeFluid);
 		List<ItemStack> smeltingInput = smeltingRecipes.stream()
-			.flatMap(s -> Arrays.stream(s.getInput().getItems()))
+			.flatMap(s -> JeiUtil.getItemStacks(s.getInput()).stream())
 			.toList();
 
 		builder.addSlot(RecipeIngredientRole.INPUT, 6, 32)
@@ -91,7 +91,7 @@ public class FabricatorRecipeCategory extends ForestryRecipeCategory<IFabricator
 		JeiUtil.setCraftingItems(craftingSlots, craftingGridRecipe, this.craftingGridHelper);
 
 		// using Catalyst tells JEI that it is not actually part of the recipe
-		builder.addSlot(RecipeIngredientRole.CATALYST, 6, 5)
+		builder.addSlot(RecipeIngredientRole.CRAFTING_STATION, 6, 5)
 			.addItemStacks(smeltingInput);
 
 		// todo why is plan unused
