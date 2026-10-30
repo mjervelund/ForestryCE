@@ -77,7 +77,7 @@ public class AlvearySwarmerBlockEntity extends AbstractAlvearyBlockEntity implem
 		}
 
 		// Try to spawn princess
-		if (this.level.random.nextFloat() < chance) {
+		if (this.level.getRandom().nextFloat() < chance) {
 			// Queue swarm spawn
 			IIndividualHandlerItem.ifPresent(princessStack, individual -> {
 				if (individual instanceof IBee princess) {
@@ -125,10 +125,10 @@ public class AlvearySwarmerBlockEntity extends AbstractAlvearyBlockEntity implem
 
 		ServerLevel level = (ServerLevel) this.level;
 
-		int x = getBlockPos().getX() + level.random.nextInt(40 * 2) - 40;
-		int z = getBlockPos().getZ() + level.random.nextInt(40 * 2) - 40;
+		int x = getBlockPos().getX() + level.getRandom().nextInt(40 * 2) - 40;
+		int z = getBlockPos().getZ() + level.getRandom().nextInt(40 * 2) - 40;
 
-		if (HiveDecorator.tryGenHive(level, level.random, x, z, hive)) {
+		if (HiveDecorator.tryGenHive(level, level.getRandom(), x, z, hive)) {
             this.pendingSpawns.pop();
 		}
 	}
@@ -138,9 +138,9 @@ public class AlvearySwarmerBlockEntity extends AbstractAlvearyBlockEntity implem
 	public void loadAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		super.loadAdditional(compoundNBT, registries);
 
-		ListTag nbttaglist = compoundNBT.getList("PendingSpawns", 10);
+		ListTag nbttaglist = compoundNBT.getListOrEmpty("PendingSpawns");
 		for (int i = 0; i < nbttaglist.size(); i++) {
-			CompoundTag compoundNBT1 = nbttaglist.getCompound(i);
+			CompoundTag compoundNBT1 = nbttaglist.getCompoundOrEmpty(i);
             this.pendingSpawns.add(ItemStack.parse(registries, compoundNBT1).orElse(ItemStack.EMPTY));
 		}
 	}

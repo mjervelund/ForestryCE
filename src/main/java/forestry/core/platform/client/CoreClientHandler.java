@@ -322,7 +322,7 @@ public class CoreClientHandler implements IClientModuleHandler {
 
 					int renderDistance = minecraft.options.renderDistance().get();
 					BlockPos playerPos = minecraft.player.blockPosition();
-					ChunkPos playerChunkPos = new ChunkPos(playerPos);
+					ChunkPos playerChunkPos = ChunkPos.containing(playerPos);
 
 					Color color = RenderUtil.getRainbowColor(minecraft.level.getGameTime(), event.getPartialTick().getGameTimeDeltaPartialTick(false));
 
@@ -334,8 +334,8 @@ public class CoreClientHandler implements IClientModuleHandler {
 					float flashAlpha = RenderUtil.getFlashingAlpha(minecraft.level.getGameTime(), event.getPartialTick().getGameTimeDeltaPartialTick(false));
 
 					// Iterate through all chunks in render distance
-					for (int chunkX = playerChunkPos.x - renderDistance; chunkX <= playerChunkPos.x + renderDistance; chunkX++) {
-						for (int chunkZ = playerChunkPos.z - renderDistance; chunkZ <= playerChunkPos.z + renderDistance; chunkZ++) {
+					for (int chunkX = playerChunkPos.x() - renderDistance; chunkX <= playerChunkPos.x() + renderDistance; chunkX++) {
+						for (int chunkZ = playerChunkPos.z() - renderDistance; chunkZ <= playerChunkPos.z() + renderDistance; chunkZ++) {
 							LevelChunk chunk = minecraft.level.getChunk(chunkX, chunkZ);
 
 							// Get all block entities in the chunk

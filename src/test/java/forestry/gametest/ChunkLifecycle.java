@@ -37,8 +37,8 @@ public final class ChunkLifecycle {
 	}
 
 	public static ChunkPos isolatedSite(GameTestHelper helper) {
-		ChunkPos grid = new ChunkPos(helper.absolutePos(BlockPos.ZERO));
-		return new ChunkPos(grid.x + SITE_DISTANCE + NEXT_SITE.getAndIncrement() * SITE_SPACING, grid.z);
+		ChunkPos grid = ChunkPos.containing(helper.absolutePos(BlockPos.ZERO));
+		return new ChunkPos(grid.x() + SITE_DISTANCE + NEXT_SITE.getAndIncrement() * SITE_SPACING, grid.z());
 	}
 
 	public static void hold(ServerLevel level, ChunkPos pos, int distance) {
@@ -63,7 +63,7 @@ public final class ChunkLifecycle {
 
 	@Nullable
 	public static BlockEntity blockEntityIfLoaded(ServerLevel level, BlockPos pos) {
-		return isFull(level, new ChunkPos(pos)) ? level.getBlockEntity(pos) : null;
+		return isFull(level, ChunkPos.containing(pos)) ? level.getBlockEntity(pos) : null;
 	}
 
 	public static List<BlockEntity> blockEntities(ServerLevel level, List<BlockPos> positions) {

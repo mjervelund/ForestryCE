@@ -248,9 +248,9 @@ public class TileBurnBarrel extends TileBase implements IStreamableGui {
 	public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
 		super.loadAdditional(compound, registries);
 
-		this.burnTime = compound.getInt("BurnTime");
-		this.currentMaxBurnTime = compound.getInt("MaxBurnTime");
-		this.ashProductionTimer = compound.getInt("AshTime");
+		this.burnTime = compound.getIntOr("BurnTime", 0);
+		this.currentMaxBurnTime = compound.getIntOr("MaxBurnTime", 0);
+		this.ashProductionTimer = compound.getIntOr("AshTime", 0);
 	}
 
 	@Override

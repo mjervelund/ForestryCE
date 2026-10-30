@@ -18,7 +18,7 @@ public class ModuleFluids extends BlankForestryModule {
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerItem(Capabilities.FluidHandler.ITEM, (stack, context) -> ((FluidContainerItem) stack.getItem()).createFluidHandler(stack), FluidsItems.CONTAINERS.itemArray());
+		event.registerItem(Capabilities.Fluid.ITEM, (stack, access) -> ((FluidContainerItem) stack.getItem()).createResourceHandler(access), FluidsItems.CONTAINERS.itemArray());
 	}
 
 	@Override

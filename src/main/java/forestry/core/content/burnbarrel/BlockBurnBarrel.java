@@ -87,13 +87,13 @@ public class BlockBurnBarrel extends BlockForestry implements EntityBlock {
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			TileBurnBarrel barrel = TileUtil.getTile(level, pos, TileBurnBarrel.class);
 			if (barrel != null) {
 				barrel.openGui((ServerPlayer) player, InteractionHand.MAIN_HAND, pos);
 			}
 		}
-		return InteractionResult.sidedSuccess(level.isClientSide);
+		return InteractionResult.SUCCESS;
 	}
 
 	// Deviation from 1.20.1: Block#use split into useItemOn and useWithoutItem. The barrel lights from a held flint
@@ -101,7 +101,7 @@ public class BlockBurnBarrel extends BlockForestry implements EntityBlock {
 	// which also stops flint and steel from placing a fire against the barrel
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			TileBurnBarrel barrel = TileUtil.getTile(level, pos, TileBurnBarrel.class);
 			if (barrel != null) {
 				barrel.openGui((ServerPlayer) player, hand, pos);
@@ -113,7 +113,7 @@ public class BlockBurnBarrel extends BlockForestry implements EntityBlock {
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> actualType) {
-		if (level.isClientSide || actualType != CoreTiles.BURN_BARREL.tileType()) {
+		if (level.isClientSide() || actualType != CoreTiles.BURN_BARREL.tileType()) {
 			return null;
 		}
 		// IForestryTicker and not a bare lambda. It advances the TickHelper that updateOnInterval reads

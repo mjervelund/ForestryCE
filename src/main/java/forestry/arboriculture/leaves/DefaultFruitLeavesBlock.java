@@ -25,7 +25,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import forestry.core.platform.legacy.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -51,7 +51,7 @@ public class DefaultFruitLeavesBlock extends AbstractLeavesBlock implements ILea
 			if (tree == null) {
 				return InteractionResult.FAIL;
 			}
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				return InteractionResult.SUCCESS;
 			}
 			BlockUtil.sendDestroyEffects(level, pos, state);

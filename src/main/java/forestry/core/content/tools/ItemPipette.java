@@ -10,8 +10,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandlerItem;
+import forestry.core.platform.legacy.fluids.capability.templates.FluidHandlerItemStack;
 
 import java.util.List;
 import forestry.core.platform.item.ItemForestry;

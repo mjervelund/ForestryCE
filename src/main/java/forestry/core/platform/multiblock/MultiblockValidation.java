@@ -50,7 +50,7 @@ public final class MultiblockValidation {
 	public static void validateFor(Level level, BlockPos pos, MultiblockTileEntityForestry<?> member) {
 		// the client receives chunks in a different order than the server loads them, so it mirrors the holder's
 		// description packet instead of reaching its own verdict
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return;
 		}
 		MultiblockPattern pattern = member.getPattern();

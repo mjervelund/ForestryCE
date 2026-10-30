@@ -71,7 +71,7 @@ public class LogPileBlock extends Block {
 		level.setBlock(pos, state.setValue(IS_ACTIVE, true), Block.UPDATE_CLIENTS);
 
 		if (scheduleUpdate) {
-			level.scheduleTick(pos, this, (TICK_RATE + level.random.nextInt(RANDOM_TICK)) / 4);
+			level.scheduleTick(pos, this, (TICK_RATE + level.getRandom().nextInt(RANDOM_TICK)) / 4);
 		}
 	}
 
@@ -106,7 +106,7 @@ public class LogPileBlock extends Block {
 					world.setBlock(pos, ashState, Block.UPDATE_CLIENTS);
 				}
 			}
-			world.scheduleTick(pos, this, TICK_RATE + world.random.nextInt(RANDOM_TICK));
+			world.scheduleTick(pos, this, TICK_RATE + world.getRandom().nextInt(RANDOM_TICK));
 		}
 	}
 

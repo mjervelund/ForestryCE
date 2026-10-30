@@ -1,5 +1,8 @@
 package forestry.core.platform.multiblock;
 
+import forestry.core.platform.util.NbtValueIO;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import com.mojang.authlib.GameProfile;
 import forestry.api.core.ILocationProvider;
 import forestry.api.core.ISpectacleBlock;
@@ -135,11 +138,15 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 	/* ===== Persistence (spec 6.1 holder-gated, 6.4 stash) ===== */
 
 	@Override
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		loadAdditional(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void loadAdditional(CompoundTag data, HolderLookup.Provider registries) {
-		super.loadAdditional(data, registries);
 
 		if (data.contains("owner")) {
-			CompoundTag ownerNbt = data.getCompound("owner");
+			CompoundTag ownerNbt = data.getCompoundOrEmpty("owner");
 			this.owner = NBTUtilForestry.readGameProfile(ownerNbt);
 		}
 
@@ -161,8 +168,14 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 	}
 
 	@Override
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		CompoundTag data = new CompoundTag();
+		saveAdditional(data, NbtValueIO.registries(this.level));
+		output.store(data);
+	}
+
 	public void saveAdditional(CompoundTag data, HolderLookup.Provider registries) {
-		super.saveAdditional(data, registries);
 
 		if (this.owner != null) {
 			CompoundTag nbt = new CompoundTag();
@@ -237,7 +250,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		// farm that clears the computed targets, which the old PAUSED path left intact (MINOR 6 parity). The
 		// state stays untouched in the anchor's NBT, and reload re-fires the assembled callbacks through
 		// load-time validation.
-		if (this.level != null && !this.level.isClientSide) {
+		if (this.level != null && !this.level.isClientSide()) {
 			BlockPos anchor = getAnchorPos();
 			if (anchor != null) {
 				MultiblockController controller = MultiblockIndex.get(this.level, anchor);
@@ -266,7 +279,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		if (level == null) {
 			return;
 		}
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			// the server resends the new holder's packet if the machine survives
 			dropClientController();
 			return;
@@ -608,7 +621,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		// client-side controller and adopt the synced payload. This is the authoritative client path. It does
 		// NOT depend on the client running its own unreliable validation, so the GUI and highlight resolve a
 		// real assembled controller after a world reload (spec 9).
-		if (this.level != null && this.level.isClientSide) {
+		if (this.level != null && this.level.isClientSide()) {
 			if (packetData.getBoolean(ASSEMBLED_KEY) && packetData.contains(MEMBERS_KEY)) {
 				reconstructClientController(packetData);
 			} else {
@@ -640,8 +653,8 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		BlockPos holderPos = getBlockPos();
 
 		// Decode the synced member positions and derive the client controller's min and max bounding box
-		CompoundTag membersTag = packetData.getCompound(MEMBERS_KEY);
-		int count = membersTag.getInt("count");
+		CompoundTag membersTag = packetData.getCompoundOrEmpty(MEMBERS_KEY);
+		int count = membersTag.getIntOr("count", 0);
 		List<BlockPos> members = new java.util.ArrayList<>(count);
 		BlockPos min = null;
 		BlockPos max = null;
@@ -673,7 +686,7 @@ public abstract class MultiblockTileEntityForestry<T extends IMultiblockLogic> e
 		controller.setHolderPos(holderPos);
 		controller.setAssembled(true);
 		if (packetData.contains(PAYLOAD_KEY)) {
-			controller.readDescriptionPayload(packetData.getCompound(PAYLOAD_KEY));
+			controller.readDescriptionPayload(packetData.getCompoundOrEmpty(PAYLOAD_KEY));
 		}
 		// Fire the assembled transition so the controller's derived client state is real (ex. the alveary's
 		// climate provider, while the farm is a no-op). Per-part onMachineAssembled visuals, meaning entrance

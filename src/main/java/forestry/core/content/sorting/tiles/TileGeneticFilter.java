@@ -27,8 +27,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import forestry.core.platform.legacy.items.IItemHandler;
+import forestry.core.platform.legacy.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class TileGeneticFilter extends TileForestry implements IStreamableGui {
 	public void loadAdditional(CompoundTag data, HolderLookup.Provider registries) {
 		super.loadAdditional(data, registries);
 
-        this.logic.read(data.getCompound("Logic"), registries);
+        this.logic.read(data.getCompoundOrEmpty("Logic"), registries);
 	}
 
 	@Override

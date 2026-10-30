@@ -33,7 +33,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import forestry.core.platform.tile.IItemStackDisplay;
@@ -233,7 +233,7 @@ public class TileAnalyzer extends TilePowered implements WorldlyContainer, ILiqu
 
 	public ItemStack getIndividualOnDisplay() {
 		// null in BEWLR
-		if (this.level == null || this.level.isClientSide) {
+		if (this.level == null || this.level.isClientSide()) {
 			return this.individualOnDisplayClient;
 		}
 		return getItem(InventoryAnalyzer.SLOT_ANALYZE);

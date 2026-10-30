@@ -18,7 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.IFluidTank;
+import forestry.core.platform.legacy.fluids.IFluidTank;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -72,9 +72,9 @@ public class TankManager implements ITankManager, ITankUpdateHandler, IStreamabl
 
 	@Override
 	public void read(CompoundTag data, HolderLookup.Provider registries) {
-		for (Tag tag : data.getList("tanks", Tag.TAG_COMPOUND)) {
+		for (Tag tag : data.getListOrEmpty("tanks")) {
 			CompoundTag compound = (CompoundTag) tag;
-			int slot = compound.getByte("tank");
+			int slot = compound.getByteOr("tank", (byte) 0);
 			if (slot >= 0 && slot < this.tanks.size()) {
 				StandardTank tank = this.tanks.get(slot);
 				tank.readFromNBT(registries, compound);
@@ -228,7 +228,7 @@ public class TankManager implements ITankManager, ITankUpdateHandler, IStreamabl
 		}
 
 		Level world = this.tile.getLevel();
-		if (world == null || world.isClientSide)
+		if (world == null || world.isClientSide())
 			return;
 
 		int tankIndex = tank.getTankIndex();

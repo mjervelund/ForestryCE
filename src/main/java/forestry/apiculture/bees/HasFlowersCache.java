@@ -163,10 +163,10 @@ public class HasFlowersCache implements INbtWritable, INbtReadable, IStreamable 
 			return;
 		}
 
-		CompoundTag hasFlowerCacheNBT = compoundNBT.getCompound(NBT_KEY);
+		CompoundTag hasFlowerCacheNBT = compoundNBT.getCompoundOrEmpty(NBT_KEY);
         this.flowerCoords.clear();
 		if (hasFlowerCacheNBT.contains(NBT_KEY_FLOWERS)) {
-			int[] flowersList = hasFlowerCacheNBT.getIntArray(NBT_KEY_FLOWERS);
+			int[] flowersList = hasFlowerCacheNBT.getIntArray(NBT_KEY_FLOWERS).orElse(new int[0]);
 			if (flowersList.length % 3 == 0) {
 				int flowerCount = flowersList.length / 3;
 

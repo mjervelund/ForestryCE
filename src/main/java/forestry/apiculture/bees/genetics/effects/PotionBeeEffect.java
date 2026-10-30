@@ -70,7 +70,7 @@ public class PotionBeeEffect extends ThrottledBeeEffect {
 
 	@Override
 	public IEffectData doEffectThrottled(IGenome genome, IEffectData storedData, IBeeHousing housing) {
-		RandomSource rand = housing.getLevel().random;
+		RandomSource rand = housing.getLevel().getRandom();
 		List<LivingEntity> entities = ThrottledBeeEffect.getEntitiesInRange(genome, housing, LivingEntity.class);
 
 		for (LivingEntity entity : entities) {
@@ -117,7 +117,7 @@ public class PotionBeeEffect extends ThrottledBeeEffect {
 	@OnlyIn(Dist.CLIENT)
 	public IEffectData doFX(IGenome genome, IEffectData storedData, IBeeHousing housing) {
 		Level level = housing.getLevel();
-		if (level.random.nextBoolean()) {
+		if (level.getRandom().nextBoolean()) {
 			super.doFX(genome, storedData, housing);
 		} else {
 			Vec3 beeFXCoordinates = housing.getBeeFXCoordinates();

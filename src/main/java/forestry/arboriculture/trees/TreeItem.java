@@ -84,7 +84,7 @@ public class TreeItem extends ItemGE implements IVariableFermentable, ITintedIte
 			return InteractionResult.PASS;
 		}
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			leaves.setMate(pollen);
 
 			BlockUtil.sendDestroyEffects(level, pos, level.getBlockState(pos));

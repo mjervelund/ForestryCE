@@ -30,12 +30,12 @@ public class CircuitBoard implements ICircuitBoard {
 	}
 
 	public CircuitBoard(CompoundTag compound) {
-        this.type = EnumCircuitBoardType.values()[compound.getShort("T")];
+        this.type = EnumCircuitBoardType.values()[compound.getShortOr("T", (short) 0)];
 
 		// Layout
 		ICircuitLayout layout = null;
 		if (compound.contains("LY")) {
-			layout = IForestryApi.INSTANCE.getCircuitManager().getLayout(compound.getString("LY"));
+			layout = IForestryApi.INSTANCE.getCircuitManager().getLayout(compound.getStringOr("LY", ""));
 		}
 		this.layout = layout;
 
@@ -45,7 +45,7 @@ public class CircuitBoard implements ICircuitBoard {
 			if (!compound.contains("CA.I" + i)) {
 				continue;
 			}
-			ICircuit circuit = IForestryApi.INSTANCE.getCircuitManager().getCircuit(compound.getString("CA.I" + i));
+			ICircuit circuit = IForestryApi.INSTANCE.getCircuitManager().getCircuit(compound.getStringOr("CA.I" + i, ""));
 			if (circuit != null) {
                 this.circuits[i] = circuit;
 			}

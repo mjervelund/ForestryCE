@@ -30,9 +30,9 @@ public class ParticleRender {
 		ParticleStatus particleSetting = mc.options.particles().get();
 
 		if (particleSetting == ParticleStatus.MINIMAL) { // minimal
-			return world.random.nextInt(10) == 0;
+			return world.getRandom().nextInt(10) == 0;
 		} else if (particleSetting == ParticleStatus.DECREASED) { // decreased
-			return world.random.nextInt(3) != 0;
+			return world.getRandom().nextInt(3) != 0;
 		} else { // all
 			return true;
 		}

@@ -22,7 +22,7 @@ public class NaturalistBackpackItem extends BackpackItem {
 
 	@Override
 	protected void writeContainerData(ServerPlayer player, ItemStack stack, RegistryFriendlyByteBuf buffer) {
-		buffer.writeResourceLocation(this.typeId);
+		buffer.writeIdentifier(this.typeId);
 	}
 
 	// The lepidopterist backpack is registered by base, but the butterfly jar owns its species type. The

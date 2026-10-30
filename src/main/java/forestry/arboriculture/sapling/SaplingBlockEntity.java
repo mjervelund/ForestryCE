@@ -44,7 +44,7 @@ public class SaplingBlockEntity extends TileTreeContainer implements IOwnedTile 
 	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 		super.loadAdditional(nbt, registries);
 
-        this.timesTicked = nbt.getInt("TT");
+        this.timesTicked = nbt.getIntOr("TT", 0);
 		this.ownerHandler.read(nbt, registries);
 	}
 

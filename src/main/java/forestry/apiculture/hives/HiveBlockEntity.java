@@ -1,5 +1,8 @@
 package forestry.apiculture.hives;
 
+import forestry.core.platform.util.NbtValueIO;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import com.google.common.base.Predicate;
 import com.mojang.authlib.GameProfile;
 import forestry.api.IForestryApi;
@@ -86,7 +89,7 @@ public class HiveBlockEntity extends BlockEntity implements IHiveTile, IActivata
 	public void tick(Level level) {
         this.tickHelper.onTick();
 
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			if (this.active && this.tickHelper.updateOnInterval(4)) {
 				if (this.beeLogic.canDoBeeFX()) {
                     this.beeLogic.doBeeFX();
@@ -145,16 +148,26 @@ public class HiveBlockEntity extends BlockEntity implements IHiveTile, IActivata
 	}
 
 	@Override
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		loadAdditional(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void loadAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
-		super.loadAdditional(compoundNBT, registries);
         this.contained.read(compoundNBT, registries);
         this.beeLogic.read(compoundNBT, registries);
 	}
 
 
 	@Override
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		CompoundTag data = new CompoundTag();
+		saveAdditional(data, NbtValueIO.registries(this.level));
+		output.store(data);
+	}
+
 	public void saveAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
-		super.saveAdditional(compoundNBT, registries);
         this.contained.write(compoundNBT, registries);
         this.beeLogic.write(compoundNBT, registries);
 	}
@@ -195,12 +208,12 @@ public class HiveBlockEntity extends BlockEntity implements IHiveTile, IActivata
 
 	private static void attack(LivingEntity entity, int maxDamage) {
 		Level level = entity.level();
-		double attackAmount = level.random.nextDouble() / 2.0 + 0.5;
+		double attackAmount = level.getRandom().nextDouble() / 2.0 + 0.5;
 		int damage = (int) (attackAmount * maxDamage);
 		if (damage > 0) {
 			// Entities are not attacked if they wear a full set of apiarist's armor.
 			int count = BeeManager.armorApiaristHelper.wearsItems(entity, null, true);
-			if (level.random.nextInt(4) >= count) {
+			if (level.getRandom().nextInt(4) >= count) {
 				entity.hurt(CoreDamageTypes.source(level, CoreDamageTypes.HIVE), damage);
 			}
 		}
@@ -218,7 +231,7 @@ public class HiveBlockEntity extends BlockEntity implements IHiveTile, IActivata
 		}
 		this.active = active;
 
-		if (!this.level.isClientSide) {
+		if (!this.level.isClientSide()) {
 			NetworkUtil.sendNetworkPacket(new PacketActiveUpdate(this), this.worldPosition, this.level);
 		}
 	}
@@ -238,16 +251,21 @@ public class HiveBlockEntity extends BlockEntity implements IHiveTile, IActivata
 
 	// todo wtf are these two methods (loading from NBT several times per packet)
 	@Override
+	public void handleUpdateTag(ValueInput input) {
+		super.handleUpdateTag(input);
+		handleUpdateTag(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-		super.handleUpdateTag(tag, registries);
-		setActive(tag.getBoolean("active"));
+		setActive(tag.getBooleanOr("active", false));
 		this.beeLogic.read(tag, registries);
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
-		super.onDataPacket(net, pkt, registries);
-		CompoundTag nbt = pkt.getTag();
+	public void onDataPacket(Connection net, ValueInput input) {
+		super.onDataPacket(net, input);
+		HolderLookup.Provider registries = input.lookup();
+		CompoundTag nbt = NbtValueIO.read(input);
 		handleUpdateTag(nbt, registries);
 	}
 

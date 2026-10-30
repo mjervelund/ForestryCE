@@ -6,7 +6,7 @@ import forestry.core.platform.gui.widgets.ReservoirWidget;
 import forestry.core.platform.gui.widgets.WidgetManager;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.IFluidTank;
+import forestry.core.platform.legacy.fluids.IFluidTank;
 
 public class BiogasSlot extends ReservoirWidget {
 	public BiogasSlot(WidgetManager manager, int xPos, int yPos, int slot) {

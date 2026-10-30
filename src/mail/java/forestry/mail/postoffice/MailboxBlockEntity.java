@@ -24,7 +24,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
+import forestry.core.platform.legacy.items.IItemHandler;
 
 public class MailboxBlockEntity extends TileBase {
 	// virtual slot for mail, successful insertion immediately sends one letter
@@ -83,7 +83,7 @@ public class MailboxBlockEntity extends TileBase {
 	/* GUI */
 	@Override
 	public void openGui(ServerPlayer player, InteractionHand hand, BlockPos pos) {
-		if (this.level.isClientSide) {
+		if (this.level.isClientSide()) {
 			return;
 		}
 
@@ -107,7 +107,7 @@ public class MailboxBlockEntity extends TileBase {
 	}
 
 	public Container getOrCreateMailInventory(Level world, GameProfile playerProfile) {
-		if (world.isClientSide) {
+		if (world.isClientSide()) {
 			return getInternalInventory();
 		}
 

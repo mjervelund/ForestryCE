@@ -48,7 +48,7 @@ public class ItemScoop extends TieredItem {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState blockState, BlockPos pos, LivingEntity player) {
-		if (!world.isClientSide && blockState.getDestroySpeed(world, pos) != 0.0F) {
+		if (!world.isClientSide() && blockState.getDestroySpeed(world, pos) != 0.0F) {
 			stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 		}
 
@@ -67,7 +67,7 @@ public class ItemScoop extends TieredItem {
 				interactionTarget.setRemoved(Entity.RemovalReason.DISCARDED);
 				stack.hurtAndBreak(1, player, usedHand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 			}
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.PASS;
 	}

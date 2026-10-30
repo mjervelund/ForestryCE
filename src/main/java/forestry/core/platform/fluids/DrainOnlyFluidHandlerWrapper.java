@@ -1,7 +1,7 @@
 package forestry.core.platform.fluids;
 
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nonnull;
 

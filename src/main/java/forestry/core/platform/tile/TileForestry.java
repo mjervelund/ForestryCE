@@ -1,5 +1,8 @@
 package forestry.core.platform.tile;
 
+import forestry.core.platform.util.NbtValueIO;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import forestry.api.core.IFilterSlotDelegate;
 import com.google.common.base.Preconditions;
 import forestry.api.core.IErrorLogic;
@@ -29,9 +32,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import forestry.core.platform.legacy.items.IItemHandler;
+import forestry.core.platform.legacy.items.wrapper.InvWrapper;
+import forestry.core.platform.legacy.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nullable;
 
@@ -83,8 +86,12 @@ public abstract class TileForestry extends BlockEntity implements IStreamable, I
 
 	// / SAVING & LOADING
 	@Override
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		loadAdditional(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void loadAdditional(CompoundTag data, HolderLookup.Provider registries) {
-		super.loadAdditional(data, registries);
         this.inventory.read(data, registries);
 	}
 
@@ -94,8 +101,14 @@ public abstract class TileForestry extends BlockEntity implements IStreamable, I
 	}
 
 	@Override
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		CompoundTag data = new CompoundTag();
+		saveAdditional(data, NbtValueIO.registries(this.level));
+		output.store(data);
+	}
+
 	public void saveAdditional(CompoundTag data, HolderLookup.Provider registries) {
-		super.saveAdditional(data, registries);
         this.inventory.write(data, registries);
 	}
 
@@ -112,8 +125,12 @@ public abstract class TileForestry extends BlockEntity implements IStreamable, I
 	}
 
 	@Override
+	public void handleUpdateTag(ValueInput input) {
+		super.handleUpdateTag(input);
+		handleUpdateTag(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-		super.handleUpdateTag(tag, registries);
 		NBTUtilForestry.readStreamableFromNbt(this, tag, registries);
 	}
 

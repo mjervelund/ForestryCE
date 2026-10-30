@@ -47,7 +47,7 @@ public class GrafterItem extends ItemForestry implements IToolGrafter {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
-		if (!world.isClientSide && !state.is(BlockTags.FIRE)) {
+		if (!world.isClientSide() && !state.is(BlockTags.FIRE)) {
 			stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
 		}
 		return state.is(BlockTags.LEAVES);

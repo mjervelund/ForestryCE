@@ -1,5 +1,8 @@
 package forestry.arboriculture.trees;
 
+import forestry.core.platform.util.NbtValueIO;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import forestry.api.arboriculture.ITreeSpecies;
 import forestry.api.arboriculture.genetics.ITree;
 import forestry.api.arboriculture.genetics.ITreeSpeciesType;
@@ -36,8 +39,14 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 
 	/* SAVING & LOADING */
 	@Override
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		CompoundTag data = new CompoundTag();
+		saveAdditional(data, NbtValueIO.registries(this.level));
+		output.store(data);
+	}
+
 	public void saveAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-		super.saveAdditional(nbt, registries);
 
 		if (this.containedTree != null) {
 			Tag serialized = SpeciesUtil.serializeIndividual(this.containedTree);
@@ -48,8 +57,12 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 	}
 
 	@Override
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		loadAdditional(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-		super.loadAdditional(nbt, registries);
 
 		Tag treeNbt = nbt.get("ContainedTree");
 
@@ -64,7 +77,7 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 		if (tree != null) {
 			data.writeBoolean(true);
 			Identifier speciesId = tree.getSpecies().id();
-			data.writeResourceLocation(speciesId);
+			data.writeIdentifier(speciesId);
 		} else {
 			data.writeBoolean(false);
 		}
@@ -73,7 +86,7 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 	@Override
 	public void readData(RegistryFriendlyByteBuf data) {
 		if (data.readBoolean()) {
-			Identifier speciesId = data.readResourceLocation();
+			Identifier speciesId = data.readIdentifier();
 			// Sync payload written server-side from a live tree's species id; fall back to the default species
 			// instead of throwing if a datapack has since removed it (e.g. reload racing a client packet).
 			ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();
@@ -87,7 +100,7 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 	public void setTree(ITree tree) {
 		this.containedTree = tree;
 
-		if (this.level != null && this.level.isClientSide) {
+		if (this.level != null && this.level.isClientSide()) {
 			// NeoForge's ModelDataManager only refreshes cached ModelData when requestModelDataUpdate() is
 			// called; setBlocksDirty alone re-meshes the section with stale (EMPTY) data, leaving freshly
 			// placed saplings rendering as Oak until the BE is reloaded. See TileLeaves#setTree for the same.
@@ -114,9 +127,10 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
-		super.onDataPacket(net, pkt, registries);
-		CompoundTag nbt = pkt.getTag();
+	public void onDataPacket(Connection net, ValueInput input) {
+		super.onDataPacket(net, input);
+		HolderLookup.Provider registries = input.lookup();
+		CompoundTag nbt = NbtValueIO.read(input);
 		handleUpdateTag(nbt, registries);
 	}
 
@@ -127,8 +141,12 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 	}
 
 	@Override
+	public void handleUpdateTag(ValueInput input) {
+		super.handleUpdateTag(input);
+		handleUpdateTag(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-		super.handleUpdateTag(tag, registries);
 		NBTUtilForestry.readStreamableFromNbt(this, tag, registries);
 	}
 }

@@ -70,9 +70,9 @@ public class TileCentrifuge extends TilePowered implements ISocketable, WorldlyC
 	public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
 		super.loadAdditional(compound, registries);
 
-		ListTag nbttaglist = compound.getList("PendingProducts", 10);
+		ListTag nbttaglist = compound.getListOrEmpty("PendingProducts");
 		for (int i = 0; i < nbttaglist.size(); i++) {
-			CompoundTag CompoundNBT1 = nbttaglist.getCompound(i);
+			CompoundTag CompoundNBT1 = nbttaglist.getCompoundOrEmpty(i);
 			this.pendingProducts.add(ItemStack.parse(registries, CompoundNBT1).orElse(ItemStack.EMPTY));
 		}
 		this.sockets.read(compound, registries);
@@ -110,7 +110,7 @@ public class TileCentrifuge extends TilePowered implements ISocketable, WorldlyC
 		}
 
 		// We are done, add products to queue
-		Collection<ItemStack> products = this.currentRecipe.getProducts(level.random, this.outputMultiplier);
+		Collection<ItemStack> products = this.currentRecipe.getProducts(level.getRandom(), this.outputMultiplier);
 		this.pendingProducts.addAll(products);
 
 		//Add Item to preview slot.

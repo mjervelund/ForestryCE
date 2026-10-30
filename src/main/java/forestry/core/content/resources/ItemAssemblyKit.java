@@ -22,7 +22,7 @@ public class ItemAssemblyKit extends ItemForestry {
 	@Override
 	public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack heldItem = playerIn.getItemInHand(handIn);
-		if (!worldIn.isClientSide) {
+		if (!worldIn.isClientSide()) {
 			heldItem.shrink(1);
 			ItemEntity entity = new ItemEntity(worldIn, playerIn.getX(), playerIn.getY(), playerIn.getZ(), this.assembled.get());
 			worldIn.addFreshEntity(entity);

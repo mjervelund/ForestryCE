@@ -76,10 +76,10 @@ public class FilterLogic implements IFilterLogic {
 			for (int j = 0; j < 3; j++) {
 				AlleleFilter filter = new AlleleFilter();
 				if (data.contains("GenomeFilterS" + i + "-" + j + "-" + 0)) {
-					filter.activeSpecies = SpeciesUtil.getAnySpecies(Identifier.parse(data.getString("GenomeFilterS" + i + "-" + j + "-" + 0)));
+					filter.activeSpecies = SpeciesUtil.getAnySpecies(Identifier.parse(data.getStringOr("GenomeFilterS" + i + "-" + j + "-" + 0, "")));
 				}
 				if (data.contains("GenomeFilterS" + i + "-" + j + "-" + 1)) {
-					filter.inactiveSpecies = SpeciesUtil.getAnySpecies(Identifier.parse(data.getString("GenomeFilterS" + i + "-" + j + "-" + 1)));
+					filter.inactiveSpecies = SpeciesUtil.getAnySpecies(Identifier.parse(data.getStringOr("GenomeFilterS" + i + "-" + j + "-" + 1, "")));
 				}
 				this.genomeFilter[i][j] = filter;
 			}
@@ -115,13 +115,13 @@ public class FilterLogic implements IFilterLogic {
 				}
 				if (filter.activeSpecies != null) {
 					buffer.writeBoolean(true);
-					buffer.writeResourceLocation(filter.activeSpecies.id());
+					buffer.writeIdentifier(filter.activeSpecies.id());
 				} else {
 					buffer.writeBoolean(false);
 				}
 				if (filter.inactiveSpecies != null) {
 					buffer.writeBoolean(true);
-					buffer.writeResourceLocation(filter.inactiveSpecies.id());
+					buffer.writeIdentifier(filter.inactiveSpecies.id());
 				} else {
 					buffer.writeBoolean(false);
 				}
@@ -145,10 +145,10 @@ public class FilterLogic implements IFilterLogic {
 			for (int j = 0; j < 3; j++) {
 				AlleleFilter filter = new AlleleFilter();
 				if (buffer.readBoolean()) {
-					filter.activeSpecies = SpeciesUtil.getAnySpecies(buffer.readResourceLocation());
+					filter.activeSpecies = SpeciesUtil.getAnySpecies(buffer.readIdentifier());
 				}
 				if (buffer.readBoolean()) {
-					filter.inactiveSpecies = SpeciesUtil.getAnySpecies(buffer.readResourceLocation());
+					filter.inactiveSpecies = SpeciesUtil.getAnySpecies(buffer.readIdentifier());
 				}
 				genomeFilters[i][j] = filter;
 			}

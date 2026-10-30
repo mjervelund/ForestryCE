@@ -95,14 +95,14 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 		super.loadAdditional(nbt, registries);
 
-		this.ripeningTime = nbt.getInt(NBT_RIPENING);
-		this.damage = nbt.getInt(NBT_DAMAGE);
-		this.isFruitLeaf = nbt.getBoolean(NBT_FRUIT_LEAF);
+		this.ripeningTime = nbt.getIntOr(NBT_RIPENING, 0);
+		this.damage = nbt.getIntOr(NBT_DAMAGE, 0);
+		this.isFruitLeaf = nbt.getBooleanOr(NBT_FRUIT_LEAF, false);
 		boolean checkFruit = !nbt.contains(NBT_FRUIT_LEAF);
 
 		Tag caterpillarNbt = nbt.get(NBT_CATERPILLAR);
 		if (caterpillarNbt != null) {
-			this.maturationTime = nbt.getInt(NBT_MATURATION);
+			this.maturationTime = nbt.getIntOr(NBT_MATURATION, 0);
 
 			IButterflySpeciesType butterflyType = SpeciesUtil.getButterflyTypeSafe();
 			if (butterflyType != null) {
@@ -197,7 +197,7 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 		this.species = genome.resolveActive(TreeChromosomes.SPECIES);
 
 		// update fruit state if genome changed
-		if (oldTree != null && tree.getSpecies() != oldTree.getSpecies() || (this.level != null && this.level.isClientSide)) {
+		if (oldTree != null && tree.getSpecies() != oldTree.getSpecies() || (this.level != null && this.level.isClientSide())) {
 			setFruit(tree, false);
 		}
 
@@ -209,21 +209,21 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 	public void setFruit(ITree tree, boolean alwaysFruit) {
 		IGenome genome = tree.getGenome();
 
-		if (tree.hasFruitLeaves() && this.level != null && !this.level.isClientSide) {
+		if (tree.hasFruitLeaves() && this.level != null && !this.level.isClientSide()) {
 			IFruit fruitProvider = genome.resolveActive(TreeChromosomes.FRUIT);
 			if (fruitProvider.isFruitLeaf()) {
-				this.isFruitLeaf = alwaysFruit || fruitProvider.getFruitChance(genome, this.level) >= this.level.random.nextFloat();
+				this.isFruitLeaf = alwaysFruit || fruitProvider.getFruitChance(genome, this.level) >= this.level.getRandom().nextFloat();
 			}
 		}
 
 		if (this.isFruitLeaf) {
 			IFruit fruit = genome.resolveActive(TreeChromosomes.FRUIT);
-			if (this.level != null && this.level.isClientSide) {
+			if (this.level != null && this.level.isClientSide()) {
 				this.fruitSprite = fruit.getSprite(genome, this.level, getBlockPos(), getRipeningTime());
 			}
 
 			this.ripeningPeriod = (short) fruit.getRipeningPeriod();
-		} else if (this.level != null && this.level.isClientSide) {
+		} else if (this.level != null && this.level.isClientSide()) {
 			this.fruitSprite = null;
 		}
 	}
@@ -288,7 +288,7 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 
 	public void setMate(ITree pollen) {
 		getTree().setMate(pollen.getGenome());
-		if (!this.level.isClientSide) {
+		if (!this.level.isClientSide()) {
 			sendNetworkUpdate();
 		}
 	}
@@ -352,16 +352,16 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 			Identifier fruitId = genome.getActiveValue(TreeChromosomes.FRUIT);
 			int colourFruits = getFruitColour();
 
-			data.writeResourceLocation(fruitId);
+			data.writeIdentifier(fruitId);
 			data.writeInt(colourFruits);
 		}
 
 		// todo come up with a way to send numeric IDs instead of string IDs
 		if (hasActiveEffect) {
-			data.writeResourceLocation(effects.active().value());
+			data.writeIdentifier(effects.active().value());
 		}
 		if (hasInactiveEffect) {
-			data.writeResourceLocation(effects.inactive().value());
+			data.writeIdentifier(effects.inactive().value());
 		}
 	}
 
@@ -369,7 +369,7 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 	public void readData(RegistryFriendlyByteBuf data) {
 		Identifier speciesId = null;
 		if (data.readBoolean()) {
-			speciesId = data.readResourceLocation(); // this is called instead of super.readData, be careful!
+			speciesId = data.readIdentifier(); // this is called instead of super.readData, be careful!
 		}
 		byte leafState = data.readByte();
 
@@ -380,12 +380,12 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 		Identifier fruitId = null;
 
 		if (this.isFruitLeaf) {
-			fruitId = data.readResourceLocation();
+			fruitId = data.readIdentifier();
             this.colourFruits = data.readInt();
 		}
 
-		Identifier activeEffectAlleleId = hasActiveEffect ? data.readResourceLocation() : null;
-		Identifier inactiveEffectAlleleId = hasInactiveEffect ? data.readResourceLocation() : null;
+		Identifier activeEffectAlleleId = hasActiveEffect ? data.readIdentifier() : null;
+		Identifier inactiveEffectAlleleId = hasInactiveEffect ? data.readIdentifier() : null;
 
 		ITreeSpecies treeTemplate = SpeciesUtil.TREE_TYPE.get().getSpeciesSafe(speciesId);
 		if (treeTemplate != null) {

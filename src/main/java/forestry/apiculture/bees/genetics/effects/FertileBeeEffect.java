@@ -27,8 +27,8 @@ public class FertileBeeEffect extends ThrottledBeeEffect {
 		BlockPos housingCoordinates = housing.getBlockPos();
 		Vec3i area = Bee.getParticleArea(genome, housing);
 
-		int blockX = getRandomOffset(level.random, housingCoordinates.getX(), area.getX());
-		int blockZ = getRandomOffset(level.random, housingCoordinates.getZ(), area.getZ());
+		int blockX = getRandomOffset(level.getRandom(), housingCoordinates.getX(), area.getX());
+		int blockZ = getRandomOffset(level.getRandom(), housingCoordinates.getZ(), area.getZ());
 		int blockMaxY = housingCoordinates.getY() + area.getY() / 2 + 1;
 		int blockMinY = housingCoordinates.getY() - area.getY() / 2 - 1;
 
@@ -37,8 +37,8 @@ public class FertileBeeEffect extends ThrottledBeeEffect {
 				if (tryTickColumn(level, blockX, blockZ, blockMaxY, blockMinY)) {
 					break;
 				}
-				blockX = getRandomOffset(level.random, housingCoordinates.getX(), area.getX());
-				blockZ = getRandomOffset(level.random, housingCoordinates.getZ(), area.getZ());
+				blockX = getRandomOffset(level.getRandom(), housingCoordinates.getX(), area.getX());
+				blockZ = getRandomOffset(level.getRandom(), housingCoordinates.getZ(), area.getZ());
 			}
 		}
 

@@ -85,7 +85,7 @@ public class ForestryChestBoat extends ForestryBoat implements HasCustomInventor
 
 	@Override
 	public void remove(Entity.RemovalReason reason) {
-		if (!level().isClientSide && reason.shouldDestroy()) {
+		if (!level().isClientSide() && reason.shouldDestroy()) {
 			Containers.dropContents(level(), this, this);
 		}
 
@@ -110,7 +110,7 @@ public class ForestryChestBoat extends ForestryBoat implements HasCustomInventor
 	@Override
 	public void openCustomInventoryScreen(Player player) {
 		player.openMenu(this);
-		if (!player.level().isClientSide) {
+		if (!player.level().isClientSide()) {
 			this.gameEvent(GameEvent.CONTAINER_OPEN, player);
 			PiglinAi.angerNearbyPiglins(player, true);
 		}

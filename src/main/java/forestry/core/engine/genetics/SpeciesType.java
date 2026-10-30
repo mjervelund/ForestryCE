@@ -173,7 +173,7 @@ public abstract class SpeciesType<S extends ISpecies<I>, I extends IIndividual> 
 	public List<ItemStack> getResearchBounty(S species, Level level, GameProfile researcher, I individual, int bountyLevel) {
 		ArrayList<ItemStack> list = new ArrayList<>();
 
-		if (level.random.nextFloat() < bountyLevel / 16f) {
+		if (level.getRandom().nextFloat() < bountyLevel / 16f) {
 			List<IMutation<S>> mutationsFrom = getMutations().getMutationsFrom(species);
 
 			if (!mutationsFrom.isEmpty()) {
@@ -188,9 +188,9 @@ public abstract class SpeciesType<S extends ISpecies<I>, I extends IIndividual> 
 
 				IMutation<?> chosenMutation;
 				if (!unresearchedMutations.isEmpty()) {
-					chosenMutation = unresearchedMutations.get(level.random.nextInt(unresearchedMutations.size()));
+					chosenMutation = unresearchedMutations.get(level.getRandom().nextInt(unresearchedMutations.size()));
 				} else {
-					chosenMutation = mutationsFrom.get(level.random.nextInt(mutationsFrom.size()));
+					chosenMutation = mutationsFrom.get(level.getRandom().nextInt(mutationsFrom.size()));
 				}
 
 				ItemStack researchNote = chosenMutation.getMutationNote(researcher);

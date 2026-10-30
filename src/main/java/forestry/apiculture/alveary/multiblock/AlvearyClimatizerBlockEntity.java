@@ -12,7 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import forestry.core.platform.legacy.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
@@ -54,7 +54,7 @@ public abstract class AlvearyClimatizerBlockEntity extends AbstractAlvearyBlockE
 	public void loadAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		super.loadAdditional(compoundNBT, registries);
         this.energyStorage.read(compoundNBT, registries);
-        this.workingTime = compoundNBT.getInt("Heating");
+        this.workingTime = compoundNBT.getIntOr("Heating", 0);
 	}
 
 	@Override

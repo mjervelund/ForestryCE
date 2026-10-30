@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 
@@ -229,7 +229,7 @@ public class BiogasEngineBlockEntity extends EngineBlockEntity implements Worldl
 	// / STATE INFORMATION
 	@Override
 	protected boolean isBurning() {
-		return mayBurn() && this.burnTank.getFluidAmount() > 0 && (this.level.isClientSide || this.currentOutput != 0);
+		return mayBurn() && this.burnTank.getFluidAmount() > 0 && (this.level.isClientSide() || this.currentOutput != 0);
 	}
 
 	@Override
@@ -252,9 +252,9 @@ public class BiogasEngineBlockEntity extends EngineBlockEntity implements Worldl
 		this.sockets.read(nbt, registries);
 
 		if (nbt.contains("shutdown")) {
-			this.shutdown = nbt.getBoolean("shutdown");
+			this.shutdown = nbt.getBooleanOr("shutdown", false);
 		}
-		this.burnTime = nbt.getFloat("burnTime");
+		this.burnTime = nbt.getFloatOr("burnTime", 0f);
 		this.tankManager.read(nbt, registries);
 
 		ItemStack chip = this.sockets.getItem(0);

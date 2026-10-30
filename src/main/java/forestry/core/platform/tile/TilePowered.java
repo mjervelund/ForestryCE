@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import forestry.core.platform.legacy.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
@@ -67,7 +67,7 @@ public abstract class TilePowered extends TileBase implements IRenderableTile, I
 	}
 
 	public int getStepsPerWorkCycle() {
-		if (this.level.isClientSide) {
+		if (this.level.isClientSide()) {
 			return this.stepsPerWorkCycle;
 		}
 		return Math.round(this.stepsPerWorkCycle / this.speedMultiplier);

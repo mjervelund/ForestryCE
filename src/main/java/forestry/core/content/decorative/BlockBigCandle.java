@@ -78,14 +78,14 @@ public class BlockBigCandle extends Block implements SimpleWaterloggedBlock {
 			&& !state.getValue(WATERLOGGED)) {
 
 			if (stack.is(Items.FLINT_AND_STEEL)) {
-				if (!level.isClientSide) {
+				if (!level.isClientSide()) {
 					level.setBlock(pos, state.setValue(LIT, true), 3);
 					stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
 				}
 				level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
 				return InteractionResult.SUCCESS;
 			} else if (stack.is(Items.FIRE_CHARGE)) {
-				if (!level.isClientSide) {
+				if (!level.isClientSide()) {
 					level.setBlock(pos, state.setValue(LIT, true), 3);
 					if (!player.isCreative()) {
 						stack.shrink(1);

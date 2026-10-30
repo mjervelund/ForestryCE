@@ -1,5 +1,6 @@
 package forestry.core.platform.item;
 
+import net.neoforged.neoforge.transfer.access.ItemAccess;
 import forestry.core.platform.fluids.ForestryFluids;
 import forestry.core.platform.models.FluidContainerModel;
 import forestry.core.platform.util.ModUtil;
@@ -20,12 +21,12 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.fluids.FluidActionResult;
+import forestry.core.platform.legacy.fluids.FluidActionResult;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import forestry.core.platform.legacy.fluids.FluidUtil;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandlerItem;
+import forestry.core.platform.legacy.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 
@@ -70,10 +71,10 @@ public class FluidContainerItem extends ItemForestry implements ITintedItem {
 					stack.shrink(1);
 				}
 
-				if (!worldIn.isClientSide) {
+				if (!worldIn.isClientSide()) {
 					FoodData foodStats = player.getFoodData();
 					foodStats.eat(drinkProperties.getHealAmount(), drinkProperties.getSaturationModifier());
-					worldIn.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 0.5F, worldIn.random.nextFloat() * 0.1F + 0.9F);
+					worldIn.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 0.5F, worldIn.getRandom().nextFloat() * 0.1F + 0.9F);
 				}
 
 				player.awardStat(Stats.ITEM_USED.get(this));
@@ -150,6 +151,10 @@ public class FluidContainerItem extends ItemForestry implements ITintedItem {
 
 	public IFluidHandlerItem createFluidHandler(ItemStack stack) {
 		return new FluidHandlerItemForestry(stack, this.type);
+	}
+
+	public FluidContainerResourceHandler createResourceHandler(ItemAccess access) {
+		return new FluidContainerResourceHandler(access, this.type);
 	}
 
 	@Override

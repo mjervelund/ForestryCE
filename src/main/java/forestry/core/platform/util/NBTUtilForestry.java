@@ -40,7 +40,7 @@ public abstract class NBTUtilForestry {
 
 	public static void readStreamableFromNbt(IStreamable streamable, CompoundTag nbt, RegistryAccess registries) {
 		if (nbt.contains("dataBytes")) {
-			byte[] bytes = nbt.getByteArray("dataBytes");
+			byte[] bytes = nbt.getByteArray("dataBytes").orElse(new byte[0]);
 			RegistryFriendlyByteBuf data = new RegistryFriendlyByteBuf(Unpooled.wrappedBuffer(bytes), registries, ConnectionType.NEOFORGE);
 			streamable.readData(data);
 		}

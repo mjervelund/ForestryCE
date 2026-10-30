@@ -5,7 +5,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStackSimple;
+import forestry.core.platform.legacy.fluids.capability.templates.FluidHandlerItemStackSimple;
 
 /**
  * Fluid handler that consumes the container item after it was used.
@@ -25,9 +25,13 @@ public class FluidHandlerItemForestry extends FluidHandlerItemStackSimple.Consum
 	 * Capsules can't contain fluid that are hotter or equal to the melting point of wax
 	 */
 	private boolean contentsAllowed(FluidStack fluidStack) {
+		return contentsAllowed(this.containerType, fluidStack);
+	}
+
+	static boolean contentsAllowed(FluidContainerType containerType, FluidStack fluidStack) {
 		Fluid fluid = fluidStack.getFluid();
 
-		if (this.containerType == FluidContainerType.WAX_CAPSULE) {
+		if (containerType == FluidContainerType.WAX_CAPSULE) {
 			return fluid.getFluidType().getTemperature(fluidStack) < 310.15; // melting point of wax in kelvin
 		}
 		return true;

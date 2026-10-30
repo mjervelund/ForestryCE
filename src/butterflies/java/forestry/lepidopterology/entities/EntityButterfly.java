@@ -202,7 +202,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 	public void setState(EnumButterflyState state) {
 		if (this.state != state) {
 			this.state = state;
-			if (!level().isClientSide) {
+			if (!level().isClientSide()) {
                 this.entityData.set(DATAWATCHER_ID_STATE, (byte) state.ordinal());
 			}
 		}
@@ -358,7 +358,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 		this.size = genome.getActiveValue(ButterflyChromosomes.SIZE);
 		this.species = genome.resolveActive(ButterflyChromosomes.SPECIES);
 
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
             this.entityData.set(DATAWATCHER_ID_SIZE, (int) (this.size * 100));
             this.entityData.set(DATAWATCHER_ID_SPECIES, this.species.id().toString());
 		} else {
@@ -398,7 +398,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn) {
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			setIndividual(this.contained);
 		}
 		return spawnDataIn;
@@ -455,7 +455,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 		ItemStack stack = player.getItemInHand(hand);
 		if (stack.is(ForestryTags.Items.SCOOPS)) {
 			Level level = level();
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();
 				ILepidopteristTracker tracker = (ILepidopteristTracker) type.getBreedingTracker(level, player.getGameProfile());
 				ItemStack itemStack = this.contained.createStack(ButterflyLifeStage.BUTTERFLY);
@@ -466,7 +466,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 			} else {
 				player.swing(hand);
 			}
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 
 		return super.mobInteract(player, hand);
@@ -507,7 +507,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 		super.tick();
 
 		// Update stuff client side
-		if (level().isClientSide) {
+		if (level().isClientSide()) {
 			if (this.species == null) {
 				String speciesUid = this.entityData.get(DATAWATCHER_ID_SPECIES);
 				IButterflySpecies species = SpeciesUtil.BUTTERFLY_TYPE.get().getSpeciesSafe(Identifier.parse(speciesUid));

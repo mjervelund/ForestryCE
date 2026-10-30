@@ -1,6 +1,6 @@
 package forestry.core.platform.inventory;
 
-import net.neoforged.neoforge.items.IItemHandler;
+import forestry.core.platform.legacy.items.IItemHandler;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

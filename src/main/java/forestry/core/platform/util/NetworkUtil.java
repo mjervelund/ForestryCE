@@ -33,7 +33,7 @@ import java.util.function.Function;
 
 public class NetworkUtil {
 	public static void sendToPlayersTrackingPos(CustomPacketPayload packet, BlockPos pos, ServerLevel level) {
-		PacketDistributor.sendToPlayersTrackingChunk(level, new ChunkPos(pos), packet);
+		PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos.containing(pos), packet);
 	}
 
 	public static void sendNetworkPacket(CustomPacketPayload packet, BlockPos pos, Level level) {

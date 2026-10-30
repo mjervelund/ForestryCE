@@ -124,7 +124,7 @@ public class SpeciesUtil {
 		S firstParent;
 		S secondParent;
 
-		if (level.random.nextBoolean()) {
+		if (level.getRandom().nextBoolean()) {
 			firstParent = parent1.resolveActive(speciesChromosome);
 			secondParent = parent2.resolveInactive(speciesChromosome);
 
@@ -142,7 +142,7 @@ public class SpeciesUtil {
 		IBreedingTracker tracker = profile == null ? null : speciesType.getBreedingTracker(level, profile);
 		IClimateProvider climate = IForestryApi.INSTANCE.getClimateManager().createClimateProvider(level, pos);
 
-		for (IMutation<S> mutation : speciesType.getMutations().getCombinationsShuffled(firstParent, secondParent, level.random)) {
+		for (IMutation<S> mutation : speciesType.getMutations().getCombinationsShuffled(firstParent, secondParent, level.getRandom())) {
 			float chance = chanceGetter.getChance(mutation, level, pos, firstGenome, secondGenome, climate);
 			if (chance <= 0) {
 				continue;
@@ -152,7 +152,7 @@ public class SpeciesUtil {
 				mutationBoost = Math.min(ForestryConfig.SERVER.maxResearchMutationBoostPercent.get().floatValue(), mutationBoost);
 				chance += mutationBoost;
 			}
-			if (chance > level.random.nextFloat()) {
+			if (chance > level.getRandom().nextFloat()) {
 				if (tracker != null) {
 					tracker.registerMutation(mutation);
 				}

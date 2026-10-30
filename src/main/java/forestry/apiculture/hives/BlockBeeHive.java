@@ -116,7 +116,7 @@ public class BlockBeeHive extends Block implements EntityBlock {
 		if (hiveDrops == null) {
 			return drops;
 		} else {
-			Util.shuffle(hiveDrops, level.random);
+			Util.shuffle(hiveDrops, level.getRandom());
 		}
 
 		// Grab a princess (10 tries)

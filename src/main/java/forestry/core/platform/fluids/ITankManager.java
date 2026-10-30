@@ -5,8 +5,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.IFluidTank;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.IFluidTank;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 

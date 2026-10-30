@@ -82,7 +82,7 @@ public class CreativeHiveFrameItem extends ItemForestry implements IHiveFrame {
 		if (customData == null || !customData.contains(NBT_FORCED_MUTATION)) {
 			return null;
 		}
-		return Identifier.tryParse(customData.copyTag().getString(NBT_FORCED_MUTATION));
+		return Identifier.tryParse(customData.copyTag().getStringOr(NBT_FORCED_MUTATION, ""));
 	}
 
 	/** Writes the forced result species onto the frame (see {@link #NBT_FORCED_MUTATION}). */

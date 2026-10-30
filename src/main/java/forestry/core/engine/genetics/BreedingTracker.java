@@ -135,7 +135,7 @@ public abstract class BreedingTracker extends SavedData implements IBreedingTrac
 	// helper method to read strings from an NBT list
 	private static void readValuesFromNBT(CompoundTag nbt, Consumer<String> values, String key) {
 		if (nbt.contains(key)) {
-			ListTag nbtList = nbt.getList(key, Tag.TAG_STRING);
+			ListTag nbtList = nbt.getListOrEmpty(key);
 			for (Tag stringTag : nbtList) {
 				values.accept(stringTag.getAsString());
 			}

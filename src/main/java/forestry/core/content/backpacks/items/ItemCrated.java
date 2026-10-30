@@ -30,7 +30,7 @@ public class ItemCrated extends ItemForestry implements ITintedItem {
 	@Override
 	public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack heldItem = playerIn.getItemInHand(handIn);
-		if (!worldIn.isClientSide) {
+		if (!worldIn.isClientSide()) {
 			ItemStack contained = this.contained.get();
 			if (contained.isEmpty() || heldItem.isEmpty()) {
 				return InteractionResult.PASS;

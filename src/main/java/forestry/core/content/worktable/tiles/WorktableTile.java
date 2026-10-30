@@ -172,7 +172,7 @@ public class WorktableTile extends TileBase implements ICrafterWorktable {
 			}
 		}
 
-		if (!this.level.isClientSide) {
+		if (!this.level.isClientSide()) {
 			this.memory.memorizeRecipe(this.level.getGameTime(), this.currentRecipe, this.level);
 		}
 	}

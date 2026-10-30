@@ -1,5 +1,6 @@
 package forestry.gametest;
 
+import forestry.core.platform.legacy.LegacyCapabilities;
 import forestry.api.ForestryConstants;
 import forestry.api.core.multiblock.IMultiblockComponent;
 import forestry.api.core.multiblock.IMultiblockController;
@@ -14,10 +15,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
-import net.neoforged.neoforge.items.IItemHandler;
+import forestry.core.platform.legacy.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -113,7 +113,7 @@ public final class MultiblockChunkTest {
 				return !level.getChunkAt(run.members.getFirst()).isUnsaved();
 			}, "site chunk was never saved before the change")
 			.run(() -> {
-				IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, run.members.getLast(), null);
+				IItemHandler handler = LegacyCapabilities.getItemHandler(level, run.members.getLast(), null);
 				helper.assertTrue(handler != null, "alveary exposes no item handler");
 				helper.assertTrue(handler.extractItem(ALVEARY_PRODUCT_SLOT, 1, false).getCount() == 1, "extraction through the item handler failed");
 				run.blockEntities = ChunkLifecycle.blockEntities(level, run.members);
@@ -153,7 +153,7 @@ public final class MultiblockChunkTest {
 	private static void formsAfterPartialLoad(GameTestHelper helper, int column, boolean oneChunk, boolean holderFirst) {
 		ServerLevel level = helper.getLevel();
 		ChunkPos a = ChunkLifecycle.isolatedSite(helper);
-		ChunkPos b = new ChunkPos(a.x + 1, a.z);
+		ChunkPos b = new ChunkPos(a.x() + 1, a.z());
 		ChunkPos first = holderFirst ? a : b;
 		ChunkPos second = holderFirst ? b : a;
 		BlockPos base = new BlockPos(a.getMinBlockX() + column, groundY(helper), a.getMinBlockZ() + 4);
@@ -165,7 +165,7 @@ public final class MultiblockChunkTest {
 			.run(() -> run.members = MultiblockTestSupport.buildAlveary(helper, ChunkLifecycle.relative(helper, base)))
 			.await(() -> isAssembled(level, run.members.getFirst()), "alveary did not assemble")
 			.run(() -> {
-				boolean inA = run.members.stream().allMatch(pos -> new ChunkPos(pos).equals(a));
+				boolean inA = run.members.stream().allMatch(pos -> ChunkPos.containing(pos).equals(a));
 				helper.assertTrue(inA == oneChunk, oneChunk ? "alveary is not inside one chunk" : "alveary does not cross into the second chunk");
 				MultiblockTestSupport.insertItem(level, run.members, MultiblockTestSupport.ALVEARY_INV_SIZE, ALVEARY_PRODUCT_SLOT, new ItemStack(Items.HONEYCOMB, 7));
 				run.before = tally(level, run.members.getFirst());

@@ -124,8 +124,8 @@ public abstract class AbstractBeeHousingBlockEntity extends TileBase implements 
 		double fxY = yCoord + 0.25F;
 		double fxZ = zCoord + 0.5F;
 		float distanceFromCenter = 0.6F;
-		float leftRightSpreadFromCenter = distanceFromCenter * (world.random.nextFloat() - 0.5F);
-		float upSpread = world.random.nextFloat() * 6F / 16F;
+		float leftRightSpreadFromCenter = distanceFromCenter * (world.getRandom().nextFloat() - 0.5F);
+		float upSpread = world.getRandom().nextFloat() * 6F / 16F;
 		fxY += upSpread;
 
 		ParticleRender.addEntityHoneyDustFX(world, fxX - distanceFromCenter, fxY, fxZ + leftRightSpreadFromCenter);

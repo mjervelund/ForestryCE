@@ -1,6 +1,6 @@
 package forestry.core.platform.render;
 
-import net.neoforged.neoforge.fluids.IFluidTank;
+import forestry.core.platform.legacy.fluids.IFluidTank;
 
 public enum EnumTankLevel {
 	EMPTY(0),

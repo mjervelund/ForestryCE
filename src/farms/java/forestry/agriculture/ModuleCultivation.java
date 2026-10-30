@@ -1,5 +1,6 @@
 package forestry.agriculture;
 
+import forestry.core.platform.legacy.LegacyCapabilities;
 import forestry.api.client.IClientModuleHandler;
 import forestry.api.modules.ForestryModule;
 import forestry.api.modules.ForestryModuleIds;
@@ -10,7 +11,6 @@ import forestry.modules.BlankForestryModule;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 import java.util.List;
@@ -29,9 +29,9 @@ public class ModuleCultivation extends BlankForestryModule {
 	}
 
 	private static <T extends AbstractMinifarmBlockEntity> void registerPlanterCapabilities(RegisterCapabilitiesEvent event, BlockEntityType<T> type) {
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, type, (tile, side) -> tile.getItemHandler(side));
-		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, type, (tile, side) -> tile.getEnergyHandler(side));
-		event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, type, (tile, side) -> tile.getFluidHandler(side));
+		LegacyCapabilities.registerItems(event, type, (tile, side) -> tile.getItemHandler(side));
+		LegacyCapabilities.registerEnergy(event, type, (tile, side) -> tile.getEnergyHandler(side));
+		LegacyCapabilities.registerFluids(event, type, (tile, side) -> tile.getFluidHandler(side));
 	}
 
 	@Override

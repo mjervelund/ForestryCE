@@ -74,7 +74,7 @@ public abstract class TileNaturalistChest extends TileBase {
 	}
 
 	private void playLidSound(Level level, SoundEvent sound) {
-		level.playSound(null, getBlockPos(), sound, SoundSource.BLOCKS, 0.5F, this.level.random.nextFloat() * 0.1F + 0.9F);
+		level.playSound(null, getBlockPos(), sound, SoundSource.BLOCKS, 0.5F, this.level.getRandom().nextFloat() * 0.1F + 0.9F);
 	}
 
 	@Override

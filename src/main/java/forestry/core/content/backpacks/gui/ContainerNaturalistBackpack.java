@@ -57,7 +57,7 @@ public class ContainerNaturalistBackpack extends ContainerItemInventory<Backpack
 	}
 
 	public static ContainerNaturalistBackpack fromNetwork(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
-		Identifier typeId = buffer.readResourceLocation();
+		Identifier typeId = buffer.readIdentifier();
 		ItemStack parent = playerInventory.getSelected();
 
 		return makeContainer(windowId, playerInventory.player, parent, typeId);

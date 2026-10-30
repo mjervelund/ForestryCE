@@ -22,7 +22,7 @@ public abstract class EntityUtil {
 	}
 
 	public static <T extends Mob> T spawnEntity(Level world, T living, double x, double y, double z) {
-		living.moveTo(x, y, z, Mth.wrapDegrees(world.random.nextFloat() * 360.0f), 0.0f);
+		living.moveTo(x, y, z, Mth.wrapDegrees(world.getRandom().nextFloat() * 360.0f), 0.0f);
 		living.yHeadRot = living.getYRot();
 		living.yBodyRot = living.getYRot();
 		DifficultyInstance diff = world.getCurrentDifficultyAt(BlockPos.containing(x, y, z));

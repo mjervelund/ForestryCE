@@ -31,11 +31,11 @@ public class BackpackDefinition implements IBackpackDefinition {
 		Component display = Component.translatable((item.getDescriptionId(backpack)).trim());
 
 		CompoundTag tagCompound = NBTUtilForestry.getItemStackTag(backpack);
-		if (tagCompound != null && tagCompound.contains("display", 10)) {
-			CompoundTag nbt = tagCompound.getCompound("display");
+		if (tagCompound != null && tagCompound.contains("display")) {
+			CompoundTag nbt = tagCompound.getCompoundOrEmpty("display");
 
-			if (nbt.contains("Name", 8)) {
-				display = Component.literal(nbt.getString("Name"));
+			if (nbt.contains("Name")) {
+				display = Component.literal(nbt.getStringOr("Name", ""));
 			}
 		}
 

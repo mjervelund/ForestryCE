@@ -50,7 +50,7 @@ public class OwnerHandler implements IOwnerHandler, IStreamable, INbtWritable, I
 	public void read(CompoundTag data, HolderLookup.Provider registries) {
 		if (data.contains("owner_name")) {
 			UUID id = data.hasUUID("owner_uuid") ? data.getUUID("owner_uuid") : null;
-			setOwner(new GameProfile(id, data.getString("owner_name")));
+			setOwner(new GameProfile(id, data.getStringOr("owner_name", "")));
 		}
 	}
 

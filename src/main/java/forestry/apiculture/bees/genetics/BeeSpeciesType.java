@@ -171,11 +171,11 @@ public class BeeSpeciesType extends SpeciesType<IBeeSpecies, IBee> implements IB
 		List<ItemStack> bounty = super.getResearchBounty(species, level, researcher, individual, bountyLevel);
 		if (bountyLevel > 10) {
 			for (IProduct stack : species.getSpecialties()) {
-				bounty.add(formBountyStack(stack, bountyLevel, level.random));
+				bounty.add(formBountyStack(stack, bountyLevel, level.getRandom()));
 			}
 		}
 		for (IProduct stack : species.getProducts()) {
-			bounty.add(formBountyStack(stack, bountyLevel, level.random));
+			bounty.add(formBountyStack(stack, bountyLevel, level.getRandom()));
 		}
 		return bounty;
 	}

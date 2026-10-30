@@ -1,5 +1,9 @@
 package forestry.core;
 
+import net.neoforged.neoforge.fluids.FluidType;
+import forestry.core.features.CoreDataComponents;
+import net.neoforged.neoforge.transfer.fluid.ItemAccessFluidHandler;
+import forestry.core.platform.legacy.LegacyCapabilities;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import forestry.api.ForestryCapabilities;
 import forestry.api.ForestryConstants;
@@ -132,14 +136,14 @@ public class ModuleCore extends BlankForestryModule {
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
 		event.registerItem(ForestryCapabilities.SPECTACLE_VISION, (stack, context) -> ItemSpectacles.SPECTACLE_VISION, CoreItems.SPECTACLES.item());
-		event.registerItem(Capabilities.FluidHandler.ITEM, (stack, context) -> ((ItemPipette) stack.getItem()).createFluidHandler(stack), CoreItems.PIPETTE.item());
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CoreTiles.ANALYZER.tileType(), (tile, side) -> tile.getItemHandler(side));
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CoreTiles.ESCRITOIRE.tileType(), (tile, side) -> tile.getItemHandler(side));
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CoreTiles.APIARIST_CHEST.tileType(), (tile, side) -> tile.getItemHandler(side));
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CoreTiles.ARBORIST_CHEST.tileType(), (tile, side) -> tile.getItemHandler(side));
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, CoreTiles.LEPIDOPTERIST_CHEST.tileType(), (tile, side) -> tile.getItemHandler(side));
-		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, CoreTiles.ANALYZER.tileType(), (tile, side) -> tile.getEnergyHandler(side));
-		event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, CoreTiles.ANALYZER.tileType(), (tile, side) -> tile.getTankManager());
+		event.registerItem(Capabilities.Fluid.ITEM, (stack, access) -> new ItemAccessFluidHandler(access, CoreDataComponents.FLUID_CONTENT.get(), FluidType.BUCKET_VOLUME), CoreItems.PIPETTE.item());
+		LegacyCapabilities.registerItems(event, CoreTiles.ANALYZER.tileType(), (tile, side) -> tile.getItemHandler(side));
+		LegacyCapabilities.registerItems(event, CoreTiles.ESCRITOIRE.tileType(), (tile, side) -> tile.getItemHandler(side));
+		LegacyCapabilities.registerItems(event, CoreTiles.APIARIST_CHEST.tileType(), (tile, side) -> tile.getItemHandler(side));
+		LegacyCapabilities.registerItems(event, CoreTiles.ARBORIST_CHEST.tileType(), (tile, side) -> tile.getItemHandler(side));
+		LegacyCapabilities.registerItems(event, CoreTiles.LEPIDOPTERIST_CHEST.tileType(), (tile, side) -> tile.getItemHandler(side));
+		LegacyCapabilities.registerEnergy(event, CoreTiles.ANALYZER.tileType(), (tile, side) -> tile.getEnergyHandler(side));
+		LegacyCapabilities.registerFluids(event, CoreTiles.ANALYZER.tileType(), (tile, side) -> tile.getTankManager());
 	}
 
 	private static void registerGlobalLootModifiers(RegisterEvent event) {

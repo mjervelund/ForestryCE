@@ -1,5 +1,6 @@
 package forestry.core.platform.tile;
 
+import forestry.core.platform.legacy.LegacyCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -14,10 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.BlockCapability;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import forestry.core.platform.legacy.items.IItemHandler;
+import forestry.core.platform.legacy.items.wrapper.InvWrapper;
+import forestry.core.platform.legacy.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -80,7 +80,7 @@ public abstract class TileUtil {
 
 		Level level = tile.getLevel();
 		if (level != null) {
-			IItemHandler itemCap = level.getCapability(Capabilities.ItemHandler.BLOCK, tile.getBlockPos(), side);
+			IItemHandler itemCap = LegacyCapabilities.getItemHandler(level, tile.getBlockPos(), side);
 			if (itemCap != null) {
 				return itemCap;
 			}

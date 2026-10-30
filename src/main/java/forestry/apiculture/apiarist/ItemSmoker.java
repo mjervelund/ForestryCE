@@ -23,7 +23,7 @@ public class ItemSmoker extends ItemForestry {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide && isSelected && level.random.nextInt(40) == 0) {
+		if (level.isClientSide() && isSelected && level.getRandom().nextInt(40) == 0) {
 			addSmoke(level, entity, 1);
 		}
 	}
@@ -63,7 +63,7 @@ public class ItemSmoker extends ItemForestry {
 		Vec3 scaledOffset = handOffset.scale(1.0 / distance);
 		Vec3 smokePos = lookDistance.add(entity.position()).add(scaledOffset);
 
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			ParticleRender.addEntitySmokeFX(level, smokePos.x, smokePos.y + 1, smokePos.z);
 		}
 

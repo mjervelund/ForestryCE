@@ -29,7 +29,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -70,7 +70,7 @@ public class TileStill extends TilePowered implements WorldlyContainer, ILiquidT
         this.tankManager.read(compoundNBT, registries);
 
 		if (compoundNBT.contains("Buffer")) {
-			CompoundTag buffer = compoundNBT.getCompound("Buffer");
+			CompoundTag buffer = compoundNBT.getCompoundOrEmpty("Buffer");
             this.bufferedLiquid = FluidStack.parseOptional(registries, buffer);
 		}
 	}

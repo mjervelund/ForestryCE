@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 public class AlleleUtil {
 	@Nullable
 	public static <S extends ISpecies<I>, I extends IIndividual> S getSpecies(ISpeciesType<S, I> speciesType, CompoundTag nbt, String key) {
-		String idString = nbt.getString(key);
+		String idString = nbt.getStringOr(key, "");
 		if (idString.isEmpty()) {
 			return null;
 		}

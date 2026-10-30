@@ -61,7 +61,7 @@ public class FungificationBeeEffect extends ThrottledBeeEffect {
 		Vec3i halfArea = new Vec3i(area.getX() / 2, area.getY() / 2, area.getZ() / 2);
 
 		for (int attempt = 0; attempt < MAX_BLOCK_FIND_TRIES; ++attempt) {
-			BlockPos pos = VecUtil.getRandomPositionInArea(world.random, area).subtract(halfArea).offset(housingCoordinates);
+			BlockPos pos = VecUtil.getRandomPositionInArea(world.getRandom(), area).subtract(halfArea).offset(housingCoordinates);
 			if (world.hasChunkAt(pos)) {
 				BlockState blockState = world.getBlockState(pos);
 
@@ -95,7 +95,7 @@ public class FungificationBeeEffect extends ThrottledBeeEffect {
 	private static boolean growGiantMushroom(ServerLevel world, BlockState blockState, BlockPos pos) {
 		Block block = blockState.getBlock();
 		if (block instanceof MushroomBlock mushroom) {
-			mushroom.growMushroom(world, pos, blockState, world.random);
+			mushroom.growMushroom(world, pos, blockState, world.getRandom());
 			return true;
 		}
 		return false;

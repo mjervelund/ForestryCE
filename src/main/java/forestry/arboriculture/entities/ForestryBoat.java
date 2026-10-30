@@ -59,7 +59,7 @@ public class ForestryBoat extends Boat {
 					}
 
 					causeFallDamage(this.fallDistance, 1f, damageSources().fall());
-					if (!level.isClientSide && !isRemoved()) {
+					if (!level.isClientSide() && !isRemoved()) {
 						this.kill();
 						if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 							for (int i = 0; i < 3; ++i) {
@@ -87,9 +87,9 @@ public class ForestryBoat extends Boat {
 
 	@Override
 	protected void readAdditionalSaveData(CompoundTag nbt) {
-		if (nbt.contains("type", 8)) {
+		if (nbt.contains("type")) {
 			try {
-				setWoodType(ForestryWoodType.valueOf(nbt.getString("type")));
+				setWoodType(ForestryWoodType.valueOf(nbt.getStringOr("type", "")));
 			} catch (IllegalArgumentException e) {
 				setWoodType(ForestryWoodType.CAMELTHORN);
 			}

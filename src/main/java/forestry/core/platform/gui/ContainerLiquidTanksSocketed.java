@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.fluids.IFluidTank;
+import forestry.core.platform.legacy.fluids.IFluidTank;
 
 import javax.annotation.Nullable;
 

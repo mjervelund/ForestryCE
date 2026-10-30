@@ -1,7 +1,7 @@
 package forestry.core.platform.inventory;
 
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
+import forestry.core.platform.legacy.items.IItemHandler;
 
 public class InvSlot implements IInvSlot {
 

@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.energy.EnergyStorage;
+import forestry.core.platform.legacy.energy.EnergyStorage;
 
 public class ForestryEnergyStorage extends EnergyStorage implements IStreamable, INbtReadable, INbtWritable {
 	public ForestryEnergyStorage(int maxTransfer, int capacity) {
@@ -25,7 +25,7 @@ public class ForestryEnergyStorage extends EnergyStorage implements IStreamable,
 
 	@Override
 	public void read(CompoundTag nbt, HolderLookup.Provider registries) {
-		setEnergyStored(nbt.getInt("Energy"));
+		setEnergyStored(nbt.getIntOr("Energy", 0));
 	}
 
 	@Override

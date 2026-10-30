@@ -32,9 +32,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import forestry.core.platform.legacy.items.IItemHandler;
+import forestry.core.platform.legacy.items.wrapper.InvWrapper;
+import forestry.core.platform.legacy.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nullable;
 

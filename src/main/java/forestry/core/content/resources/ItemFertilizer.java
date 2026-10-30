@@ -29,7 +29,7 @@ public class ItemFertilizer extends ItemForestry {
 		}
 
 		if (BoneMealItem.applyBonemeal(heldItem, worldIn, pos, player)) {
-			if (!worldIn.isClientSide) {
+			if (!worldIn.isClientSide()) {
 				worldIn.levelEvent(LevelEvent.PARTICLES_AND_SOUND_PLANT_GROWTH, pos, 15);
 			}
 

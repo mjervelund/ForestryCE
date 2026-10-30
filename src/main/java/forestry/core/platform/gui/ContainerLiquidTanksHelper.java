@@ -14,11 +14,11 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.IFluidTank;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import forestry.core.platform.legacy.fluids.FluidUtil;
+import forestry.core.platform.legacy.fluids.IFluidTank;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandlerItem;
+import forestry.core.platform.legacy.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 import java.util.Optional;

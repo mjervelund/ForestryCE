@@ -54,7 +54,7 @@ public class MailboxMenu extends ContainerTile<MailboxBlockEntity> {
 		super.clicked(slotId, button, clickTypeIn, player);
 
 		if (SlotUtil.isSlotInRange(slotId, SLOT_LETTERS, SLOT_LETTERS_COUNT)) {
-			if (!player.level().isClientSide && this.mailInventory != null) {
+			if (!player.level().isClientSide() && this.mailInventory != null) {
 				POBoxInfo info = this.mailInventory.getPOBoxInfo();
 				NetworkUtil.sendToPlayer(new PacketPOBoxInfoResponse(info, true), (ServerPlayer) player);
 			}

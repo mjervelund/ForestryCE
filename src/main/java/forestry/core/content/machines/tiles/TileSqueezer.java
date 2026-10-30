@@ -37,7 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -150,10 +150,10 @@ public class TileSqueezer extends TilePowered implements ISocketable, WorldlyCon
 
 		// createRandomFluidStack folds in any addon-defined per-cycle randomness (variable amount / chance of nothing).
 		// It may return less than createFluidStack() (the amount reserved below) or EMPTY, in which case fill is a no-op.
-		FluidStack resultFluid = this.currentRecipe.getFluidOutput().createRandomFluidStack(this.level.random);
+		FluidStack resultFluid = this.currentRecipe.getFluidOutput().createRandomFluidStack(this.level.getRandom());
 		this.productTank.fillInternal(resultFluid, IFluidHandler.FluidAction.EXECUTE);
 
-		float roll = this.level.random.nextFloat();
+		float roll = this.level.getRandom().nextFloat();
 		double threshold = this.currentRecipe.getRemnantsChance() * this.outputMultiplier;
 
 		if (!this.currentRecipe.getRemnants().isEmpty() && roll < threshold) {

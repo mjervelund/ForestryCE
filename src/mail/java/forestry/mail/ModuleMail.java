@@ -1,5 +1,6 @@
 package forestry.mail;
 
+import forestry.core.platform.legacy.LegacyCapabilities;
 import forestry.mail.network.MailPacketIds;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -22,7 +23,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -47,7 +47,7 @@ public class ModuleMail extends BlankForestryModule {
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, MailBlockEntities.MAILBOX.tileType(), (tile, side) -> tile.getAutomatedMailHandler());
+		LegacyCapabilities.registerItems(event, MailBlockEntities.MAILBOX.tileType(), (tile, side) -> tile.getAutomatedMailHandler());
 	}
 
 	private static void registerDataMaps(RegisterDataMapTypesEvent event) {
@@ -56,7 +56,7 @@ public class ModuleMail extends BlankForestryModule {
 
 	public static void handlePlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
 		Player player = event.getEntity();
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			return;
 		}
 

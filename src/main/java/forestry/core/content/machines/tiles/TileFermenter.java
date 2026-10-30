@@ -35,7 +35,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import forestry.api.ForestryDataMaps;
@@ -93,11 +93,11 @@ public class TileFermenter extends TilePowered implements WorldlyContainer, ILiq
 	public void loadAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		super.loadAdditional(compoundNBT, registries);
 
-        this.fermentationTime = compoundNBT.getInt("FermentationTime");
-        this.fermentationTotalTime = compoundNBT.getInt("FermentationTotalTime");
-        this.fuelBurnTime = compoundNBT.getInt("FuelBurnTime");
-        this.fuelTotalTime = compoundNBT.getInt("FuelTotalTime");
-        this.fuelCurrentFerment = compoundNBT.getInt("FuelCurrentFerment");
+        this.fermentationTime = compoundNBT.getIntOr("FermentationTime", 0);
+        this.fermentationTotalTime = compoundNBT.getIntOr("FermentationTotalTime", 0);
+        this.fuelBurnTime = compoundNBT.getIntOr("FuelBurnTime", 0);
+        this.fuelTotalTime = compoundNBT.getIntOr("FuelTotalTime", 0);
+        this.fuelCurrentFerment = compoundNBT.getIntOr("FuelCurrentFerment", 0);
 
         this.tankManager.read(compoundNBT, registries);
 	}

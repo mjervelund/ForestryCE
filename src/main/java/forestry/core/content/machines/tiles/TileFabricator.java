@@ -38,7 +38,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 
@@ -78,8 +78,8 @@ public class TileFabricator extends TilePowered implements ISlotPickupWatcher, I
 	public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
 		super.loadAdditional(compound, registries);
 
-        this.heat = compound.getInt("Heat");
-		this.meltingPoint = compound.getInt("MeltingPont");
+        this.heat = compound.getIntOr("Heat", 0);
+		this.meltingPoint = compound.getIntOr("MeltingPont", 0);
         this.tankManager.read(compound, registries);
         this.craftingInventory.read(compound, registries);
 	}

@@ -1,5 +1,8 @@
 package forestry.arboriculture.fruit;
 
+import forestry.core.platform.util.NbtValueIO;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.core.IProduct;
 import forestry.api.core.genetics.IFruitBearer;
@@ -63,7 +66,7 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 	public void writeData(RegistryFriendlyByteBuf data) {
 		if (this.fruit != null) {
 			data.writeBoolean(true);
-			data.writeResourceLocation(this.fruitId);
+			data.writeIdentifier(this.fruitId);
 		} else {
 			data.writeBoolean(false);
 		}
@@ -72,7 +75,7 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 	@Override
 	public void readData(RegistryFriendlyByteBuf data) {
 		if (data.readBoolean()) {
-			Identifier fruitId = data.readResourceLocation();
+			Identifier fruitId = data.readIdentifier();
 			IFruit fruit = SpeciesUtil.TREE_TYPE.get().getFruitSafe(fruitId);
 			if (fruit != null) {
 				this.fruit = fruit;
@@ -83,8 +86,14 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 	}
 
 	@Override
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		CompoundTag data = new CompoundTag();
+		saveAdditional(data, NbtValueIO.registries(this.level));
+		output.store(data);
+	}
+
 	public void saveAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
-		super.saveAdditional(compoundNBT, registries);
 		if (this.fruit != null) {
 			compoundNBT.putString(NBT_FRUIT, this.fruitId.toString());
 		}
@@ -93,10 +102,14 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
-		super.loadAdditional(nbt, registries);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		loadAdditional(NbtValueIO.read(input), input.lookup());
+	}
 
-		String fruitNbt = nbt.getString(NBT_FRUIT);
+	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
+
+		String fruitNbt = nbt.getStringOr(NBT_FRUIT, "");
 		if (!fruitNbt.isEmpty()) {
 			this.fruitId = Identifier.parse(fruitNbt);
 			// Nullable lookup so an unregistered/stale id gracefully falls back to cocoa instead of crashing on load.
@@ -107,8 +120,8 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 			this.fruit = SpeciesUtil.TREE_TYPE.get().getFruit(ForestryFruits.COCOA);
 		}
 
-		this.maturity = nbt.getShort(NBT_MATURITY);
-		this.yield = nbt.getFloat(NBT_YIELD);
+		this.maturity = nbt.getShortOr(NBT_MATURITY, (short) 0);
+		this.yield = nbt.getFloatOr(NBT_YIELD, 0f);
 	}
 
 	/* UPDATING */
@@ -162,15 +175,20 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 	}
 
 	@Override
+	public void handleUpdateTag(ValueInput input) {
+		super.handleUpdateTag(input);
+		handleUpdateTag(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-		super.handleUpdateTag(tag, registries);
 		NBTUtilForestry.readStreamableFromNbt(this, tag, registries);
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
-		super.onDataPacket(net, pkt, registries);
-		CompoundTag nbt = pkt.getTag();
+	public void onDataPacket(Connection net, ValueInput input) {
+		super.onDataPacket(net, input);
+		HolderLookup.Provider registries = input.lookup();
+		CompoundTag nbt = NbtValueIO.read(input);
 		handleUpdateTag(nbt, registries);
 	}
 

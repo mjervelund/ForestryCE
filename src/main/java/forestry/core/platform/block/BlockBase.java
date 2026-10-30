@@ -33,7 +33,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.fluids.FluidUtil;
+import forestry.core.platform.legacy.fluids.FluidUtil;
 
 import javax.annotation.Nullable;
 
@@ -82,7 +82,7 @@ public class BlockBase<P extends Enum<P> & IBlockType> extends BlockForestry imp
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> actualType) {
 		if (actualType == this.blockType.getMachineProperties().getTeType()) {
 			//noinspection unchecked
-			return (BlockEntityTicker<T>) (level.isClientSide ? this.blockType.getMachineProperties().getClientTicker() : this.blockType.getMachineProperties().getServerTicker());
+			return (BlockEntityTicker<T>) (level.isClientSide() ? this.blockType.getMachineProperties().getClientTicker() : this.blockType.getMachineProperties().getServerTicker());
 		} else {
 			return null;
 		}
@@ -105,7 +105,7 @@ public class BlockBase<P extends Enum<P> & IBlockType> extends BlockForestry imp
 			return InteractionResult.PASS;
 		}
 		if (TileUtil.isUsableByPlayer(playerIn, tile)) {
-			if (!worldIn.isClientSide) {
+			if (!worldIn.isClientSide()) {
 				ServerPlayer sPlayer = (ServerPlayer) playerIn;
 				tile.openGui(sPlayer, InteractionHand.MAIN_HAND, pos);
 			}

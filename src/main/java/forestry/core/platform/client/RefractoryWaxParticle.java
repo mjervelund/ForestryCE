@@ -18,7 +18,7 @@ public class RefractoryWaxParticle implements ParticleProvider<SimpleParticleTyp
 		GlowParticle particle = new GlowParticle(level, x, y, z, 0, 0, 0, this.sprite);
 		particle.setColor(0.74509805f, 0.16470589f, 0.16470589f);
 		particle.setParticleSpeed(xSpeed * 0.01 / 2, ySpeed * 0.01, zSpeed * 0.01 / 2);
-		particle.setLifetime(level.random.nextInt(30) + 10);
+		particle.setLifetime(level.getRandom().nextInt(30) + 10);
 		return particle;
 	}
 }

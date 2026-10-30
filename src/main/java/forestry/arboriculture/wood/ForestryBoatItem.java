@@ -64,7 +64,7 @@ public class ForestryBoatItem extends ItemForestry {
 				if (!level.noCollision(boat, boat.getBoundingBox())) {
 					return InteractionResult.FAIL;
 				} else {
-					if (!level.isClientSide) {
+					if (!level.isClientSide()) {
 						level.addFreshEntity(boat);
 						level.gameEvent(player, GameEvent.ENTITY_PLACE, hit.getLocation());
 						if (!player.getAbilities().instabuild) {

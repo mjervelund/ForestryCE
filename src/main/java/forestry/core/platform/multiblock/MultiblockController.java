@@ -106,7 +106,7 @@ public abstract class MultiblockController implements IMultiblockController, Wor
 		this.level = level;
 		this.ownerHandler = new OwnerHandler();
 		this.errorLogic = IForestryApi.INSTANCE.getErrorManager().createErrorLogic();
-		this.tickPhase = level.random.nextInt(256);
+		this.tickPhase = level.getRandom().nextInt(256);
 	}
 
 	/**
@@ -282,7 +282,7 @@ public abstract class MultiblockController implements IMultiblockController, Wor
 	 * read, {@link #markOwnerResolved()} latches this without a vote so the adopted owner is authoritative.
 	 */
 	protected final void voteOwnerOnceIfNeeded() {
-		if (this.ownerResolved || this.level.isClientSide) {
+		if (this.ownerResolved || this.level.isClientSide()) {
 			return;
 		}
 
@@ -525,7 +525,7 @@ public abstract class MultiblockController implements IMultiblockController, Wor
 
 	// resends the holder's description packet so clients rebuild or drop their controller to match the server
 	public static void syncHolder(Level level, BlockPos holderPos) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return;
 		}
 		net.minecraft.world.level.chunk.LevelChunk chunk = level.getChunkSource().getChunkNow(holderPos.getX() >> 4, holderPos.getZ() >> 4);

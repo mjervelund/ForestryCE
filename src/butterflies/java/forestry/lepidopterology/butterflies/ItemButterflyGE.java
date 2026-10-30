@@ -50,7 +50,7 @@ public class ItemButterflyGE extends ItemGE implements ITintedItem {
 			return false;
 		}
 		Level level = entityItem.level();
-		if (level.isClientSide || entityItem.tickCount < 80) {
+		if (level.isClientSide() || entityItem.tickCount < 80) {
 			return false;
 		}
 		if (level.random.nextInt(24) != 0) {
@@ -80,7 +80,7 @@ public class ItemButterflyGE extends ItemGE implements ITintedItem {
 		Level level = context.getLevel();
 		Player player = context.getPlayer();
 		BlockPos pos = context.getClickedPos();
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return InteractionResult.PASS;
 		}
 

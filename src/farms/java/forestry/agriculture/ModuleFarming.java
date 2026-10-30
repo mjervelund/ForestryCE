@@ -1,5 +1,6 @@
 package forestry.agriculture;
 
+import forestry.core.platform.legacy.LegacyCapabilities;
 import forestry.agriculture.client.MultifarmClientHandler;
 import forestry.agriculture.farmlogic.FarmingManager;
 import forestry.agriculture.features.MultifarmBlockEntities;
@@ -15,7 +16,6 @@ import forestry.apiimpl.plugin.PluginManager;
 import forestry.modules.BlankForestryModule;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 
@@ -35,9 +35,9 @@ public class ModuleFarming extends BlankForestryModule {
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, MultifarmBlockEntities.GEARBOX.tileType(), (tile, side) -> tile.getEnergyHandler(side));
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, MultifarmBlockEntities.HATCH.tileType(), (tile, side) -> tile.getItemHandler(side));
-		event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, MultifarmBlockEntities.VALVE.tileType(), (tile, side) -> tile.getFluidHandler(side));
+		LegacyCapabilities.registerEnergy(event, MultifarmBlockEntities.GEARBOX.tileType(), (tile, side) -> tile.getEnergyHandler(side));
+		LegacyCapabilities.registerItems(event, MultifarmBlockEntities.HATCH.tileType(), (tile, side) -> tile.getItemHandler(side));
+		LegacyCapabilities.registerFluids(event, MultifarmBlockEntities.VALVE.tileType(), (tile, side) -> tile.getFluidHandler(side));
 	}
 
 	private static void registerDataMaps(RegisterDataMapTypesEvent event) {

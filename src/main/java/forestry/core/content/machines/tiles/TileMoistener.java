@@ -37,7 +37,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -91,19 +91,19 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 	public void loadAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		super.loadAdditional(compoundNBT, registries);
 
-        this.burnTime = compoundNBT.getInt("BurnTime");
-        this.totalTime = compoundNBT.getInt("TotalTime");
-        this.productionTime = compoundNBT.getInt("ProductionTime");
+        this.burnTime = compoundNBT.getIntOr("BurnTime", 0);
+        this.totalTime = compoundNBT.getIntOr("TotalTime", 0);
+        this.productionTime = compoundNBT.getIntOr("ProductionTime", 0);
 
         this.tankManager.read(compoundNBT, registries);
 
 		// Load pending product
 		if (compoundNBT.contains("PendingProduct")) {
-			CompoundTag compoundNBTP = compoundNBT.getCompound("PendingProduct");
+			CompoundTag compoundNBTP = compoundNBT.getCompoundOrEmpty("PendingProduct");
             this.pendingProduct = ItemStack.parse(registries, compoundNBTP).orElse(ItemStack.EMPTY);
 		}
 		if (compoundNBT.contains("CurrentProduct")) {
-			CompoundTag compoundNBTP = compoundNBT.getCompound("CurrentProduct");
+			CompoundTag compoundNBTP = compoundNBT.getCompoundOrEmpty("CurrentProduct");
             this.currentProduct = ItemStack.parse(registries, compoundNBTP).orElse(ItemStack.EMPTY);
 		}
 

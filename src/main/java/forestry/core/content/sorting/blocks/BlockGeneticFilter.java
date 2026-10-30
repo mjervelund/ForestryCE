@@ -78,7 +78,7 @@ public class BlockGeneticFilter extends BlockForestry implements EntityBlock {
 		TileGeneticFilter tile = TileUtil.getTile(worldIn, pos, TileGeneticFilter.class);
 		if (tile != null) {
 			if (TileUtil.isUsableByPlayer(playerIn, tile)) {
-				if (!worldIn.isClientSide) {
+				if (!worldIn.isClientSide()) {
 					ServerPlayer sPlayer = (ServerPlayer) playerIn;
 					sPlayer.openMenu(tile, pos);
 				}
@@ -109,7 +109,7 @@ public class BlockGeneticFilter extends BlockForestry implements EntityBlock {
 	@Override
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> actualType) {
-		if (level.isClientSide || actualType != SortingTiles.GENETIC_FILTER.tileType()) {
+		if (level.isClientSide() || actualType != SortingTiles.GENETIC_FILTER.tileType()) {
 			return null;
 		}
 		// IForestryTicker and not a bare lambda. It advances the TickHelper that updateOnInterval reads

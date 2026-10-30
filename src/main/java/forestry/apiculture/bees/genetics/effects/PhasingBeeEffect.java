@@ -29,7 +29,7 @@ public class PhasingBeeEffect extends ThrottledBeeEffect {
 	@Override
 	IEffectData doEffectThrottled(IGenome genome, IEffectData storedData, IBeeHousing housing) {
 		ServerLevel level = (ServerLevel) housing.getLevel();
-		RandomSource random = level.random;
+		RandomSource random = level.getRandom();
 		List<LivingEntity> list = getEntitiesInRange(genome, housing, LivingEntity.class);
 
 		for (LivingEntity entity : list) {
@@ -74,7 +74,7 @@ public class PhasingBeeEffect extends ThrottledBeeEffect {
 	@Override
 	public IEffectData doFX(IGenome genome, IEffectData storedData, IBeeHousing housing) {
 		Level level = housing.getLevel();
-		level.addParticle(ParticleTypes.PORTAL, housing.getBlockPos().getX() + 0.5, housing.getBlockPos().getY() + 0.5 + level.random.nextDouble() * 2, housing.getBlockPos().getZ() + 0.5, level.random.nextGaussian(), 0, level.random.nextGaussian());
+		level.addParticle(ParticleTypes.PORTAL, housing.getBlockPos().getX() + 0.5, housing.getBlockPos().getY() + 0.5 + level.getRandom().nextDouble() * 2, housing.getBlockPos().getZ() + 0.5, level.getRandom().nextGaussian(), 0, level.getRandom().nextGaussian());
 		return storedData;
 	}
 }

@@ -31,7 +31,7 @@ public record PacketGenomeTrackerSync(@Nullable CompoundTag nbt) implements Cust
 
 	public static void handle(PacketGenomeTrackerSync msg, Player player) {
 		if (msg.nbt != null) {
-			String type = msg.nbt.getString(BreedingTracker.TYPE_KEY);
+			String type = msg.nbt.getStringOr(BreedingTracker.TYPE_KEY, "");
 			ISpeciesType<?, ?> root = IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypeSafe(Identifier.parse(type));
 
 			if (root != null) {

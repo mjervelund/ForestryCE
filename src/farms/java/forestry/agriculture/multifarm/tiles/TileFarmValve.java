@@ -5,7 +5,7 @@ import forestry.core.platform.tile.ILiquidTankTile;
 import forestry.agriculture.features.MultifarmBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 public class TileFarmValve extends TileFarm implements ILiquidTankTile {
 	public TileFarmValve(BlockPos pos, BlockState state) {

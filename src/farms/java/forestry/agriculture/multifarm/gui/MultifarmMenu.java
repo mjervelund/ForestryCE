@@ -16,7 +16,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.fluids.IFluidTank;
+import forestry.core.platform.legacy.fluids.IFluidTank;
 
 public class MultifarmMenu extends ContainerSocketed<TileFarm> implements IContainerTank {
 	private static final Identifier OPEN_FARM_UI = ForestryConstants.forestry("feed_the_world");

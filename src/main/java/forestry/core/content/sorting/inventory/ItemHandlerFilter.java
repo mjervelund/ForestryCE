@@ -3,8 +3,8 @@ package forestry.core.content.sorting.inventory;
 import forestry.core.content.sorting.tiles.TileGeneticFilter;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import forestry.core.platform.legacy.items.IItemHandler;
+import forestry.core.platform.legacy.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 

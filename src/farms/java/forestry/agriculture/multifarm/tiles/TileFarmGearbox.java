@@ -11,7 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import forestry.core.platform.legacy.energy.IEnergyStorage;
 
 public class TileFarmGearbox extends TileFarm implements IFarmComponent.Active {
 	private static final int WORK_CYCLES = 4;

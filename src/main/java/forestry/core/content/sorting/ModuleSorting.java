@@ -1,5 +1,6 @@
 package forestry.core.content.sorting;
 
+import forestry.core.platform.legacy.LegacyCapabilities;
 import forestry.api.client.IClientModuleHandler;
 import forestry.api.ForestryCapabilities;
 import forestry.api.modules.ForestryModule;
@@ -41,7 +42,7 @@ public class ModuleSorting extends BlankForestryModule {
 	}
 
 	public static void registerCapabilities(RegisterCapabilitiesEvent consumer) {
-		consumer.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SortingTiles.GENETIC_FILTER.tileType(), (tile, side) -> tile.getItemHandler(side));
+		LegacyCapabilities.registerItems(consumer, SortingTiles.GENETIC_FILTER.tileType(), (tile, side) -> tile.getItemHandler(side));
 		consumer.registerBlockEntity(ForestryCapabilities.FILTER_LOGIC, SortingTiles.GENETIC_FILTER.tileType(), (tile, side) -> tile.getLogic());
 	}
 

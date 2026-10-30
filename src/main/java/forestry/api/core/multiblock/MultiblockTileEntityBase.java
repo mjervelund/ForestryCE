@@ -1,5 +1,8 @@
 package forestry.api.core.multiblock;
 
+import forestry.core.platform.util.NbtValueIO;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -110,17 +113,22 @@ public abstract class MultiblockTileEntityBase<T extends IMultiblockLogic> exten
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public final void onDataPacket(Connection network, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider registries) {
-		super.onDataPacket(network, packet, registries);
-		CompoundTag nbtData = packet.getTag();
+	public final void onDataPacket(Connection network, ValueInput input) {
+		super.onDataPacket(network, input);
+		HolderLookup.Provider registries = input.lookup();
+		CompoundTag nbtData = NbtValueIO.read(input);
 		if (nbtData != null) {
 			this.decodeDescriptionPacket(nbtData);
 		}
 	}
 
 	@Override
+	public void handleUpdateTag(ValueInput input) {
+		super.handleUpdateTag(input);
+		handleUpdateTag(NbtValueIO.read(input), input.lookup());
+	}
+
 	public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-		super.handleUpdateTag(tag, registries);
 		this.decodeDescriptionPacket(tag);
 	}
 

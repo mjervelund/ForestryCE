@@ -32,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 
@@ -163,7 +163,7 @@ public class CombustionEngineBlockEntity extends EngineBlockEntity implements Wo
 
 	@Override
 	protected boolean isBurning() {
-		return mayBurn() && (this.level.isClientSide || (!this.burnTank.isEmpty() && this.currentOutput != 0));
+		return mayBurn() && (this.level.isClientSide() || (!this.burnTank.isEmpty() && this.currentOutput != 0));
 	}
 
 	/**
@@ -232,8 +232,8 @@ public class CombustionEngineBlockEntity extends EngineBlockEntity implements Wo
 	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 		super.loadAdditional(nbt, registries);
 		this.tankManager.read(nbt, registries);
-		this.burnTime = nbt.getFloat("burnTime");
-		this.coolantTime = nbt.getInt("coolantTime");
+		this.burnTime = nbt.getFloatOr("burnTime", 0f);
+		this.coolantTime = nbt.getIntOr("coolantTime", 0);
 		this.sockets.read(nbt, registries);
 
 		ItemStack chip = this.sockets.getItem(0);

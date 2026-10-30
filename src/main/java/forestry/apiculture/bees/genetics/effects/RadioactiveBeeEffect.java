@@ -50,7 +50,7 @@ public class RadioactiveBeeEffect extends ThrottledBeeEffect {
 
 	private static IEffectData destroyEnvironment(IGenome genome, IEffectData storedData, IBeeHousing housing) {
 		Level level = housing.getLevel();
-		RandomSource rand = level.random;
+		RandomSource rand = level.getRandom();
 
 		Vec3i area = VecUtil.scale(genome.getActiveValue(BeeChromosomes.TERRITORY), 2);
 		BlockPos posHousing = housing.getBlockPos();

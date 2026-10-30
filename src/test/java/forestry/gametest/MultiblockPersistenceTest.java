@@ -1,5 +1,6 @@
 package forestry.gametest;
 
+import forestry.core.platform.legacy.LegacyCapabilities;
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.genetics.BeeLifeStage;
 import forestry.api.apiculture.genetics.IBee;
@@ -16,10 +17,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
-import net.neoforged.neoforge.items.IItemHandler;
+import forestry.core.platform.legacy.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public final class MultiblockPersistenceTest {
 			LevelChunk holderChunk = level.getChunkAt(holder);
 			holderChunk.setUnsaved(false);
 
-			IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, members.getLast(), null);
+			IItemHandler handler = LegacyCapabilities.getItemHandler(level, members.getLast(), null);
 			helper.assertTrue(handler != null, "alveary exposes no item handler");
 			ItemStack extracted = handler.extractItem(PRODUCT_SLOT, 1, false);
 			helper.assertTrue(extracted.getCount() == 1, "extraction through the item handler failed");
@@ -69,9 +69,9 @@ public final class MultiblockPersistenceTest {
 
 		helper.runAfterDelay(5, () -> {
 			BlockPos holder = holderOf(helper, members);
-			ChunkPos holderChunkPos = new ChunkPos(holder);
+			ChunkPos holderChunkPos = ChunkPos.containing(holder);
 			BlockPos remote = members.stream()
-				.filter(pos -> !new ChunkPos(pos).equals(holderChunkPos))
+				.filter(pos -> !ChunkPos.containing(pos).equals(holderChunkPos))
 				.findFirst()
 				.orElse(null);
 			helper.assertTrue(remote != null, "alveary does not straddle a chunk border");

@@ -151,12 +151,12 @@ public class EscritoireGameToken implements INbtWritable, IStreamable {
 
 	private void readFromTag(CompoundTag nbt) {
 		if (nbt.contains("state")) {
-			int stateOrdinal = nbt.getInt("state");
+			int stateOrdinal = nbt.getIntOr("state", 0);
 			this.state = State.VALUES[stateOrdinal];
 		}
 
-		String tokenSpecies = nbt.getString(NBT_TOKEN_SPECIES);
-		String tokenType = nbt.getString(NBT_TOKEN_TYPE);
+		String tokenSpecies = nbt.getStringOr(NBT_TOKEN_SPECIES, "");
+		String tokenType = nbt.getStringOr(NBT_TOKEN_TYPE, "");
 
 		if (!tokenSpecies.isEmpty() && !tokenType.isEmpty()) {
 			setTokenSpecies(Identifier.parse(tokenType), Identifier.parse(tokenSpecies));
@@ -168,8 +168,8 @@ public class EscritoireGameToken implements INbtWritable, IStreamable {
 		NetworkUtil.writeEnum(data, this.state);
 		if (this.tokenIndividual != null && this.tokenType != null) {
 			data.writeBoolean(true);
-			data.writeResourceLocation(this.tokenIndividual.getSpecies().id());
-			data.writeResourceLocation(this.tokenType.id());
+			data.writeIdentifier(this.tokenIndividual.getSpecies().id());
+			data.writeIdentifier(this.tokenType.id());
 		} else {
 			data.writeBoolean(false);
 		}
@@ -179,8 +179,8 @@ public class EscritoireGameToken implements INbtWritable, IStreamable {
 	public void readData(RegistryFriendlyByteBuf data) {
 		this.state = NetworkUtil.readEnum(data, State.VALUES);
 		if (data.readBoolean()) {
-			Identifier speciesId = data.readResourceLocation();
-			Identifier typeId = data.readResourceLocation();
+			Identifier speciesId = data.readIdentifier();
+			Identifier typeId = data.readIdentifier();
 			setTokenSpecies(typeId, speciesId);
 		}
 	}

@@ -59,7 +59,7 @@ public class LetterMenu extends ContainerItemInventory<LetterInventory> implemen
 		}
 
 		// Rip open delivered mails
-		if (!player.level().isClientSide) {
+		if (!player.level().isClientSide()) {
 			if (inventory.getLetter().isProcessed()) {
 				inventory.onLetterOpened();
 			}
@@ -75,7 +75,7 @@ public class LetterMenu extends ContainerItemInventory<LetterInventory> implemen
 
 	@Override
 	public void removed(Player playerEntity) {
-		if (!playerEntity.level().isClientSide) {
+		if (!playerEntity.level().isClientSide()) {
 			ILetter letter = this.inventory.getLetter();
 			if (!letter.isProcessed()) {
 				IMailAddress sender = new MailAddress(playerEntity.getGameProfile());
@@ -169,7 +169,7 @@ public class LetterMenu extends ContainerItemInventory<LetterInventory> implemen
 	/* Managing Trade info */
 	private void updateTradeInfo(Level world, @Nullable IMailAddress address) {
 		// Updating is done by the server.
-		if (world.isClientSide) {
+		if (world.isClientSide()) {
 			return;
 		}
 

@@ -68,7 +68,7 @@ public class ClockworkEngineBlockEntity extends EngineBlockEntity {
 	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider registries) {
 		super.loadAdditional(nbt, registries);
 
-        this.tension = nbt.getFloat("tension");
+        this.tension = nbt.getFloatOr("tension", 0f);
 	}
 
 

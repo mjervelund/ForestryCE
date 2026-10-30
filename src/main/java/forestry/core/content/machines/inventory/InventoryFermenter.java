@@ -7,7 +7,7 @@ import forestry.core.content.machines.tiles.TileFermenter;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
+import forestry.core.platform.legacy.fluids.FluidUtil;
 
 import java.util.Optional;
 import forestry.api.ForestryDataMaps;

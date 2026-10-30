@@ -72,7 +72,7 @@ public class SaplingBlock extends Block implements BonemealableBlock, EntityBloc
 
 	@Override
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if (!level.isClientSide && !canBlockStay(level, pos)) {
+		if (!level.isClientSide() && !canBlockStay(level, pos)) {
 			level.destroyBlock(pos, true);
 		}
 	}
@@ -113,7 +113,7 @@ public class SaplingBlock extends Block implements BonemealableBlock, EntityBloc
 
 	@Override
 	public boolean isBonemealSuccess(Level world, RandomSource rand, BlockPos pos, BlockState state) {
-		if (world.random.nextFloat() >= 0.45F) {
+		if (world.getRandom().nextFloat() >= 0.45F) {
 			return false;
 		}
 		SaplingBlockEntity saplingTile = TileUtil.getTile(world, pos, SaplingBlockEntity.class);

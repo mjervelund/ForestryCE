@@ -76,7 +76,7 @@ public class TagFlowerType implements IFlowerType {
 	public boolean plantRandomFlower(Level level, BlockPos pos, List<BlockState> nearbyFlowers) {
 		if (level.hasChunkAt(pos) && isPlantablePosition(level, pos)) {
 			ObjectArrayList<BlockState> uniqueNearbyFlowers = new ObjectArrayList<>(new HashSet<>(nearbyFlowers));
-			Util.shuffle(uniqueNearbyFlowers, level.random);
+			Util.shuffle(uniqueNearbyFlowers, level.getRandom());
 
 			for (BlockState state : uniqueNearbyFlowers) {
 				if (state.is(ForestryTags.Blocks.PLANTABLE_FLOWERS) && state.canSurvive(level, pos)) {

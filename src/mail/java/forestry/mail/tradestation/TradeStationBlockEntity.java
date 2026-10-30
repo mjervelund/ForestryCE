@@ -242,7 +242,7 @@ public class TradeStationBlockEntity extends TileBase implements IOwnedTile {
 			return false;
 		}
 
-		if (!this.level.isClientSide) {
+		if (!this.level.isClientSide()) {
 			ServerLevel world = (ServerLevel) this.level;
 			IErrorLogic errorLogic = getErrorLogic();
 
@@ -269,7 +269,7 @@ public class TradeStationBlockEntity extends TileBase implements IOwnedTile {
 	@Override
 	public IInventoryAdapter getInternalInventory() {
 		// Handle client side
-		if (this.level.isClientSide || !this.address.isValid()) {
+		if (this.level.isClientSide() || !this.address.isValid()) {
 			return super.getInternalInventory();
 		}
 

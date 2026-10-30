@@ -1,5 +1,6 @@
 package forestry.gametest;
 
+import forestry.core.platform.legacy.LegacyCapabilities;
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.genetics.BeeLifeStage;
 import forestry.api.apiculture.genetics.IBee;
@@ -17,10 +18,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.gametest.GameTestHolder;
 import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
-import net.neoforged.neoforge.items.IItemHandler;
+import forestry.core.platform.legacy.items.IItemHandler;
 
 import java.util.function.Consumer;
 
@@ -43,7 +43,7 @@ public final class BeeHousingPersistenceTest {
 		LevelChunk chunk = helper.getLevel().getChunkAt(helper.absolutePos(HOUSING));
 		chunk.setUnsaved(false);
 
-		IItemHandler handler = helper.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, helper.absolutePos(HOUSING), null);
+		IItemHandler handler = LegacyCapabilities.getItemHandler(helper.getLevel(), helper.absolutePos(HOUSING), null);
 		helper.assertTrue(handler != null, "apiary exposes no item handler");
 		helper.assertTrue(handler.extractItem(BeeHousingInventory.SLOT_PRODUCT_1, 1, false).getCount() == 1, "extraction through the item handler failed");
 

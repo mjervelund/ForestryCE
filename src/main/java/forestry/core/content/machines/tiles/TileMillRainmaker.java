@@ -47,7 +47,7 @@ public class TileMillRainmaker extends TileMill {
 
 	@Override
 	public void openGui(ServerPlayer player, InteractionHand hand, BlockPos pos) {
-		if (!player.level().isClientSide) {
+		if (!player.level().isClientSide()) {
 			ItemStack heldItem = player.getItemInHand(hand);
 
 			// We don't have a gui, but we can be activated
@@ -67,11 +67,11 @@ public class TileMillRainmaker extends TileMill {
 	public void loadAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		super.loadAdditional(compoundNBT, registries);
 
-        this.charge = compoundNBT.getInt("Charge");
-        this.progress = compoundNBT.getFloat("Progress");
-        this.stage = compoundNBT.getInt("Stage");
-        this.duration = compoundNBT.getInt("Duration");
-        this.reverse = compoundNBT.getBoolean("Reverse");
+        this.charge = compoundNBT.getIntOr("Charge", 0);
+        this.progress = compoundNBT.getFloatOr("Progress", 0f);
+        this.stage = compoundNBT.getIntOr("Stage", 0);
+        this.duration = compoundNBT.getIntOr("Duration", 0);
+        this.reverse = compoundNBT.getBooleanOr("Reverse", false);
 	}
 
 
@@ -117,14 +117,14 @@ public class TileMillRainmaker extends TileMill {
 
 	@Override
 	public void activate(Level level, BlockPos pos) {
-		if (level.isClientSide) {
-			level.playSound(null, pos, SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 10000.0F, 0.8F + level.random.nextFloat() * 0.2F);
+		if (level.isClientSide()) {
+			level.playSound(null, pos, SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 10000.0F, 0.8F + level.getRandom().nextFloat() * 0.2F);
 
 			float f = pos.getX() + 0.5F;
-			float f1 = pos.getY() + level.random.nextFloat() * 6F / 16F;
+			float f1 = pos.getY() + level.getRandom().nextFloat() * 6F / 16F;
 			float f2 = pos.getZ() + 0.5F;
 			float f3 = 0.52F;
-			float f4 = level.random.nextFloat() * 0.6F - 0.3F;
+			float f4 = level.getRandom().nextFloat() * 0.6F - 0.3F;
 
 			ParticleRender.addEntityExplodeFX(level, f - f3, f1, f2 + f4);
 			ParticleRender.addEntityExplodeFX(level, f + f3, f1, f2 + f4);

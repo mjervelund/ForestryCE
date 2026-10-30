@@ -35,7 +35,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.items.IItemHandler;
+import forestry.core.platform.legacy.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -79,7 +79,7 @@ public class BackpackItem extends WithScreenItem implements ITintedItem {
 	public InteractionResult useOn(UseOnContext ctx) {
 		Level level = ctx.getLevel();
 		if (getInventoryHit(level, ctx.getClickedPos(), ctx.getClickedFace()) != null) {
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.PASS;
 	}
@@ -146,7 +146,7 @@ public class BackpackItem extends WithScreenItem implements ITintedItem {
 				return true;
 			}
 
-			if (!world.isClientSide) {
+			if (!world.isClientSide()) {
 				// Create our own backpack inventory
 				BackpackInventory backpackInventory = new BackpackInventory(player, getBackpackSize(), stack);
 

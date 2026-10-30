@@ -35,11 +35,11 @@ public class ItemRefractoryWax extends ItemForestry {
 			stack.shrink(1);
 			level.setBlock(pos, waxedState, 11);
 			level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, waxedState));
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				NetworkUtil.sendNetworkPacket(new PacketRefractoryWax(pos), pos, level);
 			}
 
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 
 		return InteractionResult.PASS;

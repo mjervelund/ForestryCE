@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import forestry.core.platform.legacy.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
@@ -171,7 +171,7 @@ public abstract class EngineBlockEntity extends TileBase implements IActivatable
 		}
 		this.active = active;
 
-		if (!this.level.isClientSide) {
+		if (!this.level.isClientSide()) {
 			NetworkUtil.sendNetworkPacket(new PacketActiveUpdate(this), this.worldPosition, this.level);
 		}
 	}
@@ -243,10 +243,10 @@ public abstract class EngineBlockEntity extends TileBase implements IActivatable
 		super.loadAdditional(nbt, registries);
         this.energyStorage.read(nbt, registries);
 
-        this.heat = nbt.getInt("EngineHeat");
+        this.heat = nbt.getIntOr("EngineHeat", 0);
 
-        this.progress = nbt.getFloat("EngineProgress");
-        this.forceCooldown = nbt.getBoolean("ForceCooldown");
+        this.progress = nbt.getFloatOr("EngineProgress", 0f);
+        this.forceCooldown = nbt.getBooleanOr("ForceCooldown", false);
 	}
 
 
