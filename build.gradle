@@ -4,7 +4,7 @@ import groovy.json.JsonSlurper
 plugins {
 	id('idea')
 	id('maven-publish')
-	id 'net.neoforged.moddev' version '2.0.140'
+	id 'net.neoforged.moddev' version '2.0.148'
 	// todo replace with mc-publish, as these plugins do not support Gradle configuration cache
 	id('com.modrinth.minotaur') version '2.+'
 	id('com.matthewprenger.cursegradle') version '1.4.0'
@@ -18,8 +18,7 @@ group = 'thedarkcolour.forestry'
 version = forestryVersion
 base.archivesName = "forestry-$minecraftVersion"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-java.toolchain.vendor = JvmVendorSpec.JETBRAINS
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 // The jars of D1, one source set each. sourceSets.main IS the core jar: Gradle's jar task,
 // processResources, components.java and the access transformers all attach to main by convention,
@@ -60,6 +59,13 @@ sourceSets {
 	mail
 }
 
+// 26.3 port, temporary: leave out what has no 26.3 dependency yet, so the rest can be ported first.
+// Datagen needs ModKit; the compat packages need KubeJS, Curios and Patchouli.
+var tekkitExcludes = ['forestry/*/data/**', 'forestry/core/platform/compat/kubejs/**',
+		'forestry/core/platform/compat/curios/**', 'forestry/core/platform/compat/ModuleCurios.java',
+		'forestry/core/platform/compat/patchouli/**']
+(['main'] + contentModules).each { sourceSets[it].java { exclude tekkitExcludes } }
+
 // Everything requires core, and nothing else. Arboriculture moving into core dissolved the only
 // cross-content edge the split ever had - three TreeUtil imports for butterfly pollination
 sourceSets.butterflies.compileClasspath += sourceSets.main.output
@@ -91,11 +97,7 @@ neoForge {
 	accessTransformers = files('src/main/resources/META-INF/accesstransformer.cfg')
 	validateAccessTransformers = true
 
-	// Add Parchment parameter mappings
-	parchment {
-		mappingsVersion = project.mappingsVersion
-		minecraftVersion = project.minecraftVersion
-	}
+	// No Parchment for 26.x: Minecraft ships unobfuscated with parameter names
 
 	mods {
 		// One mod id per jar. A jar loads as a mod only if it carries neoforge.mods.toml, so this
@@ -483,21 +485,12 @@ repositories {
 
 dependencies {
 	// JEI OPTIONAL
+	compileOnly "mezz.jei:jei-$minecraftVersion-common-api:$jeiVersion"
+	compileOnly "mezz.jei:jei-$minecraftVersion-lib:$jeiVersion"
 	compileOnly "mezz.jei:jei-$minecraftVersion-neoforge-api:$jeiVersion"
-	runtimeOnly "mezz.jei:jei-$minecraftVersion-neoforge:$jeiVersion"
-	// KubeJS OPTIONAL
-	implementation "dev.architectury:architectury-neoforge:${architecturyVersion}"
-	implementation "dev.latvian.mods:rhino:${rhinoVersion}"
-	implementation "dev.latvian.mods:kubejs-neoforge:${kubejsVersion}"
-	// Curios Optional
-	implementation "top.theillusivec4.curios:curios-neoforge:${curiosVersion}+${minecraftVersion}"
-	// Ponder OPTIONAL
-	implementation("net.createmod.ponder:ponder-neoforge:${ponderVersion}+mc${minecraftVersion}")
-	// PATCHOULI REQUIRED
-	compileOnly "vazkii.patchouli:Patchouli:$patchouliVersion-NEOFORGE:api"
-	runtimeOnly "vazkii.patchouli:Patchouli:$patchouliVersion-NEOFORGE"
-	// ModKit DEV ONLY
-	modkit 'com.github.thedarkcolour:ModKit:c0c491b35bf7c5785b933b27966a9c0b9dee4163'
+	// 26.3 port: KubeJS, Curios, Ponder and Patchouli have no 26.3 builds yet. Their compat code is
+	// excluded from compilation below (tekkitExcludes) until they do.
+	// ModKit DEV ONLY. 26.3 port: no 26.3 build; datagen is excluded below (tekkitExcludes)
 
 	// GameTests exercise every jar, and two of them build their expected species maps from the data
 	// providers that now live in those jars
