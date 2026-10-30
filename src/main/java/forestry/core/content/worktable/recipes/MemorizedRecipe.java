@@ -100,7 +100,7 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 			CraftingRecipe recipe = selectedRecipe.value();
 
 			if (recipe.matches(input, level)) {
-				ItemStack recipeOutput = recipe.assemble(input, level.registryAccess());
+				ItemStack recipeOutput = recipe.assemble(input);
 				if (!recipeOutput.isEmpty()) {
 					return recipeOutput;
 				}

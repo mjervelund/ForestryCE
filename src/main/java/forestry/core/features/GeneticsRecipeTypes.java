@@ -17,11 +17,11 @@ public class GeneticsRecipeTypes {
 	private static final IFeatureRegistry REGISTRY = ModFeatureRegistry.get(ForestryModuleIds.CORE);
 
 	public static final FeatureRecipeType<MutationRecipe> BEE_MUTATION =
-		REGISTRY.recipeType("bee_mutation", () -> new MutationRecipe.Serializer(ForestrySpeciesTypes.BEE));
+		REGISTRY.recipeType("bee_mutation", () -> MutationRecipe.serializer(ForestrySpeciesTypes.BEE));
 	public static final FeatureRecipeType<MutationRecipe> TREE_MUTATION =
-		REGISTRY.recipeType("tree_mutation", () -> new MutationRecipe.Serializer(ForestrySpeciesTypes.TREE));
+		REGISTRY.recipeType("tree_mutation", () -> MutationRecipe.serializer(ForestrySpeciesTypes.TREE));
 	public static final FeatureRecipeType<MutationRecipe> BUTTERFLY_MUTATION =
-		REGISTRY.recipeType("butterfly_mutation", () -> new MutationRecipe.Serializer(ForestrySpeciesTypes.BUTTERFLY));
+		REGISTRY.recipeType("butterfly_mutation", () -> MutationRecipe.serializer(ForestrySpeciesTypes.BUTTERFLY));
 
 	@Nullable
 	public static FeatureRecipeType<MutationRecipe> forType(Identifier speciesTypeId) {

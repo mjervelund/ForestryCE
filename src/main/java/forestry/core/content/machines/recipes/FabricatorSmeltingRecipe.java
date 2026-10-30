@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -20,7 +21,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 	private static final MapCodec<FabricatorSmeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(FabricatorSmeltingRecipe::getId),
-		Ingredient.CODEC_NONEMPTY.fieldOf("resource").forGetter(FabricatorSmeltingRecipe::getInput),
+		Ingredient.CODEC.fieldOf("resource").forGetter(FabricatorSmeltingRecipe::getInput),
 		FluidStack.CODEC.fieldOf("product").forGetter(FabricatorSmeltingRecipe::getResultFluid),
 		Codec.INT.fieldOf("melting").forGetter(FabricatorSmeltingRecipe::getMeltingPoint)
 	).apply(instance, FabricatorSmeltingRecipe::new));
@@ -72,26 +73,18 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return FactoryRecipeTypes.FABRICATOR_SMELTING.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return FactoryRecipeTypes.FABRICATOR_SMELTING.type();
 	}
 
-	public static class Serializer implements RecipeSerializer<FabricatorSmeltingRecipe> {
-		@Override
-		public MapCodec<FabricatorSmeltingRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<FabricatorSmeltingRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, FabricatorSmeltingRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
-
+	private static class Serializer {
 		private static FabricatorSmeltingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			Ingredient resource = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);

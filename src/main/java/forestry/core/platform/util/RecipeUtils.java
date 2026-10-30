@@ -1,5 +1,6 @@
 package forestry.core.platform.util;
 
+import net.minecraft.core.Holder;
 import forestry.api.core.machines.*;
 import forestry.core.platform.client.ClientsideCode;
 import forestry.core.platform.fluids.FluidHelper;
@@ -96,7 +97,7 @@ public class RecipeUtils {
 			return null;
 		}
 
-		ItemStack expectedOutput = recipe.assemble(input, level.registryAccess());
+		ItemStack expectedOutput = recipe.assemble(input);
 		if (expectedOutput.isEmpty()) {
 			return null;
 		}
@@ -120,7 +121,7 @@ public class RecipeUtils {
 		CraftingInput usedInput = usedMatrix.asCraftInput();
 
 		if (recipe.matches(usedInput, level)) {
-			ItemStack output = recipe.assemble(usedInput, level.registryAccess());
+			ItemStack output = recipe.assemble(usedInput);
 			if (ItemStack.matches(output, expectedOutput)) {
 				return usedMatrix;
 			}
@@ -140,7 +141,7 @@ public class RecipeUtils {
 				originalMatrix.setItem(slot, singleStockStack);
 
 				if (recipe.matches(input, level)) {
-					ItemStack output = recipe.assemble(input, level.registryAccess());
+					ItemStack output = recipe.assemble(input);
 					if (ItemStack.matches(output, expectedOutput)) {
 						originalMatrix.setItem(slot, originalStack);
 						return stockStack.split(1);
@@ -243,7 +244,7 @@ public class RecipeUtils {
 	}
 
 	public static <R extends Recipe<C>, C extends RecipeInput> Set<Identifier> getTargetFluidsFromIngredients(RecipeMap manager, RecipeType<R> type, Function<R, FluidIngredient> targetFluid) {
-		return getTargetFluidStreams(manager, type, recipe -> Arrays.stream(targetFluid.apply(recipe).getStacks()).map(FluidStack::getFluid));
+		return getTargetFluidStreams(manager, type, recipe -> targetFluid.apply(recipe).fluids().stream().map(Holder::value));
 	}
 
 	public static <R extends Recipe<I>, I extends RecipeInput> Set<Identifier> getTargetFluidsFromStacks(RecipeMap manager, RecipeType<R> type, Function<R, FluidStack> targetFluid) {

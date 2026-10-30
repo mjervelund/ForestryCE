@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -75,26 +76,18 @@ public class StillRecipe implements IStillRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return FactoryRecipeTypes.STILL.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return FactoryRecipeTypes.STILL.type();
 	}
 
-	public static class Serializer implements RecipeSerializer<StillRecipe> {
-		@Override
-		public MapCodec<StillRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<StillRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, StillRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
-
+	private static class Serializer {
 		private static StillRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier id = Identifier.STREAM_CODEC.decode(buffer);
 			int timePerUnit = ByteBufCodecs.VAR_INT.decode(buffer);

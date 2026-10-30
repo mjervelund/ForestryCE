@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes.jei.fabricator;
 
+import net.minecraft.world.item.crafting.CraftingInput;
 import forestry.api.ForestryConstants;
 import forestry.api.core.machines.IFabricatorRecipe;
 import forestry.api.core.machines.IFabricatorSmeltingRecipe;
@@ -99,6 +100,6 @@ public class FabricatorRecipeCategory extends ForestryRecipeCategory<IFabricator
 		//		.addIngredients(plan);
 
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 119, 37)
-			.addItemStack(craftingGridRecipe.getResultItem(RecipeUtils.getRegistryAccess()));
+			.addItemStack(craftingGridRecipe.assemble(CraftingInput.EMPTY));
 	}
 }

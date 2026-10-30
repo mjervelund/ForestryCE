@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -19,8 +20,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 public class MoistenerRecipe implements IMoistenerRecipe {
 	private static final MapCodec<MoistenerRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(MoistenerRecipe::getId),
-		Ingredient.CODEC_NONEMPTY.fieldOf("resource").forGetter(MoistenerRecipe::getInput),
-		ItemStack.STRICT_CODEC.fieldOf("product").forGetter(MoistenerRecipe::getProduct),
+		Ingredient.CODEC.fieldOf("resource").forGetter(MoistenerRecipe::getInput),
+		ItemStack.CODEC.fieldOf("product").forGetter(MoistenerRecipe::getProduct),
 		Codec.INT.fieldOf("time").forGetter(MoistenerRecipe::getTimePerItem)
 	).apply(instance, MoistenerRecipe::new));
 	private static final StreamCodec<RegistryFriendlyByteBuf, MoistenerRecipe> STREAM_CODEC = StreamCodec.of(
@@ -70,26 +71,18 @@ public class MoistenerRecipe implements IMoistenerRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return FactoryRecipeTypes.MOISTENER.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return FactoryRecipeTypes.MOISTENER.type();
 	}
 
-	public static class Serializer implements RecipeSerializer<MoistenerRecipe> {
-		@Override
-		public MapCodec<MoistenerRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<MoistenerRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, MoistenerRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
-
+	private static class Serializer {
 		private static MoistenerRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			Ingredient resource = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);

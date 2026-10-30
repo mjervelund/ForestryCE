@@ -45,7 +45,7 @@ public final class GeneticsReloadHandler {
 			lookup.put(species.id(), species);
 		}
 		ImmutableList.Builder<IMutation<S>> builder = ImmutableList.builder();
-		for (RecipeHolder<MutationRecipe> holder : rm.getAllRecipesFor(featureType.type())) {
+		for (RecipeHolder<MutationRecipe> holder : rm.byType(featureType.type())) {
 			Mutation<S> mutation = holder.value().toMutation(type, lookup::get);
 			if (mutation != null) {
 				builder.add(mutation);

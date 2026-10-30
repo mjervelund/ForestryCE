@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -38,9 +39,9 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 
 	private static final MapCodec<SqueezerContainerRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(SqueezerContainerRecipe::getId),
-		ItemStack.STRICT_CODEC.fieldOf("container").forGetter(SqueezerContainerRecipe::getEmptyContainer),
+		ItemStack.CODEC.fieldOf("container").forGetter(SqueezerContainerRecipe::getEmptyContainer),
 		Codec.INT.fieldOf("time").forGetter(SqueezerContainerRecipe::getProcessingTime),
-		ItemStack.STRICT_CODEC.fieldOf("remnants").forGetter(SqueezerContainerRecipe::getRemnants),
+		ItemStack.CODEC.fieldOf("remnants").forGetter(SqueezerContainerRecipe::getRemnants),
 		Codec.FLOAT.fieldOf("remnantsChance").forGetter(SqueezerContainerRecipe::getRemnantsChance)
 	).apply(instance, SqueezerContainerRecipe::new));
 	private static final StreamCodec<RegistryFriendlyByteBuf, SqueezerContainerRecipe> STREAM_CODEC = StreamCodec.of(
@@ -107,26 +108,18 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return FactoryRecipeTypes.SQUEEZER_CONTAINER.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return FactoryRecipeTypes.SQUEEZER_CONTAINER.type();
 	}
 
-	public static class Serializer implements RecipeSerializer<SqueezerContainerRecipe> {
-		@Override
-		public MapCodec<SqueezerContainerRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<SqueezerContainerRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, SqueezerContainerRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
-
+	private static class Serializer {
 		private static SqueezerContainerRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			ItemStack emptyContainer = ItemStack.STREAM_CODEC.decode(buffer);

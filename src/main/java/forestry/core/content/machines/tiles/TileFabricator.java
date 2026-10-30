@@ -1,5 +1,6 @@
 package forestry.core.content.machines.tiles;
 
+import net.minecraft.world.item.crafting.CraftingInput;
 import forestry.api.core.ForestryError;
 import forestry.api.core.IErrorLogic;
 import forestry.api.core.machines.IFabricatorRecipe;
@@ -181,7 +182,7 @@ public class TileFabricator extends TilePowered implements ISlotPickupWatcher, I
 			return ItemStack.EMPTY;
 		}
 
-		return myRecipe.getCraftingGridRecipe().getResultItem(this.level.registryAccess()).copy();
+		return myRecipe.getCraftingGridRecipe().assemble(CraftingInput.EMPTY).copy();
 	}
 
 	/* ISlotPickupWatcher */

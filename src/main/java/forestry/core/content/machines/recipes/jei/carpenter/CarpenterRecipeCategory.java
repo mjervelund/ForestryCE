@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes.jei.carpenter;
 
+import net.minecraft.world.item.crafting.CraftingInput;
 import forestry.api.ForestryConstants;
 import forestry.api.core.machines.ICarpenterRecipe;
 import forestry.core.content.machines.blocks.BlockTypeFactoryPlain;
@@ -62,13 +63,13 @@ public class CarpenterRecipeCategory extends ForestryRecipeCategory<ICarpenterRe
 	public void setRecipe(IRecipeLayoutBuilder builder, ICarpenterRecipe recipe, IFocusGroup focuses) {
 		CraftingRecipe craftingGridRecipe = recipe.getCraftingGridRecipe();
 
-		ItemStack processingIngredient = craftingGridRecipe.getResultItem(RecipeUtils.getRegistryAccess()).copy();
+		ItemStack processingIngredient = craftingGridRecipe.assemble(CraftingInput.EMPTY).copy();
 		processingIngredient.setCount(1);
 		builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 71, 35)
 			.addItemStack(processingIngredient);
 
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 120 - 9, 56 - 16)
-			.addItemStack(craftingGridRecipe.getResultItem(RecipeUtils.getRegistryAccess()));
+			.addItemStack(craftingGridRecipe.assemble(CraftingInput.EMPTY));
 
 		List<IRecipeSlotBuilder> craftingSlots = JeiUtil.layoutSlotGrid(builder, RecipeIngredientRole.INPUT, 3, 3, 1, 4, 18);
 		JeiUtil.setCraftingItems(craftingSlots, craftingGridRecipe, this.craftingGridHelper);

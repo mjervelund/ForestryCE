@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -27,7 +28,7 @@ public class CentrifugeRecipe implements ICentrifugeRecipe {
 	private static final MapCodec<CentrifugeRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(CentrifugeRecipe::getId),
 		Codec.INT.fieldOf("time").forGetter(CentrifugeRecipe::getProcessingTime),
-		Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(CentrifugeRecipe::getInput),
+		Ingredient.CODEC.fieldOf("input").forGetter(CentrifugeRecipe::getInput),
 		IProduct.LIST_CODEC.fieldOf("products").forGetter(CentrifugeRecipe::getAllProducts)
 	).apply(instance, CentrifugeRecipe::new));
 	private static final StreamCodec<RegistryFriendlyByteBuf, CentrifugeRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -97,24 +98,17 @@ public class CentrifugeRecipe implements ICentrifugeRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return FactoryRecipeTypes.CENTRIFUGE.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return FactoryRecipeTypes.CENTRIFUGE.type();
 	}
 
-	public static class Serializer implements RecipeSerializer<CentrifugeRecipe> {
-		@Override
-		public MapCodec<CentrifugeRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<CentrifugeRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, CentrifugeRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
+	private static class Serializer {
 	}
 }

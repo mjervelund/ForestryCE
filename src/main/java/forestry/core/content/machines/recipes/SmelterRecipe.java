@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -82,12 +83,12 @@ public class SmelterRecipe implements ISmelterRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return FactoryRecipeTypes.SMELTER.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return FactoryRecipeTypes.SMELTER.type();
 	}
 
@@ -125,15 +126,8 @@ public class SmelterRecipe implements ISmelterRecipe {
 		return this.id + "= \n[ " + this.inputs + " ]: " + this.output;
 	}
 
-	public static class Serializer implements RecipeSerializer<SmelterRecipe> {
-		@Override
-		public MapCodec<SmelterRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<SmelterRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, SmelterRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
+	private static class Serializer {
 	}
 }

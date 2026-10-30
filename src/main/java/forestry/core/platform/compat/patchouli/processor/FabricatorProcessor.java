@@ -1,5 +1,6 @@
 package forestry.core.platform.compat.patchouli.processor;
 
+import net.minecraft.world.item.crafting.CraftingInput;
 import forestry.Forestry;
 import forestry.api.core.machines.IFabricatorRecipe;
 import forestry.core.platform.util.ModUtil;
@@ -42,7 +43,7 @@ public class FabricatorProcessor implements IComponentProcessor {
 			return key.equals("output") ? IVariable.from(this.output, registries) : IVariable.empty();
 		}
 		if (key.equals("output")) {
-			return IVariable.from(this.recipe.getCraftingGridRecipe().getResultItem(registries), registries);
+			return IVariable.from(this.recipe.getCraftingGridRecipe().assemble(CraftingInput.EMPTY), registries);
 		} else if (key.equals("fluid")) {
 			return IVariable.wrap(ModUtil.getRegistryName(this.recipe.getResultFluid().getFluid()).toString(), registries);
 		} else if (key.equals("fluidAmount")) {

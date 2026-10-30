@@ -121,17 +121,12 @@ public class MutationRecipe implements IForestryRecipe {
 	}
 
 	@Override
-	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return Objects.requireNonNull(GeneticsRecipeTypes.forType(this.speciesTypeId), () -> "No mutation recipe type for species type " + this.speciesTypeId).type();
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return Objects.requireNonNull(GeneticsRecipeTypes.forType(this.speciesTypeId), () -> "No mutation recipe type for species type " + this.speciesTypeId).serializer();
 	}
 
@@ -139,36 +134,17 @@ public class MutationRecipe implements IForestryRecipe {
 	 * A per-species-type serializer. The codecs are resolved lazily on first use because the species type's
 	 * karyotype does not exist at {@code RegisterEvent} time (only by datapack-load/recipe-parse time).
 	 */
-	public static class Serializer implements RecipeSerializer<MutationRecipe> {
-		private final Identifier speciesTypeId;
-		@Nullable
-		private MapCodec<MutationRecipe> codec;
-		@Nullable
-		private StreamCodec<RegistryFriendlyByteBuf, MutationRecipe> streamCodec;
+	/**
+	 * A per-species-type serializer. The codecs are built on first use because the species type's karyotype does
+	 * not exist at {@code RegisterEvent} time (only by datapack-load/recipe-parse time).
+	 */
+	public static RecipeSerializer<MutationRecipe> serializer(Identifier speciesTypeId) {
+		return new RecipeSerializer<>(
+			MapCodec.recursive("mutation " + speciesTypeId, self -> Serializer.buildCodec(speciesTypeId)),
+			StreamCodec.recursive(self -> Serializer.buildStreamCodec(speciesTypeId)));
+	}
 
-		public Serializer(Identifier speciesTypeId) {
-			this.speciesTypeId = speciesTypeId;
-		}
-
-		@Override
-		public MapCodec<MutationRecipe> codec() {
-			MapCodec<MutationRecipe> codec = this.codec;
-			if (codec == null) {
-				codec = buildCodec(this.speciesTypeId);
-				this.codec = codec;
-			}
-			return codec;
-		}
-
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, MutationRecipe> streamCodec() {
-			StreamCodec<RegistryFriendlyByteBuf, MutationRecipe> streamCodec = this.streamCodec;
-			if (streamCodec == null) {
-				streamCodec = buildStreamCodec(this.speciesTypeId);
-				this.streamCodec = streamCodec;
-			}
-			return streamCodec;
-		}
+	private static class Serializer {
 
 		private static IKaryotype karyotype(Identifier speciesTypeId) {
 			// The mutation recipe types are registered by base, but a species type only exists when the

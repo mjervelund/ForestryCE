@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -23,7 +24,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public class FermenterRecipe implements IFermenterRecipe {
 	private static final MapCodec<FermenterRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(FermenterRecipe::getId),
-		Ingredient.CODEC_NONEMPTY.fieldOf("resource").forGetter(FermenterRecipe::getInputItem),
+		Ingredient.CODEC.fieldOf("resource").forGetter(FermenterRecipe::getInputItem),
 		Codec.INT.fieldOf("fermentationValue").forGetter(FermenterRecipe::getFermentationValue),
 		Codec.FLOAT.fieldOf("modifier").forGetter(FermenterRecipe::getModifier),
 		BuiltInRegistries.FLUID.byNameCodec().fieldOf("output").forGetter(FermenterRecipe::getOutput),
@@ -110,26 +111,18 @@ public class FermenterRecipe implements IFermenterRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return FactoryRecipeTypes.FERMENTER.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return FactoryRecipeTypes.FERMENTER.type();
 	}
 
-	public static class Serializer implements RecipeSerializer<FermenterRecipe> {
-		@Override
-		public MapCodec<FermenterRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<FermenterRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, FermenterRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
-
+	private static class Serializer {
 		private static FermenterRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			Ingredient resource = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);

@@ -1,5 +1,6 @@
 package forestry.core.content.machines.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -23,13 +24,13 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 	private static final MapCodec<SqueezerRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(SqueezerRecipe::getId),
 		Codec.INT.fieldOf("time").forGetter(SqueezerRecipe::getProcessingTime),
-		Ingredient.CODEC_NONEMPTY.listOf().fieldOf("resources").forGetter(SqueezerRecipe::getInputs),
+		Ingredient.CODEC.listOf().fieldOf("resources").forGetter(SqueezerRecipe::getInputs),
 		// A fluid product nested under "output" (dispatch codec): a plain FluidProduct serializes with no "type" key;
 		// addon-provided dynamic products (tag resolution, random amount, chance) declare their own "type".
 		IFluidProduct.CODEC.fieldOf("output").forGetter(SqueezerRecipe::getFluidOutput),
 		// "remnant" is optional: many squeezer recipes drop no remnant.
-		// ItemStack.STRICT_CODEC rejects EMPTY at serialization, so map EMPTY to absent.
-		ItemStack.STRICT_CODEC.optionalFieldOf("remnant").forGetter(r -> r.remnants.isEmpty() ? java.util.Optional.<ItemStack>empty() : java.util.Optional.of(r.remnants)),
+		// ItemStack.CODEC rejects EMPTY at serialization, so map EMPTY to absent.
+		ItemStack.CODEC.optionalFieldOf("remnant").forGetter(r -> r.remnants.isEmpty() ? java.util.Optional.<ItemStack>empty() : java.util.Optional.of(r.remnants)),
 		Codec.FLOAT.fieldOf("chance").forGetter(SqueezerRecipe::getRemnantsChance)
 	).apply(instance, (id, time, resources, fluid, remnants, chance) -> new SqueezerRecipe(id, time, resources, fluid, remnants.orElse(ItemStack.EMPTY), chance)));
 	private static final StreamCodec<RegistryFriendlyByteBuf, SqueezerRecipe> STREAM_CODEC = StreamCodec.of(
@@ -95,26 +96,18 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return FactoryRecipeTypes.SQUEEZER.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return FactoryRecipeTypes.SQUEEZER.type();
 	}
 
-	public static class Serializer implements RecipeSerializer<SqueezerRecipe> {
-		@Override
-		public MapCodec<SqueezerRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<SqueezerRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, SqueezerRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
-
+	private static class Serializer {
 		private static SqueezerRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			int processingTime = ByteBufCodecs.VAR_INT.decode(buffer);

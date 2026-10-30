@@ -1,5 +1,6 @@
 package forestry.apiculture.recipes;
 
+import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -77,26 +78,18 @@ public class HygroregulatorRecipe implements IHygroregulatorRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends IForestryRecipe> getSerializer() {
 		return ApicultureRecipeTypes.HYGROREGULATOR.serializer();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends IForestryRecipe> getType() {
 		return ApicultureRecipeTypes.HYGROREGULATOR.type();
 	}
 
-	public static class Serializer implements RecipeSerializer<HygroregulatorRecipe> {
-		@Override
-		public MapCodec<HygroregulatorRecipe> codec() {
-			return CODEC;
-		}
+	public static final RecipeSerializer<HygroregulatorRecipe> SERIALIZER = new RecipeSerializer<>(CODEC, STREAM_CODEC);
 
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, HygroregulatorRecipe> streamCodec() {
-			return STREAM_CODEC;
-		}
-
+	private static class Serializer {
 		private static HygroregulatorRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			FluidStack liquid = FluidStack.STREAM_CODEC.decode(buffer);
