@@ -17,7 +17,7 @@ import forestry.core.platform.loot.OrganismFunction;
 import forestry.core.platform.util.SpeciesUtil;
 import forestry.core.platform.registration.FeatureBlock;
 import forestry.core.platform.registration.FeatureBlockGroup;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;

@@ -3,10 +3,11 @@ package forestry.core.platform.advancements;
 import com.mojang.authlib.GameProfile;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -50,10 +51,10 @@ public class ApicultureResearchTrigger extends SimpleCriterionTrigger<Apiculture
 
 	// Deviation from 1.20.1: a trigger instance is a record with a codec, not a class with a
 	// serializeToJson method
-	public record TriggerInstance(Optional<ContextAwarePredicate> player,
+	public record TriggerInstance(Optional<Holder<LootItemCondition>> player,
 								  double percentage) implements SimpleCriterionTrigger.SimpleInstance {
 		public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-				EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+				LootItemCondition.CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
 				Codec.DOUBLE.fieldOf("percent").forGetter(TriggerInstance::percentage)
 			)
 			.apply(instance, TriggerInstance::new));
