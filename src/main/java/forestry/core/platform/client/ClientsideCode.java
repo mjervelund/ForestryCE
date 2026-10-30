@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.material.Fluid;
@@ -46,7 +46,7 @@ public class ClientsideCode {
 		return Minecraft.getInstance().level.registryAccess();
 	}
 
-	public static Optional<Resource> getResource(ResourceLocation path) {
+	public static Optional<Resource> getResource(Identifier path) {
 		return Minecraft.getInstance().getResourceManager().getResource(path);
 	}
 }

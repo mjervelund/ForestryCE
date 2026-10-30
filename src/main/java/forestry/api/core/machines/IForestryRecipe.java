@@ -2,7 +2,7 @@ package forestry.api.core.machines;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -62,7 +62,7 @@ public interface IForestryRecipe extends Recipe<RecipeInput> {
 	}
 	// </editor-fold>
 
-	ResourceLocation getId();
+	Identifier getId();
 
 	@Override
 	RecipeSerializer<?> getSerializer();

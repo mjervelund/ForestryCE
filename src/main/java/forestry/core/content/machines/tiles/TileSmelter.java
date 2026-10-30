@@ -22,7 +22,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
@@ -101,7 +101,7 @@ public class TileSmelter extends TilePowered implements WorldlyContainer, ISocke
 	}
 
 	@Override
-	public ResourceLocation getSocketType() {
+	public Identifier getSocketType() {
 		return ForestryCircuitSocketTypes.MACHINE;
 	}
 

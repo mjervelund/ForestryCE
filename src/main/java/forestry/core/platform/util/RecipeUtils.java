@@ -11,7 +11,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
@@ -52,7 +52,7 @@ public class RecipeUtils {
 	}
 
 	@Nullable
-	public static <I extends RecipeInput, T extends Recipe<I>> RecipeHolder<T> getRecipe(@Nullable ResourceLocation name) {
+	public static <I extends RecipeInput, T extends Recipe<I>> RecipeHolder<T> getRecipe(@Nullable Identifier name) {
 		if (name == null) {
 			return null;
 		}
@@ -231,19 +231,19 @@ public class RecipeUtils {
 		return manager.byType(type.type()).stream().map(RecipeHolder::value);
 	}
 
-	public static <R extends Recipe<C>, C extends RecipeInput> Set<ResourceLocation> getTargetFluidsFromIngredients(RecipeManager manager, RecipeType<R> type, Function<R, FluidIngredient> targetFluid) {
+	public static <R extends Recipe<C>, C extends RecipeInput> Set<Identifier> getTargetFluidsFromIngredients(RecipeManager manager, RecipeType<R> type, Function<R, FluidIngredient> targetFluid) {
 		return getTargetFluidStreams(manager, type, recipe -> Arrays.stream(targetFluid.apply(recipe).getStacks()).map(FluidStack::getFluid));
 	}
 
-	public static <R extends Recipe<I>, I extends RecipeInput> Set<ResourceLocation> getTargetFluidsFromStacks(RecipeManager manager, RecipeType<R> type, Function<R, FluidStack> targetFluid) {
+	public static <R extends Recipe<I>, I extends RecipeInput> Set<Identifier> getTargetFluidsFromStacks(RecipeManager manager, RecipeType<R> type, Function<R, FluidStack> targetFluid) {
 		return getTargetFluidStreams(manager, type, recipe -> Stream.of(targetFluid.apply(recipe).getFluid()));
 	}
 
-	public static <R extends Recipe<I>, I extends RecipeInput> Set<ResourceLocation> getTargetFluids(RecipeManager manager, RecipeType<R> type, Function<R, Fluid> targetFluid) {
+	public static <R extends Recipe<I>, I extends RecipeInput> Set<Identifier> getTargetFluids(RecipeManager manager, RecipeType<R> type, Function<R, Fluid> targetFluid) {
 		return getTargetFluidStreams(manager, type, recipe -> Stream.of(targetFluid.apply(recipe)));
 	}
 
-	private static <R extends Recipe<I>, I extends RecipeInput> Set<ResourceLocation> getTargetFluidStreams(RecipeManager manager, RecipeType<R> type, Function<R, Stream<Fluid>> targetFluid) {
+	private static <R extends Recipe<I>, I extends RecipeInput> Set<Identifier> getTargetFluidStreams(RecipeManager manager, RecipeType<R> type, Function<R, Stream<Fluid>> targetFluid) {
 		return manager.byType(type).stream()
 			.flatMap(holder -> targetFluid.apply(holder.value()).map(ModUtil::getRegistryName))
 			.collect(Collectors.toSet());

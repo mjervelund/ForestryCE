@@ -8,7 +8,7 @@ import forestry.core.content.machines.features.FactoryRecipeTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -21,7 +21,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public class FabricatorRecipe implements IFabricatorRecipe {
 
 	private static final MapCodec<FabricatorRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-		ResourceLocation.CODEC.fieldOf("id").forGetter(FabricatorRecipe::getId),
+		Identifier.CODEC.fieldOf("id").forGetter(FabricatorRecipe::getId),
 		// "plan" is optional: many fabricator recipes (e.g. electron tubes) require no plan.
 		// Ingredient.CODEC_NONEMPTY rejects empty ingredients at serialization, so we map
 		// Ingredient.EMPTY to absent and back.
@@ -34,12 +34,12 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 		Serializer::fromNetwork
 	);
 
-	private final ResourceLocation id;
+	private final Identifier id;
 	private final Ingredient plan;
 	private final FluidStack resultFluid;
 	private final ShapedRecipe recipe;
 
-	public FabricatorRecipe(ResourceLocation id, Ingredient plan, FluidStack resultFluid, ShapedRecipe recipe) {
+	public FabricatorRecipe(Identifier id, Ingredient plan, FluidStack resultFluid, ShapedRecipe recipe) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(plan);
 		Preconditions.checkNotNull(resultFluid);
@@ -51,7 +51,7 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return this.id;
 	}
 
@@ -102,7 +102,7 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 		}
 
 		private static FabricatorRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-			ResourceLocation id = ResourceLocation.STREAM_CODEC.decode(buffer);
+			Identifier id = Identifier.STREAM_CODEC.decode(buffer);
 			Ingredient plan = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
 			FluidStack molten = FluidStack.STREAM_CODEC.decode(buffer);
 			ShapedRecipe shapedRecipe = RecipeSerializer.SHAPED_RECIPE.streamCodec().decode(buffer);
@@ -111,7 +111,7 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 		}
 
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, FabricatorRecipe recipe) {
-			ResourceLocation.STREAM_CODEC.encode(buffer, recipe.id);
+			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.plan);
 			FluidStack.STREAM_CODEC.encode(buffer, recipe.resultFluid);
 			RecipeSerializer.SHAPED_RECIPE.streamCodec().encode(buffer, recipe.recipe);

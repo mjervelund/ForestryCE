@@ -27,7 +27,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -292,7 +292,7 @@ public class TileSqueezer extends TilePowered implements ISocketable, WorldlyCon
 	}
 
 	@Override
-	public ResourceLocation getSocketType() {
+	public Identifier getSocketType() {
 		return ForestryCircuitSocketTypes.MACHINE;
 	}
 

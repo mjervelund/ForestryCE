@@ -10,7 +10,7 @@ import forestry.api.plugin.ITreeSpeciesBuilder;
 import forestry.arboriculture.trees.TreeSpecies;
 import forestry.arboriculture.worldgen.DefaultTreeGenerator;
 import forestry.apiimpl.plugin.SpeciesBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,7 +33,7 @@ public class TreeSpeciesBuilder extends SpeciesBuilder<ITreeSpeciesType, ITreeSp
 	private final HashSet<Item> vanillaItems = new HashSet<>();
 	private ItemStack decorativeLeaves = ItemStack.EMPTY;
 
-	public TreeSpeciesBuilder(ResourceLocation id, String genus, String species) {
+	public TreeSpeciesBuilder(Identifier id, String genus, String species) {
 		super(id, genus, species);
 	}
 

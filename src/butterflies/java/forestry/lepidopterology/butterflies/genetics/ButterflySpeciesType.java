@@ -37,7 +37,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -53,38 +53,38 @@ import java.util.function.Consumer;
 public class ButterflySpeciesType extends SpeciesType<IButterflySpecies, IButterfly> implements IButterflySpeciesType {
 	// Reference-value registries backing the cocoon and butterfly_effect chromosomes.
 	@Nullable
-	private ImmutableMap<ResourceLocation, IButterflyCocoon> cocoons;
+	private ImmutableMap<Identifier, IButterflyCocoon> cocoons;
 	@Nullable
-	private ImmutableMap<ResourceLocation, IButterflyEffect> butterflyEffects;
+	private ImmutableMap<Identifier, IButterflyEffect> butterflyEffects;
 
 	public ButterflySpeciesType(IKaryotype karyotype, ISpeciesTypeBuilder builder) {
 		super(ForestrySpeciesTypes.BUTTERFLY, karyotype, builder);
 	}
 
 	@Override
-	public IButterflyCocoon getCocoon(ResourceLocation id) {
+	public IButterflyCocoon getCocoon(Identifier id) {
 		return getMapValue(this.cocoons, id, "cocoon");
 	}
 
 	@Nullable
 	@Override
-	public IButterflyCocoon getCocoonSafe(ResourceLocation id) {
+	public IButterflyCocoon getCocoonSafe(Identifier id) {
 		return getMapValueSafe(this.cocoons, id);
 	}
 
 	@Override
-	public IButterflyEffect getButterflyEffect(ResourceLocation id) {
+	public IButterflyEffect getButterflyEffect(Identifier id) {
 		return getMapValue(this.butterflyEffects, id, "butterfly effect");
 	}
 
 	@Nullable
 	@Override
-	public IButterflyEffect getButterflyEffectSafe(ResourceLocation id) {
+	public IButterflyEffect getButterflyEffectSafe(Identifier id) {
 		return getMapValueSafe(this.butterflyEffects, id);
 	}
 
 	@Override
-	public ImmutableMap<ResourceLocation, IButterflySpecies> handleSpeciesRegistration(List<IForestryPlugin> plugins) {
+	public ImmutableMap<Identifier, IButterflySpecies> handleSpeciesRegistration(List<IForestryPlugin> plugins) {
 		LepidopterologyRegistration registration = new LepidopterologyRegistration(this);
 
 		for (IForestryPlugin plugin : plugins) {
@@ -102,7 +102,7 @@ public class ButterflySpeciesType extends SpeciesType<IButterflySpecies, IButter
 	}
 
 	@Override
-	public void onSpeciesRegistered(ImmutableMap<ResourceLocation, IButterflySpecies> allSpecies) {
+	public void onSpeciesRegistered(ImmutableMap<Identifier, IButterflySpecies> allSpecies) {
 		super.onSpeciesRegistered(allSpecies);
 
 		if (ModuleLepidopterology.spawnButterflysFromLeaves) {

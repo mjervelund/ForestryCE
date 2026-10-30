@@ -18,7 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,7 +47,7 @@ public class DecorativeLeavesModel<B extends Block> extends ModelBlockCached<B, 
 
 	@Override
 	protected void bakeBlock(B block, ModelData extraData, DefaultLeavesModel.Key key, ModelBaker baker, boolean inventory) {
-		ResourceLocation speciesId = key.speciesId;
+		Identifier speciesId = key.speciesId;
 
 		// Resolve fail-soft: a datapack may have removed this species while its leaf block is still placed, so use
 		// getSpeciesSafe (not the throwing getTreeSpecies) and fall the species itself back to default - it's reused
@@ -63,21 +63,21 @@ public class DecorativeLeavesModel<B extends Block> extends ModelBlockCached<B, 
 			sprite = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(SpeciesUtil.TREE_TYPE.get().getDefaultSpecies());
 		}
 
-		ResourceLocation textureLocation = sprite.get(false, key.fancy);
+		Identifier textureLocation = sprite.get(false, key.fancy);
 		TextureAtlasSprite textureSprite = ResourceUtil.getBlockSprite(textureLocation);
 		// Render the plain leaf block.
 		baker.addBlockModel(textureSprite, AbstractLeavesBlock.FOLIAGE_COLOR_INDEX);
 
 		// Render overlay for fruit leaves.
 		IFruit fruit = species.getDefaultGenome().resolveActive(TreeChromosomes.FRUIT);
-		ResourceLocation fruitSpriteLocation = fruit.getDecorativeSprite();
+		Identifier fruitSpriteLocation = fruit.getDecorativeSprite();
 		if (fruitSpriteLocation != null) {
 			TextureAtlasSprite fruitSprite = ResourceUtil.getBlockSprite(fruitSpriteLocation);
 			baker.addBlockModel(fruitSprite, AbstractLeavesBlock.FRUIT_COLOR_INDEX);
 		}
 
 		// Set the particle sprite
-		ResourceLocation particleLocation = sprite.getParticle();
+		Identifier particleLocation = sprite.getParticle();
 		TextureAtlasSprite particleSprite = ResourceUtil.getBlockSprite(particleLocation);
 		baker.setParticleSprite(particleSprite);
 	}

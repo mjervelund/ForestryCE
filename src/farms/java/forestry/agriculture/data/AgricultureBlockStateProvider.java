@@ -1,7 +1,7 @@
 package forestry.agriculture.data;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
@@ -61,7 +61,7 @@ public class AgricultureBlockStateProvider extends BlockStateProvider {
 	private void singleFarm(MultifarmBlock block) {
 		MultifarmMaterialType material = block.getFarmMaterial();
 		Block base = material.getBase();
-		ResourceLocation texture = modBlock(this, "farm/" + block.getType().getSerializedName());
+		Identifier texture = modBlock(this, "farm/" + block.getType().getSerializedName());
 
 		ForestryBlockStateProvider.singleModelBlock(this, block, farmPillar(path(block), base, texture, texture));
 	}
@@ -78,7 +78,7 @@ public class AgricultureBlockStateProvider extends BlockStateProvider {
 			.modelForState().modelFile(farmPillar(path(block) + "_band", base, modBlock(this, "farm/top"), modBlock(this, "farm/band"))).addModel();
 	}
 
-	private ModelFile farmPillar(String path, Block base, ResourceLocation top, ResourceLocation side) {
+	private ModelFile farmPillar(String path, Block base, Identifier top, Identifier side) {
 		ModelFile baseModel = file(blockTexture(base));
 
 		return models().getBuilder(path).customLoader(CompositeModelBuilder::begin)

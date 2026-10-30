@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 
 public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity> {
@@ -29,7 +29,7 @@ public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity> {
 		BASE, PISTON, EXTENSION, TRUNK_HIGHEST, TRUNK_HIGHER, TRUNK_HIGH, TRUNK_MEDIUM, TRUNK_LOW
 	}
 
-	private final ResourceLocation[] textures;
+	private final Identifier[] textures;
 	private final ModelPart boiler;
 	private final ModelPart trunk;
 	private final ModelPart piston;
@@ -52,7 +52,7 @@ public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity> {
 		this.piston = root.getChild("piston");
 		this.extension = root.getChild("extension");
 
-		this.textures = new ResourceLocation[]{
+		this.textures = new Identifier[]{
 			ForestryConstants.forestry(baseTexture + "base.png"),
 			ForestryConstants.forestry(baseTexture + "piston.png"),
 			ForestryConstants.forestry(baseTexture + "extension.png"),
@@ -105,7 +105,7 @@ public class RenderEngine implements BlockEntityRenderer<EngineBlockEntity> {
 
 		// render trunk with color based on heat
 		TemperatureState state = engine.hasLevel() ? engine.getTemperatureState() : TemperatureState.COOL;
-		ResourceLocation texture = switch (state) {
+		Identifier texture = switch (state) {
 			case OVERHEATING -> this.textures[Textures.TRUNK_HIGHEST.ordinal()];
 			case RUNNING_HOT -> this.textures[Textures.TRUNK_HIGHER.ordinal()];
 			case OPERATING_TEMPERATURE -> this.textures[Textures.TRUNK_HIGH.ordinal()];

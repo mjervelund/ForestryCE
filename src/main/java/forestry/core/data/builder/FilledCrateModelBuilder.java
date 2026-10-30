@@ -1,7 +1,7 @@
 package forestry.core.data.builder;
 
 import com.google.gson.JsonObject;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.model.generators.CustomLoaderBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -9,12 +9,12 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import javax.annotation.Nullable;
 
 public class FilledCrateModelBuilder<T extends ModelBuilder<T>> extends CustomLoaderBuilder<T> {
-	private static final ResourceLocation ID = ResourceLocation.parse("forestry:filled_crate");
+	private static final Identifier ID = Identifier.parse("forestry:filled_crate");
 
 	@Nullable
-	private ResourceLocation layer1;
+	private Identifier layer1;
 	@Nullable
-	private ResourceLocation layer2;
+	private Identifier layer2;
 
 	public FilledCrateModelBuilder(T parent, ExistingFileHelper helper) {
 		super(ID, parent, helper, false);
@@ -24,12 +24,12 @@ public class FilledCrateModelBuilder<T extends ModelBuilder<T>> extends CustomLo
 		return new FilledCrateModelBuilder<>(parent, helper);
 	}
 
-	public FilledCrateModelBuilder<T> layer1(ResourceLocation texture) {
+	public FilledCrateModelBuilder<T> layer1(Identifier texture) {
 		this.layer1 = texture;
 		return this;
 	}
 
-	public FilledCrateModelBuilder<T> layer2(ResourceLocation texture) {
+	public FilledCrateModelBuilder<T> layer2(Identifier texture) {
 		this.layer2 = texture;
 		return this;
 	}

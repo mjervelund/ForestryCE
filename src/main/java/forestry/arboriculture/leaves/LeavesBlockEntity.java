@@ -34,7 +34,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -61,12 +61,12 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 
 	public static final ModelProperty<ITreeSpecies> PROPERTY_SPECIES = new ModelProperty<>();
 	public static final ModelProperty<Boolean> PROPERTY_POLLINATED = new ModelProperty<>();
-	public static final ModelProperty<ResourceLocation> PROPERTY_FRUIT_TEXTURE = new ModelProperty<>();
+	public static final ModelProperty<Identifier> PROPERTY_FRUIT_TEXTURE = new ModelProperty<>();
 
 	private int colourFruits;
 
 	@Nullable
-	private ResourceLocation fruitSprite;
+	private Identifier fruitSprite;
 	@Nullable
 	private ITreeSpecies species;
 	@Nullable
@@ -325,8 +325,8 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 
 		byte leafState = 0;
 		IGenome genome = getTree().getGenome();
-		AllelePair<ResourceLocation> effects = genome.getAllelePair(TreeChromosomes.EFFECT);
-		ResourceLocation noneEffect = ForestryConstants.forestry("tree_effect_none");
+		AllelePair<Identifier> effects = genome.getAllelePair(TreeChromosomes.EFFECT);
+		Identifier noneEffect = ForestryConstants.forestry("tree_effect_none");
 		boolean hasActiveEffect = !effects.active().value().equals(noneEffect);
 		boolean hasInactiveEffect = !effects.inactive().value().equals(noneEffect);
 		boolean hasFruit = hasFruit();
@@ -349,7 +349,7 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 		data.writeByte(leafState);
 
 		if (hasFruit) {
-			ResourceLocation fruitId = genome.getActiveValue(TreeChromosomes.FRUIT);
+			Identifier fruitId = genome.getActiveValue(TreeChromosomes.FRUIT);
 			int colourFruits = getFruitColour();
 
 			data.writeResourceLocation(fruitId);
@@ -367,7 +367,7 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 
 	@Override
 	public void readData(RegistryFriendlyByteBuf data) {
-		ResourceLocation speciesId = null;
+		Identifier speciesId = null;
 		if (data.readBoolean()) {
 			speciesId = data.readResourceLocation(); // this is called instead of super.readData, be careful!
 		}
@@ -377,15 +377,15 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 		this.isFruitLeaf = (leafState & FLAG_HAS_FRUIT) != 0;
 		boolean hasActiveEffect = (leafState & FLAG_HAS_ACTIVE_EFFECT) != 0;
 		boolean hasInactiveEffect = (leafState & FLAG_HAS_INACTIVE_EFFECT) != 0;
-		ResourceLocation fruitId = null;
+		Identifier fruitId = null;
 
 		if (this.isFruitLeaf) {
 			fruitId = data.readResourceLocation();
             this.colourFruits = data.readInt();
 		}
 
-		ResourceLocation activeEffectAlleleId = hasActiveEffect ? data.readResourceLocation() : null;
-		ResourceLocation inactiveEffectAlleleId = hasInactiveEffect ? data.readResourceLocation() : null;
+		Identifier activeEffectAlleleId = hasActiveEffect ? data.readResourceLocation() : null;
+		Identifier inactiveEffectAlleleId = hasInactiveEffect ? data.readResourceLocation() : null;
 
 		ITreeSpecies treeTemplate = SpeciesUtil.TREE_TYPE.get().getSpeciesSafe(speciesId);
 		if (treeTemplate != null) {
@@ -397,8 +397,8 @@ public class LeavesBlockEntity extends TileTreeContainer implements IFruitBearer
 			}
 
 			// Effect (active and inactive are separate since they can stack)
-			Allele<ResourceLocation> activeEffectAllele = activeEffectAlleleId != null ? Allele.reference(activeEffectAlleleId) : null;
-			Allele<ResourceLocation> inactiveEffectAllele = inactiveEffectAlleleId != null ? Allele.reference(inactiveEffectAlleleId) : null;
+			Allele<Identifier> activeEffectAllele = activeEffectAlleleId != null ? Allele.reference(activeEffectAlleleId) : null;
+			Allele<Identifier> inactiveEffectAllele = inactiveEffectAlleleId != null ? Allele.reference(inactiveEffectAlleleId) : null;
 			if (activeEffectAllele != null || inactiveEffectAllele != null) {
 				alleles.put(TreeChromosomes.EFFECT, new AllelePair<>(
 					activeEffectAllele != null ? activeEffectAllele : Allele.reference(ForestryConstants.forestry("tree_effect_none")),

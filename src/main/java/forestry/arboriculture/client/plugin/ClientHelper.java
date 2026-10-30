@@ -9,7 +9,7 @@ import forestry.arboriculture.models.LeafSprite;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.BlockAndTintGetter;
 
 import javax.annotation.Nullable;
@@ -42,7 +42,7 @@ public class ClientHelper implements IClientHelper {
 	}
 
 	@Override
-	public ILeafSprite createLeafSprite(ResourceLocation id) {
+	public ILeafSprite createLeafSprite(Identifier id) {
 		return LeafSprite.create(id);
 	}
 }

@@ -15,7 +15,7 @@ import forestry.core.platform.util.SpeciesUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -158,11 +158,11 @@ public enum HiveDefinition implements IHiveDefinition {
 	}
 
 	private final BlockState blockState;
-	private final ResourceLocation speciesId;
+	private final Identifier speciesId;
 	private final IHivePlacement hiveGen;
 	private final float defaultGenChance;
 
-	HiveDefinition(BlockState hiveState, float defaultGenChance, ResourceLocation beeTemplate, IHivePlacement hiveGen) {
+	HiveDefinition(BlockState hiveState, float defaultGenChance, Identifier beeTemplate, IHivePlacement hiveGen) {
 		this.blockState = hiveState;
 		this.defaultGenChance = defaultGenChance;
 		this.speciesId = beeTemplate;

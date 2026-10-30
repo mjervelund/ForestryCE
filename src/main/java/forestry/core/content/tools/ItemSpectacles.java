@@ -6,7 +6,7 @@ import forestry.core.platform.capabilities.SpectacleVision;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.util.ItemTooltipUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
@@ -22,8 +22,8 @@ public class ItemSpectacles extends ArmorItem {
 	}
 
 	@Override
-	public ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-		return ResourceLocation.parse(TEXTURE_NATURALIST_ARMOR_PRIMARY);
+	public Identifier getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+		return Identifier.parse(TEXTURE_NATURALIST_ARMOR_PRIMARY);
 	}
 
 	@Override

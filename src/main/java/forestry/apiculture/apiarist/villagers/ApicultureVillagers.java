@@ -22,7 +22,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -103,7 +103,7 @@ public class ApicultureVillagers {
 
 		@Override
 		public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-			ResourceLocation[] forestryMundane = new ResourceLocation[]{ForestryBeeSpecies.FOREST, ForestryBeeSpecies.MEADOWS, ForestryBeeSpecies.MODEST, ForestryBeeSpecies.WINTRY, ForestryBeeSpecies.TROPICAL, ForestryBeeSpecies.MARSHY};
+			Identifier[] forestryMundane = new Identifier[]{ForestryBeeSpecies.FOREST, ForestryBeeSpecies.MEADOWS, ForestryBeeSpecies.MODEST, ForestryBeeSpecies.WINTRY, ForestryBeeSpecies.TROPICAL, ForestryBeeSpecies.MARSHY};
 			ItemStack randomHiveDrone = SpeciesUtil.getBeeSpecies(forestryMundane[rand.nextInt(forestryMundane.length)]).createStack(BeeLifeStage.DRONE);
 			randomHiveDrone.setCount(this.sellingPriceInfo.getPrice(rand));
 

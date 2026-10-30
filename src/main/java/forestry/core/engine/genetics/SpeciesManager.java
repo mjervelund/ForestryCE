@@ -11,7 +11,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 
 import net.minecraft.resources.RegistryOps;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -22,35 +22,35 @@ public abstract class SpeciesManager<D extends ISpeciesDefinition> extends Simpl
 	private final String folder;
 	// a supplier because the codec needs the karyotype, which does not exist at class init
 	private final Supplier<Codec<D>> codec;
-	private final Consumer<Map<ResourceLocation, D>> rebuild;
+	private final Consumer<Map<Identifier, D>> rebuild;
 
-	private Map<ResourceLocation, D> definitions = Map.of();
+	private Map<Identifier, D> definitions = Map.of();
 
-	protected SpeciesManager(String folder, Supplier<Codec<D>> codec, Consumer<Map<ResourceLocation, D>> rebuild) {
+	protected SpeciesManager(String folder, Supplier<Codec<D>> codec, Consumer<Map<Identifier, D>> rebuild) {
 		super(new Gson(), folder);
 		this.folder = folder;
 		this.codec = codec;
 		this.rebuild = rebuild;
 	}
 
-	public Map<ResourceLocation, D> getDefinitions() {
+	public Map<Identifier, D> getDefinitions() {
 		return this.definitions;
 	}
 
 	// used by the client to store synced definitions
-	public void setDefinitions(Map<ResourceLocation, D> definitions) {
+	public void setDefinitions(Map<Identifier, D> definitions) {
 		this.definitions = definitions;
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
+	protected void apply(Map<Identifier, JsonElement> object, ResourceManager resourceManager, ProfilerFiller profiler) {
 		// not ServerLifecycleHooks, the server is still null during the first load
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, getRegistryLookup());
 		Codec<D> codec = this.codec.get();
 
-		Map<ResourceLocation, D> parsed = new LinkedHashMap<>();
-		for (Map.Entry<ResourceLocation, JsonElement> entry : object.entrySet()) {
-			ResourceLocation id = entry.getKey();
+		Map<Identifier, D> parsed = new LinkedHashMap<>();
+		for (Map.Entry<Identifier, JsonElement> entry : object.entrySet()) {
+			Identifier id = entry.getKey();
 			codec.parse(ops, entry.getValue())
 				.resultOrPartial(error -> Forestry.LOGGER.error("Skipping {} {}: {}", this.folder, id, error))
 				.ifPresent(def -> parsed.put(id, def));

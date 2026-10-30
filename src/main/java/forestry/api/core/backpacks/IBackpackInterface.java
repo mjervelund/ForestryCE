@@ -2,7 +2,7 @@
 package forestry.api.core.backpacks;
 
 import forestry.api.core.genetics.ISpeciesType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +19,7 @@ import java.util.function.Predicate;
  * <p>
  * After you've created your backpack definition, create the item with
  * {@link #createBackpack(IBackpackDefinition, EnumBackpackType)}
- * or {@link #createNaturalistBackpack(IBackpackDefinition, ResourceLocation, CreativeModeTab)}
+ * or {@link #createNaturalistBackpack(IBackpackDefinition, Identifier, CreativeModeTab)}
  * and then register the returned item like any other item.
  */
 public interface IBackpackInterface {
@@ -41,7 +41,7 @@ public interface IBackpackInterface {
 	 * @param tab
 	 * @return Created backpack item.
 	 */
-	Item createNaturalistBackpack(IBackpackDefinition definition, ResourceLocation speciesTypeId, CreativeModeTab tab);
+	Item createNaturalistBackpack(IBackpackDefinition definition, Identifier speciesTypeId, CreativeModeTab tab);
 
 	/**
 	 * Makes a new naturalist backpack filter. Only accepts items from a specific {@link ISpeciesType}.
@@ -49,7 +49,7 @@ public interface IBackpackInterface {
 	 *
 	 * @param speciesTypeId The species root's unique ID.
 	 * @return a new backpack filter for the specified species root
-	 * @see #createNaturalistBackpack(IBackpackDefinition, ResourceLocation, CreativeModeTab)
+	 * @see #createNaturalistBackpack(IBackpackDefinition, Identifier, CreativeModeTab)
 	 */
-	Predicate<ItemStack> createNaturalistBackpackFilter(ResourceLocation speciesTypeId);
+	Predicate<ItemStack> createNaturalistBackpackFilter(Identifier speciesTypeId);
 }

@@ -13,7 +13,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
@@ -28,7 +28,7 @@ import java.util.List;
 public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable {
 	private WorktableCraftingContainer craftMatrix = new WorktableCraftingContainer();
 	private List<RecipeHolder<CraftingRecipe>> recipes = new ArrayList<>();
-	private final List<ResourceLocation> recipeIds = new ArrayList<>();
+	private final List<Identifier> recipeIds = new ArrayList<>();
 	private int selectedRecipe;
 	private long lastUsed;
 	private boolean locked;
@@ -120,7 +120,7 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 
 	public List<RecipeHolder<CraftingRecipe>> getRecipes() {
 		if (this.recipes.isEmpty() && !this.recipeIds.isEmpty()) {
-			for (ResourceLocation key : this.recipeIds) {
+			for (Identifier key : this.recipeIds) {
 				RecipeHolder<CraftingRecipe> recipe = RecipeUtils.getRecipe(key);
 				if (recipe != null) {
 					this.recipes.add(recipe);
@@ -178,7 +178,7 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 		ListTag recipesNbt = nbt.getList("Recipes", Tag.TAG_STRING);
 		for (int i = 0; i < recipesNbt.size(); i++) {
 			String recipeKey = recipesNbt.getString(i);
-			ResourceLocation recipeId = ResourceLocation.tryParse(recipeKey);
+			Identifier recipeId = Identifier.tryParse(recipeKey);
 
 			if (recipeId != null) {
 				this.recipeIds.add(recipeId);
@@ -198,7 +198,7 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 		compoundNBT.putInt("SelectedRecipe", this.selectedRecipe);
 
 		ListTag recipesNbt = new ListTag();
-		for (ResourceLocation recipeName : this.recipeIds) {
+		for (Identifier recipeName : this.recipeIds) {
 			recipesNbt.add(StringTag.valueOf(recipeName.toString()));
 		}
 		compoundNBT.put("Recipes", recipesNbt);
@@ -213,7 +213,7 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 		data.writeVarInt(this.selectedRecipe);
 
 		data.writeVarInt(this.recipeIds.size());
-		for (ResourceLocation recipeName : this.recipeIds) {
+		for (Identifier recipeName : this.recipeIds) {
 			data.writeResourceLocation(recipeName);
 		}
 	}
@@ -228,7 +228,7 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 		this.recipeIds.clear();
 		int recipeCount = data.readVarInt();
 		for (int i = 0; i < recipeCount; i++) {
-			ResourceLocation recipeId = data.readResourceLocation();
+			Identifier recipeId = data.readResourceLocation();
 			this.recipeIds.add(recipeId);
 		}
 	}

@@ -13,7 +13,7 @@ import forestry.core.content.sorting.client.SortingClientHandler;
 import forestry.core.content.sorting.network.packets.PacketFilterChangeGenome;
 import forestry.core.content.sorting.network.packets.PacketFilterChangeRule;
 import forestry.core.content.sorting.network.packets.PacketGuiFilterUpdate;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 @ForestryModule
 public class ModuleSorting extends BlankForestryModule {
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.SORTING;
 	}
 

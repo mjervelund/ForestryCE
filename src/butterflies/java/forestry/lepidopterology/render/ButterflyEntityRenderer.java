@@ -6,7 +6,7 @@ import forestry.lepidopterology.entities.EntityButterfly;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ButterflyEntityRenderer extends MobRenderer<EntityButterfly, ButterflyModel> {
 	public ButterflyEntityRenderer(EntityRendererProvider.Context context) {
@@ -27,7 +27,7 @@ public class ButterflyEntityRenderer extends MobRenderer<EntityButterfly, Butter
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(EntityButterfly entity) {
+	public Identifier getTextureLocation(EntityButterfly entity) {
 		return entity.getTexture();
 	}
 

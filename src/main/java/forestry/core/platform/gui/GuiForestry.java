@@ -23,7 +23,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
@@ -38,7 +38,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 	// Used to display "Did you know?" ledgers in GUI
 	public static final LinkedListMultimap<String, String> HINTS = readDefaultHints();
 
-	public final ResourceLocation textureFile;
+	public final Identifier textureFile;
 	protected final WidgetManager widgetManager;
 	protected final LedgerManager ledgerManager;
 	protected TextLayoutHelper textLayout;
@@ -47,7 +47,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 		this(ForestryConstants.forestry(texture), menu, inv, title);
 	}
 
-	protected GuiForestry(ResourceLocation texture, C menu, Inventory inv, Component title) {
+	protected GuiForestry(Identifier texture, C menu, Inventory inv, Component title) {
 		super(menu, inv, title);
 
 		this.widgetManager = new WidgetManager(this);
@@ -216,7 +216,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
         this.widgetManager.drawWidgets(graphics);
 	}
 
-	protected void bindTexture(ResourceLocation texturePath) {
+	protected void bindTexture(Identifier texturePath) {
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, texturePath);
 	}

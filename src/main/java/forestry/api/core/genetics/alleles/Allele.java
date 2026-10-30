@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * An allele is a single inline value of a chromosome, together with its dominance.
@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  * Alleles are plain data: they are not interned, have no ID, and are not stored in any registry. A genome stores
  * {@link AllelePair} of these directly, serialized inline via each chromosome's value codec. For "reference"
  * chromosomes (species, flower type, bee effect, activity, fruit, tree effect, cocoon, butterfly effect) the value
- * is the referenced object's {@link net.minecraft.resources.ResourceLocation}; the behavior object is resolved on
+ * is the referenced object's {@link net.minecraft.resources.Identifier}; the behavior object is resolved on
  * demand through {@link IChromosome#resolver()}.
  *
  * @param value    The value held by this allele.
@@ -40,7 +40,7 @@ public record Allele<V>(V value, boolean dominant) {
 	 * the genome is materialized (e.g. in {@link IGenome#copyWith}). Use this for genome overrides built before
 	 * registries are populated, such as hive drops or village bees.
 	 */
-	public static Allele<ResourceLocation> reference(ResourceLocation id) {
+	public static Allele<Identifier> reference(Identifier id) {
 		return new Allele<>(id, false);
 	}
 

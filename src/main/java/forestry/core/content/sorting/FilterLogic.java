@@ -18,7 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -76,10 +76,10 @@ public class FilterLogic implements IFilterLogic {
 			for (int j = 0; j < 3; j++) {
 				AlleleFilter filter = new AlleleFilter();
 				if (data.contains("GenomeFilterS" + i + "-" + j + "-" + 0)) {
-					filter.activeSpecies = SpeciesUtil.getAnySpecies(ResourceLocation.parse(data.getString("GenomeFilterS" + i + "-" + j + "-" + 0)));
+					filter.activeSpecies = SpeciesUtil.getAnySpecies(Identifier.parse(data.getString("GenomeFilterS" + i + "-" + j + "-" + 0)));
 				}
 				if (data.contains("GenomeFilterS" + i + "-" + j + "-" + 1)) {
-					filter.inactiveSpecies = SpeciesUtil.getAnySpecies(ResourceLocation.parse(data.getString("GenomeFilterS" + i + "-" + j + "-" + 1)));
+					filter.inactiveSpecies = SpeciesUtil.getAnySpecies(Identifier.parse(data.getString("GenomeFilterS" + i + "-" + j + "-" + 1)));
 				}
 				this.genomeFilter[i][j] = filter;
 			}
@@ -170,7 +170,7 @@ public class FilterLogic implements IFilterLogic {
 		if (rule == DefaultFilterRuleType.ITEM) {
 			return true;
 		}
-		ResourceLocation requiredRoot = rule.getSpeciesTypeId();
+		Identifier requiredRoot = rule.getSpeciesTypeId();
 		if (requiredRoot != null && (!filterData.type().id().equals(requiredRoot))) {
 			return false;
 		}

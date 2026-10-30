@@ -27,7 +27,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -99,7 +99,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 	private float size = DEFAULT_BUTTERFLY_SIZE;
 	private EnumButterflyState state = DEFAULT_STATE;
 	@OnlyIn(Dist.CLIENT)
-	private ResourceLocation textureResource;
+	private Identifier textureResource;
 
 	public EntityButterfly(EntityType<EntityButterfly> type, Level world) {
 		super(type, world);
@@ -179,7 +179,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 
 		Tag pollenNbt = nbt.get(NBT_POLLEN);
 		if (pollenNbt != null && nbt.contains(NBT_POLLEN_TYPE)) {
-			IPollenType<?> type = IForestryApi.INSTANCE.getPollenManager().getPollenType(ResourceLocation.parse(nbt.getString(NBT_POLLEN_TYPE)));
+			IPollenType<?> type = IForestryApi.INSTANCE.getPollenManager().getPollenType(Identifier.parse(nbt.getString(NBT_POLLEN_TYPE)));
 
 			if (type != null) {
 				this.pollen = type.readNbt(pollenNbt);
@@ -427,7 +427,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public ResourceLocation getTexture() {
+	public Identifier getTexture() {
 		return this.textureResource;
 	}
 
@@ -510,7 +510,7 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 		if (level().isClientSide) {
 			if (this.species == null) {
 				String speciesUid = this.entityData.get(DATAWATCHER_ID_SPECIES);
-				IButterflySpecies species = SpeciesUtil.BUTTERFLY_TYPE.get().getSpeciesSafe(ResourceLocation.parse(speciesUid));
+				IButterflySpecies species = SpeciesUtil.BUTTERFLY_TYPE.get().getSpeciesSafe(Identifier.parse(speciesUid));
 
 				if (species != null) {
 					this.species = species;

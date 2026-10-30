@@ -17,7 +17,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
@@ -36,7 +36,7 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 	private final List<ItemStackWidget> tradeInfoWidgets = new ArrayList<>();
 
 	public CatalogScreen(CatalogMenu container, Inventory inv, Component title) {
-		super(ResourceLocation.parse("textures/gui/book.png"), container, inv, title);
+		super(Identifier.parse("textures/gui/book.png"), container, inv, title);
 
 		this.imageWidth = 192;
 		this.imageHeight = 192;

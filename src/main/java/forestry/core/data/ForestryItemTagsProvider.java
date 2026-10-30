@@ -11,7 +11,7 @@ import forestry.core.features.CoreBlocks;
 import forestry.core.features.CoreItems;
 import forestry.core.content.resources.EnumCraftingMaterial;
 import forestry.core.platform.item.FruitItemType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
@@ -146,8 +146,8 @@ public class ForestryItemTagsProvider {
 
 		// legacy aliases from mods that never moved onto the common tag
 		tags.tag(Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES)
-			.addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "workbenches"))
-			.addOptionalTag(ResourceLocation.fromNamespaceAndPath("c", "workbench"))
+			.addOptionalTag(Identifier.fromNamespaceAndPath("c", "workbenches"))
+			.addOptionalTag(Identifier.fromNamespaceAndPath("c", "workbench"))
 			.add(Items.CRAFTING_TABLE);
 
 		tags.tag(ForestryTags.Items.SCOOPS).add(CoreItems.SCOOP.item());

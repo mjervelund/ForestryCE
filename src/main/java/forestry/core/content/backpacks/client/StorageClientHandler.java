@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.bus.api.IEventBus;
@@ -44,7 +44,7 @@ public class StorageClientHandler implements IClientModuleHandler {
 			IFeatureRegistry registry = ModFeatureRegistry.get(ForestryModuleIds.STORAGE);
 			for (DeferredHolder<Item, ? extends Item> entry : registry.getRegistry(Registries.ITEM).getEntries()) {
 				if (entry.get() instanceof BackpackItem) {
-					ItemProperties.register(entry.get(), ResourceLocation.withDefaultNamespace("mode"), itemPropertyFunction);
+					ItemProperties.register(entry.get(), Identifier.withDefaultNamespace("mode"), itemPropertyFunction);
 				}
 			}
 		});

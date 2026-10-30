@@ -33,7 +33,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -64,7 +64,7 @@ public abstract class AbstractMinifarmBlockEntity extends TilePowered implements
 	@Nullable
 	private Vec3i area;
 
-	protected AbstractMinifarmBlockEntity(BlockEntityType type, BlockPos pos, BlockState state, ResourceLocation farmTypeId) {
+	protected AbstractMinifarmBlockEntity(BlockEntityType type, BlockPos pos, BlockState state, Identifier farmTypeId) {
 		super(type, pos, state, 150, 1500);
 
 		this.properties = Preconditions.checkNotNull(IForestryApi.INSTANCE.getFarmingManager().getFarmType(farmTypeId));

@@ -15,7 +15,7 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -45,13 +45,13 @@ import forestry.api.apiculture.ForestryActivityTypes;
 
 // Hives where wild bees live
 public class BlockBeeHive extends Block implements EntityBlock {
-	private final ResourceLocation speciesId;
+	private final Identifier speciesId;
 
 	public BlockBeeHive(HiveBlockType type) {
 		this(type.getSpeciesId());
 	}
 
-	public BlockBeeHive(ResourceLocation speciesId) {
+	public BlockBeeHive(Identifier speciesId) {
 		super(Properties.of().sound(SoundType.WOOD).lightLevel(state -> 7).strength(2.5f));
 		this.speciesId = speciesId;
 	}
@@ -164,7 +164,7 @@ public class BlockBeeHive extends Block implements EntityBlock {
 		return drops;
 	}
 
-	public ResourceLocation getSpeciesId() {
+	public Identifier getSpeciesId() {
 		return this.speciesId;
 	}
 

@@ -8,7 +8,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import forestry.arboriculture.trees.genetics.ArboricultureReloadHandler;
@@ -29,7 +29,7 @@ import forestry.core.engine.genetics.GeneticsReloadHandler;
  * cached in a static field here) since it is keyed against the tree karyotype, which does not exist until the tree
  * species type is registered - see {@link TreeSpeciesDefinition}'s class doc.
  */
-public record TreeSpeciesSyncPacket(Map<ResourceLocation, TreeSpeciesDefinition> definitions) implements CustomPacketPayload {
+public record TreeSpeciesSyncPacket(Map<Identifier, TreeSpeciesDefinition> definitions) implements CustomPacketPayload {
 	@Override
 	public Type<? extends CustomPacketPayload> type() {
 		return ArboriculturePacketIds.TREE_SPECIES_SYNC;
@@ -58,7 +58,7 @@ public record TreeSpeciesSyncPacket(Map<ResourceLocation, TreeSpeciesDefinition>
 		GeneticsReloadHandler.rebuildMutations(Minecraft.getInstance().getConnection().getRecipeManager());
 	}
 
-	private static StreamCodec<RegistryFriendlyByteBuf, Map<ResourceLocation, TreeSpeciesDefinition>> definitionsStreamCodec() {
-		return ByteBufCodecs.map(HashMap::new, ResourceLocation.STREAM_CODEC, TreeSpeciesDefinition.streamCodec());
+	private static StreamCodec<RegistryFriendlyByteBuf, Map<Identifier, TreeSpeciesDefinition>> definitionsStreamCodec() {
+		return ByteBufCodecs.map(HashMap::new, Identifier.STREAM_CODEC, TreeSpeciesDefinition.streamCodec());
 	}
 }

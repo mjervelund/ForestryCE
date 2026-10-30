@@ -8,7 +8,7 @@ import forestry.core.platform.util.datastructures.TriFunction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -72,7 +72,7 @@ public interface IFeatureRegistry {
 
 	FeatureItem<Item> backpack(IBackpackDefinition definition, EnumBackpackType type, String identifier);
 
-	FeatureItem<Item> naturalistBackpack(IBackpackDefinition definition, ResourceLocation speciesTypeId, CreativeModeTab tab, String identifier);
+	FeatureItem<Item> naturalistBackpack(IBackpackDefinition definition, Identifier speciesTypeId, CreativeModeTab tab, String identifier);
 
 	<I extends Item, S extends IItemSubtype> FeatureItemGroup<I, S> itemGroup(Function<S, I> constructor, String identifier, S[] subTypes);
 
@@ -112,18 +112,18 @@ public interface IFeatureRegistry {
 
 	Collection<IModFeature> getFeatures(ResourceKey<? extends Registry<?>> type);
 
-	ResourceLocation getModuleId();
+	Identifier getModuleId();
 
-	static BlockBehaviour.Properties setBlockId(ResourceLocation id, BlockBehaviour.Properties properties) {
+	static BlockBehaviour.Properties setBlockId(Identifier id, BlockBehaviour.Properties properties) {
 		return setId(Registries.BLOCK, id, properties);
 	}
 
-	static Item.Properties setItemId(ResourceLocation id, Item.Properties properties) {
+	static Item.Properties setItemId(Identifier id, Item.Properties properties) {
 		return setId(Registries.ITEM, id, properties);
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T, P> P setId(ResourceKey<? extends Registry<T>> registry, ResourceLocation id, P properties) {
+	private static <T, P> P setId(ResourceKey<? extends Registry<T>> registry, Identifier id, P properties) {
 		try {
 			properties.getClass().getMethod("setId", ResourceKey.class).invoke(properties, ResourceKey.create((ResourceKey<? extends Registry<T>>) registry, id));
 		} catch (NoSuchMethodException ignored) {

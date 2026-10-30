@@ -10,7 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -29,7 +29,7 @@ import forestry.api.ForestryDataMaps;
 import forestry.api.core.machines.fuels.RainmakerSubstrate;
 
 public class TileMillRainmaker extends TileMill {
-	private static final ResourceLocation USE_RAINMAKER = ForestryConstants.forestry("use_rainmaker");
+	private static final Identifier USE_RAINMAKER = ForestryConstants.forestry("use_rainmaker");
 	private static final int MAX_PARTICLE_COUNT = 64;
 
 	private int duration;

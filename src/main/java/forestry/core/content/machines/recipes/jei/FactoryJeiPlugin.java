@@ -38,7 +38,7 @@ import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IClickableIngredient;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.renderer.Rect2i;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -54,7 +54,7 @@ import forestry.core.content.machines.recipes.jei.rainmaker.RainmakerJeiRecipe;
 @JeiPlugin
 public class FactoryJeiPlugin implements IModPlugin {
 	@Override
-	public ResourceLocation getPluginUid() {
+	public Identifier getPluginUid() {
 		return ForestryModuleIds.FACTORY;
 	}
 
@@ -140,7 +140,7 @@ public class FactoryJeiPlugin implements IModPlugin {
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistration subtypeRegistry) {
 		ISubtypeInterpreter<ItemStack> subtypeInterpreter = new ISubtypeInterpreter<>() {
-			private Optional<ResourceLocation> currentFluidId(ItemStack itemStack) {
+			private Optional<Identifier> currentFluidId(ItemStack itemStack) {
 				return FluidUtil.getFluidHandler(itemStack)
 					.map(handler -> handler.getFluidInTank(0))
 					.map(fluid -> ModUtil.getRegistryName(fluid.getFluid()));
@@ -153,7 +153,7 @@ public class FactoryJeiPlugin implements IModPlugin {
 
 			@Override
 			public String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext context) {
-				return currentFluidId(itemStack).map(ResourceLocation::toString).orElse("");
+				return currentFluidId(itemStack).map(Identifier::toString).orElse("");
 			}
 		};
 

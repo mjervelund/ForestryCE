@@ -63,7 +63,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -1782,7 +1782,7 @@ public class ForestryRecipeProvider {
 
 	private static void crate(RecipeOutput consumer, ItemCrated crated, Ingredient ingredient) {
 		ItemStack contained = crated.getContained();
-		ResourceLocation name = ModUtil.getRegistryName(contained.getItem());
+		Identifier name = ModUtil.getRegistryName(contained.getItem());
 
 		new CarpenterRecipeBuilder()
 			.setPackagingTime(Constants.CARPENTER_CRATING_CYCLES)

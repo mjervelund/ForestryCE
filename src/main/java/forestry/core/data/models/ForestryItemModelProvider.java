@@ -14,7 +14,7 @@ import forestry.core.content.backpacks.items.BackpackItem;
 import forestry.core.content.backpacks.items.ItemCrated;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
@@ -42,13 +42,13 @@ public class ForestryItemModelProvider extends ItemModelProvider {
 			} else if (ApicultureItems.POLLEN_CLUSTER.itemEqual(containedItem)) {
 				filledCrateModelLayered(id, modLoc("item/pollen.0"), modLoc("item/pollen.1"));
 			} else {
-				ResourceLocation contained = ModUtil.getRegistryName(containedItem);
-				ResourceLocation contentsTexture;
+				Identifier contained = ModUtil.getRegistryName(containedItem);
+				Identifier contentsTexture;
 
 				if (containedItem instanceof BlockItem && !(containedItem instanceof ItemNameBlockItem)) {
-					contentsTexture = ResourceLocation.fromNamespaceAndPath(contained.getNamespace(), "block/" + contained.getPath());
+					contentsTexture = Identifier.fromNamespaceAndPath(contained.getNamespace(), "block/" + contained.getPath());
 				} else {
-					contentsTexture = ResourceLocation.fromNamespaceAndPath(contained.getNamespace(), "item/" + contained.getPath());
+					contentsTexture = Identifier.fromNamespaceAndPath(contained.getNamespace(), "item/" + contained.getPath());
 				}
 
 				filledCrateModel(id, contentsTexture);
@@ -73,7 +73,7 @@ public class ForestryItemModelProvider extends ItemModelProvider {
 					.customLoader(DynamicFluidContainerModelBuilder::begin)
 					.fluid(fluid.getFluid())
 					.end()
-					.parent(getExistingFile(ResourceLocation.parse("neoforge:item/bucket")));
+					.parent(getExistingFile(Identifier.parse("neoforge:item/bucket")));
 			}
 		}
 
@@ -97,14 +97,14 @@ public class ForestryItemModelProvider extends ItemModelProvider {
 		return ModUtil.getRegistryName(block).getPath();
 	}
 
-	private void filledCrateModel(String id, ResourceLocation texture) {
+	private void filledCrateModel(String id, Identifier texture) {
 		getBuilder(id)
 			.customLoader(FilledCrateModelBuilder::begin)
 			.layer1(texture)
 			.end();
 	}
 
-	private void filledCrateModelLayered(String id, ResourceLocation layer1, ResourceLocation layer2) {
+	private void filledCrateModelLayered(String id, Identifier layer1, Identifier layer2) {
 		getBuilder(id)
 			.customLoader(FilledCrateModelBuilder::begin)
 			.layer1(layer1)

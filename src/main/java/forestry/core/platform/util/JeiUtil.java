@@ -26,7 +26,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -82,7 +82,7 @@ public class JeiUtil {
 	}
 
 	public static void addDescription(IRecipeRegistration registry, Item item) {
-		ResourceLocation registryName = ModUtil.getRegistryName(item);
+		Identifier registryName = ModUtil.getRegistryName(item);
 		String resourcePath = registryName.getPath();
 		addDescription(registry, item, resourcePath);
 	}
@@ -136,7 +136,7 @@ public class JeiUtil {
 		return result;
 	}
 
-	public static <S extends ISpecies<?>> void registerItemSubtypes(ISubtypeRegistration registry, IChromosome<ResourceLocation> species, ISpeciesType<S, ?> type) {
+	public static <S extends ISpecies<?>> void registerItemSubtypes(ISubtypeRegistration registry, IChromosome<Identifier> species, ISpeciesType<S, ?> type) {
 		ISubtypeInterpreter<ItemStack> interpreter = new ISubtypeInterpreter<>() {
 			@Override
 			public Object getSubtypeData(ItemStack stack, UidContext context) {

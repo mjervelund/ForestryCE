@@ -11,7 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -42,7 +42,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 	);
 
 	private static final MapCodec<CarpenterRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-		ResourceLocation.CODEC.fieldOf("id").forGetter(CarpenterRecipe::getId),
+		Identifier.CODEC.fieldOf("id").forGetter(CarpenterRecipe::getId),
 		Codec.INT.fieldOf("time").forGetter(CarpenterRecipe::getPackagingTime),
 		FluidStack.OPTIONAL_CODEC.optionalFieldOf("liquid", FluidStack.EMPTY).forGetter(CarpenterRecipe::getInputFluid),
 		Ingredient.CODEC.fieldOf("box").forGetter(CarpenterRecipe::getBox),
@@ -54,7 +54,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 		Serializer::fromNetwork
 	);
 
-	private final ResourceLocation id;
+	private final Identifier id;
 	private final int packagingTime;
 	private final FluidStack liquid;
 	private final Ingredient box;
@@ -62,7 +62,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 	@Nullable
 	private final ItemStack result;
 
-	public CarpenterRecipe(ResourceLocation id, int packagingTime, FluidStack liquid, Ingredient box, CraftingRecipe recipe, @Nullable ItemStack result) {
+	public CarpenterRecipe(Identifier id, int packagingTime, FluidStack liquid, Ingredient box, CraftingRecipe recipe, @Nullable ItemStack result) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(liquid, "Recipe liquid cannot be null; use FluidStack.EMPTY for no fluid input");
 		Preconditions.checkNotNull(box);
@@ -126,7 +126,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return this.id;
 	}
 
@@ -152,7 +152,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 		}
 
 		private static CarpenterRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-			ResourceLocation recipeId = ResourceLocation.STREAM_CODEC.decode(buffer);
+			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			int packagingTime = ByteBufCodecs.VAR_INT.decode(buffer);
 			FluidStack liquid = FluidStack.OPTIONAL_STREAM_CODEC.decode(buffer);
 			Ingredient box = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
@@ -165,7 +165,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 		}
 
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, CarpenterRecipe recipe) {
-			ResourceLocation.STREAM_CODEC.encode(buffer, recipe.id);
+			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.packagingTime);
 			FluidStack.OPTIONAL_STREAM_CODEC.encode(buffer, recipe.liquid);
 			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.box);

@@ -14,14 +14,14 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class SpectaclesCurioRenderer implements ICurioRenderer {
-	private static final ResourceLocation TEXTURE = ForestryConstants.forestry("textures/item/naturalist_armor_1.png");
+	private static final Identifier TEXTURE = ForestryConstants.forestry("textures/item/naturalist_armor_1.png");
 
 	private final HumanoidArmorModel<AbstractClientPlayer> armorModel;
 

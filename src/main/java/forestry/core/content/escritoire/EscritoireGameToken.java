@@ -13,7 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -51,7 +51,7 @@ public class EscritoireGameToken implements INbtWritable, IStreamable {
 		readFromTag(nbt);
 	}
 
-	private void setTokenSpecies(ResourceLocation typeId, ResourceLocation speciesId) {
+	private void setTokenSpecies(Identifier typeId, Identifier speciesId) {
 		if (this.tokenType != null && typeId == this.tokenType.id()) {
 			setTokenSpecies(this.tokenType.getSpecies(speciesId));
 		} else {
@@ -126,7 +126,7 @@ public class EscritoireGameToken implements INbtWritable, IStreamable {
 	}
 
 	@Nullable
-	public ResourceLocation getOverlayToken() {
+	public Identifier getOverlayToken() {
 		return switch (this.state) {
 			case FAILED -> ForestrySprites.ERROR_ERRORED;
 			case SELECTED -> ForestrySprites.ERROR_UNKNOWN;
@@ -159,7 +159,7 @@ public class EscritoireGameToken implements INbtWritable, IStreamable {
 		String tokenType = nbt.getString(NBT_TOKEN_TYPE);
 
 		if (!tokenSpecies.isEmpty() && !tokenType.isEmpty()) {
-			setTokenSpecies(ResourceLocation.parse(tokenType), ResourceLocation.parse(tokenSpecies));
+			setTokenSpecies(Identifier.parse(tokenType), Identifier.parse(tokenSpecies));
 		}
 	}
 
@@ -179,8 +179,8 @@ public class EscritoireGameToken implements INbtWritable, IStreamable {
 	public void readData(RegistryFriendlyByteBuf data) {
 		this.state = NetworkUtil.readEnum(data, State.VALUES);
 		if (data.readBoolean()) {
-			ResourceLocation speciesId = data.readResourceLocation();
-			ResourceLocation typeId = data.readResourceLocation();
+			Identifier speciesId = data.readResourceLocation();
+			Identifier typeId = data.readResourceLocation();
 			setTokenSpecies(typeId, speciesId);
 		}
 	}

@@ -26,7 +26,7 @@ import forestry.arboriculture.network.PacketRipeningUpdate;
 import forestry.arboriculture.villagers.ArboricultureVillagers;
 import forestry.modules.BlankForestryModule;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -67,13 +67,13 @@ public class ModuleArboriculture extends BlankForestryModule {
 	public static boolean doSelfPollination = false;
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.ARBORICULTURE;
 	}
 
 	// declared so the load order that carries the reload ordering is stated rather than incidental
 	@Override
-	public List<ResourceLocation> getModuleDependencies() {
+	public List<Identifier> getModuleDependencies() {
 		return List.of(ForestryModuleIds.CORE);
 	}
 
@@ -174,9 +174,9 @@ public class ModuleArboriculture extends BlankForestryModule {
 
 		// id-keyed: resolving a species happens at render time by id, so the (datapack-driven) species list is not
 		// needed to build the sprite/model maps below.
-		HashMap<ResourceLocation, ILeafSprite> spritesById = impl.getLeafSprites();
-		HashMap<ResourceLocation, ILeafTint> tintsById = impl.getTints();
-		HashMap<ResourceLocation, Pair<ResourceLocation, ResourceLocation>> modelsById = impl.getSaplingModels();
+		HashMap<Identifier, ILeafSprite> spritesById = impl.getLeafSprites();
+		HashMap<Identifier, ILeafTint> tintsById = impl.getTints();
+		HashMap<Identifier, Pair<Identifier, Identifier>> modelsById = impl.getSaplingModels();
 
 		// The escritoire-color tint fallback (for the ~40 built-in species that register no explicit client tint) is
 		// applied lazily at render time in TreeClientManager#getTint from the species object itself, so no species-list
@@ -184,13 +184,13 @@ public class ModuleArboriculture extends BlankForestryModule {
 
 		// For any species id that has a leaf sprite but no explicit sapling model, synthesize the default-path pair
 		// (removing the "tree_" prefix), exactly as the old per-species loop did.
-		Map<ResourceLocation, Pair<ResourceLocation, ResourceLocation>> models = new HashMap<>(modelsById);
-		for (ResourceLocation id : spritesById.keySet()) {
+		Map<Identifier, Pair<Identifier, Identifier>> models = new HashMap<>(modelsById);
+		for (Identifier id : spritesById.keySet()) {
 			models.computeIfAbsent(id, sid -> {
 				String path = sid.getPath().replace("tree_", "");
 				return Pair.of(
-					ResourceLocation.fromNamespaceAndPath(sid.getNamespace(), "block/" + path + "_sapling"),
-					ResourceLocation.fromNamespaceAndPath(sid.getNamespace(), "item/" + path + "_sapling")
+					Identifier.fromNamespaceAndPath(sid.getNamespace(), "block/" + path + "_sapling"),
+					Identifier.fromNamespaceAndPath(sid.getNamespace(), "item/" + path + "_sapling")
 				);
 			});
 		}

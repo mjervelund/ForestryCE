@@ -13,7 +13,7 @@ import forestry.api.plugin.IForestryPlugin;
 import forestry.apiimpl.ForestryApiImpl;
 import forestry.apiimpl.plugin.PluginManager;
 import forestry.modules.BlankForestryModule;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 @ForestryModule
 public class ModuleFarming extends BlankForestryModule {
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.FARMING;
 	}
 

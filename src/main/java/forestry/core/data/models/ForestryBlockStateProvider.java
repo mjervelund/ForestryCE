@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -89,7 +89,7 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 			Block defaultBlock = ArboricultureBlocks.LEAVES_DEFAULT.get(treeType).block();
 			Block defaultFruitBlock = ArboricultureBlocks.LEAVES_DEFAULT_FRUIT.get(treeType).block();
 			Block decorativeBlock = ArboricultureBlocks.LEAVES_DECORATIVE.get(treeType).block();
-			ResourceLocation particle = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(treeType.getIndividual().getSpecies()).get(false, true);
+			Identifier particle = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(treeType.getIndividual().getSpecies()).get(false, true);
 			ModelFile file = models().getBuilder(path(defaultBlock)).texture("particle", particle);
 
 			singleModelBlock(this, defaultBlock, file);
@@ -106,9 +106,9 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 			BlockBeeHive feature = ApicultureBlocks.HIVE.get(type).block();
 			String path = path(feature);
 
-			ResourceLocation side = modBlock(this, "hive/" + type.getSerializedName() + "_side");
-			ResourceLocation top = modBlock(this, "hive/" + type.getSerializedName() + "_top");
-			ResourceLocation bottom = modBlock(this, "hive/" + type.getSerializedName() + "_bottom");
+			Identifier side = modBlock(this, "hive/" + type.getSerializedName() + "_side");
+			Identifier top = modBlock(this, "hive/" + type.getSerializedName() + "_top");
+			Identifier bottom = modBlock(this, "hive/" + type.getSerializedName() + "_bottom");
 
 			singleModelBlock(this, feature, models().cubeBottomTop(path, side, bottom, top));
 			generic3d(feature);
@@ -274,7 +274,7 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 	 * @param top    The texture on the top face
 	 */
 	private void jumboCandleModel(String name, String shape, String bottom, String side, String top) {
-		ResourceLocation sideTexture = modBlock(this, "candles/" + name + "_" + side);
+		Identifier sideTexture = modBlock(this, "candles/" + name + "_" + side);
 
 		models().withExistingParent("block/candles/" + name + "_jumbo_" + shape, modBlock(this, "candles/jumbo_" + shape))
 			.texture("bottom", modBlock(this, "candles/" + name + "_" + bottom))
@@ -308,8 +308,8 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 	 */
 	private void vanillaCandle(Block block) {
 		String name = path(block);
-		ResourceLocation texture = modBlock(this, "candles/" + name);
-		ResourceLocation litTexture = modBlock(this, "candles/" + name + "_lit");
+		Identifier texture = modBlock(this, "candles/" + name);
+		Identifier litTexture = modBlock(this, "candles/" + name + "_lit");
 
 		ModelFile one = candleCountModel(name, "one", "template_candle", texture);
 		ModelFile oneLit = candleCountModel(name, "one_lit", "template_candle", litTexture);
@@ -348,7 +348,7 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 	 * @param texture The texture on every face, which is also the particle
 	 * @return The registered model
 	 */
-	private ModelFile candleCountModel(String name, String count, String parent, ResourceLocation texture) {
+	private ModelFile candleCountModel(String name, String count, String parent, Identifier texture) {
 		return models().withExistingParent("block/candles/" + name + "_" + count, mcBlock(this, parent))
 			.texture("all", texture)
 			.texture("particle", texture);
@@ -369,7 +369,7 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 		generic3d(sheet);
 
 		BlockPlywoodBlock block = CoreBlocks.PLYWOOD_BLOCK.block();
-		ResourceLocation top = modBlock(this, "plywood_top");
+		Identifier top = modBlock(this, "plywood_top");
 		ModelFile model = models().withExistingParent(path(block), mcBlock(this, "cube_column"))
 			.texture("end", top)
 			.texture("side", modBlock(this, "plywood_side"))
@@ -387,7 +387,7 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 	 */
 	private void stoneFamily(CoreBlocks.StoneFamily family) {
 		Block base = family.base().block();
-		ResourceLocation texture = modBlock(this, path(base));
+		Identifier texture = modBlock(this, path(base));
 
 		simpleBlock(base);
 		generic3d(base);
@@ -424,7 +424,7 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 	 */
 	private void chiseledColumn(Block block) {
 		String name = path(block);
-		ResourceLocation top = modBlock(this, name + "_top");
+		Identifier top = modBlock(this, name + "_top");
 
 		singleModelBlock(this, block, models().cubeBottomTop(name, modBlock(this, name + "_side"), top, top));
 		generic3d(block);
@@ -565,7 +565,7 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 		states.getVariantBuilder(defaultBlock).partialState().modelForState().modelFile(file).addModel();
 	}
 
-	public static ModelFile particleOnly(BlockStateProvider states, String path, ResourceLocation particleTexture) {
+	public static ModelFile particleOnly(BlockStateProvider states, String path, Identifier particleTexture) {
 		return states.models().getBuilder(path).texture("particle", particleTexture);
 	}
 
@@ -616,11 +616,11 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 			.build());
 	}
 
-	protected static ResourceLocation withSuffix(ResourceLocation loc, String suffix) {
+	protected static Identifier withSuffix(Identifier loc, String suffix) {
 		return loc.withSuffix(suffix);
 	}
 
-	protected static ResourceLocation withPrefix(String prefix, ResourceLocation loc) {
+	protected static Identifier withPrefix(String prefix, Identifier loc) {
 		String oldPath = loc.getPath();
 		int slash = oldPath.lastIndexOf('/') + 1;
 
@@ -634,8 +634,8 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 		itemModels().withExistingParent(path(block), modLoc("block/" + path(otherParent)));
 	}
 
-	public void generic3d(Block block, ResourceLocation otherParentId) {
-		itemModels().withExistingParent(path(block), ResourceLocation.fromNamespaceAndPath(otherParentId.getNamespace(), "block/" + otherParentId.getPath()));
+	public void generic3d(Block block, Identifier otherParentId) {
+		itemModels().withExistingParent(path(block), Identifier.fromNamespaceAndPath(otherParentId.getNamespace(), "block/" + otherParentId.getPath()));
 	}
 
 	protected ModelFile existingMcBlock(String path) {
@@ -651,15 +651,15 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 		return ModUtil.getRegistryName(block).getPath();
 	}
 
-	public static ModelFile.UncheckedModelFile file(ResourceLocation resourceLoc) {
+	public static ModelFile.UncheckedModelFile file(Identifier resourceLoc) {
 		return new ModelFile.UncheckedModelFile(resourceLoc);
 	}
 
-	public static ResourceLocation modBlock(BlockStateProvider states, String name) {
+	public static Identifier modBlock(BlockStateProvider states, String name) {
 		return states.modLoc("block/" + name);
 	}
 
-	public static ResourceLocation mcBlock(BlockStateProvider states, String name) {
+	public static Identifier mcBlock(BlockStateProvider states, String name) {
 		return states.mcLoc("block/" + name);
 	}
 
@@ -670,15 +670,15 @@ public class ForestryBlockStateProvider extends BlockStateProvider {
 	/**
 	 * Makes a 2d single layer item like hopper, gold ingot, or redstone dust item models
 	 */
-	public void generic2d(ResourceLocation itemId) {
+	public void generic2d(Identifier itemId) {
 		layer0(itemId, "item/generated");
 	}
 
-	public void layer0(ResourceLocation itemId, String parentName) {
+	public void layer0(Identifier itemId, String parentName) {
 		String path = itemId.getPath();
 
 		itemModels().getBuilder(path)
 			.parent(new ModelFile.UncheckedModelFile(parentName))
-			.texture("layer0", ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "item/" + path));
+			.texture("layer0", Identifier.fromNamespaceAndPath(itemId.getNamespace(), "item/" + path));
 	}
 }

@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import forestry.core.platform.render.ForestryModelLayers;
 
@@ -25,7 +25,7 @@ import forestry.core.platform.render.ForestryModelLayers;
 public class RenderMill implements BlockEntityRenderer<TileMill> {
 	private enum Textures {PEDESTAL, EXTENSION, BLADE, CHARGE}
 
-	private final ResourceLocation[] textures;
+	private final Identifier[] textures;
 	private final ModelPart pedestal;
 	private final ModelPart column;
 	private final ModelPart extension;
@@ -39,7 +39,7 @@ public class RenderMill implements BlockEntityRenderer<TileMill> {
 		this.extension = root.getChild(Textures.EXTENSION.name());
 		this.blade = root.getChild(Textures.BLADE.name());
 
-		this.textures = new ResourceLocation[11];
+		this.textures = new Identifier[11];
 
 		this.textures[Textures.PEDESTAL.ordinal()] = ForestryConstants.forestry(baseTexture + "pedestal.png");
 		this.textures[Textures.EXTENSION.ordinal()] = ForestryConstants.forestry(baseTexture + "extension.png");

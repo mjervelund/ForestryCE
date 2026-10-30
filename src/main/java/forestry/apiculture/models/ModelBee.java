@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,9 +45,9 @@ public class ModelBee implements IUnbakedGeometry<ModelBee> {
 	@Override
 	public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
 		IBeeClientManager manager = IForestryClientApi.INSTANCE.getBeeManager();
-		Map<ResourceLocation, BakedModel> bakedModels = new HashMap<>();
+		Map<Identifier, BakedModel> bakedModels = new HashMap<>();
 
-		for (ResourceLocation location : manager.getAllModelLocations(this.stage)) {
+		for (Identifier location : manager.getAllModelLocations(this.stage)) {
 			BakedModel model = baker.bake(location, BlockModelRotation.X0_Y0, spriteGetter);
 
 			if (model != null) {
@@ -78,9 +78,9 @@ public class ModelBee implements IUnbakedGeometry<ModelBee> {
 	private static class Baked implements BakedModel {
 		private final ILifeStage stage;
 		private final IBeeClientManager manager;
-		private final Map<ResourceLocation, BakedModel> bakedModels;
+		private final Map<Identifier, BakedModel> bakedModels;
 
-		public Baked(ILifeStage stage, IBeeClientManager manager, Map<ResourceLocation, BakedModel> bakedModels) {
+		public Baked(ILifeStage stage, IBeeClientManager manager, Map<Identifier, BakedModel> bakedModels) {
 			this.stage = stage;
 			this.manager = manager;
 			this.bakedModels = bakedModels;
@@ -129,8 +129,8 @@ public class ModelBee implements IUnbakedGeometry<ModelBee> {
 					return model;
 				}
 
-				ResourceLocation speciesId = individual.getSpecies().id();
-				ResourceLocation location = Baked.this.manager.getModelLocation(Baked.this.stage, speciesId);
+				Identifier speciesId = individual.getSpecies().id();
+				Identifier location = Baked.this.manager.getModelLocation(Baked.this.stage, speciesId);
 				BakedModel resolved = Baked.this.bakedModels.get(location);
 
 				if (resolved != null) {
@@ -138,7 +138,7 @@ public class ModelBee implements IUnbakedGeometry<ModelBee> {
 				}
 
 				// Fall back to the default model for this life stage, then the vanilla-provided model.
-				ResourceLocation defaultLocation = Baked.this.manager.getDefaultModelLocation(Baked.this.stage);
+				Identifier defaultLocation = Baked.this.manager.getDefaultModelLocation(Baked.this.stage);
 				return Baked.this.bakedModels.getOrDefault(defaultLocation, model);
 			}
 		}

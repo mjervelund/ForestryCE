@@ -7,7 +7,7 @@ import forestry.api.core.backpacks.IBackpackInterface;
 import forestry.core.content.backpacks.items.BackpackItem;
 import forestry.core.content.backpacks.items.NaturalistBackpackItem;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +29,7 @@ public class BackpackInterface implements IBackpackInterface {
 	}
 
 	@Override
-	public Item createNaturalistBackpack(IBackpackDefinition definition, ResourceLocation speciesTypeId, CreativeModeTab tab) {
+	public Item createNaturalistBackpack(IBackpackDefinition definition, Identifier speciesTypeId, CreativeModeTab tab) {
 		Preconditions.checkNotNull(definition, "definition must not be null");
 		Preconditions.checkNotNull(speciesTypeId, "rootUid must not be null");
 
@@ -39,7 +39,7 @@ public class BackpackInterface implements IBackpackInterface {
 	}
 
 	@Override
-	public Predicate<ItemStack> createNaturalistBackpackFilter(ResourceLocation speciesRootUid) {
+	public Predicate<ItemStack> createNaturalistBackpackFilter(Identifier speciesRootUid) {
 		return new BackpackFilterNaturalist(speciesRootUid);
 	}
 }

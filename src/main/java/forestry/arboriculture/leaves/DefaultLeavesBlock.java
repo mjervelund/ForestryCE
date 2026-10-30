@@ -6,7 +6,7 @@ import forestry.api.arboriculture.genetics.TreeLifeStage;
 import forestry.api.client.IForestryClientApi;
 import forestry.core.platform.util.SpeciesUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -32,7 +32,7 @@ public class DefaultLeavesBlock extends AbstractLeavesBlock implements ILeafType
 		this.type = type;
 	}
 
-	public ResourceLocation getSpeciesId() {
+	public Identifier getSpeciesId() {
 		return this.type.getSpeciesId();
 	}
 

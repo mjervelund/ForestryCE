@@ -16,7 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,11 +33,11 @@ public class DefaultLeavesModel extends ModelBlockCached<DefaultLeavesBlock, Def
 	}
 
 	public static final class Key {
-		public final ResourceLocation speciesId;
+		public final Identifier speciesId;
 		public final boolean fancy;
 		private final int hashCode;
 
-		public Key(ResourceLocation speciesId, boolean fancy) {
+		public Key(Identifier speciesId, boolean fancy) {
 			this.speciesId = speciesId;
 			this.fancy = fancy;
 			this.hashCode = Objects.hash(speciesId, fancy);
@@ -70,7 +70,7 @@ public class DefaultLeavesModel extends ModelBlockCached<DefaultLeavesBlock, Def
 	@Override
 	protected DefaultLeavesModel.Key getWorldKey(BlockState state, ModelData extraData) {
 		if (state.getBlock() instanceof DefaultLeavesBlock block) {
-			ResourceLocation treeDefinition = block.getSpeciesId();
+			Identifier treeDefinition = block.getSpeciesId();
 			return new DefaultLeavesModel.Key(treeDefinition, Minecraft.useFancyGraphics());
 		} else {
 			throw new IllegalArgumentException("state must be for default leaves.");
@@ -79,7 +79,7 @@ public class DefaultLeavesModel extends ModelBlockCached<DefaultLeavesBlock, Def
 
 	@Override
 	protected void bakeBlock(DefaultLeavesBlock block, ModelData extraData, Key key, ModelBaker baker, boolean inventory) {
-		ResourceLocation speciesId = key.speciesId;
+		Identifier speciesId = key.speciesId;
 
 		// Resolve fail-soft: a datapack may have removed this species while its leaf block is still placed, so use
 		// getSpeciesSafe (not the throwing getTreeSpecies) and fall back to the default species.
@@ -93,7 +93,7 @@ public class DefaultLeavesModel extends ModelBlockCached<DefaultLeavesBlock, Def
 			leafSpriteProvider = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(species);
 		}
 
-		ResourceLocation leafSpriteLocation = leafSpriteProvider.get(false, key.fancy);
+		Identifier leafSpriteLocation = leafSpriteProvider.get(false, key.fancy);
 		TextureAtlasSprite leafSprite = ResourceUtil.getBlockSprite(leafSpriteLocation);
 
 		// Render the plain leaf block.

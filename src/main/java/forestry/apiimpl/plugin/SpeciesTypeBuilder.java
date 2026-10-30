@@ -12,7 +12,7 @@ import forestry.api.plugin.ISpeciesTypeFactory;
 import forestry.core.engine.genetics.Karyotype;
 import it.unimi.dsi.fastutil.objects.Reference2FloatMap;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -94,7 +94,7 @@ public class SpeciesTypeBuilder implements ISpeciesTypeBuilder {
 		this.researchMaterials.accept(materialMap);
 	}
 
-	public ISpeciesType<?, ?> build(ResourceLocation id) {
+	public ISpeciesType<?, ?> build(Identifier id) {
 		Preconditions.checkState(this.karyotype != null, "Missing karyotype for species type");
 
 		Karyotype.Builder builder = new Karyotype.Builder();

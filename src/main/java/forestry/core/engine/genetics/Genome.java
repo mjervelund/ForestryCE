@@ -9,7 +9,7 @@ import forestry.api.core.genetics.alleles.AllelePair;
 import forestry.api.core.genetics.alleles.IChromosome;
 import forestry.api.core.genetics.alleles.IKaryotype;
 import forestry.api.plugin.IGenomeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -34,13 +34,13 @@ public final class Genome implements IGenome {
 			// Fix missing chromosomes for backwards compatibility.
 			AllelePair<?> pair = map.get(chromosome);
 			if (pair == null) {
-				ResourceLocation speciesId;
+				Identifier speciesId;
 				AllelePair<?> speciesPair = map.get(karyotype.getSpeciesChromosome());
 				if (speciesPair == null) {
 					// If the stored species was added/removed, revert to the default species.
 					speciesId = karyotype.getDefaultSpecies();
 				} else {
-					speciesId = (ResourceLocation) speciesPair.active().value();
+					speciesId = (Identifier) speciesPair.active().value();
 				}
 
 				IChromosome.IReferenceResolver<?> speciesResolver = Objects.requireNonNull(karyotype.getSpeciesChromosome().resolver(), "Species chromosome has no resolver");
@@ -151,9 +151,9 @@ public final class Genome implements IGenome {
 		}
 
 		@Override
-		public void set(IChromosome<ResourceLocation> chromosome, ResourceLocation id) {
+		public void set(IChromosome<Identifier> chromosome, Identifier id) {
 			IChromosome.IReferenceResolver<?> resolver = Objects.requireNonNull(chromosome.resolver(), () -> "Not a reference chromosome: " + chromosome.id());
-			Allele<ResourceLocation> allele = new Allele<>(id, resolver.isDominant(id));
+			Allele<Identifier> allele = new Allele<>(id, resolver.isDominant(id));
 			this.active.put(chromosome, allele);
 			this.inactive.put(chromosome, allele);
 		}

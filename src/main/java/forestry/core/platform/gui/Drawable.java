@@ -2,7 +2,7 @@ package forestry.core.platform.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -16,16 +16,16 @@ public class Drawable {
 	public final int uWidth;
 	public final int vHeight;
 	//Texture
-	public final ResourceLocation textureLocation;
+	public final Identifier textureLocation;
 	//Texture Size
 	private final int textureWidth;
 	private final int textureHeight;
 
-	public Drawable(ResourceLocation textureLocation, int u, int v, int uWidth, int vHeight) {
+	public Drawable(Identifier textureLocation, int u, int v, int uWidth, int vHeight) {
 		this(textureLocation, u, v, uWidth, vHeight, 256, 256);
 	}
 
-	public Drawable(ResourceLocation textureLocation, int u, int v, int uWidth, int vHeight, int textureWidth, int textureHeight) {
+	public Drawable(Identifier textureLocation, int u, int v, int uWidth, int vHeight, int textureWidth, int textureHeight) {
 		this.u = u;
 		this.v = v;
 		this.uWidth = uWidth;

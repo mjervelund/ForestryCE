@@ -11,7 +11,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -21,7 +21,7 @@ import java.util.List;
 public class MailboxInfoToast implements Toast {
 	private static final long DISPLAY_TIME = 5000L;
 	private static final long ICON_TIME = 500L;
-	private static final ResourceLocation BACKGROUND_SPRITE = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/mail_toast.png");
+	private static final Identifier BACKGROUND_SPRITE = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/mail_toast.png");
 
 	private final Component title = Component.translatable("for.gui.mail.toast.title");
 	private POBoxInfo poBox;

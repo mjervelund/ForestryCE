@@ -10,7 +10,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +50,7 @@ public class FluidContainerModel implements IUnbakedGeometry<FluidContainerModel
 	// Note: The fluid mask is ignored, the fluid element is always from (4, 2) to (12, 14).
 	@Override
 	public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
-		ResourceLocation modelLocation = ResourceLocation.parse(context.getModelName());
+		Identifier modelLocation = Identifier.parse(context.getModelName());
 		Material baseLocation = context.hasMaterial("base") ? context.getMaterial("base") : null;
 		Material fluidMaskLocation = context.hasMaterial("fluid") ? context.getMaterial("fluid") : null;
 		Material coverLocation = context.hasMaterial("cover") ? context.getMaterial("cover") : null;

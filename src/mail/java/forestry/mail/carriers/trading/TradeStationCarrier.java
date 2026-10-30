@@ -6,7 +6,7 @@ import forestry.api.mail.*;
 import forestry.mail.letters.MailAddress;
 import forestry.mail.letters.EnumDeliveryState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +14,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 public class TradeStationCarrier implements IPostalCarrier {
-	private final ResourceLocation iconID;
+	private final Identifier iconID;
 
 	public TradeStationCarrier() {
 		this.iconID = ForestryConstants.forestry("mail/carrier.trader");

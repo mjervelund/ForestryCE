@@ -11,7 +11,7 @@ import forestry.core.platform.util.NBTUtilForestry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -74,7 +74,7 @@ public class ItemResearchNote extends ItemForestry {
 
 	@Nullable
 	private static IMutation<?> getEncodedMutation(CompoundTag compound) {
-		ISpeciesType<?, ?> type = IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypeSafe(ResourceLocation.parse(compound.getString(TYPE_KEY)));
+		ISpeciesType<?, ?> type = IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypeSafe(Identifier.parse(compound.getString(TYPE_KEY)));
 		if (type == null) {
 			return null;
 		}

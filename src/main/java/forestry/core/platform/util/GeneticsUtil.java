@@ -190,7 +190,7 @@ public class GeneticsUtil {
 	/**
 	 * @return A stable, whitespace-free string key identifying an allele value, used by debug commands for suggestions
 	 * and matching. {@link Vec3i#toString} contains spaces, so it is rendered as {@code x_y_z}; all other built-in
-	 * value types ({@code Float}/{@code Integer}/{@code Boolean}/enum/{@link ResourceLocation}) are already space-free.
+	 * value types ({@code Float}/{@code Integer}/{@code Boolean}/enum/{@link Identifier}) are already space-free.
 	 */
 	public static String alleleKey(Allele<?> allele) {
 		Object value = allele.value();

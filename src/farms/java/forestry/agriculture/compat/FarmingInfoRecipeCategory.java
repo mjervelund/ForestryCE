@@ -24,7 +24,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.mutable.MutableInt;
 
@@ -40,7 +40,7 @@ public class FarmingInfoRecipeCategory extends ForestryRecipeCategory<FarmingInf
 	public FarmingInfoRecipeCategory(IGuiHelper guiHelper) {
 		super(guiHelper.createBlankDrawable(144, 90), "for.jei.farming");
 		this.slotDrawable = guiHelper.getSlotDrawable();
-		ResourceLocation resourceLocation = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/jei/recipes.png");
+		Identifier resourceLocation = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/jei/recipes.png");
         this.addition = guiHelper.createDrawable(resourceLocation, 44, 0, 15, 15);
         this.arrow = guiHelper.createDrawable(resourceLocation, 59, 0, 15, 15);
 		ItemStack intricateCircuitboard = new ItemStack(CoreItems.CIRCUITBOARDS.get(EnumCircuitBoardType.INTRICATE));

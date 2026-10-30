@@ -15,7 +15,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
@@ -47,7 +47,7 @@ public class GuiGeneticFilter extends GuiForestryTitled<ContainerGeneticFilter> 
 			}
 		}
 
-		this.scrollBar = new WidgetScrollBar(this.widgetManager, 157 + 36, 150, 12, 64, new Drawable(ResourceLocation.parse(Constants.TEXTURE_PATH_GUI + "/container/creative_inventory/tabs.png"), 232, 0, 12, 15));
+		this.scrollBar = new WidgetScrollBar(this.widgetManager, 157 + 36, 150, 12, 64, new Drawable(Identifier.parse(Constants.TEXTURE_PATH_GUI + "/container/creative_inventory/tabs.png"), 232, 0, 12, 15));
         this.widgetManager.add(this.selection = new SelectionWidget(this.widgetManager, 0, 134, this.scrollBar, this));
         this.widgetManager.add(this.scrollBar);
         this.scrollBar.setVisible(false);

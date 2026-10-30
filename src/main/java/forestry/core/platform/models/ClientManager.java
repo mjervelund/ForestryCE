@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.ModelState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -79,7 +79,7 @@ public enum ClientManager {
 
 	public ModelState getDefaultBlockState() {
 		if (this.defaultBlockState == null) {
-            this.defaultBlockState = ResourceUtil.loadTransform(ResourceLocation.parse("block/block"));
+            this.defaultBlockState = ResourceUtil.loadTransform(Identifier.parse("block/block"));
 		}
 		return this.defaultBlockState;
 	}
@@ -116,7 +116,7 @@ public enum ClientManager {
 				registry.put(BlockModelShaper.stateToModelLocation(state), entry.model);
 			}
 			if (entry.item != null) {
-				ResourceLocation registryName = ModUtil.getRegistryName(entry.item);
+				Identifier registryName = ModUtil.getRegistryName(entry.item);
 				if (registryName == null) {
 					continue;
 				}

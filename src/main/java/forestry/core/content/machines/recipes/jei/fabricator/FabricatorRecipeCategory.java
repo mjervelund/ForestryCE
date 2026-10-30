@@ -22,7 +22,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class FabricatorRecipeCategory extends ForestryRecipeCategory<IFabricatorRecipe> {
-	private final static ResourceLocation guiTexture = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/thermionic_fabricator.png");
+	private final static Identifier guiTexture = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/thermionic_fabricator.png");
 	private final IDrawable icon;
 	@Nullable
 	private final ICraftingGridHelper craftingGridHelper;

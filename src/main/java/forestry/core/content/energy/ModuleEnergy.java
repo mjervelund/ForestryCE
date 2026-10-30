@@ -6,7 +6,7 @@ import forestry.api.modules.ForestryModuleIds;
 import forestry.core.content.energy.client.EnergyClientHandler;
 import forestry.core.content.energy.features.EnergyTiles;
 import forestry.modules.BlankForestryModule;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -29,7 +29,7 @@ public class ModuleEnergy extends BlankForestryModule {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.ENERGY;
 	}
 

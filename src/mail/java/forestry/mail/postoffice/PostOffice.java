@@ -13,7 +13,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -57,7 +57,7 @@ public class PostOffice extends SavedData implements IPostOffice {
 				continue;
 			}
 
-			ResourceLocation id = ResourceLocation.tryParse(key);
+			Identifier id = Identifier.tryParse(key);
 			Item item = id == null ? Items.AIR : BuiltInRegistries.ITEM.get(id);
 
 			// Nothing can be handed back for an item that no longer exists, so drop it loudly

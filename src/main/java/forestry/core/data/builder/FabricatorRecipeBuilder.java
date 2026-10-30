@@ -6,7 +6,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ImpossibleTrigger;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -30,12 +30,12 @@ public class FabricatorRecipeBuilder {
 
 	public FabricatorRecipeBuilder recipe(ShapedRecipeBuilder recipe) {
 		RecipeCapture capture = new RecipeCapture();
-		recipe.unlockedBy("impossible", IMPOSSIBLE).save(capture, ResourceLocation.withDefaultNamespace("forestry_fabricator"));
-		this.recipe = capture.recipe(ResourceLocation.withDefaultNamespace("forestry_fabricator"), ShapedRecipe.class);
+		recipe.unlockedBy("impossible", IMPOSSIBLE).save(capture, Identifier.withDefaultNamespace("forestry_fabricator"));
+		this.recipe = capture.recipe(Identifier.withDefaultNamespace("forestry_fabricator"), ShapedRecipe.class);
 		return this;
 	}
 
-	public void build(RecipeOutput output, ResourceLocation id) {
+	public void build(RecipeOutput output, Identifier id) {
 		output.accept(id, new FabricatorRecipe(id, this.plan, this.molten, this.recipe), null);
 	}
 }

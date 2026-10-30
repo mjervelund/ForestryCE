@@ -14,7 +14,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -63,7 +63,7 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 		ITree tree = getTree();
 		if (tree != null) {
 			data.writeBoolean(true);
-			ResourceLocation speciesId = tree.getSpecies().id();
+			Identifier speciesId = tree.getSpecies().id();
 			data.writeResourceLocation(speciesId);
 		} else {
 			data.writeBoolean(false);
@@ -73,7 +73,7 @@ public abstract class TileTreeContainer extends BlockEntity implements IStreamab
 	@Override
 	public void readData(RegistryFriendlyByteBuf data) {
 		if (data.readBoolean()) {
-			ResourceLocation speciesId = data.readResourceLocation();
+			Identifier speciesId = data.readResourceLocation();
 			// Sync payload written server-side from a live tree's species id; fall back to the default species
 			// instead of throwing if a datapack has since removed it (e.g. reload racing a client packet).
 			ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();

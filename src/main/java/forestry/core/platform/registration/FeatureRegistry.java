@@ -11,7 +11,7 @@ import forestry.core.platform.util.datastructures.TriFunction;
 import forestry.core.content.backpacks.ModuleStorage;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -47,10 +47,10 @@ public class FeatureRegistry implements IFeatureRegistry {
 	private final HashMap<ResourceKey, DeferredRegister> registries = new HashMap<>();
 	private final LinkedListMultimap<ResourceKey<? extends Registry<?>>, Consumer<RegisterEvent>> registryListeners = LinkedListMultimap.create();
 
-	private final ResourceLocation moduleId;
+	private final Identifier moduleId;
 	private final IEventBus modBus;
 
-	public FeatureRegistry(ResourceLocation moduleId, IEventBus modBus) {
+	public FeatureRegistry(Identifier moduleId, IEventBus modBus) {
 		this.moduleId = moduleId;
 		this.modBus = modBus;
 		this.modBus.addListener(this::onRegisterEvent);
@@ -85,7 +85,7 @@ public class FeatureRegistry implements IFeatureRegistry {
 	}
 
 	public <B extends Block, I extends BlockItem> FeatureBlock<B, I> block(Function<BlockBehaviour.Properties, B> constructor, Supplier<BlockBehaviour.Properties> blockProperties, @Nullable BiFunction<B, Item.Properties, I> itemConstructor, Supplier<Item.Properties> itemProperties, String name) {
-		ResourceLocation id = this.moduleId.withPath(name);
+		Identifier id = this.moduleId.withPath(name);
 		Supplier<B> blockSupplier = () -> constructor.apply(IFeatureRegistry.setBlockId(id, blockProperties.get()));
 		Function<B, I> itemFunction = itemConstructor == null ? null : (block) -> itemConstructor.apply(block, IFeatureRegistry.setItemId(id, itemProperties.get()));
 		return register(new FeatureBlock<>(this, this.moduleId, name, blockSupplier, itemFunction));
@@ -124,7 +124,7 @@ public class FeatureRegistry implements IFeatureRegistry {
 		return item(() -> ModuleStorage.BACKPACK_INTERFACE.createBackpack(definition, type), identifier);
 	}
 
-	public FeatureItem<Item> naturalistBackpack(IBackpackDefinition definition, ResourceLocation speciesTypeId, CreativeModeTab tab, String identifier) {
+	public FeatureItem<Item> naturalistBackpack(IBackpackDefinition definition, Identifier speciesTypeId, CreativeModeTab tab, String identifier) {
 		return item(() -> ModuleStorage.BACKPACK_INTERFACE.createNaturalistBackpack(definition, speciesTypeId, tab), identifier);
 	}
 
@@ -225,7 +225,7 @@ public class FeatureRegistry implements IFeatureRegistry {
 		return this.featureByRegistry.get(type);
 	}
 
-	public ResourceLocation getModuleId() {
+	public Identifier getModuleId() {
 		return this.moduleId;
 	}
 }

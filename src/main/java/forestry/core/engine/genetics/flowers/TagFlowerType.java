@@ -16,7 +16,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -36,9 +36,9 @@ public class TagFlowerType implements IFlowerType {
 	protected final TagKey<Biome> biomes;
 
 	static final StreamCodec<io.netty.buffer.ByteBuf, TagKey<Block>> BLOCK_TAG_STREAM_CODEC =
-		ResourceLocation.STREAM_CODEC.map(rl -> TagKey.create(Registries.BLOCK, rl), TagKey::location);
+		Identifier.STREAM_CODEC.map(rl -> TagKey.create(Registries.BLOCK, rl), TagKey::location);
 	static final StreamCodec<io.netty.buffer.ByteBuf, TagKey<Biome>> BIOME_TAG_STREAM_CODEC =
-		ResourceLocation.STREAM_CODEC.map(rl -> TagKey.create(Registries.BIOME, rl), TagKey::location);
+		Identifier.STREAM_CODEC.map(rl -> TagKey.create(Registries.BIOME, rl), TagKey::location);
 
 	public static final MapCodec<TagFlowerType> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
 		TagKey.codec(Registries.BLOCK).fieldOf("flowers").forGetter(t -> t.acceptableFlowers),

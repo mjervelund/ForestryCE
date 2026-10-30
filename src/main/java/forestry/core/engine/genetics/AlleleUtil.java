@@ -4,7 +4,7 @@ import forestry.api.core.genetics.IIndividual;
 import forestry.api.core.genetics.ISpecies;
 import forestry.api.core.genetics.ISpeciesType;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nullable;
 
@@ -15,7 +15,7 @@ public class AlleleUtil {
 		if (idString.isEmpty()) {
 			return null;
 		}
-		ResourceLocation id = ResourceLocation.parse(idString);
+		Identifier id = Identifier.parse(idString);
 		return speciesType.getSpecies(id);
 	}
 }

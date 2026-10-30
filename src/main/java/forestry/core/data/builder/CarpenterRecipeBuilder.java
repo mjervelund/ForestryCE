@@ -7,7 +7,7 @@ import net.minecraft.advancements.critereon.ImpossibleTrigger;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -43,15 +43,15 @@ public class CarpenterRecipeBuilder {
 
 	public CarpenterRecipeBuilder recipe(ShapedRecipeBuilder recipe) {
 		RecipeCapture capture = new RecipeCapture();
-		recipe.unlockedBy("impossible", IMPOSSIBLE).save(capture, ResourceLocation.withDefaultNamespace("forestry_carpenter_shaped"));
-		this.recipe = capture.recipe(ResourceLocation.withDefaultNamespace("forestry_carpenter_shaped"), CraftingRecipe.class);
+		recipe.unlockedBy("impossible", IMPOSSIBLE).save(capture, Identifier.withDefaultNamespace("forestry_carpenter_shaped"));
+		this.recipe = capture.recipe(Identifier.withDefaultNamespace("forestry_carpenter_shaped"), CraftingRecipe.class);
 		return this;
 	}
 
 	public CarpenterRecipeBuilder recipe(ShapelessRecipeBuilder recipe) {
 		RecipeCapture capture = new RecipeCapture();
-		recipe.unlockedBy("impossible", IMPOSSIBLE).save(capture, ResourceLocation.withDefaultNamespace("forestry_carpenter_shapeless"));
-		this.recipe = capture.recipe(ResourceLocation.withDefaultNamespace("forestry_carpenter_shapeless"), CraftingRecipe.class);
+		recipe.unlockedBy("impossible", IMPOSSIBLE).save(capture, Identifier.withDefaultNamespace("forestry_carpenter_shapeless"));
+		this.recipe = capture.recipe(Identifier.withDefaultNamespace("forestry_carpenter_shapeless"), CraftingRecipe.class);
 		return this;
 	}
 
@@ -66,7 +66,7 @@ public class CarpenterRecipeBuilder {
 		return this;
 	}
 
-	public void build(RecipeOutput output, ResourceLocation id) {
+	public void build(RecipeOutput output, Identifier id) {
 		output.accept(id, new CarpenterRecipe(id, this.packagingTime, this.liquid == null ? FluidStack.EMPTY : this.liquid, this.box, this.recipe, this.result), null);
 	}
 }

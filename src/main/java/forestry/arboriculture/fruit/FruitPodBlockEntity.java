@@ -17,7 +17,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.CocoaBlock;
@@ -42,7 +42,7 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 	// The id of the fruit reference value, tracked alongside the resolved object for serialization
 	// (IFruit has no id() of its own, and reference chromosomes store the id, not the object).
 	@Nullable
-	private ResourceLocation fruitId = null;
+	private Identifier fruitId = null;
 	private short maturity;
 	private float yield;
 
@@ -72,7 +72,7 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 	@Override
 	public void readData(RegistryFriendlyByteBuf data) {
 		if (data.readBoolean()) {
-			ResourceLocation fruitId = data.readResourceLocation();
+			Identifier fruitId = data.readResourceLocation();
 			IFruit fruit = SpeciesUtil.TREE_TYPE.get().getFruitSafe(fruitId);
 			if (fruit != null) {
 				this.fruit = fruit;
@@ -98,7 +98,7 @@ public class FruitPodBlockEntity extends BlockEntity implements IFruitBearer, IS
 
 		String fruitNbt = nbt.getString(NBT_FRUIT);
 		if (!fruitNbt.isEmpty()) {
-			this.fruitId = ResourceLocation.parse(fruitNbt);
+			this.fruitId = Identifier.parse(fruitNbt);
 			// Nullable lookup so an unregistered/stale id gracefully falls back to cocoa instead of crashing on load.
 			this.fruit = SpeciesUtil.TREE_TYPE.get().getFruitSafe(this.fruitId);
 		}

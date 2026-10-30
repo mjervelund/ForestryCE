@@ -2,7 +2,7 @@ package forestry.api.modules;
 
 import forestry.api.client.IClientModuleHandler;
 import forestry.api.client.plugin.IClientRegistration;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
@@ -20,12 +20,12 @@ public interface IForestryModule {
 	/**
 	 * @return The unique identifier for this module. The namespace should be the modid of the mod adding this module.
 	 */
-	ResourceLocation getId();
+	Identifier getId();
 
 	/**
 	 * @return A list of identifiers of the modules this module requires in order to load (Apiculture, Mail, etc.)
 	 */
-	default List<ResourceLocation> getModuleDependencies() {
+	default List<Identifier> getModuleDependencies() {
 		return List.of();
 	}
 

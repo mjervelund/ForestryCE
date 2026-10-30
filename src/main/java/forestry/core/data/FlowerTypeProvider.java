@@ -9,7 +9,7 @@ import com.google.gson.JsonElement;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BiomeTags;
 
 import com.mojang.serialization.JsonOps;
@@ -33,7 +33,7 @@ import forestry.core.engine.genetics.FlowerTypeManager;
  */
 public class FlowerTypeProvider implements DataProvider {
 	private final PackOutput.PathProvider path;
-	private final Map<ResourceLocation, IFlowerType> pending = new LinkedHashMap<>();
+	private final Map<Identifier, IFlowerType> pending = new LinkedHashMap<>();
 
 	public FlowerTypeProvider(PackOutput output) {
 		this.path = output.createPathProvider(PackOutput.Target.DATA_PACK, "flower_type");
@@ -66,7 +66,7 @@ public class FlowerTypeProvider implements DataProvider {
 		add(ForestryFlowerTypes.SCULK, new TagFlowerType(ForestryTags.Blocks.SCULK_FLOWERS, false));
 	}
 
-	protected void add(ResourceLocation id, IFlowerType type) {
+	protected void add(Identifier id, IFlowerType type) {
 		this.pending.put(id, type);
 	}
 

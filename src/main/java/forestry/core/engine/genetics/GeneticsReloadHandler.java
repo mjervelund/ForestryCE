@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 
@@ -40,7 +40,7 @@ public final class GeneticsReloadHandler {
 			// third-party species types have no mutation recipe type
 			return;
 		}
-		Map<ResourceLocation, S> lookup = new HashMap<>();
+		Map<Identifier, S> lookup = new HashMap<>();
 		for (S species : type.getAllSpecies()) {
 			lookup.put(species.id(), species);
 		}

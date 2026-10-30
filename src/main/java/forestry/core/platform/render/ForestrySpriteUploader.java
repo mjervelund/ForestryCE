@@ -5,7 +5,7 @@ import forestry.api.client.ForestrySprites;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.resources.TextureAtlasHolder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Uploads the forestry gui icon texture sprites to the forestry gui atlas texture.
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @see ForestryTextureManager
  */
 public class ForestrySpriteUploader extends TextureAtlasHolder {
-	public static final ResourceLocation ATLAS_PATH = ForestryConstants.forestry("gui");
+	public static final Identifier ATLAS_PATH = ForestryConstants.forestry("gui");
 
 	public ForestrySpriteUploader(TextureManager manager) {
 		super(manager, ForestrySprites.TEXTURE_ATLAS, ATLAS_PATH);
@@ -21,7 +21,7 @@ public class ForestrySpriteUploader extends TextureAtlasHolder {
 
 	// Public override
 	@Override
-	public TextureAtlasSprite getSprite(ResourceLocation location) {
+	public TextureAtlasSprite getSprite(Identifier location) {
 		return super.getSprite(location);
 	}
 }

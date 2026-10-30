@@ -2,7 +2,7 @@ package forestry.core.features;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import forestry.api.core.genetics.ForestrySpeciesTypes;
 import forestry.api.modules.ForestryModuleIds;
@@ -24,7 +24,7 @@ public class GeneticsRecipeTypes {
 		REGISTRY.recipeType("butterfly_mutation", () -> new MutationRecipe.Serializer(ForestrySpeciesTypes.BUTTERFLY));
 
 	@Nullable
-	public static FeatureRecipeType<MutationRecipe> forType(ResourceLocation speciesTypeId) {
+	public static FeatureRecipeType<MutationRecipe> forType(Identifier speciesTypeId) {
 		if (speciesTypeId.equals(ForestrySpeciesTypes.BEE)) {
 			return BEE_MUTATION;
 		}

@@ -10,7 +10,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -23,25 +23,25 @@ public class SmelterRecipe implements ISmelterRecipe {
 	// which carries the same ingredient plus count and ships the codecs 1.21.1 recipe serialization needs.
 	// The JSON shape is unchanged: an "ingredient" object next to a "count"
 	private static final MapCodec<SmelterRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-		ResourceLocation.CODEC.fieldOf("id").forGetter(SmelterRecipe::getId),
+		Identifier.CODEC.fieldOf("id").forGetter(SmelterRecipe::getId),
 		SizedIngredient.NESTED_CODEC.listOf().fieldOf("inputs").forGetter(SmelterRecipe::getInputs),
 		SizedIngredient.NESTED_CODEC.fieldOf("output").forGetter(recipe -> recipe.output),
 		Codec.INT.fieldOf("processingTime").forGetter(SmelterRecipe::getProcessingTime)
 	).apply(instance, SmelterRecipe::new));
 	private static final StreamCodec<RegistryFriendlyByteBuf, SmelterRecipe> STREAM_CODEC = StreamCodec.composite(
-		ResourceLocation.STREAM_CODEC, SmelterRecipe::getId,
+		Identifier.STREAM_CODEC, SmelterRecipe::getId,
 		SizedIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), SmelterRecipe::getInputs,
 		SizedIngredient.STREAM_CODEC, recipe -> recipe.output,
 		ByteBufCodecs.VAR_INT, SmelterRecipe::getProcessingTime,
 		SmelterRecipe::new
 	);
 
-	private final ResourceLocation id;
+	private final Identifier id;
 	private final List<SizedIngredient> inputs;
 	private final SizedIngredient output;
 	private final int processingTime;
 
-	public SmelterRecipe(ResourceLocation id, List<SizedIngredient> inputs, SizedIngredient output, int processingTime) {
+	public SmelterRecipe(Identifier id, List<SizedIngredient> inputs, SizedIngredient output, int processingTime) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(inputs);
 		Preconditions.checkArgument(!inputs.isEmpty());
@@ -77,7 +77,7 @@ public class SmelterRecipe implements ISmelterRecipe {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return this.id;
 	}
 

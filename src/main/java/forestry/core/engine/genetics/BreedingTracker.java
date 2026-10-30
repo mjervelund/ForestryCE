@@ -16,7 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -41,8 +41,8 @@ public abstract class BreedingTracker extends SavedData implements IBreedingTrac
 	// used for network deserialization
 	public static final String TYPE_KEY = "TYPE";
 
-	private final ResourceLocation typeId;
-	private final Set<ResourceLocation> discoveredSpecies = new HashSet<>();
+	private final Identifier typeId;
+	private final Set<Identifier> discoveredSpecies = new HashSet<>();
 	private final Set<String> discoveredMutations = new HashSet<>();
 	private final Set<String> researchedMutations = new HashSet<>();
 
@@ -51,7 +51,7 @@ public abstract class BreedingTracker extends SavedData implements IBreedingTrac
 	@Nullable
 	private Level level;
 
-	protected BreedingTracker(ResourceLocation typeId) {
+	protected BreedingTracker(Identifier typeId) {
 		this.typeId = typeId;
 	}
 
@@ -74,7 +74,7 @@ public abstract class BreedingTracker extends SavedData implements IBreedingTrac
 	}
 
 	// Sends the given species and mutations to client. Use to sync serverside breeding updates to the client.
-	private void sendUpdate(Collection<ResourceLocation> discoveredSpecies, Collection<String> discoveredMutations, Collection<String> researchedMutations) {
+	private void sendUpdate(Collection<Identifier> discoveredSpecies, Collection<String> discoveredMutations, Collection<String> researchedMutations) {
 		if (this.level != null && this.username != null && this.username.getName() != null) {
 			Player player = this.level.getPlayerByUUID(this.username.getId());
 
@@ -108,17 +108,17 @@ public abstract class BreedingTracker extends SavedData implements IBreedingTrac
 	@OverridingMethodsMustInvokeSuper
 	@Override
 	public void load(CompoundTag nbt) {
-		readValuesFromNBT(nbt, value -> this.discoveredSpecies.add(ResourceLocation.parse(value)), SPECIES_KEY);
+		readValuesFromNBT(nbt, value -> this.discoveredSpecies.add(Identifier.parse(value)), SPECIES_KEY);
 		readValuesFromNBT(nbt, this.discoveredMutations::add, MUTATIONS_KEY);
 		readValuesFromNBT(nbt, this.researchedMutations::add, RESEARCHED_KEY);
 	}
 
 	// helper method to call the three writeValuesToNbt
-	private void writeAllValues(CompoundTag nbt, Collection<ResourceLocation> discoveredSpecies, Collection<String> discoveredMutations, Collection<String> researchedMutations) {
+	private void writeAllValues(CompoundTag nbt, Collection<Identifier> discoveredSpecies, Collection<String> discoveredMutations, Collection<String> researchedMutations) {
 		// Required for network deserialization in PacketGenomeTrackerSync
 		nbt.putString(TYPE_KEY, this.typeId.toString());
 
-		writeValuesToNBT(nbt, Iterables.transform(discoveredSpecies, ResourceLocation::toString), SPECIES_KEY);
+		writeValuesToNBT(nbt, Iterables.transform(discoveredSpecies, Identifier::toString), SPECIES_KEY);
 		writeValuesToNBT(nbt, discoveredMutations, MUTATIONS_KEY);
 		writeValuesToNBT(nbt, researchedMutations, RESEARCHED_KEY);
 	}
@@ -177,7 +177,7 @@ public abstract class BreedingTracker extends SavedData implements IBreedingTrac
 	}
 
 	@Override
-	public Set<ResourceLocation> getDiscoveredSpecies() {
+	public Set<Identifier> getDiscoveredSpecies() {
 		return this.discoveredSpecies;
 	}
 
@@ -193,7 +193,7 @@ public abstract class BreedingTracker extends SavedData implements IBreedingTrac
 
 	@Override
 	public void registerSpecies(ISpecies<?> species) {
-		ResourceLocation speciesId = species.id();
+		Identifier speciesId = species.id();
 
 		discover(species);
 

@@ -18,7 +18,7 @@ import forestry.mail.features.MailBlockEntities;
 import forestry.mail.network.packets.*;
 import forestry.modules.BlankForestryModule;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +35,7 @@ import forestry.mail.letters.MailAddress;
 @ForestryModule
 public class ModuleMail extends BlankForestryModule {
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.MAIL;
 	}
 

@@ -12,7 +12,7 @@ import forestry.core.platform.util.NetworkUtil;
 import forestry.core.platform.util.SoundUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -62,7 +62,7 @@ public class GameTokenWidget extends Widget {
 
 		GuiUtil.drawItemStack(graphics, this.manager.gui, tokenStack, startX + this.xPos + 3, startY + this.yPos + 3);
 
-		ResourceLocation overlayToken = token.getOverlayToken();
+		Identifier overlayToken = token.getOverlayToken();
 
 		if (overlayToken != null) {
 			RenderSystem.disableDepthTest();

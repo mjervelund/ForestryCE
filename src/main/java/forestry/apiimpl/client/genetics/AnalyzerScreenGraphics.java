@@ -24,7 +24,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 	private final int mouseY;
 	private final IIndividual individual;
 	private final IGenome genome;
-	private final ResourceLocation texture;
+	private final Identifier texture;
 
 	private boolean haploid;
 	private int currentX;
@@ -135,7 +135,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 	}
 
 	@Override
-	public void drawFertilityRow(IChromosome<Integer> chromosome, ResourceLocation offspringSprite) {
+	public void drawFertilityRow(IChromosome<Integer> chromosome, Identifier offspringSprite) {
 		TextureAtlasSprite sprite = IForestryClientApi.INSTANCE.getTextureManager().getSprite(offspringSprite);
 
 		drawChromosomeRow(chromosome, (active, c, value, options, text) -> {

@@ -12,7 +12,7 @@ import forestry.mail.letters.MailAddress;
 import forestry.mail.network.packets.PacketPOBoxInfoResponse;
 import forestry.mail.letters.EnumDeliveryState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,7 +22,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 public class PlayerPostalCarrier implements IPostalCarrier {
-	private final ResourceLocation iconID;
+	private final Identifier iconID;
 
 	public PlayerPostalCarrier() {
 		this.iconID = ForestryConstants.forestry("mail/carrier.player");

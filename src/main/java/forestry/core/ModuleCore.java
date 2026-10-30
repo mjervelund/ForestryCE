@@ -36,7 +36,7 @@ import forestry.modules.ModuleUtil;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataSerializer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.bus.api.IEventBus;
@@ -64,7 +64,7 @@ public class ModuleCore extends BlankForestryModule {
 	private static volatile boolean apiInitialized = false;
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.CORE;
 	}
 
@@ -255,7 +255,7 @@ public class ModuleCore extends BlankForestryModule {
 	}
 
 	@Override
-	public List<ResourceLocation> getModuleDependencies() {
+	public List<Identifier> getModuleDependencies() {
 		return List.of();
 	}
 

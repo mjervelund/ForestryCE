@@ -8,7 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -26,7 +26,7 @@ import net.minecraft.resources.ResourceKey;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 
 public class FilteredTank extends StandardTank {
-	private Supplier<Set<ResourceLocation>> filters = Suppliers.ofInstance(Set.of());
+	private Supplier<Set<Identifier>> filters = Suppliers.ofInstance(Set.of());
 
 	public FilteredTank(int capacity) {
 		super(capacity);
@@ -38,7 +38,7 @@ public class FilteredTank extends StandardTank {
 		setValidator(this::fluidMatchesFilter);
 	}
 
-	public FilteredTank setFilter(Supplier<Set<ResourceLocation>> filters) {
+	public FilteredTank setFilter(Supplier<Set<Identifier>> filters) {
 		this.filters = Preconditions.checkNotNull(filters);
 		return this;
 	}
@@ -58,7 +58,7 @@ public class FilteredTank extends StandardTank {
 	}
 
 	public FilteredTank setFilters(Collection<Fluid> filters) {
-		Set<ResourceLocation> set = new HashSet<>();
+		Set<Identifier> set = new HashSet<>();
 		this.filters = () -> set;
 		for (Fluid fluid : filters) {
 			set.add(ModUtil.getRegistryName(fluid));
@@ -80,10 +80,10 @@ public class FilteredTank extends StandardTank {
 
 		ToolTip toolTip = getToolTip();
 		toolTip.clear();
-		Set<ResourceLocation> filters = this.filters.get();
+		Set<Identifier> filters = this.filters.get();
 
 		if (Screen.hasShiftDown() || filters.size() < 5) {
-			for (ResourceLocation filterName : filters) {
+			for (Identifier filterName : filters) {
 				Fluid fluidFilter = BuiltInRegistries.FLUID.get(filterName);
 				if (fluidFilter == Fluids.EMPTY) {
 					continue;

@@ -12,7 +12,7 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
@@ -56,7 +56,7 @@ public class FilledCrateModel implements IUnbakedGeometry<FilledCrateModel> {
 	}
 
 	public static class Loader implements IGeometryLoader<FilledCrateModel> {
-		private static final ResourceLocation FILLED_CRATE_LOCATION = ForestryConstants.forestry("item/filled_crate");
+		private static final Identifier FILLED_CRATE_LOCATION = ForestryConstants.forestry("item/filled_crate");
 
 		@Override
 		public FilledCrateModel read(JsonObject json, JsonDeserializationContext ctx) {
@@ -69,7 +69,7 @@ public class FilledCrateModel implements IUnbakedGeometry<FilledCrateModel> {
 				if (json.has("textures") && json.get("textures").getAsJsonObject().has("layer" + layer)) {
 					elements.add(make2dElement(layer, 3f, 4f, 11f, 12f, 0.002f));
 					// add material
-					ResourceLocation contentsTexture = ResourceLocation.tryParse(GsonHelper.getAsString(GsonHelper.getAsJsonObject(json, "textures"), "layer" + layer));
+					Identifier contentsTexture = Identifier.tryParse(GsonHelper.getAsString(GsonHelper.getAsJsonObject(json, "textures"), "layer" + layer));
 					//noinspection DataFlowIssue
 					Material contentsMaterial = new Material(TextureAtlas.LOCATION_BLOCKS, contentsTexture);
 					textureMap.put("layer" + layer, Either.left(contentsMaterial));

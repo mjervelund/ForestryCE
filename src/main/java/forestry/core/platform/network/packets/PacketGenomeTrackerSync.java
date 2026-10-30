@@ -9,7 +9,7 @@ import forestry.core.platform.network.PacketIdClient;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -32,7 +32,7 @@ public record PacketGenomeTrackerSync(@Nullable CompoundTag nbt) implements Cust
 	public static void handle(PacketGenomeTrackerSync msg, Player player) {
 		if (msg.nbt != null) {
 			String type = msg.nbt.getString(BreedingTracker.TYPE_KEY);
-			ISpeciesType<?, ?> root = IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypeSafe(ResourceLocation.parse(type));
+			ISpeciesType<?, ?> root = IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypeSafe(Identifier.parse(type));
 
 			if (root != null) {
 				IBreedingTracker tracker = root.getBreedingTracker(player.getCommandSenderWorld(), player.getGameProfile());

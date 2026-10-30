@@ -10,7 +10,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 public class StillRecipe implements IStillRecipe {
 	private static final MapCodec<StillRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-		ResourceLocation.CODEC.fieldOf("id").forGetter(StillRecipe::getId),
+		Identifier.CODEC.fieldOf("id").forGetter(StillRecipe::getId),
 		Codec.INT.fieldOf("time").forGetter(StillRecipe::getCyclesPerUnit),
 		FluidStack.CODEC.fieldOf("input").forGetter(StillRecipe::getInput),
 		FluidStack.CODEC.fieldOf("output").forGetter(StillRecipe::getOutput)
@@ -28,12 +28,12 @@ public class StillRecipe implements IStillRecipe {
 		Serializer::fromNetwork
 	);
 
-	private final ResourceLocation id;
+	private final Identifier id;
 	private final int timePerUnit;
 	private final FluidStack input;
 	private final FluidStack output;
 
-	public StillRecipe(ResourceLocation id, int timePerUnit, FluidStack input, FluidStack output) {
+	public StillRecipe(Identifier id, int timePerUnit, FluidStack input, FluidStack output) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(input, "Still recipes need an input. Input was null.");
 		Preconditions.checkNotNull(output, "Still recipes need an output. Output was null.");
@@ -70,7 +70,7 @@ public class StillRecipe implements IStillRecipe {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return this.id;
 	}
 
@@ -96,7 +96,7 @@ public class StillRecipe implements IStillRecipe {
 		}
 
 		private static StillRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-			ResourceLocation id = ResourceLocation.STREAM_CODEC.decode(buffer);
+			Identifier id = Identifier.STREAM_CODEC.decode(buffer);
 			int timePerUnit = ByteBufCodecs.VAR_INT.decode(buffer);
 			FluidStack input = FluidStack.STREAM_CODEC.decode(buffer);
 			FluidStack output = FluidStack.STREAM_CODEC.decode(buffer);
@@ -105,7 +105,7 @@ public class StillRecipe implements IStillRecipe {
 		}
 
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, StillRecipe recipe) {
-			ResourceLocation.STREAM_CODEC.encode(buffer, recipe.id);
+			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.timePerUnit);
 			FluidStack.STREAM_CODEC.encode(buffer, recipe.input);
 			FluidStack.STREAM_CODEC.encode(buffer, recipe.output);

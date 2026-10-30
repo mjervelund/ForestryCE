@@ -21,7 +21,7 @@ import forestry.core.content.sorting.gui.ISelectableProvider;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -47,7 +47,7 @@ public class SpeciesWidget extends Widget implements ISelectableProvider<ISpecie
 		for (ISpeciesType<?, ?> type : IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypes()) {
 			IBreedingTracker tracker = type.getBreedingTracker(manager.minecraft.level, manager.minecraft.player.getGameProfile());
 
-			for (ResourceLocation id : tracker.getDiscoveredSpecies()) {
+			for (Identifier id : tracker.getDiscoveredSpecies()) {
 				ISpecies<?> species = type.getSpeciesSafe(id);
 
 				if (species != null) {

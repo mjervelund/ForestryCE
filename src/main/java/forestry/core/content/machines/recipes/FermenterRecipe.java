@@ -12,7 +12,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -22,7 +22,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 public class FermenterRecipe implements IFermenterRecipe {
 	private static final MapCodec<FermenterRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-		ResourceLocation.CODEC.fieldOf("id").forGetter(FermenterRecipe::getId),
+		Identifier.CODEC.fieldOf("id").forGetter(FermenterRecipe::getId),
 		Ingredient.CODEC_NONEMPTY.fieldOf("resource").forGetter(FermenterRecipe::getInputItem),
 		Codec.INT.fieldOf("fermentationValue").forGetter(FermenterRecipe::getFermentationValue),
 		Codec.FLOAT.fieldOf("modifier").forGetter(FermenterRecipe::getModifier),
@@ -34,14 +34,14 @@ public class FermenterRecipe implements IFermenterRecipe {
 		Serializer::fromNetwork
 	);
 
-	private final ResourceLocation id;
+	private final Identifier id;
 	private final Ingredient resource;
 	private final int fermentationValue;
 	private final float modifier;
 	private final Fluid output;
 	private final FluidStack fluidResource;
 
-	public FermenterRecipe(ResourceLocation id, Ingredient resource, int fermentationValue, float modifier, Fluid output, FluidStack fluidResource) {
+	public FermenterRecipe(Identifier id, Ingredient resource, int fermentationValue, float modifier, Fluid output, FluidStack fluidResource) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(resource, "Fermenter Resource cannot be null!");
 		Preconditions.checkArgument(!resource.isEmpty(), "Fermenter Resource item cannot be empty!");
@@ -56,7 +56,7 @@ public class FermenterRecipe implements IFermenterRecipe {
 		this.fluidResource = fluidResource;
 	}
 
-	public FermenterRecipe(ResourceLocation id, int fermentationValue, float modifier, Fluid output, FluidStack fluidResource) {
+	public FermenterRecipe(Identifier id, int fermentationValue, float modifier, Fluid output, FluidStack fluidResource) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(output, "Fermenter output cannot be null!");
 		Preconditions.checkNotNull(fluidResource, "Fermenter liquid cannot be null!");
@@ -105,7 +105,7 @@ public class FermenterRecipe implements IFermenterRecipe {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return this.id;
 	}
 
@@ -131,7 +131,7 @@ public class FermenterRecipe implements IFermenterRecipe {
 		}
 
 		private static FermenterRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-			ResourceLocation recipeId = ResourceLocation.STREAM_CODEC.decode(buffer);
+			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			Ingredient resource = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
 			int fermentationValue = ByteBufCodecs.VAR_INT.decode(buffer);
 			float modifier = ByteBufCodecs.FLOAT.decode(buffer);
@@ -142,7 +142,7 @@ public class FermenterRecipe implements IFermenterRecipe {
 		}
 
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, FermenterRecipe recipe) {
-			ResourceLocation.STREAM_CODEC.encode(buffer, recipe.id);
+			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.resource);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.fermentationValue);
 			ByteBufCodecs.FLOAT.encode(buffer, recipe.modifier);

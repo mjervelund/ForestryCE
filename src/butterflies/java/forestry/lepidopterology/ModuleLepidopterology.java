@@ -19,7 +19,7 @@ import forestry.lepidopterology.proxy.LepidopterologyClientHandler;
 import forestry.modules.BlankForestryModule;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent;
@@ -56,12 +56,12 @@ public class ModuleLepidopterology extends BlankForestryModule {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.LEPIDOPTEROLOGY;
 	}
 
 	@Override
-	public List<ResourceLocation> getModuleDependencies() {
+	public List<Identifier> getModuleDependencies() {
 		return List.of(ForestryModuleIds.CORE, ForestryModuleIds.ARBORICULTURE);
 	}
 

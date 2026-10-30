@@ -6,7 +6,7 @@ import forestry.api.modules.IForestryModule;
 import forestry.api.modules.IModuleManager;
 import forestry.core.platform.network.PacketRegistry;
 import forestry.core.platform.util.ModUtil;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -18,7 +18,7 @@ import org.objectweb.asm.Type;
 import java.util.*;
 
 public class ForestryModuleManager implements IModuleManager {
-	private final LinkedHashMap<ResourceLocation, IForestryModule> loadedModules = new LinkedHashMap<>();
+	private final LinkedHashMap<Identifier, IForestryModule> loadedModules = new LinkedHashMap<>();
 	private final LinkedHashMap<String, List<IForestryModule>> loadedModulesByMod = new LinkedHashMap<>();
 
 	@Override
@@ -27,7 +27,7 @@ public class ForestryModuleManager implements IModuleManager {
 	}
 
 	@Override
-	public boolean isModuleLoaded(ResourceLocation id) {
+	public boolean isModuleLoaded(Identifier id) {
 		return this.loadedModules.containsKey(id);
 	}
 
@@ -38,7 +38,7 @@ public class ForestryModuleManager implements IModuleManager {
 
 	private void loadModules() {
 		LinkedHashMap<String, List<IForestryModule>> discoveredModules = discoverModules();
-		HashSet<ResourceLocation> discoveredIds = new HashSet<>();
+		HashSet<Identifier> discoveredIds = new HashSet<>();
 		LinkedList<IForestryModule> modulesToLoad = new LinkedList<>();
 
 		for (List<IForestryModule> modModules : discoveredModules.values()) {
@@ -57,7 +57,7 @@ public class ForestryModuleManager implements IModuleManager {
 
 			while (iterator.hasNext()) {
 				IForestryModule module = iterator.next();
-				List<ResourceLocation> dependencies = module.getModuleDependencies();
+				List<Identifier> dependencies = module.getModuleDependencies();
 				List<String> modDependencies = module.getModDependencies();
 
 				if (discoveredIds.containsAll(dependencies)) {
@@ -101,7 +101,7 @@ public class ForestryModuleManager implements IModuleManager {
 	public void init() {
 		loadModules();
 
-		for (Map.Entry<ResourceLocation, IForestryModule> entry : this.loadedModules.entrySet()) {
+		for (Map.Entry<Identifier, IForestryModule> entry : this.loadedModules.entrySet()) {
 			String modId = entry.getKey().getNamespace();
 			IEventBus modBus = ModuleUtil.getModBus(modId);
 			ModContainer mod = ModList.get().getModContainerById(modId).orElseThrow();

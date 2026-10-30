@@ -7,7 +7,7 @@ import forestry.api.core.genetics.alleles.Allele;
 import forestry.api.core.genetics.alleles.IChromosome;
 import forestry.core.platform.util.SpeciesUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HiveDrop implements IHiveDrop {
-	private final ResourceLocation speciesId;
+	private final Identifier speciesId;
 	private final double chance;
 	private final List<ItemStack> bonus;
 	private final double ignobleChance;
@@ -26,7 +26,7 @@ public class HiveDrop implements IHiveDrop {
 	@Nullable
 	private IBeeSpecies species;
 
-	public HiveDrop(double chance, ResourceLocation speciesId, List<ItemStack> bonus, float ignobleChance, Map<IChromosome<?>, Allele<?>> alleles) {
+	public HiveDrop(double chance, Identifier speciesId, List<ItemStack> bonus, float ignobleChance, Map<IChromosome<?>, Allele<?>> alleles) {
 		this.speciesId = speciesId;
 		this.chance = chance;
 		this.bonus = bonus;

@@ -20,7 +20,7 @@ import forestry.core.platform.config.ForestryConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.Level;
@@ -35,7 +35,7 @@ public class SpeciesUtil {
 	public static final Lazy<ITreeSpeciesType> TREE_TYPE = Lazy.of(() -> IForestryApi.INSTANCE.getGeneticManager().getSpeciesType(ForestrySpeciesTypes.TREE, ITreeSpeciesType.class));
 	public static final Lazy<IButterflySpeciesType> BUTTERFLY_TYPE = Lazy.of(() -> IForestryApi.INSTANCE.getGeneticManager().getSpeciesType(ForestrySpeciesTypes.BUTTERFLY, IButterflySpeciesType.class));
 
-	public static ITreeSpecies getTreeSpecies(ResourceLocation id) {
+	public static ITreeSpecies getTreeSpecies(Identifier id) {
 		return TREE_TYPE.get().getSpecies(id);
 	}
 
@@ -43,7 +43,7 @@ public class SpeciesUtil {
 		return TREE_TYPE.get().getAllSpecies();
 	}
 
-	public static IBeeSpecies getBeeSpecies(ResourceLocation id) {
+	public static IBeeSpecies getBeeSpecies(Identifier id) {
 		return BEE_TYPE.get().getSpecies(id);
 	}
 
@@ -64,7 +64,7 @@ public class SpeciesUtil {
 		return type instanceof IButterflySpeciesType butterflyType ? butterflyType : null;
 	}
 
-	public static IButterflySpecies getButterflySpecies(ResourceLocation id) {
+	public static IButterflySpecies getButterflySpecies(Identifier id) {
 		return BUTTERFLY_TYPE.get().getSpecies(id);
 	}
 
@@ -74,7 +74,7 @@ public class SpeciesUtil {
 
 	// Retrieves a species of an arbitrary type by its ID, searching all registered species types. Does not null check.
 	@Nullable
-	public static ISpecies<?> getAnySpecies(ResourceLocation id) {
+	public static ISpecies<?> getAnySpecies(Identifier id) {
 		for (ISpeciesType<?, ?> type : IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypes()) {
 			ISpecies<?> species = type.getSpeciesSafe(id);
 			if (species != null) {
@@ -90,7 +90,7 @@ public class SpeciesUtil {
 	 * @param items         The creative tab item output.
 	 * @param speciesTypeId The ID of the species type to use.
 	 */
-	public static void addTypeToCreativeTab(CreativeModeTab.Output items, ResourceLocation speciesTypeId) {
+	public static void addTypeToCreativeTab(CreativeModeTab.Output items, Identifier speciesTypeId) {
 		ISpeciesType<?, ?> speciesType = IForestryApi.INSTANCE.getGeneticManager().getSpeciesType(speciesTypeId);
 
 		for (ILifeStage stage : speciesType.getLifeStages()) {
@@ -117,7 +117,7 @@ public class SpeciesUtil {
 	}
 
 	@Nullable
-	public static <S extends ISpecies<?>> ImmutableList<AllelePair<?>> mutateSpecies(Level level, BlockPos pos, @Nullable GameProfile profile, IGenome parent1, IGenome parent2, IChromosome<ResourceLocation> speciesChromosome, IMutationChanceGetter<S> chanceGetter) {
+	public static <S extends ISpecies<?>> ImmutableList<AllelePair<?>> mutateSpecies(Level level, BlockPos pos, @Nullable GameProfile profile, IGenome parent1, IGenome parent2, IChromosome<Identifier> speciesChromosome, IMutationChanceGetter<S> chanceGetter) {
 		IGenome firstGenome;
 		IGenome secondGenome;
 

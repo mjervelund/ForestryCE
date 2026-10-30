@@ -13,7 +13,7 @@ import forestry.core.platform.util.NBTUtilForestry;
 import forestry.core.platform.util.NetworkUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalistMenu> extends GuiForestry<C> {
-	private static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller");
+	private static final Identifier SCROLLER_SPRITE = Identifier.withDefaultNamespace("container/creative_inventory/scroller");
 	private static final int INVENTORY_X = 6;
 	private static final int INVENTORY_Y = 6;
 	private static final int INVENTORY_WIDTH = ContainerNaturalistInventory.COLUMNS * 18;
@@ -43,7 +43,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 	private final ISpeciesType<?, ?> speciesType;
 	private final IBreedingTracker breedingTracker;
 	private final ItemStack ledgerIcon;
-	private final HashMap<ResourceLocation, ItemStack> iconStacks = new HashMap<>();
+	private final HashMap<Identifier, ItemStack> iconStacks = new HashMap<>();
 	private final CycleTimer timer = new CycleTimer(0);
 	private boolean scrolling;
 
@@ -287,7 +287,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 
 		private void drawIndividual(GuiGraphics graphics, IIndividual individual, int x, int y) {
 			IGenome genome = individual.getGenome();
-			IChromosome<ResourceLocation> chromosome = individual.getType().getKaryotype().getSpeciesChromosome();
+			IChromosome<Identifier> chromosome = individual.getType().getKaryotype().getSpeciesChromosome();
 			boolean pureBred = genome.getAllelePair(chromosome).isSameAlleles();
 
 			int nextY = drawSpecies(graphics, true, genome.getActiveSpecies(), x, y + 32, pureBred ? 25 : 10);

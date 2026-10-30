@@ -10,12 +10,12 @@ import forestry.core.content.sorting.gui.GuiGeneticFilter;
 import forestry.core.content.sorting.gui.ISelectableProvider;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nullable;
 
 public class SelectionWidget extends Widget {
-	public static final ResourceLocation TEXTURE = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/filter_selection.png");
+	public static final Identifier TEXTURE = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/filter_selection.png");
 	final WidgetScrollBar scrollBar;
 	@Nullable
 	private SelectionLogic<?> logic;

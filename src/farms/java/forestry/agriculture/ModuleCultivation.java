@@ -7,7 +7,7 @@ import forestry.agriculture.features.MinifarmBlockEntities;
 import forestry.agriculture.client.MinifarmClientHandler;
 import forestry.agriculture.minifarm.tiles.AbstractMinifarmBlockEntity;
 import forestry.modules.BlankForestryModule;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -35,7 +35,7 @@ public class ModuleCultivation extends BlankForestryModule {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.CULTIVATION;
 	}
 
@@ -50,7 +50,7 @@ public class ModuleCultivation extends BlankForestryModule {
 	}
 
 	@Override
-	public List<ResourceLocation> getModuleDependencies() {
+	public List<Identifier> getModuleDependencies() {
 		return List.of(ForestryModuleIds.CORE, ForestryModuleIds.FARMING);
 	}
 }

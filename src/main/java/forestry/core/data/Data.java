@@ -17,7 +17,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -53,7 +53,7 @@ public class Data {
 		// Core takes everything the content jars do not, which is the safe direction: an id registered
 		// outside a feature module still gets its item model, and it gets it in the jar that is always
 		// installed. The same set scopes core's models and core's loot, so the two cannot come to disagree
-		Set<ResourceLocation> contentOwned = JarModules.ownedIds(contentModules(contentProviders));
+		Set<Identifier> contentOwned = JarModules.ownedIds(contentModules(contentProviders));
 		DataHelper dataHelper = new DataHelper.Builder(ForestryConstants.MOD_ID, event)
 				.packOutput(output)
 				.entryFilter(id -> !contentOwned.contains(id))
@@ -111,10 +111,10 @@ public class Data {
 	 * @param contentProviders The content jars' entry points, in the order they were loaded
 	 * @return Every module those jars ship
 	 */
-	private static Set<ResourceLocation> contentModules(List<IForestryDataProvider> contentProviders) {
-		Set<ResourceLocation> union = new HashSet<>();
+	private static Set<Identifier> contentModules(List<IForestryDataProvider> contentProviders) {
+		Set<Identifier> union = new HashSet<>();
 		for (IForestryDataProvider provider : contentProviders) {
-			for (ResourceLocation moduleId : provider.moduleIds()) {
+			for (Identifier moduleId : provider.moduleIds()) {
 				// Two jars claiming one module would write the same lang keys and the same loot tables
 				// into both, and load order would decide which the game reads
 				if (!union.add(moduleId)) {

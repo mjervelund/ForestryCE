@@ -22,7 +22,7 @@ import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -30,12 +30,12 @@ import java.util.List;
 
 @JeiPlugin
 public class ApicultureJeiPlugin implements IModPlugin {
-	static final ResourceLocation BACKGROUND = ForestryConstants.forestry("textures/gui/jei/recipes.png");
+	static final Identifier BACKGROUND = ForestryConstants.forestry("textures/gui/jei/recipes.png");
 	static final List<ProductsRecipeCategory> productsCategories = new ArrayList<>();
 	static final List<MutationsRecipeCategory> mutationsCategories = new ArrayList<>();
 
 	@Override
-	public ResourceLocation getPluginUid() {
+	public Identifier getPluginUid() {
 		return ForestryModuleIds.APICULTURE;
 	}
 

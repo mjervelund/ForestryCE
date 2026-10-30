@@ -13,7 +13,7 @@ import forestry.mail.carriers.PostalCarriers;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class MailAddress implements IMailAddress {
 	public static final Codec<MailAddress> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-		ResourceLocation.CODEC.fieldOf("carrier").forGetter(address -> ForestryRegistries.POSTAL_CARRIER.getKey(address.getCarrier())),
+		Identifier.CODEC.fieldOf("carrier").forGetter(address -> ForestryRegistries.POSTAL_CARRIER.getKey(address.getCarrier())),
 		Codec.STRING.optionalFieldOf("name", "").forGetter(MailAddress::getName),
 		UUIDUtil.CODEC.optionalFieldOf("id").forGetter(MailAddress::getPlayerId)
 	).apply(instance, MailAddress::fromCodec));
@@ -59,7 +59,7 @@ public class MailAddress implements IMailAddress {
 		IPostalCarrier carrier = null;
 		GameProfile gameProfile = INVALID_GAME_PROFILE;
 		if (nbt.contains("carrier")) {
-			carrier = ForestryRegistries.POSTAL_CARRIER.get(ResourceLocation.tryParse(nbt.getString("carrier")));
+			carrier = ForestryRegistries.POSTAL_CARRIER.get(Identifier.tryParse(nbt.getString("carrier")));
 		}
 
 		if (carrier == null) {
@@ -81,7 +81,7 @@ public class MailAddress implements IMailAddress {
 		this.gameProfile = gameProfile;
 	}
 
-	private static MailAddress fromCodec(ResourceLocation carrierId, String name, Optional<UUID> id) {
+	private static MailAddress fromCodec(Identifier carrierId, String name, Optional<UUID> id) {
 		IPostalCarrier carrier = ForestryRegistries.POSTAL_CARRIER.get(carrierId);
 		if (carrier == null) {
 			carrier = PostalCarriers.PLAYER.value();

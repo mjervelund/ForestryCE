@@ -13,7 +13,7 @@ import forestry.core.platform.item.FruitItemType;
 import forestry.core.platform.util.SpeciesUtil;
 import forestry.core.platform.registration.FeatureItem;
 import forestry.core.content.backpacks.features.CrateItems;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import thedarkcolour.modkit.data.MKItemModelProvider;
 
@@ -147,7 +147,7 @@ public class ForestryItemModels {
 		models.generic2d(CoreItems.SWORD_KIT.get());
 		models.generic2d(CoreItems.HOE_KIT.get());
 
-		Set<ResourceLocation> vanillaIds = Set.of(
+		Set<Identifier> vanillaIds = Set.of(
 			ForestryTreeSpecies.OAK,
 			ForestryTreeSpecies.DARK_OAK,
 			ForestryTreeSpecies.BIRCH,

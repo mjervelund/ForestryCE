@@ -8,7 +8,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import forestry.apiculture.bees.genetics.ApicultureReloadHandler;
@@ -29,7 +29,7 @@ import forestry.core.engine.genetics.GeneticsReloadHandler;
  * cached in a static field here) since it is keyed against the bee karyotype, which does not exist until the bee
  * species type is registered - see {@link BeeSpeciesDefinition}'s class doc.
  */
-public record BeeSpeciesSyncPacket(Map<ResourceLocation, BeeSpeciesDefinition> definitions) implements CustomPacketPayload {
+public record BeeSpeciesSyncPacket(Map<Identifier, BeeSpeciesDefinition> definitions) implements CustomPacketPayload {
 	@Override
 	public Type<? extends CustomPacketPayload> type() {
 		return ApiculturePacketIds.BEE_SPECIES_SYNC;
@@ -58,7 +58,7 @@ public record BeeSpeciesSyncPacket(Map<ResourceLocation, BeeSpeciesDefinition> d
 		GeneticsReloadHandler.rebuildMutations(Minecraft.getInstance().getConnection().getRecipeManager());
 	}
 
-	private static StreamCodec<RegistryFriendlyByteBuf, Map<ResourceLocation, BeeSpeciesDefinition>> definitionsStreamCodec() {
-		return ByteBufCodecs.map(HashMap::new, ResourceLocation.STREAM_CODEC, BeeSpeciesDefinition.streamCodec());
+	private static StreamCodec<RegistryFriendlyByteBuf, Map<Identifier, BeeSpeciesDefinition>> definitionsStreamCodec() {
+		return ByteBufCodecs.map(HashMap::new, Identifier.STREAM_CODEC, BeeSpeciesDefinition.streamCodec());
 	}
 }

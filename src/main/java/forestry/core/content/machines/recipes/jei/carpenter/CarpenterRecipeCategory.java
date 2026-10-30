@@ -23,7 +23,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -31,7 +31,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import java.util.List;
 
 public class CarpenterRecipeCategory extends ForestryRecipeCategory<ICarpenterRecipe> {
-	private final static ResourceLocation guiTexture = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/carpenter.png");
+	private final static Identifier guiTexture = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/carpenter.png");
 	private final ICraftingGridHelper craftingGridHelper;
 	private final IDrawableAnimated arrow;
 	private final IDrawable tankOverlay;

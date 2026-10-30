@@ -18,7 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -237,7 +237,7 @@ public class LetterScreen extends GuiForestry<LetterMenu> {
 
 		String recipient = SessionVars.getStringVar("mail.letter.recipient");
 		String typeName = SessionVars.getStringVar("mail.letter.carrier");
-		ResourceLocation carrierId = ResourceLocation.tryParse(typeName);
+		Identifier carrierId = Identifier.tryParse(typeName);
 		IPostalCarrier carrier = ForestryRegistries.POSTAL_CARRIER.get(carrierId);
 
 		if (StringUtils.isNotBlank(recipient) && carrier != null) {

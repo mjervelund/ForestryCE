@@ -40,7 +40,7 @@ import forestry.core.platform.util.NetworkUtil;
 import forestry.core.platform.util.SpeciesUtil;
 import forestry.modules.BlankForestryModule;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
@@ -129,13 +129,13 @@ public class ModuleApiculture extends BlankForestryModule {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.APICULTURE;
 	}
 
 	// declared so the load order that carries the reload ordering is stated rather than incidental
 	@Override
-	public List<ResourceLocation> getModuleDependencies() {
+	public List<Identifier> getModuleDependencies() {
 		return List.of(ForestryModuleIds.CORE);
 	}
 
@@ -226,11 +226,11 @@ public class ModuleApiculture extends BlankForestryModule {
 
 		// id-keyed: resolving a specific species happens at render time, so the (possibly
 		// datapack-driven) species list is not needed here.
-		IdentityHashMap<ILifeStage, ResourceLocation> defaultBeeModels = new IdentityHashMap<>();
-		IdentityHashMap<ILifeStage, Map<ResourceLocation, ResourceLocation>> customBeeModels = new IdentityHashMap<>();
+		IdentityHashMap<ILifeStage, Identifier> defaultBeeModels = new IdentityHashMap<>();
+		IdentityHashMap<ILifeStage, Map<Identifier, Identifier>> customBeeModels = new IdentityHashMap<>();
 
 		for (ILifeStage stage : SpeciesUtil.BEE_TYPE.get().getLifeStages()) {
-			ResourceLocation defaultModel = Objects.requireNonNull(impl.getDefaultBeeModel(stage), "IClientRegistration.setDefaultBeeModel has not been called for life stage " + stage.getSerializedName() + ", unable to resolve bee default model");
+			Identifier defaultModel = Objects.requireNonNull(impl.getDefaultBeeModel(stage), "IClientRegistration.setDefaultBeeModel has not been called for life stage " + stage.getSerializedName() + ", unable to resolve bee default model");
 			defaultBeeModels.put(stage, defaultModel);
 			customBeeModels.put(stage, impl.getBeeModels().getOrDefault(stage, Map.of()));
 		}

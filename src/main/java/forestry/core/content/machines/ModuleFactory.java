@@ -12,7 +12,7 @@ import forestry.core.content.machines.network.packets.PacketRecipeTransferUpdate
 import forestry.core.platform.network.PacketIdClient;
 import forestry.core.platform.network.PacketIdServer;
 import forestry.modules.BlankForestryModule;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -53,7 +53,7 @@ public class ModuleFactory extends BlankForestryModule {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return ForestryModuleIds.FACTORY;
 	}
 

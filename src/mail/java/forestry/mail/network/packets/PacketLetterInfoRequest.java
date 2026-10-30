@@ -7,7 +7,7 @@ import forestry.api.mail.IPostalCarrier;
 import forestry.mail.gui.LetterMenu;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 
 public record PacketLetterInfoRequest(String recipientName,
@@ -29,6 +29,6 @@ public record PacketLetterInfoRequest(String recipientName,
 	}
 
 	public static PacketLetterInfoRequest decode(RegistryFriendlyByteBuf buffer) {
-		return new PacketLetterInfoRequest(buffer.readUtf(), ForestryRegistries.POSTAL_CARRIER.get(ResourceLocation.tryParse(buffer.readUtf())));
+		return new PacketLetterInfoRequest(buffer.readUtf(), ForestryRegistries.POSTAL_CARRIER.get(Identifier.tryParse(buffer.readUtf())));
 	}
 }

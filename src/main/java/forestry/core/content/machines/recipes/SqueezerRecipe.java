@@ -11,7 +11,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SqueezerRecipe implements ISqueezerRecipe {
 	private static final MapCodec<SqueezerRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-		ResourceLocation.CODEC.fieldOf("id").forGetter(SqueezerRecipe::getId),
+		Identifier.CODEC.fieldOf("id").forGetter(SqueezerRecipe::getId),
 		Codec.INT.fieldOf("time").forGetter(SqueezerRecipe::getProcessingTime),
 		Ingredient.CODEC_NONEMPTY.listOf().fieldOf("resources").forGetter(SqueezerRecipe::getInputs),
 		// A fluid product nested under "output" (dispatch codec): a plain FluidProduct serializes with no "type" key;
@@ -37,14 +37,14 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 		Serializer::fromNetwork
 	);
 
-	private final ResourceLocation id;
+	private final Identifier id;
 	private final int processingTime;
 	private final List<Ingredient> resources;
 	private final IFluidProduct fluidOutput;
 	private final ItemStack remnants;
 	private final float remnantsChance;
 
-	public SqueezerRecipe(ResourceLocation id, int processingTime, List<Ingredient> resources, IFluidProduct fluidOutput, ItemStack remnants, float remnantsChance) {
+	public SqueezerRecipe(Identifier id, int processingTime, List<Ingredient> resources, IFluidProduct fluidOutput, ItemStack remnants, float remnantsChance) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(resources);
 		Preconditions.checkArgument(!resources.isEmpty());
@@ -90,7 +90,7 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return this.id;
 	}
 
@@ -116,7 +116,7 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 		}
 
 		private static SqueezerRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-			ResourceLocation recipeId = ResourceLocation.STREAM_CODEC.decode(buffer);
+			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			int processingTime = ByteBufCodecs.VAR_INT.decode(buffer);
 			List<Ingredient> resources = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
 			IFluidProduct fluidOutput = IFluidProduct.STREAM_CODEC.decode(buffer);
@@ -127,7 +127,7 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 		}
 
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, SqueezerRecipe recipe) {
-			ResourceLocation.STREAM_CODEC.encode(buffer, recipe.id);
+			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.processingTime);
 			Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.resources);
 			IFluidProduct.STREAM_CODEC.encode(buffer, recipe.fluidOutput);

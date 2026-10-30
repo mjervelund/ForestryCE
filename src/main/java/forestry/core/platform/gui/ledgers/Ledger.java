@@ -12,7 +12,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.List;
@@ -30,8 +30,8 @@ public abstract class Ledger {
 	protected final int maxTextWidth;
 	protected int maxHeight = 24;
 
-	private static final ResourceLocation ledgerTextureRight = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/ledger.png");
-	private static final ResourceLocation ledgerTextureLeft = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/ledger_left.png");
+	private static final Identifier ledgerTextureRight = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/ledger.png");
+	private static final Identifier ledgerTextureLeft = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/ledger_left.png");
 
 	protected final LedgerManager manager;
 
@@ -51,7 +51,7 @@ public abstract class Ledger {
 	protected int x;
 	protected int y;
 
-	private final ResourceLocation texture;
+	private final Identifier texture;
 
 	protected Ledger(LedgerManager manager, String name) {
 		this(manager, name, true, defaultMaxWidth);
@@ -225,7 +225,7 @@ public abstract class Ledger {
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0F);
 	}
 
-	protected void drawSprite(GuiGraphics graphics, ResourceLocation path, int x, int y) {
+	protected void drawSprite(GuiGraphics graphics, Identifier path, int x, int y) {
 		drawSprite(graphics, IForestryClientApi.INSTANCE.getTextureManager().getSprite(path), x, y);
 	}
 
@@ -233,7 +233,7 @@ public abstract class Ledger {
 		drawSprite(graphics, sprite, x, y, ForestrySprites.TEXTURE_ATLAS);
 	}
 
-	protected void drawSprite(GuiGraphics graphics, TextureAtlasSprite sprite, int x, int y, ResourceLocation textureMap) {
+	protected void drawSprite(GuiGraphics graphics, TextureAtlasSprite sprite, int x, int y, Identifier textureMap) {
 		graphics.blit(x, y, 0, 16, 16, sprite);
 	}
 

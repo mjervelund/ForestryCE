@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -96,8 +96,8 @@ public class LeavesModel extends ModelBlockCached<BlockForestryLeaves, LeavesMod
 			species = SpeciesUtil.TREE_TYPE.get().getDefaultSpecies();
 			sprite = IForestryClientApi.INSTANCE.getTreeManager().getLeafSprite(species);
 		}
-		ResourceLocation leafLocation = sprite.get(Boolean.TRUE.equals(extraData.get(LeavesBlockEntity.PROPERTY_POLLINATED)), fancy);
-		ResourceLocation fruitLocation = extraData.get(LeavesBlockEntity.PROPERTY_FRUIT_TEXTURE);
+		Identifier leafLocation = sprite.get(Boolean.TRUE.equals(extraData.get(LeavesBlockEntity.PROPERTY_POLLINATED)), fancy);
+		Identifier fruitLocation = extraData.get(LeavesBlockEntity.PROPERTY_FRUIT_TEXTURE);
 
 		return new Key(ResourceUtil.getBlockSprite(leafLocation), fruitLocation != null ? ResourceUtil.getBlockSprite(fruitLocation) : null, fancy);
 	}

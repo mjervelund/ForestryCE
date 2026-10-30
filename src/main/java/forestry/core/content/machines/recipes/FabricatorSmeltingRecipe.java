@@ -10,7 +10,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 	private static final MapCodec<FabricatorSmeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-		ResourceLocation.CODEC.fieldOf("id").forGetter(FabricatorSmeltingRecipe::getId),
+		Identifier.CODEC.fieldOf("id").forGetter(FabricatorSmeltingRecipe::getId),
 		Ingredient.CODEC_NONEMPTY.fieldOf("resource").forGetter(FabricatorSmeltingRecipe::getInput),
 		FluidStack.CODEC.fieldOf("product").forGetter(FabricatorSmeltingRecipe::getResultFluid),
 		Codec.INT.fieldOf("melting").forGetter(FabricatorSmeltingRecipe::getMeltingPoint)
@@ -29,12 +29,12 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 		Serializer::fromNetwork
 	);
 
-	private final ResourceLocation id;
+	private final Identifier id;
 	private final Ingredient resource;
 	private final FluidStack product;
 	private final int meltingPoint;
 
-	public FabricatorSmeltingRecipe(ResourceLocation id, Ingredient resource, FluidStack molten, int meltingPoint) {
+	public FabricatorSmeltingRecipe(Identifier id, Ingredient resource, FluidStack molten, int meltingPoint) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(resource);
 		Preconditions.checkArgument(!resource.isEmpty());
@@ -67,7 +67,7 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 	}
 
 	@Override
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return this.id;
 	}
 
@@ -93,7 +93,7 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 		}
 
 		private static FabricatorSmeltingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-			ResourceLocation recipeId = ResourceLocation.STREAM_CODEC.decode(buffer);
+			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			Ingredient resource = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
 			FluidStack product = FluidStack.STREAM_CODEC.decode(buffer);
 			int meltingPoint = ByteBufCodecs.VAR_INT.decode(buffer);
@@ -102,7 +102,7 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 		}
 
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, FabricatorSmeltingRecipe recipe) {
-			ResourceLocation.STREAM_CODEC.encode(buffer, recipe.id);
+			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.resource);
 			FluidStack.STREAM_CODEC.encode(buffer, recipe.product);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.meltingPoint);

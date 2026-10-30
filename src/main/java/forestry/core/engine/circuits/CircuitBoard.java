@@ -9,7 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -151,7 +151,7 @@ public class CircuitBoard implements ICircuitBoard {
 
 	@Nullable
 	@Override
-	public ResourceLocation getSocketType() {
+	public Identifier getSocketType() {
 		if (this.layout == null) {
 			return null;
 		}

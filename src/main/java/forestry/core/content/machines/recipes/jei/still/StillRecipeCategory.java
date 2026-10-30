@@ -18,11 +18,11 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public class StillRecipeCategory extends ForestryRecipeCategory<IStillRecipe> {
-	private static final ResourceLocation guiTexture = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/still.png");
+	private static final Identifier guiTexture = ForestryConstants.forestry(Constants.TEXTURE_PATH_GUI + "/still.png");
 
 	private final IDrawable tankOverlay;
 	private final IDrawable icon;

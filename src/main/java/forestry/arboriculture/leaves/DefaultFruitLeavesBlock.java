@@ -10,7 +10,7 @@ import forestry.api.core.genetics.alleles.TreeChromosomes;
 import forestry.arboriculture.features.ArboricultureBlocks;
 import forestry.core.platform.util.BlockUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -90,7 +90,7 @@ public class DefaultFruitLeavesBlock extends AbstractLeavesBlock implements ILea
 		}
 	}
 
-	public ResourceLocation getSpeciesId() {
+	public Identifier getSpeciesId() {
 		return this.type.getSpeciesId();
 	}
 
