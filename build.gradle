@@ -826,7 +826,7 @@ tasks.named('assemble') {
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8'
-	options.compilerArgs << '-Xmaxerrs' << '400'
+	options.compilerArgs << '-Xmaxerrs' << '10000'
 }
 
 idea {
