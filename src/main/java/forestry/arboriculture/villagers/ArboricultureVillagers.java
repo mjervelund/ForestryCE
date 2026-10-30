@@ -1,5 +1,7 @@
 package forestry.arboriculture.villagers;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
+import net.minecraft.network.chat.Component;
 import com.google.common.collect.ImmutableSet;
 import forestry.api.IForestryApi;
 import forestry.api.arboriculture.ITreeSpecies;
@@ -11,7 +13,6 @@ import forestry.core.platform.block.NaturalistChestBlockType;
 import forestry.arboriculture.wood.ForestryWoodType;
 import forestry.arboriculture.features.ArboricultureItems;
 import forestry.core.features.CoreBlocks;
-import forestry.core.platform.villager.VillagerTrade;
 import forestry.core.platform.util.SpeciesUtil;
 import forestry.core.platform.registration.FeatureProvider;
 import forestry.core.platform.registration.IFeatureRegistry;
@@ -25,12 +26,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
@@ -53,83 +52,7 @@ public class ArboricultureVillagers {
 	public static final DeferredHolder<VillagerProfession, VillagerProfession> ARBORIST = PROFESSIONS.register("arborist", () -> {
 		ResourceKey<PoiType> key = Objects.requireNonNull(POI_TREE_CHEST.getKey());
 		Predicate<Holder<PoiType>> jobSitePredicate = poi -> poi.is(key);
-		return new VillagerProfession("arborist", jobSitePredicate, jobSitePredicate, ImmutableSet.of(), ImmutableSet.of(), SoundEvents.VILLAGER_WORK_FISHERMAN);
+		// 26.x trades are data-driven (TradeSets); Forestry's randomized trades are not ported yet
+		return new VillagerProfession(Component.translatable("entity.minecraft.villager.forestry.arborist"), jobSitePredicate, jobSitePredicate, ImmutableSet.of(), ImmutableSet.of(), SoundEvents.VILLAGER_WORK_FISHERMAN, Int2ObjectMaps.emptyMap());
 	});
-
-	public static void villagerTrades(VillagerTradesEvent event) {
-		if (event.getType() == ARBORIST.get()) {
-			Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
-			trades.get(1).add(new GivePlanksForEmeralds(new VillagerTrade.PriceInterval(1, 4), new VillagerTrade.PriceInterval(10, 32), 8, 2, 0F));
-			trades.get(1).add(new GivePollenForEmeralds(new VillagerTrade.PriceInterval(1, 1), new VillagerTrade.PriceInterval(1, 3), TreeLifeStage.SAPLING, 4, 8, 2, 0F));
-
-			trades.get(2).add(new GivePlanksForEmeralds(new VillagerTrade.PriceInterval(1, 4), new VillagerTrade.PriceInterval(10, 32), 8, 6, 0F));
-			trades.get(2).add(new GivePollenForEmeralds(new VillagerTrade.PriceInterval(2, 3), new VillagerTrade.PriceInterval(1, 1), TreeLifeStage.POLLEN, 6, 8, 6, 0F));
-			trades.get(2).add(new VillagerTrade.GiveItemForEmeralds(ArboricultureItems.PROVEN_GRAFTER.item(), new VillagerTrade.PriceInterval(1, 1), new VillagerTrade.PriceInterval(1, 4), 8, 6));
-
-			trades.get(3).add(new GiveLogsForEmeralds(new VillagerTrade.PriceInterval(2, 5), new VillagerTrade.PriceInterval(6, 18), 8, 2, 0F));
-
-			trades.get(3).add(new GiveLogsForEmeralds(new VillagerTrade.PriceInterval(2, 5), new VillagerTrade.PriceInterval(6, 18), 8, 2, 0F));
-
-			trades.get(4).add(new GivePollenForEmeralds(new VillagerTrade.PriceInterval(5, 20), new VillagerTrade.PriceInterval(1, 1), TreeLifeStage.POLLEN, 10, 8, 15, 0F));
-			trades.get(4).add(new GivePollenForEmeralds(new VillagerTrade.PriceInterval(5, 20), new VillagerTrade.PriceInterval(1, 1), TreeLifeStage.SAPLING, 10, 8, 15, 0F));
-		}
-	}
-
-	private record GivePlanksForEmeralds(VillagerTrade.PriceInterval emeraldsPriceInfo,
-										 VillagerTrade.PriceInterval sellingPriceInfo, int maxUses, int xp,
-										 float priceMult) implements VillagerTrades.ItemListing {
-
-		@Override
-		public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
-			ForestryWoodType woodType = ForestryWoodType.getRandom(rand);
-			ItemStack sellStack = IForestryApi.INSTANCE.getTreeManager().getStack(woodType, WoodBlockKind.PLANKS, false);
-			sellStack.setCount(this.sellingPriceInfo.getPrice(rand));
-
-			return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldsPriceInfo.getPrice(rand)), sellStack, this.maxUses, this.xp, this.priceMult);
-		}
-	}
-
-	private record GiveLogsForEmeralds(VillagerTrade.PriceInterval emeraldsPriceInfo,
-									   VillagerTrade.PriceInterval sellingPriceInfo, int maxUses, int xp,
-									   float priceMult) implements VillagerTrades.ItemListing {
-
-		@Override
-		public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
-			ForestryWoodType woodType = ForestryWoodType.getRandom(rand);
-			ItemStack sellStack = IForestryApi.INSTANCE.getTreeManager().getStack(woodType, WoodBlockKind.LOG, false);
-			sellStack.setCount(this.sellingPriceInfo.getPrice(rand));
-
-			return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldsPriceInfo.getPrice(rand)), sellStack, this.maxUses, this.xp, this.priceMult);
-		}
-	}
-
-	private record GivePollenForEmeralds(VillagerTrade.PriceInterval buyingPriceInfo,
-										 VillagerTrade.PriceInterval sellingPriceInfo, ILifeStage stage,
-										 int maxComplexity, int maxUses, int xp,
-										 float priceMult) implements VillagerTrades.ItemListing {
-
-		@Nullable
-		@Override
-		public MerchantOffer getOffer(Entity trader, RandomSource rand) {
-			// todo this could be optimized to just pick random entries from tree species until one with suitable complexity is found
-			// instead of copying the whole thing and then picking once
-			List<ITreeSpecies> registeredSpecies = SpeciesUtil.getAllTreeSpecies();
-			ArrayList<ITreeSpecies> potentialSpecies = new ArrayList<>();
-			for (ITreeSpecies species : registeredSpecies) {
-				if (species.getComplexity() <= this.maxComplexity) {
-					potentialSpecies.add(species);
-				}
-			}
-
-			if (potentialSpecies.isEmpty()) {
-				return null;
-			}
-
-			ITreeSpecies chosenSpecies = potentialSpecies.get(rand.nextInt(potentialSpecies.size()));
-			ItemStack sellStack = chosenSpecies.createStack(this.stage);
-			sellStack.setCount(this.sellingPriceInfo.getPrice(rand));
-
-			return new MerchantOffer(new ItemCost(Items.EMERALD, this.buyingPriceInfo.getPrice(rand)), sellStack, this.maxUses, this.xp, this.priceMult);
-		}
-	}
 }

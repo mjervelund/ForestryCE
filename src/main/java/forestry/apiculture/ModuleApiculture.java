@@ -189,7 +189,6 @@ public class ModuleApiculture extends BlankForestryModule {
 		modBus.addListener(ModuleApiculture::onCommonSetup);
 
 		NeoForge.EVENT_BUS.addListener(ModuleApiculture::registerBrewingRecipes);
-		NeoForge.EVENT_BUS.addListener(ApicultureVillagers::villagerTrades);
 		NeoForge.EVENT_BUS.addListener(ModuleApiculture::onNetherBeeMate);
 		NeoForge.EVENT_BUS.addListener(ModuleApiculture::modifySnifferLoot);
 	}

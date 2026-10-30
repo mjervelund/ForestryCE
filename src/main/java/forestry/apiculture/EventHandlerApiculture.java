@@ -30,7 +30,7 @@ public class EventHandlerApiculture {
 	public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
 		Entity entity = event.getEntity();
 		if (entity instanceof Villager villager) {
-			if (villager.getVillagerData().getProfession().equals(ApicultureVillagers.PROF_BEEKEEPER.get())) {
+			if (villager.getVillagerData().profession().is(ApicultureVillagers.PROF_BEEKEEPER.getKey())) {
 				villager.goalSelector.addGoal(6, new ApiaristAI(villager, 0.6));
 			}
 		}

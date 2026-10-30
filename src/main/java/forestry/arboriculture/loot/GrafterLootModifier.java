@@ -46,15 +46,15 @@ public class GrafterLootModifier extends LootModifier {
 
 	@Override
 	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+		BlockState state = context.getOptional(LootContextParams.BLOCK_STATE);
 		if (state == null || !state.is(BlockTags.LEAVES)) {
 			return generatedLoot;
 		}
-		ItemStack harvestingTool = context.getParamOrNull(LootContextParams.TOOL);
+		ItemStack harvestingTool = context.getOptional(LootContextParams.TOOL);
 		if (harvestingTool == null || harvestingTool.isEmpty()) {
 			return generatedLoot;
 		}
-		Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
+		Entity entity = context.getOptional(LootContextParams.THIS_ENTITY);
 		if (!(entity instanceof Player player)) {
 			return generatedLoot;
 		}
@@ -70,12 +70,12 @@ public class GrafterLootModifier extends LootModifier {
 
 	public void handleLoot(List<ItemStack> generatedLoot, Player player, ItemStack harvestingTool, BlockState state, LootContext context) {
 		Level world = player.level();
-		BlockEntity tileEntity = context.getParamOrNull(LootContextParams.BLOCK_ENTITY);
+		BlockEntity tileEntity = context.getOptional(LootContextParams.BLOCK_ENTITY);
 		ITree tree = getTree(state, tileEntity);
 		if (tree == null) {
 			return;
 		}
-		Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
+		Vec3 origin = context.getOptional(LootContextParams.ORIGIN);
 		if (origin == null) {
 			return;
 		}

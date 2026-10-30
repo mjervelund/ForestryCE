@@ -8,8 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
-import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.util.context.ContextKey;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
@@ -29,13 +29,13 @@ public class CountBlockFunction extends LootItemConditionalFunction {
 	}
 
 	@Override
-	public LootItemFunctionType getType() {
-		return ArboricultureLootFunctions.COUNT.get();
+	public MapCodec<? extends LootItemFunction> codec() {
+		return CODEC;
 	}
 
 	@Override
 	protected ItemStack run(ItemStack stack, LootContext context) {
-		BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
+		BlockState state = context.getOptional(LootContextParams.BLOCK_STATE);
 		if (state == null || !state.hasProperty(AshBlock.AMOUNT)) {
 			return stack;
 		}
@@ -45,7 +45,7 @@ public class CountBlockFunction extends LootItemConditionalFunction {
 	}
 
 	@Override
-	public Set<LootContextParam<?>> getReferencedContextParams() {
+	public Set<ContextKey<?>> getReferencedContextParams() {
 		return ImmutableSet.of(LootContextParams.BLOCK_STATE);
 	}
 }

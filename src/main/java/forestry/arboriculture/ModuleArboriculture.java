@@ -97,7 +97,6 @@ public class ModuleArboriculture extends BlankForestryModule {
 	public void registerEvents(IEventBus modBus) {
 		modBus.addListener(ModuleArboriculture::registerGlobalLootModifiers);
 		modBus.addListener(ArboricultureCreativeTab::addToForestryTab);
-		NeoForge.EVENT_BUS.addListener(ArboricultureVillagers::villagerTrades);
 
 		modBus.addListener(ModuleArboriculture::registerCapabilities);
 		modBus.addListener(ModuleArboriculture::commonSetup);
