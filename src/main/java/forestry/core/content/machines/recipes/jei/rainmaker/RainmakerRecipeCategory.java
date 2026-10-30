@@ -15,7 +15,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -48,7 +48,7 @@ public class RainmakerRecipeCategory extends ForestryRecipeCategory<RainmakerJei
 	}
 
 	@Override
-	public void draw(RainmakerJeiRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+	public void draw(RainmakerJeiRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
 		super.draw(recipe, recipeSlotsView, graphics, mouseX, mouseY);
 		Component effect = getEffectString(recipe);
 		Component speed = Component.translatable("for.jei.rainmaker.speed", recipe.fuel().speed());

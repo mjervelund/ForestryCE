@@ -8,7 +8,7 @@ import forestry.core.platform.gui.widgets.WidgetManager;
 import forestry.core.platform.gui.widgets.WidgetScrollBar;
 import forestry.core.content.sorting.gui.GuiGeneticFilter;
 import forestry.core.content.sorting.gui.ISelectableProvider;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
@@ -47,7 +47,7 @@ public class SelectionWidget extends Widget {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		if (this.logic == null) {
 			return;
 		}

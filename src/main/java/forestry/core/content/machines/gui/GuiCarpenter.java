@@ -4,7 +4,7 @@ import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.TankWidget;
 import forestry.core.content.machines.tiles.TileCarpenter;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -20,7 +20,7 @@ public class GuiCarpenter extends GuiForestryTitled<ContainerCarpenter> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 		int progressScaled = this.tile.getProgressScaled(16);
 		graphics.blit(this.textureFile, this.leftPos + 98, this.topPos + 51 + 16 - progressScaled, 176, 60 + 16 - progressScaled, 4, progressScaled);

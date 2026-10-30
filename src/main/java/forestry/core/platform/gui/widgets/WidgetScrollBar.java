@@ -3,7 +3,7 @@ package forestry.core.platform.gui.widgets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import forestry.core.platform.gui.Drawable;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.util.Mth;
 
 import javax.annotation.Nullable;
@@ -94,7 +94,7 @@ public class WidgetScrollBar extends Widget {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		if (!isVisible()) {
 			return;
 		}

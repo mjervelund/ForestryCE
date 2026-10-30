@@ -11,7 +11,7 @@ import forestry.core.platform.gui.ledgers.Ledger;
 import forestry.core.platform.network.packets.PacketGuiSelectRequest;
 import forestry.core.platform.util.NBTUtilForestry;
 import forestry.core.platform.util.NetworkUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -64,7 +64,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int j, int i) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int j, int i) {
 		super.renderBg(graphics, partialTicks, j, i);
 		this.timer.onDraw();
 		drawScrollBar(graphics);
@@ -104,7 +104,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 		return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
 	}
 
-	private void drawScrollBar(GuiGraphics graphics) {
+	private void drawScrollBar(GuiGraphicsExtractor graphics) {
 		graphics.blit(
 			this.textureFile,
 			this.leftPos + SCROLL_X + 1,
@@ -173,7 +173,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 		return IIndividualHandlerItem.getIndividual(slot.getItem());
 	}
 
-	private void drawUnknownIcon(GuiGraphics graphics, IMutation<?> mutation, int x, int y) {
+	private void drawUnknownIcon(GuiGraphicsExtractor graphics, IMutation<?> mutation, int x, int y) {
 		float chance = mutation.getChance();
 
 		int line;
@@ -237,7 +237,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 		}
 
 		@Override
-		public void draw(GuiGraphics graphics, int y, int x) {
+		public void draw(GuiGraphicsExtractor graphics, int y, int x) {
 			drawBackground(graphics, y, x);
 			GuiUtil.drawItemStack(graphics, GuiNaturalistInventory.this, GuiNaturalistInventory.this.ledgerIcon, x + 4, y + 4);
 
@@ -255,7 +255,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 			}
 		}
 
-		private void drawStatistics(GuiGraphics graphics, int x, int y) {
+		private void drawStatistics(GuiGraphicsExtractor graphics, int x, int y) {
 			int textY = y + 28;
 
 			drawSplitText(
@@ -285,7 +285,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 			}
 		}
 
-		private void drawIndividual(GuiGraphics graphics, IIndividual individual, int x, int y) {
+		private void drawIndividual(GuiGraphicsExtractor graphics, IIndividual individual, int x, int y) {
 			IGenome genome = individual.getGenome();
 			IChromosome<Identifier> chromosome = individual.getType().getKaryotype().getSpeciesChromosome();
 			boolean pureBred = genome.getAllelePair(chromosome).isSameAlleles();
@@ -296,7 +296,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 			}
 		}
 
-		private int drawSpecies(GuiGraphics graphics, boolean analyzed, ISpecies<?> species, int x, int y, int maxMutationCount) {
+		private int drawSpecies(GuiGraphicsExtractor graphics, boolean analyzed, ISpecies<?> species, int x, int y, int maxMutationCount) {
 			if (!analyzed) {
 				drawHeader(graphics, Component.translatable("for.gui.unknown"), x + 22, y);
 				return y + 22;

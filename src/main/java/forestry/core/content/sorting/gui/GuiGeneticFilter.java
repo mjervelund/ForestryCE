@@ -11,7 +11,7 @@ import forestry.core.content.sorting.gui.widgets.RuleWidget;
 import forestry.core.content.sorting.gui.widgets.SelectionWidget;
 import forestry.core.content.sorting.gui.widgets.SpeciesWidget;
 import forestry.core.content.sorting.tiles.TileGeneticFilter;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -103,7 +103,7 @@ public class GuiGeneticFilter extends GuiForestryTitled<ContainerGeneticFilter> 
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

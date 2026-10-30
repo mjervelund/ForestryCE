@@ -4,7 +4,7 @@ import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.SocketWidget;
 import forestry.core.content.machines.tiles.TileCentrifuge;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -18,7 +18,7 @@ public class GuiCentrifuge extends GuiForestryTitled<ContainerCentrifuge> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		int progress = this.tile.getProgressScaled(16);

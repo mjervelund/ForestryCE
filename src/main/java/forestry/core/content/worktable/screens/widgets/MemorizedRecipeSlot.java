@@ -9,7 +9,7 @@ import forestry.core.platform.util.SoundUtil;
 import forestry.core.content.worktable.recipes.RecipeMemory;
 import forestry.core.content.worktable.screens.WorktableMenu;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.item.ItemStack;
 
@@ -29,7 +29,7 @@ public class MemorizedRecipeSlot extends ItemStackWidgetBase {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		super.draw(graphics, startX, startY);
 
 		RenderSystem.disableDepthTest();

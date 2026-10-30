@@ -4,7 +4,7 @@ import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestry;
 import forestry.core.platform.render.ColourProperties;
 import forestry.mail.tradestation.TradeStationBlockEntity;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -19,7 +19,7 @@ public class TradeStationScreen extends GuiForestry<TradeStationMenu> {
 	}
 
 	@Override
-	protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
+	protected void renderLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 		Component name = this.tile.getTitle();
 		graphics.drawString(this.font, name, this.textLayout.getCenteredOffset(name), 6, ColourProperties.INSTANCE.get("gui.mail.text"));
 
@@ -33,7 +33,7 @@ public class TradeStationScreen extends GuiForestry<TradeStationMenu> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
 
 		graphics.drawString(this.font, this.menu.getAddress().getName(), this.leftPos + 19, this.topPos + 22, ColourProperties.INSTANCE.get("gui.mail.text"));

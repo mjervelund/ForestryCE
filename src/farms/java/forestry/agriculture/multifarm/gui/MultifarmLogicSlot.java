@@ -9,7 +9,7 @@ import forestry.core.platform.gui.widgets.Widget;
 import forestry.core.platform.gui.widgets.WidgetManager;
 import forestry.agriculture.multifarm.multiblock.IFarmControllerInternal;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -38,7 +38,7 @@ public class MultifarmLogicSlot extends Widget {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		if (!getStackIndex().isEmpty()) {
 			Minecraft minecraft = Minecraft.getInstance();
 			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);

@@ -7,7 +7,7 @@ import forestry.core.platform.config.ForestryConfig;
 import forestry.mail.carriers.players.POBoxInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
@@ -31,7 +31,7 @@ public class MailboxInfoToast implements Toast {
 	}
 
 	@Override
-	public Visibility render(GuiGraphics graphics, ToastComponent toastComponent, long timeSinceLastVisible) {
+	public Visibility render(GuiGraphicsExtractor graphics, ToastComponent toastComponent, long timeSinceLastVisible) {
 		if (!ForestryConfig.CLIENT.mailAlertsEnabled.get()) {
 			return Visibility.HIDE;
 		}
@@ -88,7 +88,7 @@ public class MailboxInfoToast implements Toast {
 			this.y = pY;
 		}
 
-		public void render(GuiGraphics graphics, int pX, int pY) {
+		public void render(GuiGraphicsExtractor graphics, int pX, int pY) {
 			RenderSystem.enableBlend();
 			// todo verify this sprite is correct
 			graphics.blit(BACKGROUND_SPRITE, pX, pY, 176 + this.x * 26, this.y * 15, 26, 15);

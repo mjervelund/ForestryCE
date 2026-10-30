@@ -5,7 +5,7 @@ import forestry.api.ForestryConstants;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.util.RenderUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -22,7 +22,7 @@ public class GuiBetterButton extends Button {
 	}
 
 	@Override
-	public void renderWidget(GuiGraphics graphics, int mX, int mY, float partialTick) {
+	public void renderWidget(GuiGraphicsExtractor graphics, int mX, int mY, float partialTick) {
 		int xOffset = this.texture.getX();
 		int yOffset = this.texture.getY();
 		int h = this.height;

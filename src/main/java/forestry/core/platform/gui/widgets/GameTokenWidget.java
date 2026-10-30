@@ -10,7 +10,7 @@ import forestry.core.content.escritoire.EscritoireGame;
 import forestry.core.content.escritoire.EscritoireGameToken;
 import forestry.core.platform.util.NetworkUtil;
 import forestry.core.platform.util.SoundUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +38,7 @@ public class GameTokenWidget extends Widget {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		EscritoireGameToken token = getToken();
 		if (token == null) {
 			return;

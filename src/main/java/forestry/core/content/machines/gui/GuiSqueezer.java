@@ -5,7 +5,7 @@ import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.SocketWidget;
 import forestry.core.platform.gui.widgets.TankWidget;
 import forestry.core.content.machines.tiles.TileSqueezer;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -20,7 +20,7 @@ public class GuiSqueezer extends GuiForestryTitled<ContainerSqueezer> {
 	}
 
 	@Override
-	protected void drawWidgets(GuiGraphics graphics) {
+	protected void drawWidgets(GuiGraphicsExtractor graphics) {
 		//TODO: Make this more consistent
 		int progress = this.tile.getProgressScaled(43);
 		graphics.blit(this.textureFile, 75, 41, 176, 60, progress, 18);

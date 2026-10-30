@@ -4,7 +4,7 @@ import forestry.api.core.tooltips.ToolTip;
 import forestry.core.platform.gui.GuiForestry;
 import forestry.core.platform.gui.widgets.IScrollable;
 import forestry.core.content.sorting.gui.ISelectableProvider;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nullable;
@@ -91,7 +91,7 @@ public class SelectionLogic<S> implements IScrollable {
 		return this.widget.isMouseOver(mouseX, mouseY);
 	}
 
-	public void draw(GuiGraphics graphics) {
+	public void draw(GuiGraphicsExtractor graphics) {
 		for (SelectableWidget selectable : this.visible) {
 			selectable.draw(this.widget.gui, graphics);
 		}
@@ -129,7 +129,7 @@ public class SelectionLogic<S> implements IScrollable {
 			this.yPos = yPos;
 		}
 
-		public void draw(GuiForestry gui, GuiGraphics graphics) {
+		public void draw(GuiForestry gui, GuiGraphicsExtractor graphics) {
             SelectionLogic.this.provider.draw(gui, this.selectable, graphics, this.yPos, this.xPos);
 		}
 

@@ -14,7 +14,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -121,7 +121,7 @@ public class ProductsRecipeCategory implements IRecipeCategory<ProductRecipe> {
 	}
 
 	@Override
-	public void draw(ProductRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+	public void draw(ProductRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
 		this.background.draw(graphics);
 		JeiUtil.drawCenteredMulti(graphics, recipe.species.getDisplayName(), SPECIES_SLOT_X + 9, SPECIES_SLOT_Y + 22, 0xffffff);
 	}

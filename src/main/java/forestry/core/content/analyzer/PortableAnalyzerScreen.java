@@ -14,7 +14,7 @@ import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.widgets.WidgetManager;
 import forestry.core.platform.inventory.PortableAnalyzerInventory;
 import forestry.core.platform.render.ColourProperties;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +39,7 @@ public class PortableAnalyzerScreen extends GuiForestry<PortableAnalyzerMenu> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
 		this.widgetManager.clear();
 
@@ -56,7 +56,7 @@ public class PortableAnalyzerScreen extends GuiForestry<PortableAnalyzerMenu> {
 		});
 	}
 
-	private <S extends ISpecies<I>, I extends IIndividual> void drawIndividualInfo(GuiGraphics graphics, int mouseX, int mouseY, int slot, I individual, ILifeStage stage, ItemStack stack) {
+	private <S extends ISpecies<I>, I extends IIndividual> void drawIndividualInfo(GuiGraphicsExtractor graphics, int mouseX, int mouseY, int slot, I individual, ILifeStage stage, ItemStack stack) {
 		ISpeciesType<S, I> type = individual.getType().cast();
 		IAnalyzerPlugin<S, I> plugin = IForestryClientApi.INSTANCE.getGeneticManager().getAnalyzerPlugin(type);
 
@@ -88,7 +88,7 @@ public class PortableAnalyzerScreen extends GuiForestry<PortableAnalyzerMenu> {
 		return -1;
 	}
 
-	public void drawAnalyticsOverview(GuiGraphics graphics) {
+	public void drawAnalyticsOverview(GuiGraphicsExtractor graphics) {
 		this.textLayout.startPage(graphics);
 
 		this.textLayout.newLine();

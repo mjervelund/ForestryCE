@@ -12,7 +12,7 @@ import forestry.mail.carriers.PostalCarriers;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
@@ -59,7 +59,7 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		graphics.drawString(this.font, String.format("%s / %s", this.menu.getPageNumber(), this.menu.getPageCount()), this.leftPos + this.imageWidth - 72, this.topPos + 12, ColourProperties.INSTANCE.get("gui.book"), false);
@@ -83,11 +83,11 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 		}
 	}
 
-	private void drawNoTrade(GuiGraphics graphics, int x, int y) {
+	private void drawNoTrade(GuiGraphicsExtractor graphics, int x, int y) {
 		graphics.drawWordWrap(this.font, Component.translatable("for.gui.mail.notrades"), x, y + 18, 119, ColourProperties.INSTANCE.get("gui.book"));
 	}
 
-	private void drawTradePreview(GuiGraphics graphics, ITradeStationInfo tradeInfo, int x, int y) {
+	private void drawTradePreview(GuiGraphicsExtractor graphics, ITradeStationInfo tradeInfo, int x, int y) {
 		Font font = this.font;
 		graphics.drawString(font, BOLD_UNDERLINE + tradeInfo.address().getName(), x, y, ColourProperties.INSTANCE.get("gui.book"), false);
 

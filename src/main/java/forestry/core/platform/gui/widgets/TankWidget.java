@@ -13,7 +13,7 @@ import forestry.core.platform.gui.IContainerLiquidTanks;
 import forestry.core.platform.gui.IContainerTank;
 import forestry.core.platform.util.ResourceUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -66,7 +66,7 @@ public class TankWidget extends Widget {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		RenderSystem.disableBlend();
 		IFluidTank tank = getTank();
 

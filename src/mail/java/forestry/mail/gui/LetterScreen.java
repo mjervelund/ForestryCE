@@ -15,7 +15,7 @@ import forestry.mail.carriers.PostalCarriers;
 import forestry.mail.inventory.LetterInventory;
 import forestry.mail.network.packets.PacketLetterInfoRequest;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -139,7 +139,7 @@ public class LetterScreen extends GuiForestry<LetterMenu> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 
 		if (!this.isProcessedLetter && !this.checkedSessionVars) {
             this.checkedSessionVars = true;
@@ -182,7 +182,7 @@ public class LetterScreen extends GuiForestry<LetterMenu> {
 		}
 	}
 
-	private void drawTradePreview(GuiGraphics graphics, int x, int y) {
+	private void drawTradePreview(GuiGraphicsExtractor graphics, int x, int y) {
 
 		Component infoString = null;
 		if (this.menu.getTradeInfo() == null) {

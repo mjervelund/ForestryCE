@@ -8,7 +8,7 @@ import forestry.api.core.tooltips.ToolTip;
 import forestry.core.platform.config.SessionVars;
 import forestry.core.platform.gui.GuiForestry;
 import forestry.core.platform.gui.GuiUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.Rect2i;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -126,7 +126,7 @@ public class LedgerManager {
 		return areas;
 	}
 
-	public void drawLedgers(GuiGraphics transform) {
+	public void drawLedgers(GuiGraphicsExtractor transform) {
 		int yPosRight = 8;
 		int yPosLeft = 8;
 		for (Ledger ledger : this.ledgers) {
@@ -171,7 +171,7 @@ public class LedgerManager {
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 
-	public void drawTooltips(GuiGraphics graphics, int mouseX, int mouseY) {
+	public void drawTooltips(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
 		Ledger ledger = getAtPosition(mouseX, mouseY);
 		if (ledger != null && ledger.shouldDrawTooltip()) {
 			ToolTip toolTip = new ToolTip();

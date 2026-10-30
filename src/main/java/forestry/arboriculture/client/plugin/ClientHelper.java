@@ -10,7 +10,7 @@ import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
 
 import javax.annotation.Nullable;
 import java.awt.*;

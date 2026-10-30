@@ -2,7 +2,7 @@ package forestry.core.content.burnbarrel;
 
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -16,7 +16,7 @@ public class GuiBurnBarrel extends GuiForestryTitled<ContainerBurnBarrel> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		// Display the progress arrows

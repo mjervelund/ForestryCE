@@ -10,7 +10,7 @@ import forestry.core.content.escritoire.EscritoireGame;
 import forestry.core.content.escritoire.EscritoireTextSource;
 import forestry.core.content.escritoire.TileEscritoire;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -72,7 +72,7 @@ public class GuiEscritoire extends GuiForestry<ContainerEscritoire> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		for (int i = 0; i <= this.tile.getGame().getBountyLevel() / 4; i++) {

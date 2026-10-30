@@ -21,7 +21,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluids;
@@ -82,7 +82,7 @@ public class MoistenerRecipeCategory extends ForestryRecipeCategory<IMoistenerRe
 	}
 
 	@Override
-	public void draw(IMoistenerRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+	public void draw(IMoistenerRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
 		super.draw(recipe, recipeSlotsView, graphics, mouseX, mouseY);
 		this.arrow.draw(graphics, 78, 2);
 		this.progressBar.draw(graphics, 109, 22);

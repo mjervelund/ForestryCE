@@ -4,7 +4,7 @@ import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.ReservoirWidget;
 import forestry.core.content.machines.tiles.TileFabricator;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -23,7 +23,7 @@ public class GuiFabricator extends GuiForestryTitled<ContainerFabricator> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		int heatScaled = this.tile.getHeatScaled(52);
@@ -38,7 +38,7 @@ public class GuiFabricator extends GuiForestryTitled<ContainerFabricator> {
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+	public void render(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
 		super.render(guiGraphics, mouseX, mouseY, partialTick);
 
 		boolean mouseOverHeatingBar = (

@@ -19,7 +19,7 @@ import forestry.core.platform.render.ColourProperties;
 import forestry.core.content.energy.ForestryEnergyStorage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
@@ -82,7 +82,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
 		super.render(graphics, mouseX, mouseY, partialTicks);
 		renderTooltip(graphics, mouseX, mouseY);
 	}
@@ -182,7 +182,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 	}
 
 	@Override
-	protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
+	protected void renderLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         this.ledgerManager.drawTooltips(graphics, mouseX, mouseY);
 
 		if (this.menu.getCarried().isEmpty()) {
@@ -192,7 +192,7 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 		}
 	}
 
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseX, int mouseY) {
 		drawBackground(graphics);
 
         this.widgetManager.updateWidgets(mouseX - this.leftPos, mouseY - this.topPos);
@@ -207,11 +207,11 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 		bindTexture(this.textureFile);
 	}
 
-	protected void drawBackground(GuiGraphics transform) {
+	protected void drawBackground(GuiGraphicsExtractor transform) {
 		transform.blit(this.textureFile, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
-	protected void drawWidgets(GuiGraphics graphics) {
+	protected void drawWidgets(GuiGraphicsExtractor graphics) {
         this.ledgerManager.drawLedgers(graphics);
         this.widgetManager.drawWidgets(graphics);
 	}

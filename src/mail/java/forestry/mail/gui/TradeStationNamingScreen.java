@@ -6,7 +6,7 @@ import forestry.core.platform.render.ColourProperties;
 import forestry.core.platform.util.NetworkUtil;
 import forestry.mail.network.packets.PacketTraderAddressRequest;
 import forestry.mail.tradestation.TradeStationBlockEntity;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -57,7 +57,7 @@ public class TradeStationNamingScreen extends GuiForestry<TradeStationNamingMenu
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
 
         this.textLayout.startPage(graphics);

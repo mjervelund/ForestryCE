@@ -5,7 +5,7 @@ import forestry.core.content.escritoire.GuiEscritoire;
 import forestry.core.platform.network.packets.PacketGuiSelectRequest;
 import forestry.core.platform.util.NetworkUtil;
 import forestry.core.platform.util.SoundUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 
 public class ProbeButton extends Widget {
@@ -21,7 +21,7 @@ public class ProbeButton extends Widget {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		graphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 		graphics.blit(this.manager.gui.textureFile, startX + this.xPos, startY + this.yPos, 228, this.pressed ? 47 : 22, this.width, this.height);
 	}

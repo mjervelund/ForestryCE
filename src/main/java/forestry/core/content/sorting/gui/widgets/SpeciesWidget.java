@@ -18,7 +18,7 @@ import forestry.core.platform.util.GeneticsUtil;
 import forestry.core.platform.util.SoundUtil;
 import forestry.core.content.sorting.gui.GuiGeneticFilter;
 import forestry.core.content.sorting.gui.ISelectableProvider;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -59,7 +59,7 @@ public class SpeciesWidget extends Widget implements ISelectableProvider<ISpecie
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		int x = this.xPos + startX;
 		int y = this.yPos + startY;
 		IFilterLogic logic = this.gui.getLogic();
@@ -92,7 +92,7 @@ public class SpeciesWidget extends Widget implements ISelectableProvider<ISpecie
 	}
 
 	@Override
-	public void draw(GuiForestry<?> gui, ISpecies<?> selectable, GuiGraphics graphics, int y, int x) {
+	public void draw(GuiForestry<?> gui, ISpecies<?> selectable, GuiGraphicsExtractor graphics, int y, int x) {
 		GuiUtil.drawItemStack(graphics, gui, ITEMS.getOrDefault(selectable, ItemStack.EMPTY), x, y);
 	}
 

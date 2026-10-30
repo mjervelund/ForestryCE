@@ -1,7 +1,7 @@
 package forestry.core.platform.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -35,11 +35,11 @@ public class Drawable {
 		this.textureHeight = textureHeight;
 	}
 
-	public void draw(GuiGraphics graphics, int yOffset, int xOffset) {
+	public void draw(GuiGraphicsExtractor graphics, int yOffset, int xOffset) {
 		draw(graphics, yOffset, this.uWidth, this.vHeight, xOffset);
 	}
 
-	public void draw(GuiGraphics graphics, int yOffset, int width, int height, int xOffset) {
+	public void draw(GuiGraphicsExtractor graphics, int yOffset, int width, int height, int xOffset) {
 		RenderSystem.setShaderTexture(0, this.textureLocation);
 
 		// Enable correct lighting.

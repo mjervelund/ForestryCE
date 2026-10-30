@@ -9,7 +9,7 @@ import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestry;
 import forestry.core.platform.inventory.SolderingIronInventory;
 import forestry.core.platform.render.ColourProperties;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -30,7 +30,7 @@ public class GuiSolderingIron extends GuiForestry<ContainerSolderingIron> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
 
 		ICircuitLayout layout = this.menu.getLayout();

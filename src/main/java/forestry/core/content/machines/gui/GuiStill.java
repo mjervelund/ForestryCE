@@ -4,7 +4,7 @@ import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.TankWidget;
 import forestry.core.content.machines.tiles.TileStill;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -19,7 +19,7 @@ public class GuiStill extends GuiForestryTitled<ContainerStill> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		graphics.blit(this.textureFile, this.leftPos + 81, this.topPos + 57, 176, 60, 14, 14);

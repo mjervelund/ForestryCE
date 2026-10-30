@@ -8,7 +8,7 @@ import forestry.agriculture.minifarm.gui.widgets.GhostItemStackWidget;
 import forestry.agriculture.minifarm.inventory.MinifarmInventory;
 import forestry.agriculture.minifarm.tiles.AbstractMinifarmBlockEntity;
 import forestry.agriculture.multifarm.gui.FarmLedger;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -73,7 +73,7 @@ public class MinifarmScreen extends GuiForestryTitled<MinifarmMenu> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		super.renderBg(graphics, partialTicks, mouseY, mouseX);
 
 		// Fuel remaining

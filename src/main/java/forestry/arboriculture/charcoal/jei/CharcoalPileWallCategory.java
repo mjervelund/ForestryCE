@@ -17,7 +17,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -54,7 +54,7 @@ public class CharcoalPileWallCategory extends ForestryRecipeCategory<ICharcoalPi
 	}
 
 	@Override
-	public void draw(ICharcoalPileWall recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+	public void draw(ICharcoalPileWall recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
 		super.draw(recipe, recipeSlotsView, graphics, mouseX, mouseY);
 		this.flame.draw(graphics, 52, 0);
 		this.flameAnimated.draw(graphics, 52, 0);

@@ -3,7 +3,7 @@ package forestry.apiculture.bees;
 import forestry.core.platform.config.Constants;
 import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.render.EnumTankLevel;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -29,13 +29,13 @@ public class BeeHousingScreen extends GuiForestryTitled<BeeHousingMenu> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
 
 		drawHealthMeter(graphics, this.leftPos + 20, this.topPos + 37, this.delegate.getHealthScaled(46), EnumTankLevel.rateTankLevel(this.delegate.getHealthScaled(100)));
 	}
 
-	private void drawHealthMeter(GuiGraphics graphics, int x, int y, int height, EnumTankLevel rated) {
+	private void drawHealthMeter(GuiGraphicsExtractor graphics, int x, int y, int height, EnumTankLevel rated) {
 		int i = 176 + rated.getLevelScaled(16);
 		int k = 0;
 

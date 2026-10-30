@@ -23,7 +23,7 @@ import mezz.jei.api.registration.ISubtypeRegistration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -157,7 +157,7 @@ public class JeiUtil {
 	}
 
 	// From JEI Bees
-	public static void drawCenteredMulti(GuiGraphics graphics, Component component, float x, float y, int color) {
+	public static void drawCenteredMulti(GuiGraphicsExtractor graphics, Component component, float x, float y, int color) {
 		Font font = Minecraft.getInstance().font;
 		String[] split = component.getString().split(" ");
 
@@ -167,7 +167,7 @@ public class JeiUtil {
 		}
 	}
 
-	private static void drawCentered(GuiGraphics graphics, Font font, String line, float x, float y, int color) {
+	private static void drawCentered(GuiGraphicsExtractor graphics, Font font, String line, float x, float y, int color) {
 		int width = font.width(line);
 
 		graphics.drawString(font, line, x - (width / 2f), y, color, false);

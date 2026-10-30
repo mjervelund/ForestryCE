@@ -8,7 +8,7 @@ import forestry.core.platform.gui.widgets.WidgetManager;
 import forestry.core.platform.render.ColourProperties;
 import forestry.agriculture.minifarm.inventory.MinifarmInventory;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.Slot;
@@ -25,7 +25,7 @@ public class GhostItemStackWidget extends ItemStackWidget {
 	}
 
 	@Override
-	public void draw(GuiGraphics graphics, int startX, int startY) {
+	public void draw(GuiGraphicsExtractor graphics, int startX, int startY) {
 		if (!this.slot.hasItem()) {
 			super.draw(graphics, startX, startY);
 		}

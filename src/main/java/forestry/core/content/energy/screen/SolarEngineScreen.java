@@ -6,7 +6,7 @@ import forestry.core.platform.render.ColourProperties;
 import forestry.core.content.energy.menu.SolarEngineMenu;
 import forestry.core.content.energy.tiles.SolarEngineBlockEntity;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -26,7 +26,7 @@ public class SolarEngineScreen extends EngineScreen<SolarEngineMenu, SolarEngine
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseX, int mouseY) {
 		super.renderBg(graphics, partialTicks, mouseX, mouseY);
 
 		int active = this.engine.getClientActivePanelCount();
@@ -58,7 +58,7 @@ public class SolarEngineScreen extends EngineScreen<SolarEngineMenu, SolarEngine
 		}
 	}
 
-	private void drawRow(GuiGraphics graphics, int row, int offset, Component text, int colour) {
+	private void drawRow(GuiGraphicsExtractor graphics, int row, int offset, Component text, int colour) {
 		graphics.drawString(this.font, text, this.leftPos + TEXT_X, this.topPos + TEXT_TOP + offset + row * TEXT_LINE_HEIGHT, colour, false);
 	}
 

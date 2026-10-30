@@ -6,7 +6,7 @@ import forestry.core.platform.gui.GuiForestryTitled;
 import forestry.core.platform.gui.widgets.TankWidget;
 import forestry.core.platform.render.ColourProperties;
 import forestry.core.content.machines.tiles.TileBottler;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -20,7 +20,7 @@ public class GuiBottler extends GuiForestryTitled<ContainerBottler> {
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseY, int mouseX) {
+	protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int mouseY, int mouseX) {
 		bindTexture(this.textureFile);
 
 		int x = (this.width - this.imageWidth) / 2;

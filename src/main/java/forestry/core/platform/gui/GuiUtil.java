@@ -6,7 +6,7 @@ import forestry.api.core.tooltips.IToolTipProvider;
 import forestry.api.core.tooltips.ToolTip;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
 
 import java.text.NumberFormat;
@@ -16,12 +16,12 @@ import java.util.Optional;
 // todo this stuff should probably be yeeted
 public class GuiUtil {
 	// todo replace with AbstractContainerScreen#renderFloatingItem
-	public static void drawItemStack(GuiGraphics graphics, GuiForestry<?> gui, ItemStack stack, int xPos, int yPos) {
+	public static void drawItemStack(GuiGraphicsExtractor graphics, GuiForestry<?> gui, ItemStack stack, int xPos, int yPos) {
 		drawItemStack(graphics, gui.font(), stack, xPos, yPos);
 	}
 
 	// todo replace with AbstractContainerScreen#renderFloatingItem
-	public static void drawItemStack(GuiGraphics graphics, Font font, ItemStack stack, int xPos, int yPos) {
+	public static void drawItemStack(GuiGraphicsExtractor graphics, Font font, ItemStack stack, int xPos, int yPos) {
 		PoseStack itemRendererStack = graphics.pose();
 		itemRendererStack.pushPose();
 		graphics.renderItem(stack, xPos, yPos);
@@ -30,7 +30,7 @@ public class GuiUtil {
 	}
 
 
-	public static void drawToolTips(GuiGraphics graphics, GuiForestry<?> screen, IToolTipProvider provider, ToolTip toolTips, int mouseX, int mouseY) {
+	public static void drawToolTips(GuiGraphicsExtractor graphics, GuiForestry<?> screen, IToolTipProvider provider, ToolTip toolTips, int mouseX, int mouseY) {
 		if (!toolTips.isEmpty()) {
 			PoseStack pose = graphics.pose();
 			pose.pushPose();
@@ -44,7 +44,7 @@ public class GuiUtil {
 		}
 	}
 
-	public static void drawToolTips(GuiGraphics graphics, GuiForestry<?> gui, Collection<?> objects, int mouseX, int mouseY) {
+	public static void drawToolTips(GuiGraphicsExtractor graphics, GuiForestry<?> gui, Collection<?> objects, int mouseX, int mouseY) {
 		for (Object obj : objects) {
 			if (!(obj instanceof IToolTipProvider provider)) {
 				continue;

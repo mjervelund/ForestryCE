@@ -20,7 +20,7 @@ import forestry.core.platform.util.Translator;
 import it.unimi.dsi.fastutil.objects.ObjectOpenCustomHashSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -40,7 +40,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 	public static final int COLUMN_1 = 78;
 	public static final int COLUMN_2 = 143;
 
-	private final GuiGraphics graphics;
+	private final GuiGraphicsExtractor graphics;
 	private final Font font;
 	private final int mouseX;
 	private final int mouseY;
@@ -52,7 +52,7 @@ public class AnalyzerScreenGraphics<S extends ISpecies<I>, I extends IIndividual
 	private int currentX;
 	private int currentY;
 
-	public AnalyzerScreenGraphics(GuiGraphics graphics, PortableAnalyzerScreen parent, int mouseX, int mouseY, I individual) {
+	public AnalyzerScreenGraphics(GuiGraphicsExtractor graphics, PortableAnalyzerScreen parent, int mouseX, int mouseY, I individual) {
 		this.graphics = graphics;
 		this.font = parent.getMinecraft().font;
 		this.currentX = parent.getGuiLeft() + 12;
