@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -90,10 +89,10 @@ public class BlockGeneticFilter extends BlockForestry implements EntityBlock {
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult rayTraceResult) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult rayTraceResult) {
 		return useWithoutItem(state, worldIn, pos, playerIn, rayTraceResult).consumesAction()
-			? ItemInteractionResult.sidedSuccess(worldIn.isClientSide)
-			: ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			? InteractionResult.SUCCESS
+			: InteractionResult.TRY_WITH_EMPTY_HAND;
 	}
 
 	@Override

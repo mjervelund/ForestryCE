@@ -1,5 +1,6 @@
 package forestry.core.content.backpacks.items;
 
+import net.minecraft.world.InteractionResult;
 import forestry.core.platform.item.ItemForestry;
 import forestry.core.platform.item.ITintedItem;
 import forestry.core.platform.util.ItemStackUtil;
@@ -7,7 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -28,12 +28,12 @@ public class ItemCrated extends ItemForestry implements ITintedItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack heldItem = playerIn.getItemInHand(handIn);
 		if (!worldIn.isClientSide) {
 			ItemStack contained = this.contained.get();
 			if (contained.isEmpty() || heldItem.isEmpty()) {
-				return InteractionResultHolder.pass(heldItem);
+				return InteractionResult.PASS;
 			}
 
 			heldItem.shrink(1);
@@ -42,7 +42,7 @@ public class ItemCrated extends ItemForestry implements ITintedItem {
 			dropStack.setCount(9);
 			ItemStackUtil.dropItemStackAsEntity(dropStack, worldIn, playerIn.getX() - playerIn.getBbWidth() / 2f, playerIn.getY(), playerIn.getZ() - playerIn.getBbWidth() / 2f, 40);
 		}
-		return InteractionResultHolder.success(heldItem);
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override

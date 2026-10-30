@@ -4,6 +4,6 @@
 package forestry.core.data.builder;
 
 import forestry.core.platform.util.FieldsAreNonnullByDefault;
-import net.minecraft.MethodsReturnNonnullByDefault;
+import forestry.core.platform.util.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

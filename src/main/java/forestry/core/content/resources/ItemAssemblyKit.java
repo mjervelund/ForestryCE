@@ -1,7 +1,7 @@
 package forestry.core.content.resources;
 
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -20,13 +20,13 @@ public class ItemAssemblyKit extends ItemForestry {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack heldItem = playerIn.getItemInHand(handIn);
 		if (!worldIn.isClientSide) {
 			heldItem.shrink(1);
 			ItemEntity entity = new ItemEntity(worldIn, playerIn.getX(), playerIn.getY(), playerIn.getZ(), this.assembled.get());
 			worldIn.addFreshEntity(entity);
 		}
-		return InteractionResultHolder.success(heldItem);
+		return InteractionResult.SUCCESS;
 	}
 }

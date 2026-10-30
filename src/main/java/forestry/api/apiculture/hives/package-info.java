@@ -2,6 +2,6 @@
 @MethodsReturnNonnullByDefault
 package forestry.api.apiculture.hives;
 
-import net.minecraft.MethodsReturnNonnullByDefault;
+import forestry.core.platform.util.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

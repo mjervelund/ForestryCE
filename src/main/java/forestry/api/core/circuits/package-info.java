@@ -2,6 +2,6 @@
 @MethodsReturnNonnullByDefault
 package forestry.api.core.circuits;
 
-import net.minecraft.MethodsReturnNonnullByDefault;
+import forestry.core.platform.util.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

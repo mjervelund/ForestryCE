@@ -1,5 +1,6 @@
 package forestry.core.engine.genetics;
 
+import net.minecraft.world.InteractionResult;
 import com.mojang.authlib.GameProfile;
 import forestry.api.IForestryApi;
 import forestry.api.core.genetics.*;
@@ -13,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -58,10 +58,10 @@ public class ItemResearchNote extends ItemForestry {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResult use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack heldItem = playerIn.getItemInHand(handIn);
 		if (worldIn.isClientSide) {
-			return InteractionResultHolder.pass(heldItem);
+			return InteractionResult.PASS;
 		}
 
 		ResearchNote note = new ResearchNote(NBTUtilForestry.getItemStackTag(heldItem));
@@ -69,7 +69,7 @@ public class ItemResearchNote extends ItemForestry {
 			heldItem.shrink(1);
 		}
 
-		return InteractionResultHolder.success(heldItem);
+		return InteractionResult.SUCCESS;
 	}
 
 	@Nullable

@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
@@ -116,20 +115,20 @@ public class FluidContainerItem extends ItemForestry implements ITintedItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
+	public InteractionResult use(Level world, Player player, InteractionHand handIn) {
 		ItemStack heldItem = player.getItemInHand(handIn);
 		DrinkProperties drinkProperties = getDrinkProperties(heldItem);
 		if (drinkProperties != null) {
 			if (player.canEat(false)) {
 				player.startUsingItem(handIn);
-				return new InteractionResultHolder<>(InteractionResult.SUCCESS, heldItem);
+				return InteractionResult.SUCCESS;
 			} else {
-				return new InteractionResultHolder<>(InteractionResult.FAIL, heldItem);
+				return InteractionResult.FAIL;
 			}
 		} else {
 			BlockHitResult target = getPlayerPOVHitResult(world, player, ClipContext.Fluid.SOURCE_ONLY);
 			if (target.getType() != HitResult.Type.BLOCK) {
-				return InteractionResultHolder.pass(heldItem);
+				return InteractionResult.PASS;
 			}
 			ItemStack singleBucket = heldItem.copy();
 			singleBucket.setCount(1);
@@ -143,7 +142,7 @@ public class FluidContainerItem extends ItemForestry implements ITintedItem {
 					heldItem.shrink(1);
 				}
 
-				return InteractionResultHolder.success(heldItem);
+				return InteractionResult.SUCCESS;
 			}
 			return super.use(world, player, handIn);
 		}

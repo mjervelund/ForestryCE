@@ -1,4 +1,4 @@
 @javax.annotation.ParametersAreNonnullByDefault
 @forestry.core.platform.util.FieldsAreNonnullByDefault
-@net.minecraft.MethodsReturnNonnullByDefault
+@forestry.core.platform.util.MethodsReturnNonnullByDefault
 package forestry.lepidopterology.entities;

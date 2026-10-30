@@ -1,10 +1,10 @@
 package forestry.core.platform.item;
 
+import net.minecraft.world.InteractionResult;
 import forestry.core.platform.gui.ContainerItemInventory;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -20,14 +20,14 @@ public abstract class WithScreenItem extends ItemForestry {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn) {
+	public InteractionResult use(Level worldIn, Player player, InteractionHand handIn) {
 		ItemStack stack = player.getItemInHand(handIn);
 
 		if (player instanceof ServerPlayer serverPlayer) {
 			openGui(serverPlayer, stack);
 		}
 
-		return InteractionResultHolder.success(stack);
+		return InteractionResult.SUCCESS;
 	}
 
 	protected void openGui(ServerPlayer serverPlayer, ItemStack heldItem) {

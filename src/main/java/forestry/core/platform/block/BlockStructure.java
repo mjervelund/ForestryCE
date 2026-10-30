@@ -11,7 +11,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -72,10 +71,10 @@ public abstract class BlockStructure extends BlockForestry {
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult hit) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult hit) {
 		return useWithoutItem(state, worldIn, pos, playerIn, hit).consumesAction()
-			? ItemInteractionResult.sidedSuccess(worldIn.isClientSide)
-			: ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			? InteractionResult.SUCCESS
+			: InteractionResult.TRY_WITH_EMPTY_HAND;
 	}
 
 	@Override

@@ -13,7 +13,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -101,14 +100,14 @@ public class BlockBurnBarrel extends BlockForestry implements EntityBlock {
 	// and steel or fire charge, so this path forwards the hand the player actually used and consumes the click,
 	// which also stops flint and steel from placing a fire against the barrel
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!level.isClientSide) {
 			TileBurnBarrel barrel = TileUtil.getTile(level, pos, TileBurnBarrel.class);
 			if (barrel != null) {
 				barrel.openGui((ServerPlayer) player, hand, pos);
 			}
 		}
-		return ItemInteractionResult.sidedSuccess(level.isClientSide);
+		return InteractionResult.SUCCESS;
 	}
 
 	@Nullable

@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -115,13 +114,13 @@ public class BlockBase<P extends Enum<P> & IBlockType> extends BlockForestry imp
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult hit) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult hit) {
 		if (!playerIn.isShiftKeyDown() && FluidUtil.interactWithFluidHandler(playerIn, hand, worldIn, pos, hit.getDirection())) {
-			return ItemInteractionResult.sidedSuccess(worldIn.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 		return useWithoutItem(state, worldIn, pos, playerIn, hit).consumesAction()
-			? ItemInteractionResult.sidedSuccess(worldIn.isClientSide)
-			: ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			? InteractionResult.SUCCESS
+			: InteractionResult.TRY_WITH_EMPTY_HAND;
 	}
 
 	@Nullable

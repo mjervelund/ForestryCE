@@ -7,7 +7,6 @@ import forestry.core.platform.tile.TileUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -73,10 +72,10 @@ public class ItemSmoker extends ItemForestry {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		player.startUsingItem(hand);
 		ItemStack itemStack = player.getItemInHand(hand);
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemStack);
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override

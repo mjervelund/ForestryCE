@@ -8,7 +8,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -67,12 +67,12 @@ public class BlockBigCandle extends Block implements SimpleWaterloggedBlock {
 	}
 
 	/**
-	 * Deviation from 1.20.1: Block#use became useItemOn, which returns an ItemInteractionResult and runs
+	 * Deviation from 1.20.1: Block#use became useItemOn, which returns an InteractionResult and runs
 	 * for an empty hand too. Both branches stay here rather than moving the empty-handed one to
 	 * useWithoutItem, which would also fire while the player holds an unrelated item.
 	 */
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!state.getValue(LIT)
 			&& !player.isShiftKeyDown()
 			&& !state.getValue(WATERLOGGED)) {
@@ -83,7 +83,7 @@ public class BlockBigCandle extends Block implements SimpleWaterloggedBlock {
 					stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
 				}
 				level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
-				return ItemInteractionResult.sidedSuccess(level.isClientSide);
+				return InteractionResult.SUCCESS;
 			} else if (stack.is(Items.FIRE_CHARGE)) {
 				if (!level.isClientSide) {
 					level.setBlock(pos, state.setValue(LIT, true), 3);
@@ -92,15 +92,15 @@ public class BlockBigCandle extends Block implements SimpleWaterloggedBlock {
 					}
 				}
 				level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS);
-				return ItemInteractionResult.sidedSuccess(level.isClientSide);
+				return InteractionResult.SUCCESS;
 			}
 		} else if (state.getValue(LIT) && stack.isEmpty()) {
 			level.setBlock(pos, state.setValue(LIT, false), 3);
 			level.playSound(null, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-			return ItemInteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.SUCCESS;
 		}
 
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.TRY_WITH_EMPTY_HAND;
 	}
 
 	@Override
