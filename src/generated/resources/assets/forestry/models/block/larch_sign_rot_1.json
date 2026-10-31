@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_1",
+  "textures": {
+    "all": "forestry:block/larch_sign",
+    "particle": "forestry:block/larch_planks"
+  }
+}

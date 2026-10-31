@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_hanging_sign_rot_0",
+  "textures": {
+    "all": "forestry:block/chestnut_hanging_sign",
+    "particle": "forestry:block/stripped_chestnut_log"
+  }
+}

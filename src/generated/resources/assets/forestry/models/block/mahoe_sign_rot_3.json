@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_3",
+  "textures": {
+    "all": "forestry:block/mahoe_sign",
+    "particle": "forestry:block/mahoe_planks"
+  }
+}

@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "forestry:block/pear_hanging_sign"
+    "facing=south": {
+      "model": "forestry:block/pear_wall_hanging_sign"
+    },
+    "facing=west": {
+      "model": "forestry:block/pear_wall_hanging_sign",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "forestry:block/pear_wall_hanging_sign",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "forestry:block/pear_wall_hanging_sign",
+      "y": 270
     }
   }
 }

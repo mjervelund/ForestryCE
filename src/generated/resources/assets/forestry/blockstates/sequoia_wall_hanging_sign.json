@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "forestry:block/sequoia_hanging_sign"
+    "facing=south": {
+      "model": "forestry:block/sequoia_wall_hanging_sign"
+    },
+    "facing=west": {
+      "model": "forestry:block/sequoia_wall_hanging_sign",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "forestry:block/sequoia_wall_hanging_sign",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "forestry:block/sequoia_wall_hanging_sign",
+      "y": 270
     }
   }
 }

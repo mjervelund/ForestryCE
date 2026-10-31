@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_3",
+  "textures": {
+    "all": "forestry:block/camelthorn_sign",
+    "particle": "forestry:block/camelthorn_planks"
+  }
+}

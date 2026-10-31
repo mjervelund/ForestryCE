@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_1",
+  "textures": {
+    "all": "forestry:block/papaya_sign",
+    "particle": "forestry:block/papaya_planks"
+  }
+}

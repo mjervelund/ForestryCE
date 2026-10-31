@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_wall_sign",
+  "textures": {
+    "all": "forestry:block/papaya_sign",
+    "particle": "forestry:block/papaya_planks"
+  }
+}
