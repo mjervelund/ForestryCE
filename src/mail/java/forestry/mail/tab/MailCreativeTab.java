@@ -22,7 +22,7 @@ public class MailCreativeTab {
 
 	public static final FeatureCreativeTab MAIL = REGISTRY.creativeTab("mail", tab -> {
 		tab.icon(() -> MailBlocks.BASE.stack(MailBlockType.MAILBOX));
-		tab.displayItems(MailCreativeTab::addMailItems);
+		tab.displayItems(FeatureCreativeTab.unique(MailCreativeTab::addMailItems));
 		tab.withTabsBefore(ForestryCreativeTabs.tabKey("storage"));
 	});
 

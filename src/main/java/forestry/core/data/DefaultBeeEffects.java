@@ -41,7 +41,7 @@ public class DefaultBeeEffects {
 		effects.put(ForestryBeeEffects.SIFTER, new TransformBlockBeeEffect(
 			new ThrottleSettings(true, 550, true, true),
 			List.of(new TransformBlockBeeEffect.Transform(
-				new BlockMatcher.Tag(BlockTags.DIRT),
+				new BlockMatcher.Tag(BlockTags.SUBSTRATE_OVERWORLD),
 				new TransformBlockBeeEffect.To.Fixed(Blocks.COARSE_DIRT.defaultBlockState()),
 				false)),
 			1, 1.0f, Optional.empty()));

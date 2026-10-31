@@ -26,7 +26,7 @@ public class LepidopterologyCreativeTab {
 
 	public static final FeatureCreativeTab LEPIDOPTEROLOGY = REGISTRY.creativeTab("lepidopterology", tab -> {
 		tab.icon(() -> SpeciesUtil.BUTTERFLY_TYPE.get().createStack(ForestryButterflySpecies.MONARCH, ButterflyLifeStage.BUTTERFLY));
-		tab.displayItems(LepidopterologyCreativeTab::addLepidopterologyItems);
+		tab.displayItems(FeatureCreativeTab.unique(LepidopterologyCreativeTab::addLepidopterologyItems));
 		tab.withTabsBefore(ForestryCreativeTabs.tabKey("arboriculture"));
 		tab.withTabsAfter(ForestryCreativeTabs.tabKey("agriculture"));
 	});

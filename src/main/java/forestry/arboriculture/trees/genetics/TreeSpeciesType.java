@@ -134,10 +134,10 @@ public class TreeSpeciesType extends SpeciesType<ITreeSpecies, ITree> implements
 			}
 			if (species != null) {
 				type.setSpecies(species);
-			} else {
-				// Empty at setup before the datapack loads (no species at all, not even the default). Warn instead of
-				// throwing and leave the back-ref for the datapack load to populate; nothing renders in this window.
-				Forestry.LOGGER.warn("ForestryLeafType {} has no tree species with id {} and no default to fall back to (not yet loaded)", type.getSerializedName(), type.getSpeciesId());
+			} else if (!allSpecies.isEmpty()) {
+				// Species are loaded but neither this one nor the default is among them. Warn instead of throwing;
+				// the empty map at setup (before the datapack loads) is expected and stays silent, nothing renders then.
+				Forestry.LOGGER.warn("ForestryLeafType {} has no tree species with id {} and no default to fall back to", type.getSerializedName(), type.getSpeciesId());
 			}
 		}
 	}

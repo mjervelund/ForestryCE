@@ -10,9 +10,7 @@
     {
       "from": "minecraft:water",
       "requires_air_above": true,
-      "to": {
-        "Name": "minecraft:ice"
-      }
+      "to": "minecraft:ice"
     }
   ]
 }

@@ -6,10 +6,8 @@
   "throttle": 550,
   "transforms": [
     {
-      "from": "#minecraft:dirt",
-      "to": {
-        "Name": "minecraft:coarse_dirt"
-      }
+      "from": "#minecraft:substrate_overworld",
+      "to": "minecraft:coarse_dirt"
     }
   ]
 }

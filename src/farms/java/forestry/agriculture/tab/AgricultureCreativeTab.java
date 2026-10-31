@@ -29,7 +29,7 @@ public class AgricultureCreativeTab {
 
 	public static final FeatureCreativeTab AGRICULTURE = REGISTRY.creativeTab("agriculture", tab -> {
 		tab.icon(() -> MinifarmBlocks.MANAGED_PLANTER.stack(MinifarmBlockType.ARBORETUM));
-		tab.displayItems(AgricultureCreativeTab::addAgricultureItems);
+		tab.displayItems(FeatureCreativeTab.unique(AgricultureCreativeTab::addAgricultureItems));
 		tab.withTabsBefore(ForestryCreativeTabs.tabKey("lepidopterology"));
 		tab.withTabsAfter(ForestryCreativeTabs.tabKey("storage"));
 	});

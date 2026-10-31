@@ -43,7 +43,7 @@ public class TransformBlockBeeEffect extends ThrottledBeeEffect {
 
 		BlockState apply(BlockState current);
 
-		/** A fixed state: {@code "to": {"Name": "minecraft:ice"}}. */
+		/** A fixed state: {@code "to": "minecraft:ice"}. */
 		record Fixed(BlockState state) implements To {
 			public static final Codec<Fixed> CODEC = BlockState.CODEC.xmap(Fixed::new, Fixed::state);
 

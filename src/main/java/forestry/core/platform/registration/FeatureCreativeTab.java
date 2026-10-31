@@ -6,9 +6,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackLinkedSet;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class FeatureCreativeTab extends ModFeature {
@@ -22,6 +25,22 @@ public class FeatureCreativeTab extends ModFeature {
 			builder.accept(tab);
 			return tab.build();
 		});
+	}
+
+	/**
+	 * Wraps a tab's item generator so an item listed twice (shared helpers such as genetic basics, the same gear
+	 * listed under two headings, a wood kind without a fireproof variant) is added once: the tab output throws on
+	 * a repeated equal stack, which crashes every creative tab rebuild.
+	 */
+	public static CreativeModeTab.DisplayItemsGenerator unique(CreativeModeTab.DisplayItemsGenerator generator) {
+		return (params, output) -> {
+			Set<ItemStack> seen = ItemStackLinkedSet.createTypeAndComponentsSet();
+			generator.accept(params, (stack, visibility) -> {
+				if (seen.add(stack)) {
+					output.accept(stack, visibility);
+				}
+			});
+		};
 	}
 
 	public CreativeModeTab creativeTab() {

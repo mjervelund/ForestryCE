@@ -1,5 +1,6 @@
 package forestry.core.platform.tab;
 
+import forestry.core.platform.registration.FeatureCreativeTab;
 import forestry.api.ForestryConstants;
 import forestry.api.arboriculture.IWoodType;
 import forestry.api.modules.ForestryModuleIds;
@@ -50,19 +51,19 @@ public class ForestryCreativeTabs {
 
 	public static final FeatureCreativeTab FORESTRY = REGISTRY.creativeTab(ForestryConstants.MOD_ID, tab -> {
 		tab.icon(CoreItems.PORTABLE_ANALYZER::stack);
-		tab.displayItems(ForestryCreativeTabs::addForestryItems);
+		tab.displayItems(FeatureCreativeTab.unique(ForestryCreativeTabs::addForestryItems));
 		tab.withTabsBefore(CreativeModeTabs.SPAWN_EGGS);
 		tab.withTabsAfter(tabKey("building_blocks"), tabKey("storage"), tabKey("apiculture"), tabKey("arboriculture"), tabKey("lepidopterology"));
 	});
 	public static final FeatureCreativeTab BUILDING = REGISTRY.creativeTab("building_blocks", tab -> {
 		tab.icon(() -> CoreBlocks.METAL_PLATING.get(BlockTypeMetalPlating.BLUE).stack());
-		tab.displayItems(ForestryCreativeTabs::addBuildingItems);
+		tab.displayItems(FeatureCreativeTab.unique(ForestryCreativeTabs::addBuildingItems));
 		tab.withTabsBefore(tabKey("forestry"));
 		tab.withTabsAfter(tabKey("apiculture"));
 	});
 	public static final FeatureCreativeTab STORAGE = REGISTRY.creativeTab("storage", tab -> {
 		tab.icon(BackpackItems.MINER_BACKPACK::stack);
-		tab.displayItems(ForestryCreativeTabs::addStorageItems);
+		tab.displayItems(FeatureCreativeTab.unique(ForestryCreativeTabs::addStorageItems));
 		tab.withTabsBefore(tabKey("agriculture"));
 		tab.withTabsAfter(tabKey("mail"));
 	});

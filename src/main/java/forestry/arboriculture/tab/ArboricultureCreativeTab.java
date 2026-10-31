@@ -36,7 +36,7 @@ public class ArboricultureCreativeTab {
 		tab.icon(() -> SpeciesUtil.TREE_TYPE.get().createStack(ForestryTreeSpecies.OAK, TreeLifeStage.SAPLING));
 		tab.withTabsBefore(ForestryCreativeTabs.tabKey("apiculture"));
 		tab.withTabsAfter(ForestryCreativeTabs.tabKey("lepidopterology"));
-		tab.displayItems(ArboricultureCreativeTab::addArboricultureItems);
+		tab.displayItems(FeatureCreativeTab.unique(ArboricultureCreativeTab::addArboricultureItems));
 	});
 
 	static void addArboricultureItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output items) {

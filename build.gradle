@@ -65,6 +65,9 @@ var tekkitExcludes = ['forestry/*/data/**', 'forestry/core/platform/compat/kubej
 		'forestry/core/platform/compat/curios/**', 'forestry/core/platform/compat/ModuleCurios.java',
 		'forestry/core/platform/compat/patchouli/**']
 (['main'] + contentModules).each { sourceSets[it].java { exclude tekkitExcludes } }
+// The datagen service files name the excluded providers; the jars drop them (excludeDatagen), the dev runs
+// load the resource folders, where JPMS rejects a provider class that is not there
+contentModules.each { sourceSets[it].resources { exclude 'META-INF/services/forestry.core.data.IForestryDataProvider' } }
 
 // Everything requires core, and nothing else. Arboriculture moving into core dissolved the only
 // cross-content edge the split ever had - three TreeUtil imports for butterfly pollination
