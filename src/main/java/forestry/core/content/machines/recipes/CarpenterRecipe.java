@@ -16,6 +16,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -49,7 +50,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 		FluidStack.OPTIONAL_CODEC.optionalFieldOf("liquid", FluidStack.EMPTY).forGetter(CarpenterRecipe::getInputFluid),
 		Ingredient.CODEC.fieldOf("box").forGetter(CarpenterRecipe::getBox),
 		CRAFTING_RECIPE_CODEC.fieldOf("recipe").forGetter(CarpenterRecipe::getCraftingGridRecipe),
-		ItemStack.CODEC.optionalFieldOf("result").forGetter(CarpenterRecipe::getOptionalResult)
+		ItemStackTemplate.CODEC.optionalFieldOf("result").forGetter(r -> Optional.ofNullable(r.result))
 	).apply(instance, (id, time, liquid, box, recipe, optResult) -> new CarpenterRecipe(id, time, liquid, box, recipe, optResult.orElse(null))));
 	private static final StreamCodec<RegistryFriendlyByteBuf, CarpenterRecipe> STREAM_CODEC = StreamCodec.of(
 		Serializer::toNetwork,
@@ -62,9 +63,14 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 	private final Ingredient box;
 	private final CraftingRecipe recipe;
 	@Nullable
-	private final ItemStack result;
+	private final ItemStackTemplate result;
 
 	public CarpenterRecipe(Identifier id, int packagingTime, FluidStack liquid, Ingredient box, CraftingRecipe recipe, @Nullable ItemStack result) {
+		this(id, packagingTime, liquid, box, recipe, result == null || result.isEmpty() ? null : ItemStackTemplate.fromStack(result));
+	}
+
+	// Decoded at datapack load, before item components are bound, so the result is kept as a template
+	public CarpenterRecipe(Identifier id, int packagingTime, FluidStack liquid, Ingredient box, CraftingRecipe recipe, @Nullable ItemStackTemplate result) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(liquid, "Recipe liquid cannot be null; use FluidStack.EMPTY for no fluid input");
 		Preconditions.checkNotNull(box);
@@ -103,12 +109,9 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 
 	@Override
 	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
-		return this.result != null ? this.result : this.recipe.assemble(CraftingInput.EMPTY);
+		return this.result != null ? this.result.create() : this.recipe.assemble(CraftingInput.EMPTY);
 	}
 
-	Optional<ItemStack> getOptionalResult() {
-		return Optional.ofNullable(this.result);
-	}
 
 	@Override
 	public boolean matches(FluidStack fluid, ItemStack boxStack, Container craftingInventory, Level level) {
@@ -153,7 +156,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 			CraftingRecipe internal = buffer.readBoolean()
 				? ShapedRecipe.SERIALIZER.streamCodec().decode(buffer)
 				: ShapelessRecipe.SERIALIZER.streamCodec().decode(buffer);
-			ItemStack result = buffer.readBoolean() ? ItemStack.STREAM_CODEC.decode(buffer) : null;
+			ItemStackTemplate result = buffer.readBoolean() ? ItemStackTemplate.STREAM_CODEC.decode(buffer) : null;
 
 			return new CarpenterRecipe(recipeId, packagingTime, liquid, box, internal, result);
 		}
@@ -176,7 +179,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 			boolean hasResult = recipe.result != null;
 			buffer.writeBoolean(hasResult);
 			if (hasResult) {
-				ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+				ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.result);
 			}
 		}
 	}

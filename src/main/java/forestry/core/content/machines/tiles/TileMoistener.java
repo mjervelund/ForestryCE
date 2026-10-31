@@ -334,7 +334,7 @@ public class TileMoistener extends TileBase implements WorldlyContainer, ILiquid
 			ItemStack deposit;
 			MoistenerFuel res = getItem(InventoryMoistener.SLOT_WORKING).typeHolder().getData(ForestryDataMaps.MOISTENER_FUELS);
 			if (res != null) {
-				deposit = res.product().copy();
+				deposit = res.product().create();
 			} else {
 				deposit = getItem(InventoryMoistener.SLOT_WORKING).copy();
 			}

@@ -5,6 +5,7 @@ import forestry.api.core.IFeatureSubtype;
 import forestry.api.core.IItemProvider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -67,6 +68,18 @@ public abstract class FeatureGroup<B extends FeatureGroup.Builder<S, ? extends F
 			return item.stack(amount);
 		}
 		throw new IllegalStateException("This feature group has no item registered for the given sub type to create a stack for.");
+	}
+
+	public ItemStackTemplate template(S subType) {
+		return template(subType, 1);
+	}
+
+	public ItemStackTemplate template(S subType, int amount) {
+		F featureBlock = this.featureByType.get(subType);
+		if (featureBlock instanceof IItemProvider<?> item) {
+			return item.template(amount);
+		}
+		throw new IllegalStateException("This feature group has no item registered for the given sub type to create a template for.");
 	}
 
 	public static abstract class Builder<S extends IFeatureSubtype, G> {

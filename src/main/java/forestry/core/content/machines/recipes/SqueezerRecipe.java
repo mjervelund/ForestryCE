@@ -14,10 +14,12 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SqueezerRecipe implements ISqueezerRecipe {
@@ -29,10 +31,9 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 		// addon-provided dynamic products (tag resolution, random amount, chance) declare their own "type".
 		IFluidProduct.CODEC.fieldOf("output").forGetter(SqueezerRecipe::getFluidOutput),
 		// "remnant" is optional: many squeezer recipes drop no remnant.
-		// ItemStack.CODEC rejects EMPTY at serialization, so map EMPTY to absent.
-		ItemStack.CODEC.optionalFieldOf("remnant").forGetter(r -> r.remnants.isEmpty() ? java.util.Optional.<ItemStack>empty() : java.util.Optional.of(r.remnants)),
+		ItemStackTemplate.CODEC.optionalFieldOf("remnant").forGetter(r -> java.util.Optional.ofNullable(r.remnants)),
 		Codec.FLOAT.fieldOf("chance").forGetter(SqueezerRecipe::getRemnantsChance)
-	).apply(instance, (id, time, resources, fluid, remnants, chance) -> new SqueezerRecipe(id, time, resources, fluid, remnants.orElse(ItemStack.EMPTY), chance)));
+	).apply(instance, (id, time, resources, fluid, remnants, chance) -> new SqueezerRecipe(id, time, resources, fluid, remnants.orElse(null), chance)));
 	private static final StreamCodec<RegistryFriendlyByteBuf, SqueezerRecipe> STREAM_CODEC = StreamCodec.of(
 		Serializer::toNetwork,
 		Serializer::fromNetwork
@@ -42,15 +43,20 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 	private final int processingTime;
 	private final List<Ingredient> resources;
 	private final IFluidProduct fluidOutput;
-	private final ItemStack remnants;
+	@Nullable
+	private final ItemStackTemplate remnants;
 	private final float remnantsChance;
 
 	public SqueezerRecipe(Identifier id, int processingTime, List<Ingredient> resources, IFluidProduct fluidOutput, ItemStack remnants, float remnantsChance) {
+		this(id, processingTime, resources, fluidOutput, remnants.isEmpty() ? null : ItemStackTemplate.fromStack(remnants), remnantsChance);
+	}
+
+	// Decoded at datapack load, before item components are bound, so the remnant is kept as a template
+	public SqueezerRecipe(Identifier id, int processingTime, List<Ingredient> resources, IFluidProduct fluidOutput, @Nullable ItemStackTemplate remnants, float remnantsChance) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(resources);
 		Preconditions.checkArgument(!resources.isEmpty());
 		Preconditions.checkNotNull(fluidOutput);
-		Preconditions.checkNotNull(remnants);
 
 		this.id = id;
 		this.processingTime = processingTime;
@@ -67,7 +73,7 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 
 	@Override
 	public ItemStack getRemnants() {
-		return this.remnants;
+		return this.remnants == null ? ItemStack.EMPTY : this.remnants.create();
 	}
 
 	@Override
@@ -113,7 +119,7 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 			int processingTime = ByteBufCodecs.VAR_INT.decode(buffer);
 			List<Ingredient> resources = Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
 			IFluidProduct fluidOutput = IFluidProduct.STREAM_CODEC.decode(buffer);
-			ItemStack remnants = ItemStack.OPTIONAL_STREAM_CODEC.decode(buffer);
+			ItemStackTemplate remnants = buffer.readBoolean() ? ItemStackTemplate.STREAM_CODEC.decode(buffer) : null;
 			float remnantsChance = ByteBufCodecs.FLOAT.decode(buffer);
 
 			return new SqueezerRecipe(recipeId, processingTime, resources, fluidOutput, remnants, remnantsChance);
@@ -124,7 +130,10 @@ public class SqueezerRecipe implements ISqueezerRecipe {
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.processingTime);
 			Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, recipe.resources);
 			IFluidProduct.STREAM_CODEC.encode(buffer, recipe.fluidOutput);
-			ItemStack.OPTIONAL_STREAM_CODEC.encode(buffer, recipe.remnants);
+			buffer.writeBoolean(recipe.remnants != null);
+			if (recipe.remnants != null) {
+				ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.remnants);
+			}
 			ByteBufCodecs.FLOAT.encode(buffer, recipe.remnantsChance);
 		}
 	}

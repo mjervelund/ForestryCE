@@ -15,11 +15,13 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.fluids.FluidStack;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
@@ -39,27 +41,31 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 
 	private static final MapCodec<SqueezerContainerRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(SqueezerContainerRecipe::getId),
-		ItemStack.CODEC.fieldOf("container").forGetter(SqueezerContainerRecipe::getEmptyContainer),
+		ItemStackTemplate.CODEC.fieldOf("container").forGetter(r -> r.emptyContainer),
 		Codec.INT.fieldOf("time").forGetter(SqueezerContainerRecipe::getProcessingTime),
-		ItemStack.CODEC.fieldOf("remnants").forGetter(SqueezerContainerRecipe::getRemnants),
+		ItemStackTemplate.CODEC.optionalFieldOf("remnants").forGetter(r -> java.util.Optional.ofNullable(r.remnants)),
 		Codec.FLOAT.fieldOf("remnantsChance").forGetter(SqueezerContainerRecipe::getRemnantsChance)
-	).apply(instance, SqueezerContainerRecipe::new));
+	).apply(instance, (id, container, time, remnants, chance) -> new SqueezerContainerRecipe(id, container, time, remnants.orElse(null), chance)));
 	private static final StreamCodec<RegistryFriendlyByteBuf, SqueezerContainerRecipe> STREAM_CODEC = StreamCodec.of(
 		Serializer::toNetwork,
 		Serializer::fromNetwork
 	);
 
 	private final Identifier id;
-	private final ItemStack emptyContainer;
+	private final ItemStackTemplate emptyContainer;
 	private final int processingTime;
-	private final ItemStack remnants;
+	@Nullable
+	private final ItemStackTemplate remnants;
 	private final float remnantsChance;
 
 	public SqueezerContainerRecipe(Identifier id, ItemStack emptyContainer, int processingTime, ItemStack remnants, float remnantsChance) {
+		this(id, ItemStackTemplate.fromNonEmptyStack(emptyContainer), processingTime, remnants.isEmpty() ? null : ItemStackTemplate.fromStack(remnants), remnantsChance);
+	}
+
+	// Decoded at datapack load, before item components are bound, so the stacks are kept as templates
+	public SqueezerContainerRecipe(Identifier id, ItemStackTemplate emptyContainer, int processingTime, @Nullable ItemStackTemplate remnants, float remnantsChance) {
 		this.id = id;
 		Preconditions.checkNotNull(emptyContainer);
-		Preconditions.checkArgument(!emptyContainer.isEmpty());
-		Preconditions.checkNotNull(remnants);
 
 		this.emptyContainer = emptyContainer;
 		this.processingTime = processingTime;
@@ -69,7 +75,7 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 
 	@Override
 	public ItemStack getEmptyContainer() {
-		return this.emptyContainer;
+		return this.emptyContainer.create();
 	}
 
 	@Override
@@ -84,7 +90,7 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 
 	@Override
 	public ItemStack getRemnants() {
-		return this.remnants;
+		return this.remnants == null ? ItemStack.EMPTY : this.remnants.create();
 	}
 
 	@Override
@@ -99,7 +105,7 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 
 	@Override
 	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
-		return this.remnants;
+		return getRemnants();
 	}
 
 	@Override
@@ -122,9 +128,9 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 	private static class Serializer {
 		private static SqueezerContainerRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
-			ItemStack emptyContainer = ItemStack.STREAM_CODEC.decode(buffer);
+			ItemStackTemplate emptyContainer = ItemStackTemplate.STREAM_CODEC.decode(buffer);
 			int processingTime = ByteBufCodecs.VAR_INT.decode(buffer);
-			ItemStack remnants = ItemStack.STREAM_CODEC.decode(buffer);
+			ItemStackTemplate remnants = buffer.readBoolean() ? ItemStackTemplate.STREAM_CODEC.decode(buffer) : null;
 			float remnantsChance = ByteBufCodecs.FLOAT.decode(buffer);
 
 			return new SqueezerContainerRecipe(recipeId, emptyContainer, processingTime, remnants, remnantsChance);
@@ -132,9 +138,12 @@ public class SqueezerContainerRecipe implements ISqueezerContainerRecipe {
 
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, SqueezerContainerRecipe recipe) {
 			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
-			ItemStack.STREAM_CODEC.encode(buffer, recipe.emptyContainer);
+			ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.emptyContainer);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.processingTime);
-			ItemStack.STREAM_CODEC.encode(buffer, recipe.remnants);
+			buffer.writeBoolean(recipe.remnants != null);
+			if (recipe.remnants != null) {
+				ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.remnants);
+			}
 			ByteBufCodecs.FLOAT.encode(buffer, recipe.remnantsChance);
 		}
 	}

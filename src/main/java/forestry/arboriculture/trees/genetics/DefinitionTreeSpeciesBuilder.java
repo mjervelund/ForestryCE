@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
+import javax.annotation.Nullable;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
@@ -42,14 +43,14 @@ public class DefinitionTreeSpeciesBuilder
 	@Override public ITreeGenerator getGenerator() { return bindings.generator(); }
 	@Override public List<BlockState> getVanillaLeafStates() { return bindings.vanillaLeafStates(); }
 	@Override public List<Item> getVanillaSaplingItems() { return bindings.vanillaSaplingItems(); }
-	@Override public ItemStack getDecorativeLeaves() { return bindings.decorativeLeaves(); }
+	@Nullable @Override public ItemStackTemplate getDecorativeLeaves() { return bindings.decorativeLeaves(); }
 
 	// --- tree-specific mutators (all throw) ---
 	@Override public ITreeSpeciesBuilder setTreeFeature(Function<ITreeGenData, Feature> factory) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 	@Override public ITreeSpeciesBuilder setGenerator(ITreeGenerator generator) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 	@Override public ITreeSpeciesBuilder addVanillaStates(Collection<BlockState> states) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 	@Override public ITreeSpeciesBuilder addVanillaSapling(Item sapling) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
-	@Override public ITreeSpeciesBuilder setDecorativeLeaves(ItemStack stack) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
+	@Override public ITreeSpeciesBuilder setDecorativeLeaves(@Nullable ItemStackTemplate template) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 	@Override public ITreeSpeciesBuilder setWoodType(IWoodType woodType) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 	@Override public ITreeSpeciesBuilder setRarity(float rarity) { throw new UnsupportedOperationException(READ_ONLY_MESSAGE); }
 }

@@ -44,8 +44,9 @@ public class ModuleFarming extends BlankForestryModule {
 		event.register(ForestryDataMaps.FARM_FERTILIZERS);
 	}
 
+	// Farm types are built from item stacks (icons, soils, germlings), so they wait for component binding
 	@Override
-	public void applyPluginRegistration() {
+	public void applyComponentBoundRegistration() {
 		FarmingRegistration registration = new FarmingRegistration();
 
 		for (IForestryPlugin plugin : PluginManager.getLoadedPlugins()) {

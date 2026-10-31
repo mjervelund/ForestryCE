@@ -78,9 +78,9 @@ public class ForestryDataMapProvider extends DataMapProvider {
 		Builder<MoistenerFuel, Item> fuels = builder(ForestryDataMaps.MOISTENER_FUELS);
 
 		// Each entry names the item the working slot leaves behind, so the three form a chain
-		fuels.add(Items.WHEAT.builtInRegistryHolder(), new MoistenerFuel(CoreItems.MOULDY_WHEAT.stack(), 0, 300), false);
-		fuels.add(CoreItems.MOULDY_WHEAT.item().builtInRegistryHolder(), new MoistenerFuel(CoreItems.DECAYING_WHEAT.stack(), 1, 600), false);
-		fuels.add(CoreItems.DECAYING_WHEAT.item().builtInRegistryHolder(), new MoistenerFuel(CoreItems.MULCH.stack(), 2, 900), false);
+		fuels.add(Items.WHEAT.builtInRegistryHolder(), new MoistenerFuel(CoreItems.MOULDY_WHEAT.template(), 0, 300), false);
+		fuels.add(CoreItems.MOULDY_WHEAT.item().builtInRegistryHolder(), new MoistenerFuel(CoreItems.DECAYING_WHEAT.template(), 1, 600), false);
+		fuels.add(CoreItems.DECAYING_WHEAT.item().builtInRegistryHolder(), new MoistenerFuel(CoreItems.MULCH.template(), 2, 900), false);
 	}
 
 	private void gatherRainmakerFuels() {

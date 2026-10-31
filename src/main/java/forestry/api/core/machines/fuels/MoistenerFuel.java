@@ -3,7 +3,7 @@ package forestry.api.core.machines.fuels;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 /**
  * Data map value for items usable as a resource by the Moistener.
@@ -12,9 +12,9 @@ import net.minecraft.world.item.ItemStack;
  * @param stage          What stage this product represents. Resources with lower stage value are consumed first
  * @param moistenerValue How much this item contributes to the final product of the moistener (i.e. mycelium)
  */
-public record MoistenerFuel(ItemStack product, int stage, int moistenerValue) {
+public record MoistenerFuel(ItemStackTemplate product, int stage, int moistenerValue) {
 	public static final Codec<MoistenerFuel> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-			ItemStack.CODEC.fieldOf("product").forGetter(MoistenerFuel::product),
+			ItemStackTemplate.CODEC.fieldOf("product").forGetter(MoistenerFuel::product),
 			Codec.INT.fieldOf("stage").forGetter(MoistenerFuel::stage),
 			Codec.INT.fieldOf("moistener_value").forGetter(MoistenerFuel::moistenerValue)
 	).apply(inst, MoistenerFuel::new));

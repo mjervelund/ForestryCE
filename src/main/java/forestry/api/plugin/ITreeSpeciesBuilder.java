@@ -8,6 +8,7 @@ import forestry.api.arboriculture.genetics.ITreeSpeciesType;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
@@ -56,10 +57,18 @@ public interface ITreeSpeciesBuilder extends ISpeciesBuilder<ITreeSpeciesType, I
 	 * The decorative form has no genome or block entity which is better for performance, but has no functionality.
 	 * Calling this method is not required but highly recommended.
 	 *
-	 * @param stack The item form of the decorative leaves for this species.
+	 * @param template The item form of the decorative leaves for this species, or null for none.
 	 * @return The decorative form of this species's leaves block.
 	 */
-	ITreeSpeciesBuilder setDecorativeLeaves(ItemStack stack);
+	ITreeSpeciesBuilder setDecorativeLeaves(@Nullable ItemStackTemplate template);
+
+	/**
+	 * Stack form of {@link #setDecorativeLeaves(ItemStackTemplate)}. Item stacks cannot be created before item
+	 * components are bound, which is after plugin registration, so prefer the template.
+	 */
+	default ITreeSpeciesBuilder setDecorativeLeaves(ItemStack stack) {
+		return setDecorativeLeaves(stack.isEmpty() ? null : ItemStackTemplate.fromStack(stack));
+	}
 
 	/**
 	 * Overrides the wood type set in {@link IArboricultureRegistration#registerSpecies}.
@@ -90,7 +99,8 @@ public interface ITreeSpeciesBuilder extends ISpeciesBuilder<ITreeSpeciesType, I
 
 	List<Item> getVanillaSaplingItems();
 
-	ItemStack getDecorativeLeaves();
+	@Nullable
+	ItemStackTemplate getDecorativeLeaves();
 
 	float getRarity();
 }

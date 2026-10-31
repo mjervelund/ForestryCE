@@ -143,10 +143,14 @@ public class ModuleCore extends BlankForestryModule {
 
 	// 26.x binds item components only after the server (or, on a client, the joined server) loads its
 	// data, so ItemStacks cannot be created during setup. Circuits are registered against stacks, so
-	// they are registered the first time components are bound instead of in applyPluginRegistration.
+	// they (and module registrations that build stacks, e.g. farm types) are registered the first time
+	// components are bound instead of in applyPluginRegistration.
 	private static synchronized void onComponentsBound(DefaultDataComponentsBoundEvent event) {
 		if (!circuitsRegistered) {
 			PluginManager.registerCircuits();
+			for (IForestryModule module : IForestryApi.INSTANCE.getModuleManager().getLoadedModules()) {
+				module.applyComponentBoundRegistration();
+			}
 			circuitsRegistered = true;
 		}
 	}

@@ -91,6 +91,14 @@ public interface IForestryModule {
 	}
 
 	/**
+	 * Called once, in module load order, the first time item data components are bound (26.x binds them after the
+	 * server's data load, so item stacks cannot be created in {@link #applyPluginRegistration}). Used for
+	 * registrations that build item stacks, such as farm types.
+	 */
+	default void applyComponentBoundRegistration() {
+	}
+
+	/**
 	 * Called during client plugin registration after {@link #applyPluginRegistration}. Modules build
 	 * their client manager from the assembled registration and install it here.
 	 *

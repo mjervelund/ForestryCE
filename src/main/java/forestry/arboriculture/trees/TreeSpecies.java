@@ -29,6 +29,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
@@ -46,7 +47,8 @@ public class TreeSpecies extends Species<ITreeSpeciesType, ITree> implements ITr
 	private final ITreeGenerator generator;
 	private final List<BlockState> vanillaLeafStates;
 	private final List<Item> vanillaSaplingItems;
-	private final ItemStack decorativeLeaves;
+	@Nullable
+	private final ItemStackTemplate decorativeLeaves;
 	private final float rarity;
 
 	public TreeSpecies(Identifier id, ITreeSpeciesType speciesType, IGenome defaultGenome, ITreeSpeciesBuilder builder) {
@@ -69,7 +71,7 @@ public class TreeSpecies extends Species<ITreeSpeciesType, ITree> implements ITr
 
 	@Override
 	public ItemStack getDecorativeLeaves() {
-		return this.decorativeLeaves;
+		return this.decorativeLeaves == null ? ItemStack.EMPTY : this.decorativeLeaves.create();
 	}
 
 	@Override

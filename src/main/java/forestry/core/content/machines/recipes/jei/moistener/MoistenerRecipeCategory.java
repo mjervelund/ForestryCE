@@ -70,7 +70,7 @@ public class MoistenerRecipeCategory extends ForestryRecipeCategory<IMoistenerRe
 			.addItemStack(recipe.getProduct());
 
 		IRecipeSlotBuilder fuelProductsSlot = builder.addSlot(RecipeIngredientRole.OUTPUT, 90, 22)
-			.addItemStacks(fuels.stream().map(entry -> entry.getSecond().product()).toList());
+			.addItemStacks(fuels.stream().map(entry -> entry.getSecond().product().create()).toList());
 
 		FluidStack fluidInput = new FluidStack(Fluids.WATER, recipe.getTimePerItem() / 4);
 		builder.addSlot(RecipeIngredientRole.INPUT, 1, 1)
