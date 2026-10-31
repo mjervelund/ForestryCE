@@ -1,0 +1,25 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "forestry:item/filled_crate"
+      },
+      {
+        "type": "minecraft:model",
+        "model": "forestry:item/crated_dark_oak_sapling",
+        "tints": [
+          {
+            "type": "forestry:item_color",
+            "index": 0
+          },
+          {
+            "type": "forestry:item_color",
+            "index": 1
+          }
+        ]
+      }
+    ]
+  }
+}

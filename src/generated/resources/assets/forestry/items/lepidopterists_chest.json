@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "forestry:item/lepidopterists_chest",
+    "model": {
+      "type": "forestry:naturalist_chest",
+      "texture": "lepichest"
+    }
+  }
+}

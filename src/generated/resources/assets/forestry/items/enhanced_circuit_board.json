@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "forestry:item/enhanced_circuit_board"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "forestry:item/resource_ore_tin"
+  }
+}

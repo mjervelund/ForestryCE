@@ -1,0 +1,24 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "forestry:item/habitat_screen",
+    "tints": [
+      {
+        "type": "forestry:item_color",
+        "index": 0
+      },
+      {
+        "type": "forestry:item_color",
+        "index": 1
+      },
+      {
+        "type": "forestry:item_color",
+        "index": 2
+      },
+      {
+        "type": "forestry:item_color",
+        "index": 3
+      }
+    ]
+  }
+}

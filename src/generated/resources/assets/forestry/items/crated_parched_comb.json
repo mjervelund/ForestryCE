@@ -1,0 +1,29 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "forestry:item/filled_crate"
+      },
+      {
+        "type": "minecraft:model",
+        "model": "forestry:item/crated_parched_comb",
+        "tints": [
+          {
+            "type": "forestry:item_color",
+            "index": 0
+          },
+          {
+            "type": "forestry:item_color",
+            "index": 1
+          },
+          {
+            "type": "forestry:item_color",
+            "index": 2
+          }
+        ]
+      }
+    ]
+  }
+}

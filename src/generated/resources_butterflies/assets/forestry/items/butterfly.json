@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "forestry:item/butterfly_base",
+    "model": {
+      "type": "forestry:butterfly"
+    }
+  }
+}

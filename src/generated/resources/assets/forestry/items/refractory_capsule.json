@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "forestry:fluid_container",
+    "textures": {
+      "base": "forestry:item/liquids/refractory.bottle",
+      "fluid": "forestry:item/liquids/refractory.contents"
+    }
+  }
+}

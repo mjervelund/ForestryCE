@@ -1,0 +1,16 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "forestry:item/vintage_comb",
+    "tints": [
+      {
+        "type": "forestry:item_color",
+        "index": 0
+      },
+      {
+        "type": "forestry:item_color",
+        "index": 1
+      }
+    ]
+  }
+}

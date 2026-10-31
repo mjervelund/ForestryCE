@@ -1,0 +1,85 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "forestry:backpack_mode",
+    "cases": [
+      {
+        "when": "locked",
+        "model": {
+          "type": "minecraft:model",
+          "model": "forestry:item/backpack/woven_locked",
+          "tints": [
+            {
+              "type": "forestry:item_color",
+              "index": 0
+            },
+            {
+              "type": "forestry:item_color",
+              "index": 1
+            },
+            {
+              "type": "forestry:item_color",
+              "index": 2
+            }
+          ]
+        }
+      },
+      {
+        "when": "receive",
+        "model": {
+          "type": "minecraft:model",
+          "model": "forestry:item/backpack/woven_receive",
+          "tints": [
+            {
+              "type": "forestry:item_color",
+              "index": 0
+            },
+            {
+              "type": "forestry:item_color",
+              "index": 1
+            },
+            {
+              "type": "forestry:item_color",
+              "index": 2
+            }
+          ]
+        }
+      },
+      {
+        "when": "resupply",
+        "model": {
+          "type": "minecraft:model",
+          "model": "forestry:item/backpack/woven_resupply",
+          "tints": [
+            {
+              "type": "forestry:item_color",
+              "index": 0
+            },
+            {
+              "type": "forestry:item_color",
+              "index": 1
+            },
+            {
+              "type": "forestry:item_color",
+              "index": 2
+            }
+          ]
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "forestry:item/backpack/woven_neutral",
+      "tints": [
+        {
+          "type": "forestry:item_color",
+          "index": 0
+        },
+        {
+          "type": "forestry:item_color",
+          "index": 1
+        }
+      ]
+    }
+  }
+}

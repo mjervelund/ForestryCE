@@ -1,0 +1,26 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "forestry:cocoon_age",
+    "cases": [
+      {
+        "when": 1,
+        "model": {
+          "type": "minecraft:model",
+          "model": "forestry:item/cocoon_middle"
+        }
+      },
+      {
+        "when": 2,
+        "model": {
+          "type": "minecraft:model",
+          "model": "forestry:item/cocoon_late"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "forestry:item/cocoon_early"
+    }
+  }
+}

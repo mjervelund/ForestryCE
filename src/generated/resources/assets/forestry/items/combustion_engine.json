@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "forestry:item/combustion_engine",
+    "model": {
+      "type": "forestry:engine",
+      "base": "textures/block/engine_iron_"
+    }
+  }
+}

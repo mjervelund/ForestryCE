@@ -1,5 +1,5 @@
 {
-  "loader": "forestry:filled_crate",
+  "parent": "forestry:item/filled_crate_contents",
   "textures": {
     "layer1": "forestry:block/humus"
   }
