@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_attached_hanging_sign_rot_3",
+  "textures": {
+    "all": "forestry:block/feijoa_hanging_sign",
+    "particle": "forestry:block/stripped_feijoa_log"
+  }
+}

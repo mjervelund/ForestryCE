@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_wall_hanging_sign",
+  "textures": {
+    "all": "forestry:block/greenheart_hanging_sign",
+    "particle": "forestry:block/stripped_greenheart_log"
+  }
+}
