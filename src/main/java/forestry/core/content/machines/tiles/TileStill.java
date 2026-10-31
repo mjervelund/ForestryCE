@@ -52,7 +52,19 @@ public class TileStill extends TilePowered implements WorldlyContainer, ILiquidT
 
 		this.resourceTank = new FilteredTank(Constants.PROCESSOR_TANK_CAPACITY, true, true).setFilter(FluidRecipeFilter.STILL_INPUT);
 		this.productTank = new FilteredTank(Constants.PROCESSOR_TANK_CAPACITY, false, true).setFilter(FluidRecipeFilter.STILL_OUTPUT);
-		this.tankManager = new TankManager(this, this.resourceTank, this.productTank);
+		// Keep the resource tank fillable, but only expose the finished product for fluid extraction (as the fermenter does):
+		// otherwise a pipe pulling from the still drains the biomass back out of its input tank.
+		this.tankManager = new TankManager(this, this.resourceTank, this.productTank) {
+			@Override
+			public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) {
+				return TileStill.this.productTank.drain(resource, action);
+			}
+
+			@Override
+			public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) {
+				return TileStill.this.productTank.drain(maxDrain, action);
+			}
+		};
 	}
 
 	@Override
