@@ -54,7 +54,7 @@ public class ItemButterflyGE extends ItemGE implements ITintedItem {
 		if (level.isClientSide() || entityItem.tickCount < 80) {
 			return false;
 		}
-		if (level.random.nextInt(24) != 0) {
+		if (level.getRandom().nextInt(24) != 0) {
 			return false;
 		}
 
@@ -135,7 +135,7 @@ public class ItemButterflyGE extends ItemGE implements ITintedItem {
 		if (tagCompound == null) {
 			return 0;
 		}
-		return Mth.clamp(tagCompound.getInt(NBT_AGE), 0, 2);
+		return Mth.clamp(tagCompound.getIntOr(NBT_AGE, 0), 0, 2);
 	}
 
 	@Override

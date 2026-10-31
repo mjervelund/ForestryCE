@@ -198,7 +198,7 @@ public class ButterflySpeciesType extends SpeciesType<IButterflySpecies, IButter
 
 	@Override
 	public String getBreedingTrackerFile(@Nullable GameProfile profile) {
-		return "LepidopteristTracker." + (profile == null ? "common" : profile.getId());
+		return "LepidopteristTracker." + (profile == null ? "common" : profile.id());
 	}
 
 	@Override

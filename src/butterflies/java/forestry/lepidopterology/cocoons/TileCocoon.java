@@ -37,10 +37,10 @@ public class TileCocoon extends BlockEntity {
 		super.loadAdditional(compoundNBT, registries);
 
 		if (compoundNBT.contains("Caterpillar")) {
-            this.caterpillar = SpeciesUtil.deserializeIndividual(SpeciesUtil.BUTTERFLY_TYPE.get(), compoundNBT.getCompound("Caterpillar"));
+            this.caterpillar = SpeciesUtil.deserializeIndividual(SpeciesUtil.BUTTERFLY_TYPE.get(), compoundNBT.getCompoundOrEmpty("Caterpillar"));
 		}
-		this.maturationTime = compoundNBT.getInt("CATMAT");
-		this.isSolid = compoundNBT.getBoolean("isSolid");
+		this.maturationTime = compoundNBT.getIntOr("CATMAT", 0);
+		this.isSolid = compoundNBT.getBooleanOr("isSolid", false);
 	}
 
 	@Override
