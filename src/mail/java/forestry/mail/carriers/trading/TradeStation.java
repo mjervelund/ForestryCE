@@ -106,15 +106,15 @@ public class TradeStation implements ITradeStation {
 	@Override
 	public void read(CompoundTag nbt, HolderLookup.Provider registries) {
 		if (nbt.contains("owner")) {
-            this.owner = NBTUtilForestry.readGameProfile(nbt.getCompound("owner"));
+            this.owner = NBTUtilForestry.readGameProfile(nbt.getCompoundOrEmpty("owner"));
 		}
 
 		if (nbt.contains("address")) {
-            this.address = new MailAddress(nbt.getCompound("address"));
+            this.address = new MailAddress(nbt.getCompoundOrEmpty("address"));
 		}
 
-		this.isVirtual = nbt.getBoolean("VRT");
-		this.isInvalid = nbt.getBoolean("IVL");
+		this.isVirtual = nbt.getBooleanOr("VRT", false);
+		this.isInvalid = nbt.getBooleanOr("IVL", false);
         this.inventory.read(nbt, registries);
 	}
 

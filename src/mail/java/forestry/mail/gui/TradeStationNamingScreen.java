@@ -12,7 +12,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import org.apache.commons.lang3.StringUtils;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 public class TradeStationNamingScreen extends GuiForestry<TradeStationNamingMenu> {
 	private final TradeStationBlockEntity tile;
@@ -42,11 +42,11 @@ public class TradeStationNamingScreen extends GuiForestry<TradeStationNamingMenu
 	@Override
 	public boolean keyPressed(KeyEvent event) {
 		int key = event.key();
-		if (key == GLFW.GLFW_KEY_ESCAPE) {
+		if (key == InputConstants.KEY_ESCAPE) {
 			this.minecraft.player.closeContainer();
 		}
 
-		if (key == GLFW.GLFW_KEY_ENTER && this.addressNameField.isFocused()) {
+		if (key == InputConstants.KEY_RETURN && this.addressNameField.isFocused()) {
 			setAddress();
 			return true;
 		}
@@ -66,7 +66,7 @@ public class TradeStationNamingScreen extends GuiForestry<TradeStationNamingMenu
         this.textLayout.newLine(38);
         this.textLayout.drawCenteredLine(graphics, Component.translatable("for.gui.mail.nametrader.finish"), 0, ColourProperties.INSTANCE.get("gui.mail.text"));
         this.textLayout.endPage(graphics);
-        this.addressNameField.render(graphics, mouseY, mouseX, partialTicks);
+        this.addressNameField.extractRenderState(graphics, mouseY, mouseX, partialTicks);
 	}
 
 	private void setAddress() {

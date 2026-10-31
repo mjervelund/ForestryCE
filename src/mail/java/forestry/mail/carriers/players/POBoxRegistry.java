@@ -61,18 +61,17 @@ public class POBoxRegistry extends SavedData implements IWatchable.Watcher {
 
 	private static POBoxRegistry load(CompoundTag compoundTag, HolderLookup.Provider registries) {
 		POBoxRegistry registry = new POBoxRegistry();
-		ListTag tradeStations = compoundTag.getList("poboxes", 10);
+		ListTag tradeStations = compoundTag.getListOrEmpty("poboxes");
 		for (int i = 0; i < tradeStations.size(); ++i) {
-			CompoundTag stationTag = tradeStations.getCompound(i);
+			CompoundTag stationTag = tradeStations.getCompoundOrEmpty(i);
 
-			IMailAddress address = new MailAddress(stationTag.getCompound("address"));
-			POBox pobox = new POBox(stationTag.getCompound("pobox"), registries);
+			IMailAddress address = new MailAddress(stationTag.getCompoundOrEmpty("address"));
+			POBox pobox = new POBox(stationTag.getCompoundOrEmpty("pobox"), registries);
 			registry.registerPOBOx(address, pobox);
 		}
 		return registry;
 	}
 
-	@Override
 	public CompoundTag save(CompoundTag compoundTag, HolderLookup.Provider registries) {
 		ListTag poboxes = new ListTag();
 		for (Map.Entry<IMailAddress, POBox> entry : this.cachedPOBoxes.entrySet()) {
@@ -85,8 +84,17 @@ public class POBoxRegistry extends SavedData implements IWatchable.Watcher {
 		return compoundTag;
 	}
 
+	// 26.x: saved data is codec-based (the file moves to data/forestry/forestry_poboxes.dat)
+	private static final net.minecraft.world.level.saveddata.SavedDataType<POBoxRegistry> TYPE = new net.minecraft.world.level.saveddata.SavedDataType<>(
+		forestry.api.ForestryConstants.forestry(SAVE_NAME),
+		level -> create(),
+		level -> CompoundTag.CODEC.xmap(
+			tag -> load(tag, level.registryAccess()),
+			registry -> registry.save(new CompoundTag(), level.registryAccess())
+		)
+	);
+
 	public static POBoxRegistry getOrCreate(ServerLevel level) {
-		SavedData.Factory<POBoxRegistry> factory = new SavedData.Factory<>(POBoxRegistry::create, POBoxRegistry::load);
-		return level.getDataStorage().computeIfAbsent(factory, SAVE_NAME);
+		return level.getDataStorage().computeIfAbsent(TYPE);
 	}
 }

@@ -59,13 +59,13 @@ public class MailAddress implements IMailAddress {
 		IPostalCarrier carrier = null;
 		GameProfile gameProfile = INVALID_GAME_PROFILE;
 		if (nbt.contains("carrier")) {
-			carrier = ForestryRegistries.POSTAL_CARRIER.get(Identifier.tryParse(nbt.getString("carrier")));
+			carrier = ForestryRegistries.POSTAL_CARRIER.getValue(Identifier.tryParse(nbt.getStringOr("carrier", "")));
 		}
 
 		if (carrier == null) {
 			carrier = PostalCarriers.PLAYER.value();
 		} else if (nbt.contains("profile")) {
-			CompoundTag profileTag = nbt.getCompound("profile");
+			CompoundTag profileTag = nbt.getCompoundOrEmpty("profile");
 			gameProfile = NBTUtilForestry.readGameProfile(profileTag);
 			if (gameProfile == null) {
 				gameProfile = INVALID_GAME_PROFILE;
@@ -82,7 +82,7 @@ public class MailAddress implements IMailAddress {
 	}
 
 	private static MailAddress fromCodec(Identifier carrierId, String name, Optional<UUID> id) {
-		IPostalCarrier carrier = ForestryRegistries.POSTAL_CARRIER.get(carrierId);
+		IPostalCarrier carrier = ForestryRegistries.POSTAL_CARRIER.getValue(carrierId);
 		if (carrier == null) {
 			carrier = PostalCarriers.PLAYER.value();
 		}
@@ -109,7 +109,7 @@ public class MailAddress implements IMailAddress {
 
 	// Empty for traders, which are identified by name alone
 	private Optional<UUID> getPlayerId() {
-		UUID id = this.gameProfile.getId();
+		UUID id = this.gameProfile.id();
 		return id == null || id.equals(NO_ID) ? Optional.empty() : Optional.of(id);
 	}
 
@@ -120,12 +120,12 @@ public class MailAddress implements IMailAddress {
 
 	@Override
 	public String getName() {
-		return this.gameProfile.getName();
+		return this.gameProfile.name();
 	}
 
 	@Override
 	public boolean isValid() {
-		return this.gameProfile.getName() != null && !PlayerUtil.isSameGameProfile(this.gameProfile, INVALID_GAME_PROFILE);
+		return this.gameProfile.name() != null && !PlayerUtil.isSameGameProfile(this.gameProfile, INVALID_GAME_PROFILE);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class MailAddress implements IMailAddress {
 
 	@Override
 	public int hashCode() {
-		return this.gameProfile.getName().hashCode();
+		return this.gameProfile.name().hashCode();
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class MailAddress implements IMailAddress {
 	public String toString() {
 		String name = getName().toLowerCase(Locale.ENGLISH);
 		if (getCarrier().equals(PostalCarriers.PLAYER.value())) {
-			return getCarrier() + "-" + name + '-' + this.gameProfile.getId();
+			return getCarrier() + "-" + name + '-' + this.gameProfile.id();
 		} else {
 			return getCarrier() + "-" + name;
 		}

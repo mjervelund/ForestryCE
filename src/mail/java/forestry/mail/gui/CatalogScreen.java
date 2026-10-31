@@ -90,7 +90,7 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 		Font font = this.font;
 		graphics.text(font, BOLD_UNDERLINE + tradeInfo.address().getName(), x, y, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 
-		graphics.text(font, Component.translatable("for.gui.mail.willtrade", tradeInfo.owner().getName()), x, y + 18, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
+		graphics.text(font, Component.translatable("for.gui.mail.willtrade", tradeInfo.owner().name()), x, y + 18, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.book")), false);
 
 		addTradeInfoWidget(new ItemStackWidget(this.widgetManager, x - this.leftPos, y - this.topPos + 28, tradeInfo.tradegood()));
 
@@ -137,7 +137,7 @@ public class CatalogScreen extends GuiForestry<CatalogMenu> {
 					SessionVars.setStringVar("mail.letter.recipient", info.address().getName());
 					SessionVars.setStringVar("mail.letter.carrier", PostalCarriers.TRADER.getKey().identifier().toString());
 				}
-				player.displayClientMessage(Component.translatable("for.gui.mail.catalogue.save_info"), false);
+				player.sendSystemMessage(Component.translatable("for.gui.mail.catalogue.save_info"));
 				player.closeContainer();
 			}
 		}

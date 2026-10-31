@@ -123,7 +123,7 @@ public class FarmController extends MultiblockController implements IFarmControl
 				this.manager.addListener(listenerPart.getFarmListener());
 			}
 			if (part instanceof IFarmComponent.Active active) {
-				this.farmActiveComponents.put(active, this.level.random.nextInt(256));
+				this.farmActiveComponents.put(active, this.level.getRandom().nextInt(256));
 			}
 		}
 	}

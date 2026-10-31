@@ -53,7 +53,7 @@ public class FarmFertilizerManager implements INbtWritable, INbtReadable, IStrea
 
 	@Override
 	public void read(CompoundTag data, HolderLookup.Provider registries) {
-        this.storedFertilizer = data.getInt("StoredFertilizer");
+        this.storedFertilizer = data.getIntOr("StoredFertilizer", 0);
 	}
 
 	@Override

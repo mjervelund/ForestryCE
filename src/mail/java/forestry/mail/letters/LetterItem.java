@@ -47,7 +47,8 @@ public class LetterItem extends WithScreenItem {
 	private final State state;
 
 	public LetterItem(Size size, State state) {
-		super(RegistrationIds.item().stacksTo(64));
+		// all letter variants share one translation key (getDescriptionId is final in 26.x)
+		super(RegistrationIds.item().stacksTo(64).overrideDescription("item.forestry.letter"));
 		this.size = size;
 		this.state = state;
 	}
@@ -58,11 +59,6 @@ public class LetterItem extends WithScreenItem {
 
 	public State getState() {
 		return this.state;
-	}
-
-	@Override
-	public String getDescriptionId() {
-		return "item.forestry.letter";
 	}
 
 	@Override

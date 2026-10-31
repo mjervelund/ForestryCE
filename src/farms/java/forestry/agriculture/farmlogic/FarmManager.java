@@ -126,7 +126,7 @@ public class FarmManager implements INbtReadable, INbtWritable, IStreamable, IEx
 
 		Level level = this.housing.getLevel();
 		ObjectArrayList<Direction> farmDirections = new ObjectArrayList<>(HorizontalDirection.VALUES);
-		Util.shuffle(farmDirections, level.random);
+		Util.shuffle(farmDirections, level.getRandom());
 		for (Direction farmSide : farmDirections) {
 			IFarmLogic logic = this.housing.getFarmLogic(farmSide);
 			List<FarmTarget> farmTargets = this.targets.get(farmSide);

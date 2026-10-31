@@ -93,18 +93,17 @@ public class TradeStationRegistry extends SavedData implements IWatchable.Watche
 
 	private static TradeStationRegistry load(CompoundTag compoundTag, HolderLookup.Provider registries) {
 		TradeStationRegistry registry = new TradeStationRegistry();
-		ListTag tradeStations = compoundTag.getList("tradeStations", 10);
+		ListTag tradeStations = compoundTag.getListOrEmpty("tradeStations");
 		for (int i = 0; i < tradeStations.size(); ++i) {
-			CompoundTag stationTag = tradeStations.getCompound(i);
+			CompoundTag stationTag = tradeStations.getCompoundOrEmpty(i);
 
-			IMailAddress address = new MailAddress(stationTag.getCompound("address"));
-			ITradeStation station = new TradeStation(stationTag.getCompound("station"), registries);
+			IMailAddress address = new MailAddress(stationTag.getCompoundOrEmpty("address"));
+			ITradeStation station = new TradeStation(stationTag.getCompoundOrEmpty("station"), registries);
 			registry.registerTradeStation(address, station);
 		}
 		return registry;
 	}
 
-	@Override
 	public CompoundTag save(CompoundTag compoundTag, HolderLookup.Provider registries) {
 		ListTag tradeStations = new ListTag();
 		for (Map.Entry<IMailAddress, ITradeStation> entry : this.cachedTradeStations.entrySet()) {
@@ -117,8 +116,17 @@ public class TradeStationRegistry extends SavedData implements IWatchable.Watche
 		return compoundTag;
 	}
 
+	// 26.x: saved data is codec-based (the file moves to data/forestry/forestry_trade_stations.dat)
+	private static final net.minecraft.world.level.saveddata.SavedDataType<TradeStationRegistry> TYPE = new net.minecraft.world.level.saveddata.SavedDataType<>(
+		forestry.api.ForestryConstants.forestry(SAVE_NAME),
+		level -> create(),
+		level -> CompoundTag.CODEC.xmap(
+			tag -> load(tag, level.registryAccess()),
+			registry -> registry.save(new CompoundTag(), level.registryAccess())
+		)
+	);
+
 	public static TradeStationRegistry getOrCreate(ServerLevel level) {
-		SavedData.Factory<TradeStationRegistry> factory = new SavedData.Factory<>(TradeStationRegistry::create, TradeStationRegistry::load);
-		return level.getDataStorage().computeIfAbsent(factory, SAVE_NAME);
+		return level.getDataStorage().computeIfAbsent(TYPE);
 	}
 }

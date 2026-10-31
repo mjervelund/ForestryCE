@@ -62,7 +62,7 @@ public class Letter implements ILetter {
 		this.text = text;
 		this.uid = uid;
 		for (int i = 0; i < Math.min(this.inventory.getContainerSize(), contents.getSlots()); i++) {
-			this.inventory.setItem(i, contents.getStackInSlot(i));
+			this.inventory.setItem(i, contents.getTemplateInSlot(i).map(net.minecraft.world.item.ItemStackTemplate::create).orElse(ItemStack.EMPTY));
 		}
 	}
 

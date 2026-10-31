@@ -26,7 +26,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.StringUtils;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -49,7 +49,6 @@ public class LetterScreen extends GuiForestry<LetterMenu> {
 
 	public LetterScreen(LetterMenu container, Inventory inv, Component title) {
 		super(Constants.TEXTURE_PATH_GUI + "/letter.png", container, inv, title, 194, 227);
-		this.minecraft = Minecraft.getInstance(); //not 100% why this is needed, maybe side issues
 
 		this.itemInventory = container.getItemInventory();
 
@@ -94,13 +93,13 @@ public class LetterScreen extends GuiForestry<LetterMenu> {
 
 		// Set focus or enter text into address
 		if (this.address.isFocused()) {
-			if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_ESCAPE) {
+			if (key == InputConstants.KEY_RETURN || key == InputConstants.KEY_ESCAPE) {
 				this.address.setFocused(false);
-			} else if (key == GLFW.GLFW_KEY_TAB) {
+			} else if (key == InputConstants.KEY_TAB) {
 				// Name autocomplete
 				String currentValue = this.address.getValue().toLowerCase(Locale.ENGLISH);
 				Minecraft.getInstance().getConnection().getOnlinePlayers().stream()
-					.map(info -> info.getProfile().getName())
+					.map(info -> info.getProfile().name())
 					.filter(name -> name.toLowerCase(Locale.ENGLISH).contains(currentValue))
 					.findFirst()
 					.ifPresent(name -> this.address.setValue(name));
@@ -111,17 +110,17 @@ public class LetterScreen extends GuiForestry<LetterMenu> {
 		}
 
 		if (this.text.isFocused()) {
-			if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_ESCAPE) {
-				if (hasShiftDown() && key != GLFW.GLFW_KEY_ESCAPE) {
+			if (key == InputConstants.KEY_RETURN || key == InputConstants.KEY_ESCAPE) {
+				if (event.hasShiftDown() && key != InputConstants.KEY_ESCAPE) {
                     this.text.setValue(this.text.getValue() + "\n");
 				} else {
 					this.text.setFocused(false);
 				}
-			} else if (key == GLFW.GLFW_KEY_DOWN) {
+			} else if (key == InputConstants.KEY_DOWN) {
                 this.text.advanceLine();
-			} else if (key == GLFW.GLFW_KEY_UP) {
+			} else if (key == InputConstants.KEY_UP) {
                 this.text.regressLine();
-			} else if (this.text.moreLinesAllowed() || key == GLFW.GLFW_KEY_DELETE || key == GLFW.GLFW_KEY_BACKSLASH) {
+			} else if (this.text.moreLinesAllowed() || key == InputConstants.KEY_DELETE || key == InputConstants.KEY_BACKSLASH) {
 				this.text.keyPressed(event);
 			}
 			return true;
@@ -175,11 +174,11 @@ public class LetterScreen extends GuiForestry<LetterMenu> {
 			graphics.textWithWordWrap(this.font, Component.literal(this.text.getValue()), this.leftPos + 20, this.topPos + 34, 119, ForestryColors.textColor(ColourProperties.INSTANCE.get("gui.mail.lettertext")), false);
 		} else {
 			clearTradeInfoWidgets();
-            this.address.render(graphics, mouseX, mouseY, partialTicks);    //TODO correct?
+            this.address.extractRenderState(graphics, mouseX, mouseY, partialTicks);
 			if (this.menu.getCarrier().equals(PostalCarriers.TRADER.value())) {
 				drawTradePreview(graphics, 18, 32);
 			} else {
-                this.text.render(graphics, mouseX, mouseY, partialTicks);
+                this.text.extractRenderState(graphics, mouseX, mouseY, partialTicks);
 			}
 		}
 	}
@@ -240,7 +239,7 @@ public class LetterScreen extends GuiForestry<LetterMenu> {
 		String recipient = SessionVars.getStringVar("mail.letter.recipient");
 		String typeName = SessionVars.getStringVar("mail.letter.carrier");
 		Identifier carrierId = Identifier.tryParse(typeName);
-		IPostalCarrier carrier = ForestryRegistries.POSTAL_CARRIER.get(carrierId);
+		IPostalCarrier carrier = ForestryRegistries.POSTAL_CARRIER.getValue(carrierId);
 
 		if (StringUtils.isNotBlank(recipient) && carrier != null) {
             this.menu.setCarrier(carrier);

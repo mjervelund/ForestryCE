@@ -63,7 +63,7 @@ public class MultifarmBlock extends BlockStructure implements EntityBlock {
 	}
 
 	@Override
-	public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction side) {
+	public boolean shouldRedstoneWireConnectTo(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction side) {
 		return this.type == MultifarmBlockType.CONTROL;
 	}
 

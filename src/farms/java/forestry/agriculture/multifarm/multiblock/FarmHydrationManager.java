@@ -110,7 +110,7 @@ public class FarmHydrationManager implements IFarmLedgerDelegate, INbtWritable, 
 
 	@Override
 	public void read(CompoundTag nbt, HolderLookup.Provider registries) {
-        this.hydrationDelay = nbt.getInt("HydrationDelay");
-        this.ticksSinceRainfall = nbt.getInt("TicksSinceRainfall");
+        this.hydrationDelay = nbt.getIntOr("HydrationDelay", 0);
+        this.ticksSinceRainfall = nbt.getIntOr("TicksSinceRainfall", 0);
 	}
 }

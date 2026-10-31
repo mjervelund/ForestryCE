@@ -29,6 +29,6 @@ public record PacketLetterInfoRequest(String recipientName,
 	}
 
 	public static PacketLetterInfoRequest decode(RegistryFriendlyByteBuf buffer) {
-		return new PacketLetterInfoRequest(buffer.readUtf(), ForestryRegistries.POSTAL_CARRIER.get(Identifier.tryParse(buffer.readUtf())));
+		return new PacketLetterInfoRequest(buffer.readUtf(), ForestryRegistries.POSTAL_CARRIER.getValue(Identifier.tryParse(buffer.readUtf())));
 	}
 }

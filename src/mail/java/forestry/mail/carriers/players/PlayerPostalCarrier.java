@@ -57,7 +57,7 @@ public class PlayerPostalCarrier implements IPostalCarrier {
 
 	@Override
 	public IMailAddress getRecipient(MinecraftServer minecraftServer, String recipientName) {
-		return minecraftServer.getProfileCache().get(recipientName).map(MailAddress::new).orElse(MailAddress.INVALID);
+		return minecraftServer.services().nameToIdCache().get(recipientName).map(nameAndId -> new MailAddress(new com.mojang.authlib.GameProfile(nameAndId.id(), nameAndId.name()))).orElse(MailAddress.INVALID);
 	}
 
 	@Override

@@ -119,7 +119,7 @@ public class LetterMenu extends ContainerItemInventory<LetterInventory> implemen
 	}
 
 	public void handleRequestLetterInfo(Player player, String recipientName, IPostalCarrier carrier) {
-		MinecraftServer server = player.getServer();
+		MinecraftServer server = player.level().getServer();
 		if (server == null) {
 			Forestry.LOGGER.error("Could not get server");
 			return;

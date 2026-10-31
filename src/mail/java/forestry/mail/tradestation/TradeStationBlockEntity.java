@@ -76,7 +76,7 @@ public class TradeStationBlockEntity extends TileBase implements IOwnedTile {
 		super.loadAdditional(compoundNBT, registries);
 
 		if (compoundNBT.contains("address")) {
-            this.address = new MailAddress(compoundNBT.getCompound("address"));
+            this.address = new MailAddress(compoundNBT.getCompoundOrEmpty("address"));
 		}
         this.ownerHandler.read(compoundNBT, registries);
 	}

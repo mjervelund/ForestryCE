@@ -46,7 +46,7 @@ public class POBox implements Container, IWatchable, INbtReadable, INbtWritable 
 	@Override
 	public void read(CompoundTag tag, HolderLookup.Provider registries) {
 		if (tag.contains("address")) {
-			this.address = new MailAddress(tag.getCompound("address"));
+			this.address = new MailAddress(tag.getCompoundOrEmpty("address"));
 		}
 
 		this.letters.read(tag, registries);

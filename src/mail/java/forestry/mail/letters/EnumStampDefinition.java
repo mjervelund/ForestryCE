@@ -30,7 +30,7 @@ public enum EnumStampDefinition implements TwoTintItem.ITwoTintItemSubtype {
 	private final int postage;
 
 	EnumStampDefinition(String name, int postage, TagKey<Item> crafting, TextColor primaryColor, TextColor secondaryColor) {
-		this(name, postage, () -> Ingredient.of(crafting), primaryColor, secondaryColor);
+		this(name, postage, () -> Ingredient.of(net.minecraft.core.registries.BuiltInRegistries.ITEM.getOrThrow(crafting)), primaryColor, secondaryColor);
 	}
 
 	EnumStampDefinition(String name, int postage, Item crafting, TextColor primaryColor, TextColor secondaryColor) {

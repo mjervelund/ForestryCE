@@ -75,7 +75,7 @@ public class DefaultFarms {
 		poales.addFarmable(new FarmableStacked(new ItemStack(Items.SUGAR_CANE), Blocks.SUGAR_CANE, 3));
 
 		// Cactus
-		IFarmTypeBuilder cactus = farming.createFarmType(ForestryFarmTypes.SUCCULENTES, FarmLogicSucculent::new, new ItemStack(Items.GREEN_DYE))
+		IFarmTypeBuilder cactus = farming.createFarmType(ForestryFarmTypes.SUCCULENTES, FarmLogicSucculent::new, new ItemStack(Items.DYE.pick(net.minecraft.world.item.DyeColor.GREEN)))
 			.setFertilizerConsumption(10)
 			.setWaterConsumption(1)
 			.addSoil(Blocks.SAND);

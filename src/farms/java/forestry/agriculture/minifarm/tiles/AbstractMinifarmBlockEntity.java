@@ -121,7 +121,7 @@ public abstract class AbstractMinifarmBlockEntity extends TilePowered implements
 		super.loadAdditional(data, registries);
         this.manager.read(data, registries);
         this.ownerHandler.read(data, registries);
-		setManual(data.getBoolean("manual"));
+		setManual(data.getBooleanOr("manual", false));
 	}
 
 	@Override
