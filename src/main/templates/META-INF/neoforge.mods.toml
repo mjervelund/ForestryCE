@@ -25,7 +25,8 @@ side = "BOTH"
 
 [[dependencies.forestry]]
 modId = "patchouli"
-type = "REQUIRED"
+# 26.3 port: no 26.3 Patchouli exists and the compat package is excluded from compile.
+type = "OPTIONAL"
 versionRange = "${patchouliVersionRange}"
 ordering = "NONE"
 side = "BOTH"

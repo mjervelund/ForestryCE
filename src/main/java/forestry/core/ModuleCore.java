@@ -51,6 +51,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
+import net.neoforged.neoforge.event.DefaultDataComponentsBoundEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
@@ -68,6 +69,7 @@ import forestry.core.platform.PickupHandlerCore;
 @ForestryModule
 public class ModuleCore extends BlankForestryModule {
 	private static volatile boolean apiInitialized = false;
+	private static volatile boolean circuitsRegistered = false;
 
 	@Override
 	public Identifier getId() {
@@ -88,7 +90,9 @@ public class ModuleCore extends BlankForestryModule {
 		modBus.addListener(ModuleCore::registerCapabilities);
 		modBus.addListener(ModuleCore::registerGlobalLootModifiers);
 		modBus.addListener(ModuleCore::registerForestryRegistries);
-		modBus.addListener(ModuleCore::onGatherData);
+		// 26.x: GatherDataEvent is abstract (sealed Server/Client); listeners go on a subclass.
+		modBus.addListener(net.neoforged.neoforge.data.event.GatherDataEvent.Server.class, ModuleCore::onGatherData);
+		modBus.addListener(net.neoforged.neoforge.data.event.GatherDataEvent.Client.class, ModuleCore::onGatherData);
 
 		ModuleUtil.loadFeatureProviders();
 		NeoForge.EVENT_BUS.addListener(ModuleCore::onItemPickup);
@@ -97,6 +101,7 @@ public class ModuleCore extends BlankForestryModule {
 		NeoForge.EVENT_BUS.addListener(ModuleCore::onAddReloadListeners);
 		NeoForge.EVENT_BUS.addListener(ModuleCore::registerCommands);
 		NeoForge.EVENT_BUS.addListener(ModuleCore::onDatapackSync);
+		NeoForge.EVENT_BUS.addListener(ModuleCore::onComponentsBound);
 	}
 
 	private static void onCommonSetup(FMLCommonSetupEvent event) {
@@ -134,6 +139,16 @@ public class ModuleCore extends BlankForestryModule {
 		postItemRegistry();
 		((ForestryModuleManager) IForestryApi.INSTANCE.getModuleManager()).setupApi();
 		apiInitialized = true;
+	}
+
+	// 26.x binds item components only after the server (or, on a client, the joined server) loads its
+	// data, so ItemStacks cannot be created during setup. Circuits are registered against stacks, so
+	// they are registered the first time components are bound instead of in applyPluginRegistration.
+	private static synchronized void onComponentsBound(DefaultDataComponentsBoundEvent event) {
+		if (!circuitsRegistered) {
+			PluginManager.registerCircuits();
+			circuitsRegistered = true;
+		}
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -255,7 +270,7 @@ public class ModuleCore extends BlankForestryModule {
 
 	@Override
 	public void applyPluginRegistration() {
-		PluginManager.registerCircuits();
+		// registerCircuits runs in onComponentsBound
 		PluginManager.registerGenetics();
 		PluginManager.registerPollen();
 	}

@@ -13,16 +13,18 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.EnumMap;
+import java.util.function.Supplier;
 
 public enum BlockTypeCoreTesr implements IBlockType {
 
 	// Neither IRON_BLOCK nor CRAFTING_TABLE calls dropsLike, so ofFullCopy carries a null `drops`
 	// and cannot steal a vanilla loot table id (1.20.1's Properties.copy left drops alone regardless)
-	ANALYZER(createAnalyzerProperties(CoreTiles.ANALYZER, "analyzer"), RegistrationIds.block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)).noOcclusion()),
+	ANALYZER(createAnalyzerProperties(CoreTiles.ANALYZER, "analyzer"), () -> RegistrationIds.block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)).noOcclusion()),
 
-	ESCRITOIRE(createEscritoireProperties(CoreTiles.ESCRITOIRE, "escritoire"), RegistrationIds.block(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE)).noOcclusion());
+	ESCRITOIRE(createEscritoireProperties(CoreTiles.ESCRITOIRE, "escritoire"), () -> RegistrationIds.block(BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE)).noOcclusion());
 
-	private final BlockBehaviour.Properties properties;
+	// Created per call: RegistrationIds.block() only works while the block's registry supplier runs
+	private final Supplier<BlockBehaviour.Properties> properties;
 	private final IMachineProperties<?> machineProperties;
 
 	//I, Spearkiller, do sorrowfully declare that the following code is AI-written.
@@ -97,7 +99,7 @@ public enum BlockTypeCoreTesr implements IBlockType {
 			.create();
 	}
 
-	BlockTypeCoreTesr(IMachineProperties<?> machineProperties, BlockBehaviour.Properties properties) {
+	BlockTypeCoreTesr(IMachineProperties<?> machineProperties, Supplier<BlockBehaviour.Properties> properties) {
 		this.machineProperties = machineProperties;
 		this.properties = properties;
 	}
@@ -108,7 +110,7 @@ public enum BlockTypeCoreTesr implements IBlockType {
 	}
 
 	public BlockBehaviour.Properties getBlockProperties() {
-		return this.properties;
+		return this.properties.get();
 	}
 
 	@Override

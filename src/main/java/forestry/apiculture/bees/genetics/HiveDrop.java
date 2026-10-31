@@ -1,5 +1,6 @@
 package forestry.apiculture.bees.genetics;
 
+import com.google.common.base.Suppliers;
 import forestry.api.apiculture.genetics.IBee;
 import forestry.api.apiculture.genetics.IBeeSpecies;
 import forestry.api.apiculture.hives.IHiveDrop;
@@ -15,21 +16,23 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class HiveDrop implements IHiveDrop {
 	private final Identifier speciesId;
 	private final double chance;
-	private final List<ItemStack> bonus;
+	// Resolved on first use: 26.x item stacks need bound components, which setup runs before
+	private final Supplier<List<ItemStack>> bonus;
 	private final double ignobleChance;
 	private final Map<IChromosome<?>, Allele<?>> alleles;
 
 	@Nullable
 	private IBeeSpecies species;
 
-	public HiveDrop(double chance, Identifier speciesId, List<ItemStack> bonus, float ignobleChance, Map<IChromosome<?>, Allele<?>> alleles) {
+	public HiveDrop(double chance, Identifier speciesId, Supplier<List<ItemStack>> bonus, float ignobleChance, Map<IChromosome<?>, Allele<?>> alleles) {
 		this.speciesId = speciesId;
 		this.chance = chance;
-		this.bonus = bonus;
+		this.bonus = Suppliers.memoize(bonus::get);
 		this.ignobleChance = ignobleChance;
 		this.alleles = alleles;
 	}
@@ -45,7 +48,7 @@ public class HiveDrop implements IHiveDrop {
 	@Override
 	public List<ItemStack> getExtraItems(BlockGetter level, BlockPos pos, int fortune) {
 		ArrayList<ItemStack> result = new ArrayList<>();
-		for (ItemStack stack : this.bonus) {
+		for (ItemStack stack : this.bonus.get()) {
 			result.add(stack.copy());
 		}
 

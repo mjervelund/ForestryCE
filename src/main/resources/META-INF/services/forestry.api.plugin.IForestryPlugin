@@ -1,4 +1,5 @@
 forestry.core.plugin.DefaultForestryPlugin
 forestry.apiculture.plugin.ApicultureForestryPlugin
 forestry.arboriculture.plugin.ArboricultureForestryPlugin
-forestry.core.platform.compat.kubejs.KubeForestryPlugin
+# 26.3 port: KubeJS compat is excluded from compile (no 26.3 KubeJS); a service naming a missing class fails module resolution.
+# forestry.core.platform.compat.kubejs.KubeForestryPlugin

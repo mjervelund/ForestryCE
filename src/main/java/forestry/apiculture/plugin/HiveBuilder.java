@@ -31,7 +31,7 @@ public class HiveBuilder implements IHiveBuilder {
 
 	@Override
 	public IHiveBuilder addDrop(double chance, Identifier speciesId, Supplier<List<ItemStack>> extraItems, float ignobleChance, Map<IChromosome<?>, Allele<?>> alleles) {
-		this.drops.add(new HiveDrop(chance, speciesId, extraItems.get(), ignobleChance, alleles));
+		this.drops.add(new HiveDrop(chance, speciesId, extraItems, ignobleChance, alleles));
 		return this;
 	}
 

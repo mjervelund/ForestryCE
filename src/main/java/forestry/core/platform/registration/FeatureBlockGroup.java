@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public class FeatureBlockGroup<B extends Block, S extends IBlockSubtype> extends FeatureGroup<FeatureBlockGroup.Builder<B, S>, FeatureBlock<B, BlockItem>, S> {
@@ -24,10 +25,11 @@ public class FeatureBlockGroup<B extends Block, S extends IBlockSubtype> extends
 	@Override
 	protected FeatureBlock<B, BlockItem> createFeature(Builder<B, S> builder, S type) {
 		String identifier = builder.getIdentifier(type);
-		BlockBehaviour.Properties properties = builder.blockProperties != null ? builder.blockProperties.apply(RegistrationIds.block(), type) : RegistrationIds.block();
+		// Lazy: RegistrationIds.block() only works while the registry supplier runs (26.x block ids)
+		Supplier<BlockBehaviour.Properties> properties = () -> builder.blockProperties != null ? builder.blockProperties.apply(RegistrationIds.block(), type) : RegistrationIds.block();
 		return builder.registry.block(
 			(blockProperties) -> builder.blockConstructor.apply(blockProperties, type),
-			() -> properties,
+			properties,
 			builder.itemConstructor != null ? (block, itemProperties) -> builder.itemConstructor.apply(block, itemProperties, type) : null,
 			identifier
 		);
