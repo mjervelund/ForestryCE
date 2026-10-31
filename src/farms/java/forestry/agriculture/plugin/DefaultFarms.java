@@ -121,8 +121,9 @@ public class DefaultFarms {
 		IFarmTypeBuilder cocoa = farming.createFarmType(ForestryFarmTypes.COCOA, FarmLogicCocoa::new, new ItemStack(Items.COCOA_BEANS))
 			.setFertilizerConsumption(120)
 			.setWaterConsumption(hydrationModifier -> (int) (20 * hydrationModifier))
-			.addGermling(new ItemStack(Items.COCOA_BEANS))
-			.addProduct(new ItemStack(Items.COCOA_BEANS));
+			.addSoil(Blocks.JUNGLE_LOG);
+		// the farmable is what makes the inventory accept cocoa beans (addGermling is JEI display only)
+		cocoa.addFarmable(new FarmableCocoa());
 	}
 
 	private static void addGourdFarmables(IFarmTypeBuilder gourd) {
