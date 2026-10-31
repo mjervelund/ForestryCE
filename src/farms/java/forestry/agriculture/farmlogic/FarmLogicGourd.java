@@ -78,7 +78,7 @@ public class FarmLogicGourd extends FarmLogicWatered {
 		if (super.isAcceptedSoil(housing, direction, pos, state)) {
 			return true;
 		}
-		return !isStemPosition(housing, direction, pos) && state.is(BlockTags.DIRT);
+		return !isStemPosition(housing, direction, pos) && state.is(BlockTags.SUBSTRATE_OVERWORLD);
 	}
 
 	private static boolean isStemPosition(IFarmHousing housing, Direction direction, BlockPos position) {

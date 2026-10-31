@@ -47,7 +47,7 @@ public enum HiveDefinition implements IHiveDefinition {
 			return super.isGoodBiome(biome) && !biome.is(Tags.Biomes.IS_SNOWY);
 		}
 	},
-	MEADOWS(ApicultureBlocks.HIVE.get(HiveBlockType.MEADOWS).defaultState(), 1.0f, ForestryBeeSpecies.MEADOWS, new GroundHivePlacement(BlockTags.DIRT)) {
+	MEADOWS(ApicultureBlocks.HIVE.get(HiveBlockType.MEADOWS).defaultState(), 1.0f, ForestryBeeSpecies.MEADOWS, new GroundHivePlacement(BlockTags.SUBSTRATE_OVERWORLD)) {
 		@Override
 		public void postGen(WorldGenLevel level, RandomSource rand, BlockPos pos) {
 			postGenFlowers(level, rand, pos, flowerStates);
@@ -83,7 +83,7 @@ public enum HiveDefinition implements IHiveDefinition {
 			postGenFlowers(level, rand, pos, flowerStates);
 		}
 	},
-	SWAMP(ApicultureBlocks.HIVE.get(HiveBlockType.MARSHY).defaultState(), 2.0f, ForestryBeeSpecies.MARSHY, new GroundHivePlacement(BlockTags.DIRT)) {
+	SWAMP(ApicultureBlocks.HIVE.get(HiveBlockType.MARSHY).defaultState(), 2.0f, ForestryBeeSpecies.MARSHY, new GroundHivePlacement(BlockTags.SUBSTRATE_OVERWORLD)) {
 		@Override
 		public void postGen(WorldGenLevel level, RandomSource rand, BlockPos pos) {
 			postGenFlowers(level, rand, pos, mushroomStates);
@@ -95,7 +95,7 @@ public enum HiveDefinition implements IHiveDefinition {
 			return super.isGoodBiome(biome) && !biome.is(Tags.Biomes.IS_SNOWY);
 		}
 	},
-	SAVANNA(ApicultureBlocks.HIVE.get(HiveBlockType.SAVANNA).defaultState(), 1.0f, ForestryBeeSpecies.SAVANNA, new GroundHivePlacement(BlockTags.DIRT)) {
+	SAVANNA(ApicultureBlocks.HIVE.get(HiveBlockType.SAVANNA).defaultState(), 1.0f, ForestryBeeSpecies.SAVANNA, new GroundHivePlacement(BlockTags.SUBSTRATE_OVERWORLD)) {
 		@Override
 		public void postGen(WorldGenLevel level, RandomSource rand, BlockPos pos) {
 			//TODO: generate pumpkins in dry biomes and melons in normal ones

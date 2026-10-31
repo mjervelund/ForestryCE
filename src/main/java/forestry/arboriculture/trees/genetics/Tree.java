@@ -93,7 +93,7 @@ public class Tree extends Individual<ITreeSpecies, ITree, ITreeSpeciesType> impl
 	}
 
 	public static boolean canPlantTreeOn(BlockState state) {
-		return state.is(BlockTags.DIRT);
+		return state.is(BlockTags.SUBSTRATE_OVERWORLD);
 	}
 
 	@Override

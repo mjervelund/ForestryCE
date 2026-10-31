@@ -2,6 +2,7 @@ package forestry.core.data;
 
 import forestry.api.ForestryTags;
 import forestry.core.features.CoreItems;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -28,7 +29,11 @@ public class ForestryBackpackTagProvider {
 		tags.tag(ForestryTags.Items.MINER_REJECT);
 
 		tags.tag(ForestryTags.Items.DIGGER_ALLOW).addTags(
+			// 26.x split the old #dirt into these four
 			ItemTags.DIRT,
+			BlockItemTags.GRASS_BLOCKS.item(),
+			ItemTags.MOSS_BLOCKS,
+			ItemTags.MUD,
 			Tags.Items.COBBLESTONES,
 			Tags.Items.GRAVELS,
 			Tags.Items.NETHERRACKS,
