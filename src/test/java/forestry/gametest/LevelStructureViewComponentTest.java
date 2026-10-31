@@ -3,6 +3,13 @@ package forestry.gametest;
 import java.util.List;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -69,5 +76,47 @@ public class LevelStructureViewComponentTest {
 		helper.assertFalse(MultiblockTestSupport.isAssembled(level, members.get(0)),
 				"a chest in the interior must not be recognised as an alveary component");
 		helper.succeed();
+	}
+
+	/**
+	 * Regression: a Mekanism transporter kept a capability handler built while the farm was unformed (hatch size 0),
+	 * then indexed it after the farm formed (and the other way round): IndexOutOfBoundsException while ticking.
+	 */
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
+	public static void farmHatchHandlerSurvivesFormStateChanges(GameTestHelper helper) {
+		List<BlockPos> members = MultiblockTestSupport.buildFarm(helper, BASE);
+		BlockPos hatchRel = BASE.offset(0, 1, 1);
+		BlockPos cornerRel = BASE.offset(2, 3, 2);
+		helper.setBlock(hatchRel, MultifarmBlocks.FARM.get(MultifarmBlockType.HATCH, MultifarmMaterialType.STONE_BRICK).defaultState());
+		ServerLevel level = helper.getLevel();
+		BlockPos hatchAbs = helper.absolutePos(hatchRel);
+		helper.assertTrue(MultiblockTestSupport.isAssembled(level, members.get(0)), "farm must assemble");
+
+		ResourceHandler<ItemResource> formed = level.getCapability(Capabilities.Item.BLOCK, hatchAbs, Direction.WEST);
+		helper.assertTrue(formed != null && formed.size() > 0, "a formed farm hatch must expose slots");
+
+		// unform: the handler obtained while formed must stay usable
+		BlockState plain = MultifarmBlocks.FARM.get(MultifarmBlockType.PLAIN, MultifarmMaterialType.STONE_BRICK).defaultState();
+		helper.setBlock(cornerRel, Blocks.AIR);
+		helper.assertFalse(MultiblockTestSupport.isAssembled(level, members.get(0)), "farm must be broken");
+		insertEverywhere(formed);
+		ResourceHandler<ItemResource> unformed = level.getCapability(Capabilities.Item.BLOCK, hatchAbs, Direction.WEST);
+		helper.assertTrue(unformed != null && unformed.size() == 0, "an unformed farm hatch must expose no slots");
+
+		// form again: the handler obtained while unformed must now see the slots
+		helper.setBlock(cornerRel, plain);
+		helper.succeedWhen(() -> {
+			helper.assertTrue(MultiblockTestSupport.isAssembled(level, members.get(0)), "farm must reassemble");
+			helper.assertTrue(unformed.size() > 0, "the stale handler must see the formed slots");
+			insertEverywhere(unformed);
+		});
+	}
+
+	private static void insertEverywhere(ResourceHandler<ItemResource> handler) {
+		try (Transaction tx = Transaction.openRoot()) {
+			for (int i = 0; i < 40; i++) {
+				handler.insert(i, ItemResource.of(new ItemStack(Items.DIRT)), 1, tx);
+			}
+		}
 	}
 }
