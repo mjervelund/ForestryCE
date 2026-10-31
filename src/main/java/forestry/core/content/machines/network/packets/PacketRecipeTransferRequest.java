@@ -18,6 +18,9 @@ public record PacketRecipeTransferRequest(BlockPos pos,
 	public static void handle(PacketRecipeTransferRequest msg, ServerPlayer player) {
 		BlockPos pos = msg.pos();
 		NonNullList<ItemStack> craftingInventory = msg.craftingInventory();
+		if (!TileUtil.canReach(player, pos)) {
+			return;
+		}
 
 		BlockEntity tile = TileUtil.getTile(player.level(), pos);
 		if (tile instanceof TileCarpenter carpenter) {

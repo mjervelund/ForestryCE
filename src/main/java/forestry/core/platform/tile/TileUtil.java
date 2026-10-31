@@ -35,6 +35,15 @@ public abstract class TileUtil {
 	}
 
 	/**
+	 * Whether a position sent by a client is loaded and within the player's block interaction range (plus the
+	 * margin vanilla allows). Check it before looking up the tile: otherwise a packet can edit machines anywhere
+	 * in the dimension and load or generate chunks.
+	 */
+	public static boolean canReach(Player player, BlockPos pos) {
+		return player.level().isLoaded(pos) && player.isWithinBlockInteractionRange(pos, 4.0D);
+	}
+
+	/**
 	 * Returns the tile at the specified position, returns null if it is the wrong type or does not exist.
 	 * Avoids creating new tile entities when using a ChunkCache (off the main thread).
 	 */

@@ -17,6 +17,9 @@ import javax.annotation.Nullable;
 public record PacketFilterChangeGenome(BlockPos pos, Direction facing, short index, boolean active,
 									   @Nullable ISpecies<?> species) implements CustomPacketPayload {
 	public static void handle(PacketFilterChangeGenome msg, ServerPlayer player) {
+		if (!TileUtil.canReach(player, msg.pos())) {
+			return;
+		}
 		TileUtil.getInterface(player.level(), msg.pos(), ForestryCapabilities.FILTER_LOGIC, null).ifPresent(logic -> {
 			if (logic.setGenomeFilter(msg.facing(), msg.index(), msg.active(), msg.species())) {
 				logic.getNetworkHandler().sendToPlayers(logic, player.level(), player);
