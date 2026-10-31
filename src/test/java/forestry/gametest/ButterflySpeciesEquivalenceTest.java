@@ -16,14 +16,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.core.IProduct;
@@ -48,10 +45,8 @@ import forestry.lepidopterology.butterflies.genetics.ButterflySpeciesProjector;
  * {@code BeeSpeciesEquivalenceTest}); the default-genome comparison is the heart of the guarantee, since it also
  * covers the cocoon/butterfly_effect reference chromosomes recorded via {@code RecordingGenomeBuilder}.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class ButterflySpeciesEquivalenceTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void generatedJsonMatchesCodeBuilt(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());

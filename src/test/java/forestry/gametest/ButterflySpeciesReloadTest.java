@@ -4,11 +4,8 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.core.genetics.alleles.AlleleOverride;
@@ -33,10 +30,8 @@ import forestry.lepidopterology.butterflies.genetics.LepidopterologyReloadHandle
  * server session - notably {@code MutationRecipeTest}'s butterfly mutation assertions - still see the full built-in
  * butterfly species set.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class ButterflySpeciesReloadTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void rebuildRepopulates(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();
@@ -83,7 +78,7 @@ public class ButterflySpeciesReloadTest {
 	 * exactly those definitions should reproduce the full built-in set. Mutates and restores the live species map
 	 * exactly like {@code rebuildRepopulates} above, so it doesn't leak into later tests in the same server session.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void managerLoadedAllSpeciesAtServerStart(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();

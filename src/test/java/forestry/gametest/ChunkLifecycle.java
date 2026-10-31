@@ -1,6 +1,7 @@
 package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.gametest.framework.GameTestAssertException;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.gametest.framework.GameTestSequence;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.chunk.LevelChunk;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,7 +26,8 @@ import java.util.function.BooleanSupplier;
 // also ticks block entities, so hold(pos, 0) leaves the neighbors just short of fully loaded, like the edge of a
 // player's loaded area. A chunk past 33 keeps its block entities until no ticket reaches it at all
 public final class ChunkLifecycle {
-	private static final TicketType<ChunkPos> TICKET = TicketType.create("forestry_gametest", Comparator.comparingLong(ChunkPos::toLong));
+	// loads and simulates like the 1.21.1 region ticket did; registered as forestry:gametest by ForestryGameTests
+	static final TicketType TICKET = new TicketType(TicketType.NO_TIMEOUT, TicketType.FLAG_LOADING | TicketType.FLAG_SIMULATION);
 	// far enough past the grid and apart from each other that no two sites' tickets overlap
 	private static final int SITE_DISTANCE = 700;
 	private static final int SITE_SPACING = 64;
@@ -42,23 +43,23 @@ public final class ChunkLifecycle {
 	}
 
 	public static void hold(ServerLevel level, ChunkPos pos, int distance) {
-		level.getChunkSource().addRegionTicket(TICKET, pos, distance, pos);
+		level.getChunkSource().addTicketWithRadius(TICKET, pos, distance);
 	}
 
 	public static void release(ServerLevel level, ChunkPos pos, int distance) {
-		level.getChunkSource().removeRegionTicket(TICKET, pos, distance, pos);
+		level.getChunkSource().removeTicketWithRadius(TICKET, pos, distance);
 	}
 
 	// never loads the chunk, unlike Level.getBlockEntity
 	public static boolean isFull(ServerLevel level, ChunkPos pos) {
-		return level.getChunkSource().getChunkNow(pos.x, pos.z) != null;
+		return level.getChunkSource().getChunkNow(pos.x(), pos.z()) != null;
 	}
 
 	// the condition LevelChunk.isTicking checks before it ticks a block entity, which a FULL chunk can lag behind
 	public static boolean isTicking(ServerLevel level, ChunkPos pos) {
-		return level.getChunkSource().getChunkNow(pos.x, pos.z) instanceof LevelChunk chunk
+		return level.getChunkSource().getChunkNow(pos.x(), pos.z()) instanceof LevelChunk chunk
 			&& chunk.getFullStatus().isOrAfter(FullChunkStatus.BLOCK_TICKING)
-			&& level.areEntitiesLoaded(pos.toLong());
+			&& level.areEntitiesLoaded(pos.pack());
 	}
 
 	@Nullable
@@ -136,7 +137,7 @@ public final class ChunkLifecycle {
 			// an assertion thrown while waiting only means "not yet", so the wait ends at the deadline and fails below
 			this.sequence.thenWaitUntil(() -> {
 				if (!this.failed && !condition.getAsBoolean() && System.nanoTime() < deadline[0]) {
-					throw new GameTestAssertException(message);
+					throw new GameTestAssertException(Component.literal(message), 0);
 				}
 			});
 			return run(() -> this.helper.assertTrue(condition.getAsBoolean(), message));
@@ -152,7 +153,7 @@ public final class ChunkLifecycle {
 				}
 				task.run();
 				if (left[0]-- > 0) {
-					throw new GameTestAssertException("watching");
+					throw new GameTestAssertException(Component.literal("watching"), 0);
 				}
 			});
 			return this;

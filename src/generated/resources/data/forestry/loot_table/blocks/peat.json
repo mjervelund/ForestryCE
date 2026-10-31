@@ -19,11 +19,11 @@
           "name": "forestry:peat"
         }
       ],
-      "functions": [
+      "modifier": [
         {
           "add": false,
           "count": 2.0,
-          "function": "minecraft:set_count"
+          "type": "minecraft:set_count"
         }
       ],
       "rolls": 1.0

@@ -9,7 +9,6 @@ import forestry.apiculture.bees.BeeHousingInventory;
 import forestry.core.platform.multiblock.MultiblockController;
 import forestry.core.platform.util.SpeciesUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
@@ -17,8 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import forestry.core.platform.legacy.items.IItemHandler;
 
 import java.util.ArrayList;
@@ -26,8 +23,6 @@ import java.util.List;
 
 // an idle alveary never reports a change from serverTick, so a shared inventory change only survives a save if the
 // change itself marks the holder's chunk unsaved
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public final class MultiblockPersistenceTest {
 	private static final BlockPos BASE = new BlockPos(6, 1, 6);
 	private static final int PRODUCT_SLOT = 2;
@@ -35,7 +30,7 @@ public final class MultiblockPersistenceTest {
 	private MultiblockPersistenceTest() {
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void alvearyAutomationChangeMarksHolderUnsaved(GameTestHelper helper) {
 		ServerLevel level = helper.getLevel();
 		List<BlockPos> members = MultiblockTestSupport.buildAlveary(helper, BASE);
@@ -44,7 +39,7 @@ public final class MultiblockPersistenceTest {
 			BlockPos holder = holderOf(helper, members);
 			MultiblockTestSupport.insertItem(level, members, MultiblockTestSupport.ALVEARY_INV_SIZE, PRODUCT_SLOT, new ItemStack(Items.HONEYCOMB, 7));
 			LevelChunk holderChunk = level.getChunkAt(holder);
-			holderChunk.setUnsaved(false);
+			holderChunk.tryMarkSaved();
 
 			IItemHandler handler = LegacyCapabilities.getItemHandler(level, members.getLast(), null);
 			helper.assertTrue(handler != null, "alveary exposes no item handler");
@@ -56,7 +51,7 @@ public final class MultiblockPersistenceTest {
 		});
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void alvearyChangeFromOtherChunkMarksHolderUnsaved(GameTestHelper helper) {
 		ServerLevel level = helper.getLevel();
 		// put the min corner in the last column of a chunk so the rest of the alveary sits in the next chunk
@@ -77,8 +72,8 @@ public final class MultiblockPersistenceTest {
 			helper.assertTrue(remote != null, "alveary does not straddle a chunk border");
 
 			LevelChunk holderChunk = level.getChunkAt(holder);
-			holderChunk.setUnsaved(false);
-			level.getChunkAt(remote).setUnsaved(false);
+			holderChunk.tryMarkSaved();
+			level.getChunkAt(remote).tryMarkSaved();
 
 			// the same calls a menu slot makes when a player places an item
 			Container container = (Container) level.getBlockEntity(remote);
@@ -92,7 +87,7 @@ public final class MultiblockPersistenceTest {
 
 	// a queen's death leaves the alveary idle, so serverTick never reports the dead queen or her offspring. Machines
 	// in the grid mark their chunks every tick, so this check spans ticks on a chunk to itself
-	@GameTest(template = "empty", timeoutTicks = 2_000_000)
+	@ForestryGameTest(timeoutTicks = 2_000_000)
 	public static void alvearyQueenDeathMarksHolderUnsaved(GameTestHelper helper) {
 		ServerLevel level = helper.getLevel();
 		ChunkPos site = ChunkLifecycle.isolatedSite(helper);
@@ -113,7 +108,7 @@ public final class MultiblockPersistenceTest {
 				queen.setMate(queen.getGenome());
 				queen.setHealth(0);
 				MultiblockTestSupport.insertItem(level, members, MultiblockTestSupport.ALVEARY_INV_SIZE, BeeHousingInventory.SLOT_QUEEN, queen.createStack(BeeLifeStage.QUEEN));
-				holderChunk[0].setUnsaved(false);
+				holderChunk[0].tryMarkSaved();
 			})
 			// the queen dies on the next tick and her offspring move into the inventory on the tick after. The next
 			// tick's eager save can write a dirty chunk and clear its flag, so check it after every tick

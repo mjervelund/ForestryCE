@@ -19,7 +19,6 @@ import com.mojang.serialization.JsonOps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.Identifier;
@@ -29,8 +28,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.IBeeHousing;
@@ -64,10 +61,8 @@ import forestry.core.platform.util.SpeciesUtil;
  * The default-genome comparison is the heart of the guarantee: every chromosome's active+inactive allele must match
  * exactly, including reference-vs-data dispatch (a bug there would silently corrupt breeding).
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class BeeSpeciesEquivalenceTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void projectedMatchesCodeBuilt(GameTestHelper helper) {
 		IBeeSpeciesType type = SpeciesUtil.BEE_TYPE.get();
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());

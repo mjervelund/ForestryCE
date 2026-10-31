@@ -4,11 +4,8 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -38,10 +35,8 @@ import forestry.core.platform.util.SpeciesUtil;
  * happen if {@code rebuildVanillaMembership} actually re-ran during {@code setSpecies}. Do not "simplify" this back
  * to a non-null check; it would silently stop guarding the behavior this task delivers.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class TreeReloadSideEffectsTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void sideEffectsSurviveReload(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();

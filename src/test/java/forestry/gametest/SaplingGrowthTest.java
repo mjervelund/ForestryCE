@@ -1,11 +1,8 @@
 package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.Tag;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.arboriculture.ITreeSpecies;
@@ -34,10 +31,8 @@ import forestry.core.platform.util.SpeciesUtil;
  * the bug present. Keep the serialize round-trip and the distinct-instance guard - they are what make this a real
  * regression test.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class SaplingGrowthTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void saplingWithFreshGenomeIsRecognizedForGrowth(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();
 		ITreeSpecies species = type.getAllSpecies().iterator().next();
@@ -60,7 +55,7 @@ public class SaplingGrowthTest {
 
 		BlockPos rel = new BlockPos(2, 1, 2);
 		helper.setBlock(rel, ArboricultureBlocks.SAPLING_GE.block());
-		if (!(helper.getBlockEntity(rel) instanceof SaplingBlockEntity tile)) {
+		if (!(helper.getLevel().getBlockEntity(helper.absolutePos(rel)) instanceof SaplingBlockEntity tile)) {
 			helper.fail("Expected a TileSapling at " + rel);
 			return;
 		}

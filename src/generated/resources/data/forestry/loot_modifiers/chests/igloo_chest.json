@@ -1,11 +1,9 @@
 {
   "type": "forestry:condition_modifier",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/igloo_chest"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/igloo_chest"
+  },
   "extensions": [
     "apiculture"
   ],

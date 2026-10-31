@@ -2,13 +2,10 @@ package forestry.gametest;
 
 import java.util.List;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.mail.features.MailItems;
@@ -21,10 +18,8 @@ import forestry.mail.letters.PostageUtil;
  * preserved from the original, greedy and admittedly not optimal, so these assert what it does rather
  * than what an optimal solver would do.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class PostageSelectorTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void heldDenominationsSortCheapestFirstAndIgnoreNonStamps(GameTestHelper helper) {
 		List<PostageSelector.Denomination> held = PostageSelector.heldDenominations(List.of(
 			MailItems.STAMPS.stack(EnumStampDefinition.P_20, 2),
@@ -41,7 +36,7 @@ public class PostageSelectorTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void virtualDenominationsAreForestryStampsOnly(GameTestHelper helper) {
 		List<PostageSelector.Denomination> virtual = PostageSelector.virtualDenominations();
 
@@ -53,7 +48,7 @@ public class PostageSelectorTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void exactChangeUsesTheLargestStampsThatFit(GameTestHelper helper) {
 		// 27 from 20 + 5 + 1 + 1, taken largest first
 		List<ItemStack> selected = PostageSelector.select(PostageSelector.heldDenominations(List.of(
@@ -69,7 +64,7 @@ public class PostageSelectorTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void noExactChangeOverpaysWithTheSmallestCoveringStamp(GameTestHelper helper) {
 		// 3 required, only 20n stamps held, so one 20n overpays rather than failing
 		List<ItemStack> selected = PostageSelector.select(PostageSelector.heldDenominations(List.of(
@@ -82,7 +77,7 @@ public class PostageSelectorTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void noCoveringStampCombinesSmallerOnes(GameTestHelper helper) {
 		// 7 required, only 2n stamps held, so four of them combine and overpay by one
 		List<ItemStack> selected = PostageSelector.select(PostageSelector.heldDenominations(List.of(
@@ -94,14 +89,14 @@ public class PostageSelectorTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void anEmptyStationSelectsNothing(GameTestHelper helper) {
 		helper.assertTrue(PostageSelector.select(PostageSelector.heldDenominations(List.of()), 5).isEmpty(),
 			"A station holding no stamps still selected postage");
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void aZeroPostageDenominationIsIgnored(GameTestHelper helper) {
 		// A datapack can strip an item's postage entry, which leaves getPostage returning zero. The
 		// solver divides by postage, so a zero denomination has to be filtered out before a pass reaches it.

@@ -3,14 +3,11 @@ package forestry.gametest;
 import java.util.List;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.core.content.machines.blocks.BlockTypeFactoryPlain;
@@ -30,8 +27,6 @@ import forestry.core.content.machines.tiles.TileSmelter;
  * Neither shows up on the common case of one slot holding the whole cost, which is why they survived. The tests
  * below all use costs that must be paid from more than one slot, or from the ninth slot alone.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class SmelterResourceRemovalTest {
 	private static final BlockPos SMELTER_POS = new BlockPos(8, 1, 8);
 
@@ -41,7 +36,7 @@ public class SmelterResourceRemovalTest {
 	/**
 	 * A cost spread over three slots must be payable, and each slot must be emptied by what it actually held.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void aCostSpreadOverSlotsIsPaidFromAllOfThem(GameTestHelper helper) {
 		InventorySmelter inventory = smelter(helper);
 		inventory.setItem(0, new ItemStack(Items.QUARTZ, 5));
@@ -59,7 +54,7 @@ public class SmelterResourceRemovalTest {
 	/**
 	 * The ninth input slot is real inventory. The original loop stopped before it.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void theLastInputSlotIsUsable(GameTestHelper helper) {
 		InventorySmelter inventory = smelter(helper);
 		inventory.setItem(LAST_INPUT_SLOT, new ItemStack(Items.QUARTZ, 4));
@@ -75,7 +70,7 @@ public class SmelterResourceRemovalTest {
 	/**
 	 * Not enough across every slot must fail, and must leave the inventory untouched.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void anUnpayableCostChangesNothing(GameTestHelper helper) {
 		InventorySmelter inventory = smelter(helper);
 		inventory.setItem(0, new ItemStack(Items.QUARTZ, 2));
@@ -93,7 +88,7 @@ public class SmelterResourceRemovalTest {
 	 * Two ingredients that both match the same slot must not double spend it. The original overwrote the recorded
 	 * amount per slot rather than accumulating, so the second ingredient erased the first one's claim.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void twoIngredientsDoNotDoubleSpendOneSlot(GameTestHelper helper) {
 		InventorySmelter inventory = smelter(helper);
 		inventory.setItem(0, new ItemStack(Items.QUARTZ, 3));
@@ -112,7 +107,7 @@ public class SmelterResourceRemovalTest {
 
 	private static InventorySmelter smelter(GameTestHelper helper) {
 		helper.setBlock(SMELTER_POS, FactoryBlocks.PLAIN.get(BlockTypeFactoryPlain.SMELTER).block());
-		TileSmelter smelter = (TileSmelter) helper.getBlockEntity(SMELTER_POS);
+		TileSmelter smelter = (TileSmelter) helper.getLevel().getBlockEntity(helper.absolutePos(SMELTER_POS));
 		return (InventorySmelter) smelter.getInternalInventory();
 	}
 

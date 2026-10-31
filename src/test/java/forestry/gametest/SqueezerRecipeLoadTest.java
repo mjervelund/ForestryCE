@@ -1,11 +1,8 @@
 package forestry.gametest;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.crafting.RecipeMap;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.core.machines.ISqueezerRecipe;
@@ -18,10 +15,8 @@ import forestry.core.content.machines.features.FactoryRecipeTypes;
  * End-to-end oracle: the real built-in squeezer recipes load from datapack JSON (the new nested
  * {@code "output": {"stack": {...}}} shape) and resolve to the expected non-empty fluid output.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class SqueezerRecipeLoadTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void squeezerRecipesResolveOutput(GameTestHelper helper) {
 		RecipeMap manager = RecipeUtils.recipes(helper.getLevel());
 

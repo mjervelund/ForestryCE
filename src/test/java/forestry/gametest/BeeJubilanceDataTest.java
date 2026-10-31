@@ -15,7 +15,6 @@ import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -24,8 +23,6 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.ForestryRegistries;
@@ -41,8 +38,6 @@ import forestry.apiculture.bees.genetics.BeeSpeciesProjector;
 import forestry.apiculture.bees.genetics.HermitBeeJubilance;
 import forestry.core.platform.util.SpeciesUtil;
 
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class BeeJubilanceDataTest {
 	private static final Identifier TEST_ID = ForestryConstants.forestry("test_requires_gold");
 	private static final String JSON = "{\"type\":\"forestry:requires_resource\",\"blocks\":\"minecraft:gold_block\"}";
@@ -52,7 +47,7 @@ public class BeeJubilanceDataTest {
 		return IBeeJubilance.CODEC.parse(ops, JsonParser.parseString(JSON)).getOrThrow();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void requiresResourceTypeIsRegistered(GameTestHelper helper) {
 		if (!ForestryRegistries.BEE_JUBILANCE_TYPE.containsKey(ForestryConstants.forestry("requires_resource"))) {
 			helper.fail("forestry:requires_resource is not a registered jubilance type");
@@ -61,7 +56,7 @@ public class BeeJubilanceDataTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void jubilanceCodecRoundTrip(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
 		IBeeJubilance parsed = parse(helper);
@@ -84,7 +79,7 @@ public class BeeJubilanceDataTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void requiresResourceChecksBlockBelowHousing(GameTestHelper helper) {
 		IBeeJubilance jubilance = parse(helper);
 		IBeeSpecies species = SpeciesUtil.BEE_TYPE.get().getDefaultSpecies();
@@ -109,7 +104,7 @@ public class BeeJubilanceDataTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void datapackJubilanceMergesOntoCodeJubilances(GameTestHelper helper) {
 		IBeeSpeciesType type = SpeciesUtil.BEE_TYPE.get();
 		Map<Identifier, IBeeJubilance> original = BeeJubilanceManager.INSTANCE.getDefinitions();
@@ -139,7 +134,7 @@ public class BeeJubilanceDataTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void jubilanceProviderGenerates(GameTestHelper helper) throws IOException {
 		IBeeSpeciesType type = SpeciesUtil.BEE_TYPE.get();
 		Path dir = Files.createTempDirectory("forestry_jubilance_test");
@@ -158,7 +153,7 @@ public class BeeJubilanceDataTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void jubilanceFactoryEncodesTag(GameTestHelper helper) {
 		IBeeJubilance jubilance = SpeciesUtil.BEE_TYPE.get().getJubilanceFactory().getRequiresResource(BlockTags.DIRT);
 		JsonElement json = IBeeJubilance.CODEC.encodeStart(RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess()), jubilance).getOrThrow();

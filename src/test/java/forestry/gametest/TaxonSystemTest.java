@@ -3,11 +3,8 @@ package forestry.gametest;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.IForestryApi;
@@ -31,10 +28,8 @@ import forestry.core.platform.util.SpeciesUtil;
  * fixpoint parent resolution (a child listed before its parent still resolves; an orphan is skipped; an empty reload
  * reverts to exactly the - now empty - code base).
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class TaxonSystemTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void baseTaxonomyLoadedFromDatapack(GameTestHelper helper) {
 		IGeneticManager gm = IForestryApi.INSTANCE.getGeneticManager();
 
@@ -53,7 +48,7 @@ public class TaxonSystemTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void genusDefaultAllelesInheritedFromDatapack(GameTestHelper helper) {
 		IGeneticManager gm = IForestryApi.INSTANCE.getGeneticManager();
 
@@ -79,7 +74,7 @@ public class TaxonSystemTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void datapackTaxaMergeWithFixpointAndSkip(GameTestHelper helper) {
 		IGeneticManager gm = IForestryApi.INSTANCE.getGeneticManager();
 		var original = TaxonManager.INSTANCE.getDefinitions().values();

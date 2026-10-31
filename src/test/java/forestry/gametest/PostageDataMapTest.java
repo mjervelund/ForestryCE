@@ -3,13 +3,10 @@ package forestry.gametest;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.ForestryDataMaps;
@@ -22,10 +19,8 @@ import forestry.mail.letters.PostageUtil;
  * file and no dependency on the mail jar, so a data map that fails to register, or a generated file
  * that fails to load, silently turns every Forestry stamp into a worthless item.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class PostageDataMapTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void everyForestryStampCarriesItsPostage(GameTestHelper helper) {
 		List<String> broken = new ArrayList<>();
 
@@ -48,14 +43,14 @@ public class PostageDataMapTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void nonStampsCarryNoPostage(GameTestHelper helper) {
 		helper.assertTrue(Items.PAPER.builtInRegistryHolder().getData(ForestryDataMaps.POSTAGE) == null,
 			"Paper resolved a postage value, so the data map is matching items it should not");
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void postageUtilReadsTheDataMap(GameTestHelper helper) {
 		ItemStack tenner = MailItems.STAMPS.stack(EnumStampDefinition.P_10, 3);
 
@@ -67,7 +62,7 @@ public class PostageDataMapTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void sumPostageMultipliesByCount(GameTestHelper helper) {
 		List<ItemStack> stamps = List.of(
 			MailItems.STAMPS.stack(EnumStampDefinition.P_10, 3),

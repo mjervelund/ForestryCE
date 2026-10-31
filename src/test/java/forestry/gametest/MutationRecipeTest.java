@@ -1,5 +1,6 @@
 package forestry.gametest;
 
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,6 @@ import com.mojang.serialization.MapCodec;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -26,8 +26,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import com.google.gson.JsonElement;
 
@@ -67,11 +65,9 @@ import forestry.core.platform.util.SpeciesUtil;
  * the mutation chance. All assertions key off stable, classic Forestry mutations (Forest+Marshy&rarr;Common, etc.) and
  * "non-empty"/"contains" checks rather than exact counts, so datapack edits do not make them brittle.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class MutationRecipeTest {
 	/** The mutation index must be populated from the generated recipes for all three species types. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void mutationIndexPopulated(GameTestHelper helper) {
 		// --- Bees: Forest + Marshy -> Common @ 0.15 (a stable, unconditioned classic mutation) ---
 		IMutationManager<IBeeSpecies> beeMutations = SpeciesUtil.BEE_TYPE.get().getMutations();
@@ -127,7 +123,7 @@ public class MutationRecipeTest {
 	}
 
 	/** Each of the 7 condition types must survive a JSON dispatch-codec and a network stream-codec round-trip. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void conditionCodecRoundTrip(GameTestHelper helper) {
 		TagKey<Biome> forestBiomes = BiomeTags.IS_FOREST;
 		List<IMutationCondition> conditions = List.of(
@@ -170,7 +166,7 @@ public class MutationRecipeTest {
 	}
 
 	/** A built MutationRecipe must survive the BEE serializer's NBT codec and network stream-codec unchanged. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void recipeCodecRoundTrip(GameTestHelper helper) {
 		List<IMutationCondition> conditions = List.of(
 			new MutationConditionTemperature(TemperatureType.WARM, TemperatureType.HOT),
@@ -187,7 +183,8 @@ public class MutationRecipeTest {
 			Map.of()
 		);
 
-		MutationRecipe.Serializer serializer = (MutationRecipe.Serializer) GeneticsRecipeTypes.BEE_MUTATION.serializer();
+		@SuppressWarnings("unchecked")
+		RecipeSerializer<MutationRecipe> serializer = (RecipeSerializer<MutationRecipe>) GeneticsRecipeTypes.BEE_MUTATION.serializer();
 
 		// NBT codec.
 		MapCodec<MutationRecipe> mapCodec = serializer.codec();
@@ -221,7 +218,7 @@ public class MutationRecipeTest {
 	 * mutation. Condition gating is checked deterministically via the full {@link Mutation#getChance} path and a direct
 	 * {@code modifyChance} call using inline {@link IClimateProvider}s, so it never depends on the template's biome.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void breedingProducesMutation(GameTestHelper helper) {
 		Level level = helper.getLevel();
 		BlockPos pos = helper.absolutePos(BlockPos.ZERO);
@@ -300,7 +297,7 @@ public class MutationRecipeTest {
 	}
 
 	/** {@code getMutations()} must be non-null for all three species types and never throw. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void getMutationsNeverThrows(GameTestHelper helper) {
 		if (SpeciesUtil.BEE_TYPE.get().getMutations() == null
 				|| SpeciesUtil.TREE_TYPE.get().getMutations() == null

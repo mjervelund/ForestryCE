@@ -3,12 +3,9 @@ package forestry.gametest;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.ForestryBeeJubilances;
@@ -17,13 +14,11 @@ import forestry.apiculture.bees.genetics.BeeSpeciesDefinition;
 import forestry.apiculture.bees.genetics.BeeSpeciesProvider;
 import forestry.core.platform.util.SpeciesUtil;
 
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class BeeSpeciesProviderTest {
 	private static final Identifier SPECIES = ForestryConstants.forestry("test_jubilant");
 	private static final Identifier JUBILANCE = ForestryConstants.forestry("test_jubilance");
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void jubilanceIsGenerated(GameTestHelper helper) {
 		BeeSpeciesDefinition def = build(reg -> {
 			reg.registerSpecies(SPECIES, "Testus", "jubilans", true, TextColor.fromRgb(0)).setJubilance(ForestryBeeJubilances.HERMIT);
@@ -33,7 +28,7 @@ public class BeeSpeciesProviderTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void unregisteredJubilanceIsGenerated(GameTestHelper helper) {
 		BeeSpeciesDefinition def = build(reg -> {
 			reg.registerSpecies(SPECIES, "Testus", "jubilans", true, TextColor.fromRgb(0)).setJubilance(JUBILANCE);

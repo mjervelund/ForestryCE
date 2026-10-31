@@ -5,11 +5,8 @@ import java.util.List;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.core.features.CoreDataComponents;
@@ -23,10 +20,8 @@ import forestry.mail.features.MailDataComponents;
  * <p>This matters most when a component moves between modules, since the new module's registry may
  * not be wired. Nothing else in the suite exercises letters.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class DataComponentRegistrationTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void everyForestryDataComponentIsRegistered(GameTestHelper helper) {
 		List<String> broken = new ArrayList<>();
 

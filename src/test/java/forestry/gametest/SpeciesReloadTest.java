@@ -3,11 +3,8 @@ package forestry.gametest;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.genetics.IBeeSpecies;
@@ -26,8 +23,6 @@ import forestry.core.platform.util.SpeciesUtil;
  * {@code bee_species} datapack JSON at server start, then {@link ApicultureReloadHandler#rebuildSpecies} projecting it
  * into the live species type - actually produces the full built-in set.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class SpeciesReloadTest {
 	/**
 	 * Mirrors {@code BeeSpeciesEquivalenceTest}'s canary: 69 is the current number of built-in bee species / generated
@@ -36,7 +31,7 @@ public class SpeciesReloadTest {
 	 */
 	private static final int EXPECTED_BUILTIN_COUNT = 69;
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void allSpeciesNeverThrowsAndCountMatches(GameTestHelper helper) {
 		List<IBeeSpecies> allSpecies = SpeciesUtil.BEE_TYPE.get().getAllSpecies();
 		if (allSpecies == null) {
@@ -60,7 +55,7 @@ public class SpeciesReloadTest {
 	 * definitions must then (re)populate the live bee species type with the full built-in set, one live species per
 	 * definition id.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void rebuildFromLoadedDefinitionsProducesFullSet(GameTestHelper helper) {
 		Map<Identifier, BeeSpeciesDefinition> defs = BeeSpeciesManager.INSTANCE.getDefinitions();
 		if (defs.size() < EXPECTED_BUILTIN_COUNT) {

@@ -1,9 +1,6 @@
 package forestry.gametest;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.ForestryBeeJubilances;
@@ -19,11 +16,9 @@ import forestry.core.platform.util.SpeciesUtil;
  * {@link IBeeSpeciesType#getJubilance} / {@link IBeeSpeciesType#getJubilanceSafe}, and that the safe getter returns
  * {@code null} for an unregistered id instead of throwing.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class BeeJubilanceTest {
 	/** The two builtin jubilances must resolve to their exact singleton instances by id. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void builtinJubilancesResolveById(GameTestHelper helper) {
 		IBeeSpeciesType beeType = SpeciesUtil.BEE_TYPE.get();
 
@@ -43,7 +38,7 @@ public class BeeJubilanceTest {
 	}
 
 	/** The safe getter must return null for an id that was never registered, rather than throwing. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void unregisteredJubilanceSafeGetterReturnsNull(GameTestHelper helper) {
 		IBeeSpeciesType beeType = SpeciesUtil.BEE_TYPE.get();
 

@@ -1,14 +1,11 @@
 package forestry.gametest;
 
 import io.netty.buffer.Unpooled;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import com.mojang.serialization.JsonOps;
 
@@ -18,10 +15,8 @@ import forestry.core.engine.genetics.flowers.PhotosynthesisFlowerType;
 import forestry.core.engine.genetics.flowers.TagFlowerType;
 import forestry.core.engine.genetics.flowers.WaterTagFlowerType;
 
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class FlowerTypeCodecTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void streamRoundTrip(GameTestHelper helper) {
 		IFlowerType[] samples = {
 			new TagFlowerType(BlockTags.FLOWERS, true),
@@ -41,7 +36,7 @@ public class FlowerTypeCodecTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void jsonRoundTrip(GameTestHelper helper) {
 		RegistryOps<com.google.gson.JsonElement> jsonOps = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
 		IFlowerType end = new TagFlowerType(BlockTags.FLOWERS, false, BiomeTags.IS_END);

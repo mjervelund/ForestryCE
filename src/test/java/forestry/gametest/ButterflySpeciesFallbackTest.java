@@ -6,11 +6,8 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.core.genetics.alleles.ButterflyChromosomes;
@@ -34,10 +31,8 @@ import forestry.lepidopterology.butterflies.genetics.LepidopterologyReloadHandle
  * butterfly species id that a datapack has since removed, and resolving it must fall back to the default species
  * instead of throwing (mirrors {@code TreeSpeciesFallbackTest}'s resolver coverage).
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class ButterflySpeciesFallbackTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void speciesResolverFallsSoft(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();
@@ -62,7 +57,7 @@ public class ButterflySpeciesFallbackTest {
 	 * to an id nothing registered - that must fall back to {@link ForestryCocoons#DEFAULT}/{@link
 	 * ForestryButterflyEffects#NONE} instead of crashing cocoon maturation ({@code TileCocoon}) or the analyzer.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void cocoonAndEffectResolversFallSoft(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();
@@ -103,7 +98,7 @@ public class ButterflySpeciesFallbackTest {
 	 * rebuildMutations} in a {@code finally} block), so later GameTests in the same server session (notably {@code
 	 * MutationRecipeTest}'s butterfly mutation assertions) are unaffected.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void bindinglessDefinitionSkippedNoCrash(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();

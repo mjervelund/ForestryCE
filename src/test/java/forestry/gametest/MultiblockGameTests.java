@@ -9,7 +9,6 @@ import forestry.agriculture.multifarm.blocks.MultifarmBlockType;
 import forestry.agriculture.multifarm.blocks.MultifarmMaterialType;
 import forestry.agriculture.features.MultifarmBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -19,8 +18,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import java.util.*;
 
@@ -47,8 +44,6 @@ import java.util.*;
  * placing a single bridge block between two separately-assembled machines, then checking that the inventories survive
  * across the controller merge.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class MultiblockGameTests {
 	private static final BlockPos BASE = new BlockPos(6, 1, 6);
 	private static final int TIMEOUT = 240;
@@ -70,39 +65,39 @@ public class MultiblockGameTests {
 
 	// ===================== Alveary =====================
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyRoundTripConservesInventory(GameTestHelper helper) {
 		roundTrip(helper, MultiblockTestSupport::buildAlveary, MultiblockTestSupport.ALVEARY_INV_SIZE, 2);
 	}
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyBreakConservesInventory(GameTestHelper helper) {
 		breakAll(helper, MultiblockTestSupport::buildAlveary, MultiblockTestSupport.ALVEARY_INV_SIZE, 2);
 	}
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyPartialBreakConservesInventory(GameTestHelper helper) {
 		partialBreak(helper, MultiblockTestSupport::buildAlveary, MultiblockTestSupport.ALVEARY_INV_SIZE, 2);
 	}
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyBridgeMergeConservesInventory(GameTestHelper helper) {
 		bridgeMerge(helper, MultiblockTestSupport::buildAlveary, alvearyPart(), MultiblockTestSupport.ALVEARY_INV_SIZE, 2);
 	}
 
 	// ===================== Farm =====================
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void farmRoundTripConservesInventory(GameTestHelper helper) {
 		roundTrip(helper, MultiblockTestSupport::buildFarm, MultiblockTestSupport.FARM_INV_SIZE, 0);
 	}
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void farmBreakConservesInventory(GameTestHelper helper) {
 		breakAll(helper, MultiblockTestSupport::buildFarm, MultiblockTestSupport.FARM_INV_SIZE, 0);
 	}
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void farmBridgeMergeConservesInventory(GameTestHelper helper) {
 		bridgeMerge(helper, MultiblockTestSupport::buildFarm, farmPart(), MultiblockTestSupport.FARM_INV_SIZE, 0);
 	}

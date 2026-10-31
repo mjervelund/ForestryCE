@@ -2,10 +2,7 @@ package forestry.gametest;
 
 import java.util.Map;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.core.genetics.IGenome;
@@ -25,10 +22,8 @@ import forestry.lepidopterology.butterflies.genetics.ButterflySpeciesProjector;
  * from the code-registered Monarch butterfly projects into a runtime {@link ButterflySpecies} whose fields and
  * default genome match the live built-in, including the sparse genome override dispatch (data chromosome, SIZE).
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class ButterflySpeciesProjectorTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void projectsMatchingButterflySpecies(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();
 		// Read the genus/species/etc. off the real Monarch so the definition is faithful.
@@ -92,7 +87,7 @@ public class ButterflySpeciesProjectorTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void unknownChromosomeOverrideIsSkippedNotFatal(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();
 		// Reuse a real, taxon-registered genus (Monarch's) so the only abnormality under test is the bogus

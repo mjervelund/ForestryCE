@@ -14,13 +14,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.mojang.serialization.JsonOps;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.arboriculture.ITreeSpecies;
@@ -43,10 +40,8 @@ import forestry.core.platform.util.SpeciesUtil;
  * Mirrors {@code BeeSpeciesEquivalenceTest}. Trees need no jubilance-style instance -&gt; id inversion, so the
  * comparison surface is simpler: genetics fields, resolved bindings (the generator instance), and the default genome.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class TreeSpeciesEquivalenceTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void generatedJsonMatchesCodeBuilt(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());

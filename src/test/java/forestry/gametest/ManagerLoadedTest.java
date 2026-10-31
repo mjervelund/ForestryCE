@@ -1,9 +1,6 @@
 package forestry.gametest;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.IForestryApi;
@@ -14,10 +11,8 @@ import forestry.api.IForestryApi;
  * contract. Hives and trees come from base and are installed during species type registration, so the
  * getter throwing here is the initialization-order failure the no-ops used to hide.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class ManagerLoadedTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void serverManagersAreLoaded(GameTestHelper helper) {
 		if (!IForestryApi.INSTANCE.getFarmingManager().isLoaded()) {
 			helper.fail("IFarmingManager reports not loaded in a full install");

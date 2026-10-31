@@ -3,13 +3,10 @@ package forestry.gametest;
 import java.util.Collection;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.core.content.soil.BlockBogEarth;
@@ -25,14 +22,12 @@ import forestry.core.features.CoreBlocks;
  * <p>
  * The tests drive {@link BlockState#randomTick} directly instead of waiting on the level to roll random ticks, because
  * the in-world rate would make the suite take minutes. {@code randomTick} then gates itself on a further 1 in 13 roll
- * off {@code level.random}, which the test cannot seed, so the loop counts state CHANGES and not calls. The number of
+ * off {@code level.getRandom()}, which the test cannot seed, so the loop counts state CHANGES and not calls. The number of
  * calls is random but the number of changes is not, which is what {@link #EXPECTED_ADVANCES} asserts.
  * <p>
  * A whole test method body runs inside a single server tick. No fluid tick fires while it runs, so a placed water
  * source stays exactly where the test put it and cannot spread into or out of the scanned box.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class BogEarthMaturationTest {
 	// maturity 0 -> 1, 1 -> 2, then 2 -> peat
 	private static final int EXPECTED_ADVANCES = 3;
@@ -46,7 +41,7 @@ public class BogEarthMaturationTest {
 	// one block outside that box
 	private static final BlockPos FAR_WATER = BOG_POS.offset(3, 0, 0);
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void bogEarthBecomesPeatAfterThreeMaturityAdvances(GameTestHelper helper) {
 		helper.setBlock(NEAR_WATER, Blocks.WATER);
 		helper.setBlock(BOG_POS, CoreBlocks.BOG_EARTH.defaultState());
@@ -59,7 +54,7 @@ public class BogEarthMaturationTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void bogEarthDoesNotMatureWithoutWater(GameTestHelper helper) {
 		helper.setBlock(BOG_POS, CoreBlocks.BOG_EARTH.defaultState());
 
@@ -67,7 +62,7 @@ public class BogEarthMaturationTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void bogEarthDoesNotMatureWithWaterOutOfRange(GameTestHelper helper) {
 		helper.setBlock(FAR_WATER, Blocks.WATER);
 		helper.setBlock(BOG_POS, CoreBlocks.BOG_EARTH.defaultState());
@@ -80,7 +75,7 @@ public class BogEarthMaturationTest {
 	 * Covers the maturity values the growth path never produces on its own. Closes #157, where a maturity set with a
 	 * debug stick fell into the increment branch and threw on an out-of-range property value.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void everyMaturityValueReachesPeat(GameTestHelper helper) {
 		helper.setBlock(NEAR_WATER, Blocks.WATER);
 
@@ -105,7 +100,7 @@ public class BogEarthMaturationTest {
 	 * Guards the rest of this class. Every other test calls {@code randomTick} by hand, so all of them would still pass
 	 * if the block stopped opting into random ticks and could never mature in a real world.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void bogEarthOptsIntoRandomTicks(GameTestHelper helper) {
 		helper.setBlock(BOG_POS, CoreBlocks.BOG_EARTH.defaultState());
 
@@ -129,7 +124,7 @@ public class BogEarthMaturationTest {
 				break;
 			}
 
-			before.randomTick(level, pos, level.random);
+			before.randomTick(level, pos, level.getRandom());
 
 			// block states are singletons, so identity separates a tick that acted from one the 1 in 13 roll rejected
 			BlockState after = helper.getBlockState(BOG_POS);
@@ -153,7 +148,7 @@ public class BogEarthMaturationTest {
 		BlockPos pos = helper.absolutePos(BOG_POS);
 
 		for (int i = 0; i < MAX_RANDOM_TICKS; i++) {
-			helper.getBlockState(BOG_POS).randomTick(level, pos, level.random);
+			helper.getBlockState(BOG_POS).randomTick(level, pos, level.getRandom());
 		}
 
 		helper.assertBlockPresent(CoreBlocks.BOG_EARTH.block(), BOG_POS);

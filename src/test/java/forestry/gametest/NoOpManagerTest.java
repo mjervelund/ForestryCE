@@ -1,12 +1,9 @@
 package forestry.gametest;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.apiimpl.fake.FakeFarmingManager;
@@ -17,10 +14,8 @@ import forestry.apiimpl.fake.FakeFarmingManager;
  * protects is the contract an addon relies on when farms is absent: non-null returns and empty
  * results rather than a throw.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class NoOpManagerTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void noOpReportsNotLoaded(GameTestHelper helper) {
 		if (FakeFarmingManager.INSTANCE.isLoaded()) {
 			helper.fail("The no-op farming manager reported itself loaded");
@@ -29,7 +24,7 @@ public class NoOpManagerTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void noOpFarmingManagerDegrades(GameTestHelper helper) {
 		Identifier any = ForestryConstants.forestry("wheat");
 

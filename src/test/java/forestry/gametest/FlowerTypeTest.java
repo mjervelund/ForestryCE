@@ -1,10 +1,7 @@
 package forestry.gametest;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.IForestryApi;
@@ -16,8 +13,6 @@ import forestry.core.engine.genetics.flowers.TagFlowerType;
 import forestry.core.engine.genetics.flowers.WaterTagFlowerType;
 import forestry.core.engine.genetics.FlowerTypeManager;
 
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class FlowerTypeTest {
 	private static final Identifier[] ALL = {
 		ForestryFlowerTypes.VANILLA, ForestryFlowerTypes.NETHER, ForestryFlowerTypes.CACTI,
@@ -30,7 +25,7 @@ public class FlowerTypeTest {
 	// Butterflies carry the same flower type chromosome bees do, so resolving one must not route
 	// through the bee species type. Before phase 9b it did, which meant lepidopterology installed
 	// without apiculture could not project a single butterfly
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void flowerTypesResolveWithoutBeeSpeciesType(GameTestHelper helper) {
 		for (Identifier id : ALL) {
 			if (IForestryApi.INSTANCE.getFlowerTypeManager().getFlowerType(id) == null) {
@@ -40,7 +35,7 @@ public class FlowerTypeTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void allBuiltinsResolve(GameTestHelper helper) {
 		IFlowerTypeManager bees = IForestryApi.INSTANCE.getFlowerTypeManager();
 		for (Identifier id : ALL) {
@@ -70,7 +65,7 @@ public class FlowerTypeTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void tagFlowerTypeAcceptsTaggedBlock(GameTestHelper helper) {
 		net.minecraft.core.BlockPos abs = helper.absolutePos(new net.minecraft.core.BlockPos(0, 1, 0));
 		helper.getLevel().setBlockAndUpdate(abs, net.minecraft.world.level.block.Blocks.DANDELION.defaultBlockState());
@@ -82,7 +77,7 @@ public class FlowerTypeTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void waterFlowerTypePlantablePositionIsWaterOnly(GameTestHelper helper) {
 		net.minecraft.core.BlockPos water = helper.absolutePos(new net.minecraft.core.BlockPos(0, 1, 0));
 		net.minecraft.core.BlockPos air = helper.absolutePos(new net.minecraft.core.BlockPos(1, 1, 0));
@@ -96,7 +91,7 @@ public class FlowerTypeTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void datapackOverrideWinsAndUnionSwaps(GameTestHelper helper) {
 		IFlowerTypeManager bees = IForestryApi.INSTANCE.getFlowerTypeManager();
 		Identifier probe = ForestryConstants.forestry("gametest_probe_flower");

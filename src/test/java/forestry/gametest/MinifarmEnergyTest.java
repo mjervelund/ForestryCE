@@ -1,13 +1,10 @@
 package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.agriculture.features.MinifarmBlocks;
@@ -28,8 +25,6 @@ import forestry.core.content.energy.ForestryEnergyStorage;
  * stack moves into the product inventory. That keeps the farm off soil, water and fertilizer setup, and leaves the
  * work cycle itself as the only thing under test.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class MinifarmEnergyTest {
 	private static final BlockPos FARM_POS = new BlockPos(8, 2, 8);
 
@@ -48,7 +43,7 @@ public class MinifarmEnergyTest {
 	// long enough for many steps past the point where the broken tile kept working without power
 	private static final int OUT_OF_ENERGY_IDLE = 100;
 
-	@GameTest(template = "empty", timeoutTicks = 200)
+	@ForestryGameTest(timeoutTicks = 200)
 	public static void minifarmPaysEnergyForEveryWorkCycle(GameTestHelper helper) {
 		AbstractMinifarmBlockEntity farm = placeFarm(helper);
 		ForestryEnergyStorage energy = farm.getEnergyManager();
@@ -74,7 +69,7 @@ public class MinifarmEnergyTest {
 	 * The other half of the same bug. A pinned work counter never falls below {@code stepsPerWorkCycle}, so the farm
 	 * kept harvesting on an empty energy buffer.
 	 */
-	@GameTest(template = "empty", timeoutTicks = 200)
+	@ForestryGameTest(timeoutTicks = 200)
 	public static void minifarmStopsWorkingWhenOutOfEnergy(GameTestHelper helper) {
 		AbstractMinifarmBlockEntity farm = placeFarm(helper);
 		ForestryEnergyStorage energy = farm.getEnergyManager();
@@ -97,7 +92,7 @@ public class MinifarmEnergyTest {
 	private static AbstractMinifarmBlockEntity placeFarm(GameTestHelper helper) {
 		helper.setBlock(FARM_POS, MinifarmBlocks.MANAGED_PLANTER.get(MinifarmBlockType.ARBORETUM).defaultState());
 
-		if (helper.getBlockEntity(FARM_POS) instanceof AbstractMinifarmBlockEntity farm) {
+		if (helper.getLevel().getBlockEntity(helper.absolutePos(FARM_POS)) instanceof AbstractMinifarmBlockEntity farm) {
 			return farm;
 		}
 

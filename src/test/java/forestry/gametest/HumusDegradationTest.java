@@ -3,13 +3,10 @@ package forestry.gametest;
 import java.util.Collection;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.core.content.soil.BlockHumus;
@@ -24,14 +21,12 @@ import forestry.core.features.CoreBlocks;
  * <p>
  * Built in the same shape as {@link BogEarthMaturationTest}, and for the same reason: the tests drive
  * {@link BlockState#randomTick} directly rather than waiting on the level to roll random ticks, and count state CHANGES
- * rather than calls, because {@code randomTick} gates itself on a further 1 in 140 roll off {@code level.random} that
+ * rather than calls, because {@code randomTick} gates itself on a further 1 in 140 roll off {@code level.getRandom()} that
  * the test cannot seed.
  * <p>
  * A solid block sits under the humus in every test. Sand is a falling block, and the support keeps a converted block
  * where the assertions expect it.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class HumusDegradationTest {
 	// degrade 0 -> 1, 1 -> 2, then 2 -> sand
 	private static final int EXPECTED_ADVANCES = 3;
@@ -46,7 +41,7 @@ public class HumusDegradationTest {
 	// the one position in that ring isEnrooted skips
 	private static final BlockPos CENTRE_ABOVE_POS = HUMUS_POS.above();
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void humusBecomesSandAfterThreeDegradeAdvances(GameTestHelper helper) {
 		placeHumus(helper);
 		helper.setBlock(ROOT_POS, Blocks.OAK_LOG);
@@ -59,7 +54,7 @@ public class HumusDegradationTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void humusDoesNotDegradeWithoutRoots(GameTestHelper helper) {
 		placeHumus(helper);
 
@@ -71,7 +66,7 @@ public class HumusDegradationTest {
 	 * Covers the carve-out that keeps a sapling from degrading the soil it stands on. A log directly above the centre,
 	 * and nowhere else, must not count as roots.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void humusDoesNotDegradeFromTheBlockDirectlyAbove(GameTestHelper helper) {
 		placeHumus(helper);
 		helper.setBlock(CENTRE_ABOVE_POS, Blocks.OAK_LOG);
@@ -80,7 +75,7 @@ public class HumusDegradationTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void everyDegradeValueReachesSand(GameTestHelper helper) {
 		helper.setBlock(ROOT_POS, Blocks.OAK_LOG);
 
@@ -106,7 +101,7 @@ public class HumusDegradationTest {
 	 * Guards the rest of this class. Every other test calls {@code randomTick} by hand, so all of them would still pass
 	 * if the block stopped opting into random ticks and could never degrade in a real world.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void humusOptsIntoRandomTicks(GameTestHelper helper) {
 		placeHumus(helper);
 
@@ -135,7 +130,7 @@ public class HumusDegradationTest {
 				break;
 			}
 
-			before.randomTick(level, pos, level.random);
+			before.randomTick(level, pos, level.getRandom());
 
 			// block states are singletons, so identity separates a tick that acted from one the 1 in 140 roll rejected
 			BlockState after = helper.getBlockState(HUMUS_POS);
@@ -159,7 +154,7 @@ public class HumusDegradationTest {
 		BlockPos pos = helper.absolutePos(HUMUS_POS);
 
 		for (int i = 0; i < MAX_RANDOM_TICKS; i++) {
-			helper.getBlockState(HUMUS_POS).randomTick(level, pos, level.random);
+			helper.getBlockState(HUMUS_POS).randomTick(level, pos, level.getRandom());
 		}
 
 		helper.assertBlockPresent(CoreBlocks.HUMUS.block(), HUMUS_POS);

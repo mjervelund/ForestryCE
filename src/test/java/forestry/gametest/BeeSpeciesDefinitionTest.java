@@ -9,13 +9,10 @@ import com.mojang.serialization.JsonOps;
 import com.google.gson.JsonElement;
 
 import io.netty.buffer.Unpooled;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.ForestryBeeEffects;
@@ -35,10 +32,8 @@ import forestry.apiculture.bees.genetics.BeeSpeciesDefinition;
  * a one-sided override (lifespan) survives both the lazily-built JSON codec and the lazily-built network stream
  * codec unchanged.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class BeeSpeciesDefinitionTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void definitionCodecRoundTrip(GameTestHelper helper) {
 		BeeSpeciesDefinition definition = new BeeSpeciesDefinition(
 			"Testus",

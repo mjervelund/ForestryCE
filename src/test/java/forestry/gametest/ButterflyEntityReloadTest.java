@@ -6,11 +6,8 @@ import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableMap;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.lepidopterology.genetics.IButterfly;
@@ -34,10 +31,8 @@ import forestry.lepidopterology.butterflies.genetics.LepidopterologyReloadHandle
  * Mutates the live {@code BUTTERFLY_TYPE}'s species map and restores it (plus rebuilds mutations) in a
  * {@code finally} block, so later GameTests in the same server session still see the full built-in species set.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class ButterflyEntityReloadTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void entityRefreshedAfterReload(GameTestHelper helper) {
 		IButterflySpeciesType type = SpeciesUtil.BUTTERFLY_TYPE.get();

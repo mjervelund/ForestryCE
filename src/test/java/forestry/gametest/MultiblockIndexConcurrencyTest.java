@@ -4,11 +4,8 @@ import forestry.api.ForestryConstants;
 import forestry.core.platform.multiblock.MultiblockController;
 import forestry.core.platform.multiblock.MultiblockIndex;
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.level.LevelAccessor;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
@@ -39,8 +36,6 @@ import java.util.concurrent.TimeUnit;
  *
  * <p>The test asserts behavior, not the map class. Any correct fix satisfies it.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public final class MultiblockIndexConcurrencyTest {
 	private static final int WORKERS = 16;
 	private static final int ITERATIONS = 1_000;
@@ -48,7 +43,7 @@ public final class MultiblockIndexConcurrencyTest {
 	private MultiblockIndexConcurrencyTest() {
 	}
 
-	@GameTest(template = "empty", timeoutTicks = 200)
+	@ForestryGameTest(timeoutTicks = 200)
 	public static void outerLevelIndexSurvivesConcurrentClientAndServerLoading(GameTestHelper helper) throws Exception {
 		Map<LevelAccessor, Map<BlockPos, MultiblockController>> levels = outerLevelIndex();
 

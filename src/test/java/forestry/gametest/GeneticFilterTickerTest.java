@@ -1,8 +1,8 @@
 package forestry.gametest;
 
+import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
@@ -11,8 +11,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.core.content.sorting.blocks.BlockGeneticFilter;
@@ -33,8 +31,6 @@ import forestry.core.content.sorting.tiles.TileGeneticFilter;
  * {@link #geneticFilterForwardsItemsToAdjacentInventory} covers that: it asserts the item ARRIVES rather than only that
  * the source slot empties, because a failed transfer also empties the slot by dropping the item on the floor.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class GeneticFilterTickerTest {
 	private static final BlockPos FILTER_POS = new BlockPos(8, 2, 8);
 	private static final Direction TARGET = Direction.SOUTH;
@@ -45,7 +41,7 @@ public class GeneticFilterTickerTest {
 	// TileGeneticFilter transfers on a 5 tick interval. Idle well past it rather than couple to the constant.
 	private static final int IDLE_TICKS = 20;
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void geneticFilterSuppliesAServerTicker(GameTestHelper helper) {
 		helper.setBlock(FILTER_POS, SortingBlocks.FILTER.defaultState());
 
@@ -54,17 +50,17 @@ public class GeneticFilterTickerTest {
 
 		helper.assertTrue(block.getTicker(helper.getLevel(), state, SortingTiles.GENETIC_FILTER.tileType()) != null,
 			"BlockGeneticFilter supplied no ticker, so TileGeneticFilter.serverTick can never run");
-		helper.assertTrue(block.getTicker(helper.getLevel(), state, BlockEntityType.CHEST) == null,
+		helper.assertTrue(block.getTicker(helper.getLevel(), state, BlockEntityTypes.CHEST) == null,
 			"BlockGeneticFilter supplied a ticker for a foreign block entity type");
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void geneticFilterForwardsItemsToAdjacentInventory(GameTestHelper helper) {
 		helper.setBlock(CHEST_POS, Blocks.CHEST);
 		helper.setBlock(FILTER_POS, SortingBlocks.FILTER.defaultState());
 
-		if (!(helper.getBlockEntity(FILTER_POS) instanceof TileGeneticFilter filter)) {
+		if (!(helper.getLevel().getBlockEntity(helper.absolutePos(FILTER_POS)) instanceof TileGeneticFilter filter)) {
 			helper.fail("Expected a TileGeneticFilter at " + FILTER_POS);
 			return;
 		}
@@ -87,7 +83,7 @@ public class GeneticFilterTickerTest {
 	}
 
 	private static int countInChest(GameTestHelper helper) {
-		if (!(helper.getBlockEntity(CHEST_POS) instanceof Container chest)) {
+		if (!(helper.getLevel().getBlockEntity(helper.absolutePos(CHEST_POS)) instanceof Container chest)) {
 			helper.fail("Expected a chest at " + CHEST_POS);
 			return -1;
 		}

@@ -1,14 +1,11 @@
 package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.core.content.energy.blocks.EngineBlockType;
@@ -27,8 +24,6 @@ import forestry.core.content.energy.tiles.SolarEngineBlockEntity;
  * The rig is built at absolute coordinates in open air rather than inside the test plot, for the reasons
  * documented on {@link SolarPanelExposureTest}.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class SolarArrayConnectivityTest {
 	/** Comfortably above sea level, so the columns are open to the sky. */
 	private static final int OPEN_SKY_Y = 80;
@@ -40,7 +35,7 @@ public class SolarArrayConnectivityTest {
 	/** How long the engine may take to notice a change in the plane. One rescan pass plus slack. */
 	private static final int REACT_TICKS = 30;
 
-	@GameTest(template = "empty", timeoutTicks = 600)
+	@ForestryGameTest(timeoutTicks = 600)
 	public static void breakingAPanelReleasesEverythingPastTheSplit(GameTestHelper helper) {
 		BlockPos engine = openSkySite(helper);
 		BlockPos seed = engine.above();

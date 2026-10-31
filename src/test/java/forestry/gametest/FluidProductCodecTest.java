@@ -1,14 +1,11 @@
 package forestry.gametest;
 
 import io.netty.buffer.Unpooled;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.DataResult;
@@ -18,14 +15,12 @@ import forestry.api.ForestryConstants;
 import forestry.api.core.FluidProduct;
 import forestry.api.core.IFluidProduct;
 
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class FluidProductCodecTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void referenceImplProducesStack(GameTestHelper helper) {
 		FluidProduct product = FluidProduct.of(Fluids.WATER, 1000);
 		FluidStack stack = product.createFluidStack();
-		FluidStack random = product.createRandomFluidStack(helper.getLevel().random);
+		FluidStack random = product.createRandomFluidStack(helper.getLevel().getRandom());
 		if (stack.getFluid() != Fluids.WATER || stack.getAmount() != 1000) {
 			helper.fail("createFluidStack did not return the wrapped fluid/amount: " + stack);
 			return;
@@ -37,7 +32,7 @@ public class FluidProductCodecTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void referenceImplRoundTrips(GameTestHelper helper) {
 		FluidProduct original = FluidProduct.of(Fluids.LAVA, 500);
 
@@ -61,7 +56,7 @@ public class FluidProductCodecTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void dispatchDefaultTypeOmitsTypeKey(GameTestHelper helper) {
 		RegistryOps<com.google.gson.JsonElement> jsonOps = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
 		IFluidProduct product = FluidProduct.of(Fluids.WATER, 1000);
@@ -83,7 +78,7 @@ public class FluidProductCodecTest {
 	 * An unknown "type" must fail with an error naming it, not fall back to the default FluidProduct. The JSON is
 	 * otherwise a valid default product, so a dispatch built on trial decoding would silently accept it.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void unknownFluidProductTypeFailsInsteadOfFallingBack(GameTestHelper helper) {
 		RegistryOps<com.google.gson.JsonElement> jsonOps = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
 		String bogus = ForestryConstants.forestry("no_such_fluid_product_type").toString();
@@ -104,7 +99,7 @@ public class FluidProductCodecTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void dispatchStreamRoundTrip(GameTestHelper helper) {
 		IFluidProduct product = FluidProduct.of(Fluids.LAVA, 500);
 		RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), helper.getLevel().registryAccess());

@@ -4,11 +4,8 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.arboriculture.genetics.ITreeSpeciesType;
@@ -38,10 +35,8 @@ import forestry.lepidopterology.butterflies.genetics.LepidopterologyReloadHandle
  * {@code finally} block, so other GameTests running later in the same server session - notably
  * {@code MutationRecipeTest}'s butterfly mutation assertions - still see the full built-in butterfly species set.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class ButterflySpawnerReloadTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void spawnerCountStableAcrossReload(GameTestHelper helper) {
 		ITreeSpeciesType treeType = SpeciesUtil.TREE_TYPE.get();

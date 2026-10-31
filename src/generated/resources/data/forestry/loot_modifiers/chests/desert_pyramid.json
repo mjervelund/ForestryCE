@@ -1,11 +1,9 @@
 {
   "type": "forestry:condition_modifier",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/desert_pyramid"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/desert_pyramid"
+  },
   "extensions": [
     "apiculture",
     "arboriculture",

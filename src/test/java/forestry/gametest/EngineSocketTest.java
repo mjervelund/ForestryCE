@@ -2,14 +2,11 @@ package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.IForestryApi;
@@ -42,8 +39,6 @@ import forestry.core.features.CoreItems;
  * {@code @OnlyIn(Dist.CLIENT)} and is stripped in this dedicated server run, so reading the payload back here
  * would exercise the empty superclass method rather than the engine's.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class EngineSocketTest {
 	private static final BlockPos ENGINE_POS = new BlockPos(8, 1, 8);
 
@@ -55,7 +50,7 @@ public class EngineSocketTest {
 	 * the dead override the payload held only the fields EngineBlockEntity writes, so socketing a chipset changed
 	 * nothing on the wire and the client drew an empty slot after every relog.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void theSocketReachesTheDescriptionPacket(GameTestHelper helper) {
 		BiogasEngineBlockEntity engine = engineAt(helper);
 		HolderLookup.Provider registries = helper.getLevel().registryAccess();
@@ -72,12 +67,12 @@ public class EngineSocketTest {
 	/**
 	 * Socketing a chipset must mark the chunk, or the write is lost when nothing else dirties it before unload.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void socketingMarksTheChunkDirty(GameTestHelper helper) {
 		BiogasEngineBlockEntity engine = engineAt(helper);
 		LevelChunk chunk = helper.getLevel().getChunkAt(engine.getBlockPos());
 
-		chunk.setUnsaved(false);
+		chunk.tryMarkSaved();
 		engine.setSocket(SOCKET, engineChipset(helper));
 
 		helper.assertTrue(chunk.isUnsaved(),
@@ -89,13 +84,13 @@ public class EngineSocketTest {
 	 * Emptying the socket must mark the chunk too. This is the soldering iron and the block break path, where a
 	 * missed mark restores the removed chipset on the next load and duplicates it.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void emptyingTheSocketMarksTheChunkDirty(GameTestHelper helper) {
 		BiogasEngineBlockEntity engine = engineAt(helper);
 		engine.setSocket(SOCKET, engineChipset(helper));
 
 		LevelChunk chunk = helper.getLevel().getChunkAt(engine.getBlockPos());
-		chunk.setUnsaved(false);
+		chunk.tryMarkSaved();
 		engine.setSocket(SOCKET, ItemStack.EMPTY);
 
 		helper.assertTrue(chunk.isUnsaved(), "emptying the socket left the chunk clean");
@@ -106,7 +101,7 @@ public class EngineSocketTest {
 	 * Pins the save and load round trip. This one passed before either fix, since the serialization was always
 	 * sound, and it is here so a change to how sockets are written cannot break the disk format unnoticed.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void theSocketSurvivesSaveAndLoad(GameTestHelper helper) {
 		BiogasEngineBlockEntity engine = engineAt(helper);
 		HolderLookup.Provider registries = helper.getLevel().registryAccess();
@@ -127,7 +122,7 @@ public class EngineSocketTest {
 
 	private static BiogasEngineBlockEntity engineAt(GameTestHelper helper) {
 		helper.setBlock(ENGINE_POS, EnergyBlocks.ENGINES.get(EngineBlockType.BIOGAS).block());
-		return (BiogasEngineBlockEntity) helper.getBlockEntity(ENGINE_POS);
+		return (BiogasEngineBlockEntity) helper.getLevel().getBlockEntity(helper.absolutePos(ENGINE_POS));
 	}
 
 	/**

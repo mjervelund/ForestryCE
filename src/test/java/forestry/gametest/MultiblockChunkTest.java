@@ -7,7 +7,6 @@ import forestry.api.core.multiblock.IMultiblockController;
 import forestry.api.core.multiblock.IMultiblockInventoryProbe;
 import forestry.core.platform.multiblock.MultiblockIndex;
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -15,8 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import forestry.core.platform.legacy.items.IItemHandler;
 
 import javax.annotation.Nullable;
@@ -24,8 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 // multiblock behavior across real chunk unloads and loads, built at isolated sites (see ChunkLifecycle)
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public final class MultiblockChunkTest {
 	// the real limit is the wall-clock deadline in ChunkLifecycle.Steps.await, ticks run far faster than 20 per second
 	private static final int TIMEOUT = 2_000_000;
@@ -47,12 +42,12 @@ public final class MultiblockChunkTest {
 		Map<Item, Integer> before = Map.of();
 	}
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyReloadsFromSavedChunk(GameTestHelper helper) {
 		reloadsFromSavedChunk(helper, MultiblockTestSupport::buildAlveary, MultiblockTestSupport.ALVEARY_INV_SIZE, ALVEARY_PRODUCT_SLOT);
 	}
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void farmReloadsFromSavedChunk(GameTestHelper helper) {
 		reloadsFromSavedChunk(helper, MultiblockTestSupport::buildFarm, MultiblockTestSupport.FARM_INV_SIZE, 0);
 	}
@@ -94,7 +89,7 @@ public final class MultiblockChunkTest {
 	}
 
 	// an idle alveary never dirties its chunk from serverTick, so only the change itself can get it saved
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyAutomationChangeSurvivesChunkUnload(GameTestHelper helper) {
 		ServerLevel level = helper.getLevel();
 		ChunkPos site = ChunkLifecycle.isolatedSite(helper);
@@ -132,18 +127,18 @@ public final class MultiblockChunkTest {
 
 	// every member sits in one chunk but the air ring and upper face reach into the next, which holds no member to
 	// trigger validation when it loads
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyFormsWhenShellChunkLoadsLater(GameTestHelper helper) {
 		formsAfterPartialLoad(helper, 13, true, true);
 	}
 
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyAcrossChunksFormsWhenOtherChunkLoads(GameTestHelper helper) {
 		formsAfterPartialLoad(helper, 14, false, true);
 	}
 
 	// the order where the chunk that saved the payload arrives last
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyAcrossChunksFormsWhenHolderChunkLoadsLast(GameTestHelper helper) {
 		formsAfterPartialLoad(helper, 14, false, false);
 	}

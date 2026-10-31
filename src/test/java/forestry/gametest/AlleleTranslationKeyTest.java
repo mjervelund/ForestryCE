@@ -11,11 +11,8 @@ import java.util.TreeSet;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.util.GsonHelper;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.IForestryApi;
 import forestry.api.ForestryConstants;
@@ -38,10 +35,8 @@ import forestry.api.core.genetics.alleles.IChromosome;
  * raw. This is the authoritative check: it covers the whole value space that natural species contribute (mutations
  * only recombine those), across every species type, not just the numeric traits noticed by hand.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class AlleleTranslationKeyTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void everyAlleleValueHasATranslation(GameTestHelper helper) {
 		Set<String> langKeys = loadLangKeys(helper);
 

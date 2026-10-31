@@ -1,11 +1,9 @@
 {
   "type": "forestry:condition_modifier",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/end_city_treasure"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/end_city_treasure"
+  },
   "extensions": [
     "apiculture",
     "arboriculture"

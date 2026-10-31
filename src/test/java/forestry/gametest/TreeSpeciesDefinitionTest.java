@@ -4,11 +4,8 @@ import java.util.Map;
 
 import com.mojang.serialization.JsonOps;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 import io.netty.buffer.Unpooled;
 
 import net.minecraft.resources.RegistryOps;
@@ -23,8 +20,6 @@ import forestry.api.core.genetics.alleles.ForestryAlleles;
 import forestry.api.core.genetics.alleles.TreeChromosomes;
 import forestry.arboriculture.trees.genetics.TreeSpeciesDefinition;
 
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class TreeSpeciesDefinitionTest {
 	private static TreeSpeciesDefinition sample() {
 		return new TreeSpeciesDefinition(
@@ -50,7 +45,7 @@ public class TreeSpeciesDefinitionTest {
 		);
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void codecRoundTrips(GameTestHelper helper) {
 		TreeSpeciesDefinition def = sample();
 		var ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
@@ -63,7 +58,7 @@ public class TreeSpeciesDefinitionTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void streamCodecRoundTrips(GameTestHelper helper) {
 		TreeSpeciesDefinition def = sample();
 		// Same idiom MutationRecipeTest uses for its stream-codec round trip.

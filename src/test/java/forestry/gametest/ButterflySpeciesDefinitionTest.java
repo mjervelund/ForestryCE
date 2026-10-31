@@ -9,14 +9,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 
 import io.netty.buffer.Unpooled;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.core.HumidityType;
@@ -36,8 +33,6 @@ import forestry.lepidopterology.butterflies.genetics.ButterflySpeciesDefinition;
  * and an optional biome tag survives both the lazily-built JSON codec and the lazily-built network stream codec
  * unchanged.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class ButterflySpeciesDefinitionTest {
 	private static ButterflySpeciesDefinition sample() {
 		return new ButterflySpeciesDefinition(
@@ -70,7 +65,7 @@ public class ButterflySpeciesDefinitionTest {
 		);
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void codecRoundTrips(GameTestHelper helper) {
 		ButterflySpeciesDefinition def = sample();
 		Codec<ButterflySpeciesDefinition> codec = ButterflySpeciesDefinition.codec();
@@ -83,7 +78,7 @@ public class ButterflySpeciesDefinitionTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void streamCodecRoundTrips(GameTestHelper helper) {
 		ButterflySpeciesDefinition def = sample();
 		StreamCodec<RegistryFriendlyByteBuf, ButterflySpeciesDefinition> streamCodec = ButterflySpeciesDefinition.streamCodec();

@@ -5,14 +5,11 @@ import java.util.Map;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.IBeeHousing;
@@ -40,10 +37,8 @@ import forestry.core.platform.util.SpeciesUtil;
  * the code-registered Forest bee) projects into a runtime {@link BeeSpecies} whose fields and default genome match
  * the definition exactly, including the sparse genome override dispatch (data chromosome, POLLINATION).
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class BeeSpeciesProjectorTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void projectsMatchingBeeSpecies(GameTestHelper helper) {
 		BeeSpeciesDefinition def = TestSpeciesDefinitions.bee(ForestryTaxa.GENUS_HONEY, ForestryTaxa.SPECIES_FOREST)
 			.dominant(true)

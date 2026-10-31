@@ -16,7 +16,6 @@ import com.mojang.serialization.JsonOps;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -30,8 +29,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import io.netty.buffer.Unpooled;
 
@@ -63,8 +60,6 @@ import forestry.core.platform.util.SpeciesUtil;
  * by {@code BeeEffectSyncPacket}; and {@code ApicultureReloadHandler.rebuildBeeEffects} merges datapack effects onto the
  * code-registered builtins reloadably (datapack entries resolve, builtins survive, and an empty reload keeps builtins).
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class BeeEffectSystemTest {
 	/** The effect a species' default genome resolves to, via the reference {@code bee_effect} chromosome. */
 	private static IBeeEffect effectOf(Identifier speciesId) {
@@ -76,7 +71,7 @@ public class BeeEffectSystemTest {
 	 * consumer is addon material: it is speculative surface area that base Forestry pays for in maintenance and that
 	 * no shipped content proves works.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void allEffectPrimitiveTypesRegistered(GameTestHelper helper) {
 		String[] types = {"apply_potion", "damage_entities", "transform_block", "resurrect", "aging"};
 		for (String type : types) {
@@ -98,7 +93,7 @@ public class BeeEffectSystemTest {
 	 * A datapack effect definition round-trips through {@link IBeeEffect#CODEC} (JSON) preserving its type and
 	 * parameters, and through the network stream codec the sync packet uses.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void effectDefinitionRoundTrips(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
 
@@ -152,10 +147,10 @@ public class BeeEffectSystemTest {
 	 * coarse-dirt exclusion (coarse dirt is in {@code #minecraft:dirt}, so the tag matches and only the identity check
 	 * stops the rewrite) and GLOW_BERRY_GROW's already-berried check.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void transformIdentityGuardSkipsNoOps(GameTestHelper helper) {
 		BlockState coarseDirt = Blocks.COARSE_DIRT.defaultBlockState();
-		if (!coarseDirt.is(BuiltInRegistries.BLOCK.getOrCreateTag(BlockTags.DIRT))) {
+		if (!coarseDirt.is(BlockTags.DIRT)) {
 			helper.fail("#minecraft:dirt no longer contains coarse_dirt; SIFTER's identity guard assumption is void");
 			return;
 		}
@@ -186,7 +181,7 @@ public class BeeEffectSystemTest {
 	 * still resolves, and after an empty reload the builtin survives (self-resetting). Restores the live effect map
 	 * afterwards so the mutation does not leak into other tests.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void datapackEffectsMergeOntoBuiltins(GameTestHelper helper) {
 		IBeeSpeciesType beeType = SpeciesUtil.BEE_TYPE.get();
 		Map<Identifier, IBeeEffect> original = BeeEffectManager.INSTANCE.getDefinitions();
@@ -230,7 +225,7 @@ public class BeeEffectSystemTest {
 	 * effect map any datapack effect uses. Proves base content flows through the data-driven pipe, not just new
 	 * primitives.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void potionBuiltinsAreDatapackDefined(GameTestHelper helper) {
 		IBeeSpeciesType beeType = SpeciesUtil.BEE_TYPE.get();
 		for (Identifier id : new Identifier[]{
@@ -260,7 +255,7 @@ public class BeeEffectSystemTest {
 	 * {@link ResurrectionBeeEffect}, and a definition round-trips through {@link IBeeEffect#CODEC} preserving its
 	 * entries.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void resurrectBuiltinsAreDatapackDefined(GameTestHelper helper) {
 		if (!ForestryRegistries.BEE_EFFECT_TYPE.containsKey(ForestryConstants.forestry("resurrect"))) {
 			helper.fail("resurrect effect type not registered: forestry:resurrect");
@@ -298,7 +293,7 @@ public class BeeEffectSystemTest {
 	 * {@code aging} flag: the type is registered, both built-ins resolve to an {@link AgingBeeEffect}, and the bees
 	 * that carry them (CHRONOFUGE/REJUVENATION, ANACHRONE/CHRONOPHAGE) resolve their genome effect to the datapack instance.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void agingBuiltinsAreDatapackDefined(GameTestHelper helper) {
 		if (!ForestryRegistries.BEE_EFFECT_TYPE.containsKey(ForestryConstants.forestry("aging"))) {
 			helper.fail("aging effect type not registered: forestry:aging");
@@ -335,7 +330,7 @@ public class BeeEffectSystemTest {
 	 * built-ins are datapack-defined, and the bees that carry them (SINISTER/AGGRESSIVE, ENDED/MISANTHROPE,
 	 * HEROIC/HEROIC) resolve their genome effect to the datapack instance.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void damageEntitiesBuiltinsAreDatapackDefined(GameTestHelper helper) {
 		if (!ForestryRegistries.BEE_EFFECT_TYPE.containsKey(ForestryConstants.forestry("damage_entities"))) {
 			helper.fail("damage_entities effect type not registered: forestry:damage_entities");
@@ -423,7 +418,7 @@ public class BeeEffectSystemTest {
 	 * Every {@code ThrottledBeeEffect}-derived primitive exposes the four common fields through
 	 * {@link ThrottleSettings}, so a pack can retune them. Proven on {@code apply_potion} and {@code resurrect}.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void throttleSettingsRoundTrip(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
 
@@ -459,7 +454,7 @@ public class BeeEffectSystemTest {
 	 * way {@code BeeEffectProvider} builds the built-ins emits none of the four fields it did not already emit. This
 	 * is what keeps the generated JSON for the pre-existing built-ins unchanged.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void throttleSettingsDefaultsStayOutOfJson(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
 
@@ -488,7 +483,7 @@ public class BeeEffectSystemTest {
 	 * type is registered, all three built-ins are datapack-defined, and each preserves the throttle settings and the
 	 * knobs that blocked its migration (GLACIAL's temperature ceiling and its 10 attempts; SIFTER's 550-tick throttle).
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void transformBlockBuiltinsAreDatapackDefined(GameTestHelper helper) {
 		if (!ForestryRegistries.BEE_EFFECT_TYPE.containsKey(ForestryConstants.forestry("transform_block"))) {
 			helper.fail("transform_block effect type not registered: forestry:transform_block");
@@ -565,7 +560,7 @@ public class BeeEffectSystemTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void effectProviderGenerates(GameTestHelper helper) throws IOException {
 		IBeeEffect effect = new PotionBeeEffect(false, MobEffects.REGENERATION, 100);
 		Path dir = Files.createTempDirectory("forestry_effect_test");
@@ -585,7 +580,7 @@ public class BeeEffectSystemTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void effectFactoryCreatesPotion(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, helper.getLevel().registryAccess());
 		IBeeEffect created = SpeciesUtil.BEE_TYPE.get().getEffectFactory().createPotion(false, MobEffects.POISON, 600, 100, 0.1f);

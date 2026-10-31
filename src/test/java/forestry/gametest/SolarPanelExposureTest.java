@@ -1,14 +1,11 @@
 package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.core.content.energy.blocks.EngineBlockType;
@@ -30,8 +27,6 @@ import forestry.core.content.energy.tiles.SolarEngineBlockEntity;
  * surface simply refills with water and blocks sky light. Building above sea level and clearing the panel's own
  * column sidesteps whatever terrain the plot happens to be under. The rig is torn down again at the end.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class SolarPanelExposureTest {
 	/** Comfortably above sea level, so the column is open to the sky. */
 	private static final int OPEN_SKY_Y = 80;
@@ -43,7 +38,7 @@ public class SolarPanelExposureTest {
 	/** How long the engine may take to notice a change in the sky. One rescan interval plus slack. */
 	private static final int REACT_TICKS = 30;
 
-	@GameTest(template = "empty", timeoutTicks = 600)
+	@ForestryGameTest(timeoutTicks = 600)
 	public static void shadingAPanelStopsItCountingAsActive(GameTestHelper helper) {
 		BlockPos engine = openSkySite(helper);
 		BlockPos panel = engine.above();

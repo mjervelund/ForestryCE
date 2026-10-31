@@ -8,13 +8,10 @@ import java.util.UUID;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.core.HolderLookup;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.mail.IMailAddress;
@@ -27,10 +24,8 @@ import forestry.mail.letters.MailAddress;
  * name is the only identity they have. Every path that drops it silently unnames every trade station in
  * the world and collapses them onto one map key.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class MailAddressTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void traderNameSurvivesConstruction(GameTestHelper helper) {
 		MailAddress address = new MailAddress("Emporium");
 
@@ -49,7 +44,7 @@ public class MailAddressTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void tradersWithDifferentNamesAreDistinct(GameTestHelper helper) {
 		MailAddress first = new MailAddress("Emporium");
 		MailAddress second = new MailAddress("Bazaar");
@@ -74,7 +69,7 @@ public class MailAddressTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void traderNbtRoundTrip(GameTestHelper helper) {
 		HolderLookup.Provider registries = helper.getLevel().registryAccess();
 		MailAddress original = new MailAddress("Emporium");
@@ -96,7 +91,7 @@ public class MailAddressTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void traderCodecRoundTrip(GameTestHelper helper) {
 		MailAddress original = new MailAddress("Emporium");
 
@@ -114,12 +109,12 @@ public class MailAddressTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void traderProfileIsNotAPlayerProfile(GameTestHelper helper) {
 		MailAddress trader = new MailAddress("Emporium");
 		MailAddress player = new MailAddress(new GameProfile(UUID.nameUUIDFromBytes("Steve".getBytes(StandardCharsets.UTF_8)), "Steve"));
 
-		if (!trader.getPlayerProfile().getName().isEmpty()) {
+		if (!trader.getPlayerProfile().name().isEmpty()) {
 			helper.fail("Trader address handed out a player profile");
 			return;
 		}
@@ -130,7 +125,7 @@ public class MailAddressTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void legacyTraderNbtWithoutIdLoads(GameTestHelper helper) {
 		// Addresses written before the profile gained a UUID have a Name and nothing else
 		CompoundTag profile = new CompoundTag();
@@ -148,7 +143,7 @@ public class MailAddressTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void copyOfForeignTraderKeepsName(GameTestHelper helper) {
 		MailAddress copy = MailAddress.copyOf(new ForeignTraderAddress("Emporium"));
 

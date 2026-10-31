@@ -1,7 +1,6 @@
 package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -11,8 +10,6 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.core.content.machines.blocks.BlockTypeFactoryPlain;
@@ -39,8 +36,6 @@ import forestry.core.platform.fluids.StandardTank;
  * only reaches it once every 20 ticks and only after the machine has satisfied its energy and recipe requirements,
  * none of which this table depends on.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class SqueezerBottlingTest {
 	private static final BlockPos SQUEEZER_POS = new BlockPos(8, 1, 8);
 
@@ -56,7 +51,7 @@ public class SqueezerBottlingTest {
 	/**
 	 * The 1.20.1 regression: a tank of water must bottle into a water bottle, not a honey bottle.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void waterBottlesIntoAWaterBottle(GameTestHelper helper) {
 		TileSqueezer squeezer = bottlingSqueezer(helper, Fluids.WATER);
 
@@ -76,7 +71,7 @@ public class SqueezerBottlingTest {
 	 * The entry next to it, which was already correct. Kept so a future edit to the chain cannot quietly break honey
 	 * while fixing something else.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void honeyBottlesIntoAHoneyBottle(GameTestHelper helper) {
 		TileSqueezer squeezer = bottlingSqueezer(helper, ForestryFluids.HONEY.getFluid());
 
@@ -93,7 +88,7 @@ public class SqueezerBottlingTest {
 	 * A fluid with no entry in the table must leave the bottle and the tank alone. Lava is the case the original
 	 * author called out: an unusable container silently does nothing rather than raising an error.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void anUnmappedFluidBottlesIntoNothing(GameTestHelper helper) {
 		TileSqueezer squeezer = bottlingSqueezer(helper, Fluids.LAVA);
 
@@ -108,7 +103,7 @@ public class SqueezerBottlingTest {
 	/**
 	 * A tank holding less than one bottle's worth must not hand out a partially paid-for bottle.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void aPartialTankBottlesNothing(GameTestHelper helper) {
 		TileSqueezer squeezer = squeezerWith(helper, Fluids.WATER, WATER_PER_BOTTLE - 1);
 
@@ -128,7 +123,7 @@ public class SqueezerBottlingTest {
 
 	private static TileSqueezer squeezerWith(GameTestHelper helper, Fluid fluid, int amount) {
 		helper.setBlock(SQUEEZER_POS, FactoryBlocks.PLAIN.get(BlockTypeFactoryPlain.SQUEEZER).block());
-		TileSqueezer squeezer = (TileSqueezer) helper.getBlockEntity(SQUEEZER_POS);
+		TileSqueezer squeezer = (TileSqueezer) helper.getLevel().getBlockEntity(helper.absolutePos(SQUEEZER_POS));
 
 		// The product tank refuses external fills by design, so seed it the way workCycle() does.
 		tank(squeezer).fillInternal(new FluidStack(fluid, amount), IFluidHandler.FluidAction.EXECUTE);

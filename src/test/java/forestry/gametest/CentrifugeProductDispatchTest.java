@@ -11,7 +11,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import io.netty.buffer.Unpooled;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -21,8 +20,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeMap;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.core.IProduct;
@@ -40,11 +37,9 @@ import forestry.core.content.machines.features.FactoryRecipeTypes;
  * ({@link FireworkProduct}) round-trips through its own declared type, that the list stream codec round-trips a mixed
  * list, and that the built-in centrifuge recipes still expose and resolve their products through the migrated path.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class CentrifugeProductDispatchTest {
 	/** A plain Product must encode identically through the dispatch codec (no "type" key), and legacy JSON must decode. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void defaultProductMatchesPlainProductJson(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = helper.getLevel().registryAccess().createSerializationContext(JsonOps.INSTANCE);
 		Product product = Product.of(Items.SUGAR, 2, 0.9f);
@@ -71,7 +66,7 @@ public class CentrifugeProductDispatchTest {
 	}
 
 	/** A dynamic product must round-trip through its own declared "type" key. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void dynamicProductRoundTripsWithType(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = helper.getLevel().registryAccess().createSerializationContext(JsonOps.INSTANCE);
 		FireworkProduct firework = new FireworkProduct(0.5f);
@@ -97,7 +92,7 @@ public class CentrifugeProductDispatchTest {
 	 * dispatch built on trial decoding (ex. Codec#withAlternative) would silently decode it as a plain Product
 	 * instead. This pins the "dispatch on key presence" behaviour that prevents that.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void unknownProductTypeFailsInsteadOfFallingBack(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = helper.getLevel().registryAccess().createSerializationContext(JsonOps.INSTANCE);
 		String bogus = ForestryConstants.forestry("no_such_product_type").toString();
@@ -119,7 +114,7 @@ public class CentrifugeProductDispatchTest {
 	}
 
 	/** Encoding a product whose type was never registered must fail rather than write a dangling type key. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void unregisteredProductTypeFailsToEncode(GameTestHelper helper) {
 		RegistryOps<JsonElement> ops = helper.getLevel().registryAccess().createSerializationContext(JsonOps.INSTANCE);
 
@@ -133,7 +128,7 @@ public class CentrifugeProductDispatchTest {
 	}
 
 	/** The list stream codec must round-trip a mixed list of a plain and a dynamic product. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void dispatchListStreamRoundTrip(GameTestHelper helper) {
 		List<IProduct> products = List.of(Product.of(Items.SUGAR, 2, 0.9f), new FireworkProduct(0.5f));
 		RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), helper.getLevel().registryAccess());
@@ -149,7 +144,7 @@ public class CentrifugeProductDispatchTest {
 	}
 
 	/** The built-in centrifuge recipes must still expose and resolve their products through the migrated path. */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void centrifugeRecipesResolveProducts(GameTestHelper helper) {
 		RecipeMap manager = RecipeUtils.recipes(helper.getLevel());
 

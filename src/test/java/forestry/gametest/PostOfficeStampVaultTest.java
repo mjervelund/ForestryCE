@@ -2,13 +2,10 @@ package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.mail.blocks.MailBlockType;
@@ -32,10 +29,8 @@ import forestry.mail.postoffice.StampCollectorBlockEntity;
  * and used to drop the stamp on the floor of nowhere when it did not. {@link #aFullBufferReturnsTheStampToTheVault}
  * pins the fix: a withdrawal that cannot be stowed must leave the stamp in the vault.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class PostOfficeStampVaultTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void withdrawingStampsMarksTheVaultDirty(GameTestHelper helper) {
 		PostOffice office = new PostOffice();
 		office.collectPostage(stamps(MailItems.STAMPS.stack(EnumStampDefinition.P_10, 4)));
@@ -48,7 +43,7 @@ public class PostOfficeStampVaultTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void collectedStampsSurviveASaveRoundTrip(GameTestHelper helper) {
 		PostOffice office = new PostOffice();
 		office.collectPostage(stamps(
@@ -62,7 +57,7 @@ public class PostOfficeStampVaultTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void legacyOrdinalKeysMigrate(GameTestHelper helper) {
 		// CPS<n> was indexed by EnumPostage.ordinal(), so CPS1 was P_1 and CPS7 was P_100. CPS0 was
 		// never incremented and CPS8 (P_200) never had a stamp item
@@ -82,7 +77,7 @@ public class PostOfficeStampVaultTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void unfilteredWithdrawalTakesTheCheapestFirst(GameTestHelper helper) {
 		PostOffice office = new PostOffice();
 		office.collectPostage(stamps(
@@ -97,7 +92,7 @@ public class PostOfficeStampVaultTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void filteredWithdrawalMatchesTheExactItem(GameTestHelper helper) {
 		PostOffice office = new PostOffice();
 		office.collectPostage(stamps(MailItems.STAMPS.stack(EnumStampDefinition.P_5, 3)));
@@ -108,12 +103,12 @@ public class PostOfficeStampVaultTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void aFullBufferReturnsTheStampToTheVault(GameTestHelper helper) {
 		BlockPos pos = new BlockPos(8, 2, 8);
 		helper.setBlock(pos, MailBlocks.BASE.get(MailBlockType.STAMP_COLLETOR).defaultState());
 
-		if (!(helper.getBlockEntity(pos) instanceof StampCollectorBlockEntity collector)) {
+		if (!(helper.getLevel().getBlockEntity(helper.absolutePos(pos)) instanceof StampCollectorBlockEntity collector)) {
 			helper.fail("Expected a StampCollectorBlockEntity at " + pos);
 			return;
 		}

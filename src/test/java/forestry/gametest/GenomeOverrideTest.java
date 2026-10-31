@@ -7,11 +7,8 @@ import com.mojang.serialization.JsonOps;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.ForestryBeeEffects;
@@ -37,13 +34,11 @@ import forestry.core.platform.util.SpeciesUtil;
  * Covers the three legs a datapack override travels: the JSON shapes {@link AlleleOverride} accepts, the projection
  * of those overrides onto a species' default genome, and the datagen shim that records the same three setters.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class GenomeOverrideTest {
 	/**
 	 * The single-allele shape written before overrides could name a side still parses, and still means "set both".
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void legacyJsonShapeStillSetsBothSides(GameTestHelper helper) {
 		AlleleOverride<?> override = parseOne(helper, """
 			{"forestry:bee_effect": {"value": "forestry:bee_effect_mycophilic"}}""", BeeChromosomes.EFFECT.id());
@@ -62,7 +57,7 @@ public class GenomeOverrideTest {
 	/**
 	 * Naming one side leaves the other unset, and naming both carries a separate dominance for each.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void perSideJsonShapesParse(GameTestHelper helper) {
 		AlleleOverride<?> activeOnly = parseOne(helper, """
 			{"forestry:bee_effect": {"active": {"value": "forestry:bee_effect_mycophilic"}}}""", BeeChromosomes.EFFECT.id());
@@ -100,7 +95,7 @@ public class GenomeOverrideTest {
 	 * An override that names only the inactive side must leave the active one at whatever the karyotype and taxon
 	 * defaults produced, so the oracle projects the same species twice and compares.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void oneSidedOverrideLeavesTheOtherSideAlone(GameTestHelper helper) {
 		AllelePair<Integer> untouched = projectFertility(helper, "test_override_baseline", Map.of());
 		if (untouched == null) {
@@ -127,7 +122,7 @@ public class GenomeOverrideTest {
 	 * A heterozygous override lands verbatim: the projector keeps the authored sides rather than reordering them by
 	 * dominance, so a recessive allele stays in the active slot.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void heterozygousOverrideKeepsAuthoredSides(GameTestHelper helper) {
 		AllelePair<Integer> pair = projectFertility(helper, "test_override_heterozygous",
 			Map.of(BeeChromosomes.FERTILITY.id(), new AlleleOverride<>(ForestryAlleles.FERTILITY_4, ForestryAlleles.FERTILITY_1)));
@@ -150,7 +145,7 @@ public class GenomeOverrideTest {
 	 * A heterozygous reference chromosome takes each side's dominance from the referenced value, not from the
 	 * placeholder dominance the id was serialized with.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void heterozygousReferenceResolvesDominancePerSide(GameTestHelper helper) {
 		IBeeSpeciesType type = SpeciesUtil.BEE_TYPE.get();
 		BeeSpeciesDefinition def = TestSpeciesDefinitions.bee(ForestryTaxa.GENUS_HONEY, ForestryTaxa.SPECIES_FOREST)
@@ -183,7 +178,7 @@ public class GenomeOverrideTest {
 	 * The datagen shim records all three setters, so a genome closure that names one side generates the one-sided
 	 * override the projector reads back.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void datagenShimRecordsEverySetter(GameTestHelper helper) {
 		MapGenomeBuilder recorder = new MapGenomeBuilder();
 		recorder.set(BeeChromosomes.SPEED, ForestryAlleles.SPEED_FASTEST);
@@ -208,7 +203,7 @@ public class GenomeOverrideTest {
 	 * carrying a whole allele each when they do not. Uses only integer-valued and reference chromosomes: a float
 	 * allele widens to a different double than the same literal parses to, which no encoder can fix.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void encodedShapesMatchTheDocumentedForm(GameTestHelper helper) {
 		String expected = """
 			{

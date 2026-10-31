@@ -239,7 +239,7 @@ public final class MultiblockTestSupport {
 				continue;
 			}
 			BlockState state = level.getBlockState(member);
-			BlockEntity recreated = BlockEntity.loadStatic(member, state, be.saveWithId(level.registryAccess()), level.registryAccess());
+			BlockEntity recreated = BlockEntity.loadStatic(member, state, be.saveWithFullMetadata(level.registryAccess()), level.registryAccess());
 			if (recreated != null) {
 				fresh.put(member, recreated);
 			}

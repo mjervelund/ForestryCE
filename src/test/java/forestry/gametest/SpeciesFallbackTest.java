@@ -6,11 +6,8 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.apiculture.genetics.IBeeSpecies;
@@ -34,15 +31,13 @@ import forestry.core.platform.util.SpeciesUtil;
  * (re-driving the real reload path from {@link BeeSpeciesManager#INSTANCE}'s already-loaded definitions), so other
  * GameTests running later in the same server session are unaffected.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class SpeciesFallbackTest {
 	/**
 	 * {@link BeeSpeciesProjector#project} must return {@code null} (not throw) for a definition referencing an
 	 * unknown jubilance id, and {@link ApicultureReloadHandler#rebuildSpecies} over a map containing that one bad
 	 * definition alongside the real, currently-loaded ones must yield a species set missing only that entry.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void unknownJubilanceIsSkippedGracefully(GameTestHelper helper) {
 		IBeeSpeciesType type = SpeciesUtil.BEE_TYPE.get();
 
@@ -97,7 +92,7 @@ public class SpeciesFallbackTest {
 	 * (it threw {@code IllegalStateException} whenever the species map was empty). This is now the normal state of
 	 * {@code BeeSpeciesType} between setup and the first datapack reload.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void emptySpeciesSetIsTolerated(GameTestHelper helper) {
 		IBeeSpeciesType type = SpeciesUtil.BEE_TYPE.get();

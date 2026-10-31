@@ -1,11 +1,9 @@
 {
   "type": "forestry:condition_modifier",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "forestry:chests/village_naturalist"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "forestry:chests/village_naturalist"
+  },
   "extensions": [
     "arboriculture",
     "apiculture"

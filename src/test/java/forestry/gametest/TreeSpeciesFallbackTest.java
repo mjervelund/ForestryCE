@@ -6,11 +6,8 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.arboriculture.ITreeSpecies;
@@ -29,10 +26,8 @@ import forestry.core.platform.util.SpeciesUtil;
  * tree species id that a datapack has since removed, and resolving it must fall back to the default species
  * instead of throwing (mirrors {@code SpeciesFallbackTest}'s bee coverage).
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class TreeSpeciesFallbackTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void unknownSpeciesIdResolvesToDefault(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();
@@ -60,7 +55,7 @@ public class TreeSpeciesFallbackTest {
 	 * GameTests in the same server session (notably {@code MutationRecipeTest}'s tree mutation assertions) are
 	 * unaffected.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void bindinglessDefinitionSkippedNoCrash(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();

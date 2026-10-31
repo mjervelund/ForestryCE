@@ -2,10 +2,7 @@ package forestry.gametest;
 
 import java.util.Map;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.arboriculture.ForestryTreeSpecies;
@@ -19,10 +16,8 @@ import forestry.arboriculture.trees.genetics.TreeSpeciesDefinition;
 import forestry.arboriculture.trees.genetics.TreeSpeciesProjector;
 import forestry.core.platform.util.SpeciesUtil;
 
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class TreeSpeciesProjectorTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void projectsMatchingTreeSpecies(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();
 		// Read the genus/species off the real oak so the definition is faithful.
@@ -51,7 +46,7 @@ public class TreeSpeciesProjectorTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void missingBindingsSkips(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();
 		TreeSpeciesDefinition def = TestSpeciesDefinitions.tree("Quercus", "phantom").build();

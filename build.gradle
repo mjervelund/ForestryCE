@@ -209,13 +209,11 @@ neoForge {
 			loadedMods = [mods.forestry, mods.forestrybutterflies, mods.forestryfarms, mods.forestrymail]
 		}
 
-		// Multiblock inventory-conservation GameTest suite. Runs ONLY via `gradlew runGameTestServer`; the
-		// enabled-namespaces property is what makes NeoForge execute the @GameTestHolder("forestry") classes, so the
-		// tests are completely inert in normal client/server play.
+		// Forestry GameTest suite. Runs ONLY via `gradlew runGameTestServer`: the forestrygametest mod registers its
+		// @ForestryGameTest methods only when NeoForge enables GameTests, so they are inert in normal play.
 		gameTestServer {
 			type = "gameTestServer"
 			gameDirectory.set(project.layout.projectDirectory.dir('run/gametest'))
-			systemProperty 'neoforge.enabledGameTestNamespaces', 'forestry'
 			// Forwards `-Pforestry.genomeBaseline=generate` to the forked gametest JVM so GenomeBaselineTest
 			// can (re)generate its golden-master snapshot. Empty/absent => assert mode.
 			systemProperty 'forestry.genomeBaseline', providers.gradleProperty('forestry.genomeBaseline').getOrElse('')

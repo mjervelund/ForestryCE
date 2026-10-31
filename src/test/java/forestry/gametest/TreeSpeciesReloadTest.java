@@ -4,11 +4,8 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.arboriculture.ForestryTreeSpecies;
@@ -34,10 +31,8 @@ import forestry.core.platform.util.SpeciesUtil;
  * server session - notably {@code MutationRecipeTest}'s tree mutation assertions - still see the full built-in tree
  * species set.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class TreeSpeciesReloadTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void rebuildRepopulatesSpecies(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();
@@ -80,7 +75,7 @@ public class TreeSpeciesReloadTest {
 	 * definitions should reproduce the full built-in set. Mutates and restores the live species map exactly like
 	 * {@code rebuildRepopulatesSpecies} above, so it doesn't leak into later tests in the same server session.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	@SuppressWarnings("unchecked")
 	public static void managerLoadedAllSpeciesAtServerStart(GameTestHelper helper) {
 		ITreeSpeciesType type = SpeciesUtil.TREE_TYPE.get();

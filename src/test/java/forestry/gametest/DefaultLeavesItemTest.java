@@ -1,13 +1,10 @@
 package forestry.gametest;
 
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.arboriculture.leaves.ForestryLeafType;
@@ -27,10 +24,8 @@ import forestry.arboriculture.features.ArboricultureBlocks;
  * unprefixed key and the "every species looks identical" symptom. The tint half of the bug is the client-only sibling
  * of this same species-resolution fix and can't be asserted headless.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class DefaultLeavesItemTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void defaultLeavesItemNameIsPerSpecies(GameTestHelper helper) {
 		java.util.List<ForestryLeafType> types = ForestryLeafType.values();
 		if (types.size() < 2) {

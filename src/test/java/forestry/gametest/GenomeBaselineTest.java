@@ -11,11 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.core.Vec3i;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.IForestryApi;
@@ -45,13 +42,11 @@ import forestry.api.core.genetics.alleles.IChromosome;
  * int -&gt; Integer.toString, boolean -&gt; Boolean.toString, enum -&gt; name(), Vec3i -&gt; "x,y,z", reference value
  * -&gt; its Identifier; each rendered as {@code <value>:<dominant>}.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class GenomeBaselineTest {
 	private static final String BASELINE_RESOURCE = "/forestry/gametest/genome-baseline.txt";
 	private static final String OUTPUT_FILE = "genome-baseline.txt";
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void defaultGenomesMatchBaseline(GameTestHelper helper) {
 		String actual = dumpAllDefaultGenomes();
 

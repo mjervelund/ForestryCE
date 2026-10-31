@@ -3,13 +3,10 @@ package forestry.gametest;
 import java.util.List;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.apiculture.alveary.AlvearyBlock;
@@ -30,14 +27,12 @@ import forestry.agriculture.features.MultifarmBlocks;
  * sieve or hatch in an exterior cell exercises the code an addon part runs through, without a test-only
  * block entity type.
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class LevelStructureViewComponentTest {
 	private static final BlockPos BASE = new BlockPos(6, 1, 6);
 	private static final int TIMEOUT = 240;
 
 	/** Checks that an alveary assembles with a non-role member (a sieve) in an exterior cell. */
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void alvearyFormsWithNonRoleComponent(GameTestHelper helper) {
 		List<BlockPos> members = MultiblockTestSupport.buildAlveary(helper, BASE);
 		BlockState sieve = ApicultureBlocks.ALVEARY.get(AlvearyBlock.Type.SIEVE).defaultState();
@@ -51,7 +46,7 @@ public class LevelStructureViewComponentTest {
 	}
 
 	/** Checks that a farm assembles with a non-role member (a hatch) in an exterior cell. */
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void farmFormsWithNonRoleComponent(GameTestHelper helper) {
 		List<BlockPos> members = MultiblockTestSupport.buildFarm(helper, BASE);
 		BlockState hatch = MultifarmBlocks.FARM.get(MultifarmBlockType.HATCH, MultifarmMaterialType.STONE_BRICK).defaultState();
@@ -65,7 +60,7 @@ public class LevelStructureViewComponentTest {
 	}
 
 	/** Checks that a non-component block entity in an interior cell is not adopted as a part. */
-	@GameTest(template = "empty", timeoutTicks = TIMEOUT)
+	@ForestryGameTest(timeoutTicks = TIMEOUT)
 	public static void nonComponentBlockEntityIsNotAPart(GameTestHelper helper) {
 		List<BlockPos> members = MultiblockTestSupport.buildAlveary(helper, BASE);
 		helper.setBlock(BASE.offset(1, 1, 1), Blocks.CHEST);

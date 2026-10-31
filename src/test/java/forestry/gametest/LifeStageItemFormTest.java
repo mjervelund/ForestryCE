@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 import forestry.api.ForestryConstants;
 import forestry.api.IForestryApi;
@@ -31,10 +28,8 @@ import forestry.api.core.genetics.ISpeciesType;
  *
  * Ex. BeeLifeStage.DRONE -> "forestry:drone_bee", not "forestry:bee_drone"
  */
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class LifeStageItemFormTest {
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void everyLifeStageResolvesToARegisteredItem(GameTestHelper helper) {
 		List<String> broken = new ArrayList<>();
 
@@ -60,7 +55,7 @@ public class LifeStageItemFormTest {
 	 * registered under exactly the id the stage asked for. Catches an id that happens to match some
 	 * other mod's item.
 	 */
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void everyLifeStageItemIsRegisteredUnderTheForestryNamespace(GameTestHelper helper) {
 		List<String> wrong = new ArrayList<>();
 
