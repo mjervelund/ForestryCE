@@ -6,6 +6,7 @@ import java.util.function.UnaryOperator;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -52,8 +53,8 @@ public class FluidComponent implements ICustomComponent {
 			Identifier fluidTexture = Identifier.fromNamespaceAndPath(spriteLocation.getNamespace(), "textures/" + spriteLocation.getPath() + ".png");
 			setGLColorFromInt(fluidAttributes.getTintColor(this.fluidStack));
 
-			// MatrixStack transform, int x, int y, float u, float v, int width, int height, int ?, int ?
-			graphics.blit(fluidTexture, this.x, (int) (this.y + this.h - Math.floor(this.h * ((float) this.level / this.maxLevel))), sprite.getU0(), sprite.getV0(), this.w, this.h * this.level / this.maxLevel, 8, 8);
+			// pipeline, texture, x, y, u, v, width, height, textureWidth, textureHeight
+			graphics.blit(RenderPipelines.GUI_TEXTURED, fluidTexture, this.x, (int) (this.y + this.h - Math.floor(this.h * ((float) this.level / this.maxLevel))), sprite.getU0(), sprite.getV0(), this.w, this.h * this.level / this.maxLevel, 8, 8);
 
 			if (context.isAreaHovered(mouseX, mouseY, this.x, this.y, this.w, this.h)) {
 				List<Component> toolTips = new ArrayList<>();
