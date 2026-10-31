@@ -1,12 +1,15 @@
 package forestry.lepidopterology;
 
 import forestry.api.ForestryConstants;
+import forestry.core.features.CompostablesAndFuels;
 import forestry.lepidopterology.network.LepidopterologyPacketIds;
 import forestry.api.modules.IPacketRegistry;
 import forestry.lepidopterology.butterflies.genetics.ButterflySpeciesManager;
 import forestry.lepidopterology.network.ButterflySpeciesSyncPacket;
 import forestry.core.platform.util.NetworkUtil;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import forestry.api.client.IClientModuleHandler;
@@ -44,6 +47,12 @@ public class ModuleLepidopterology extends BlankForestryModule {
 	public void registerEvents(IEventBus modBus) {
 		NeoForge.EVENT_BUS.addListener(ModuleLepidopterology::onEntityTravelToDimension);
 		modBus.addListener(ModuleLepidopterology::onAttributeCreate);
+		modBus.addListener(ModuleLepidopterology::modifyDefaultComponents);
+	}
+
+	// 26.3: the neoforge:compostables data map is gone, the composter reads the COMPOSTABLE component
+	private static void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {
+		CompostablesAndFuels.compostable(event, LepidopterologyItems.COCOON_GE.item(), ContextIntProviders.COMPOSTABLE_LOW);
 	}
 
 	public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {

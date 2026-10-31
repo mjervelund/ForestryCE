@@ -36,7 +36,6 @@ public class LepidopterologyData extends ContentJarData {
 		jar.addServer(SpeciesUtil.BUTTERFLY_TYPE.get().createSpeciesProvider(jar.output(), jar.lookup(), DefaultButterflySpecies::register));
 		jar.addServer(new ButterflyMutationProvider(jar.output(), jar.lookup()));
 		jar.addServer(new JarLootTableProvider(jar.output(), jar.lookup(), LepidopterologyBlockLootTables::new));
-		jar.addServer(new LepidopterologyDataMapProvider(jar.output(), jar.lookup()));
 		jar.addClient(new LepidopterologyItemModelProvider(jar.output(), jar.existingFileHelper()));
 	}
 }

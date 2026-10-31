@@ -75,7 +75,7 @@ public class CoreBlocks {
 	/* Plywood and cork */
 	// Deviation from 1.20.1: the sheet and the cork built their properties inside their constructors, and all
 	// three block items carried new ItemProperties().burnTime(n). The registry owns the properties here, and
-	// the burn times moved to the neoforge:furnace_fuels data map in ForestryDataMapProvider
+	// the burn times are COOKING_FUEL components set in CompostablesAndFuels
 	// todo sheet blocks can only be wood
 	public static final FeatureBlock<BlockSheet, BlockItem> PLYWOOD_SHEET = REGISTRY.block(BlockSheet::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.OAK_PLANKS)), ItemBlockForestry::new, "plywood");
 	public static final FeatureBlock<BlockPlywoodBlock, BlockItem> PLYWOOD_BLOCK = REGISTRY.block(BlockPlywoodBlock::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.OAK_PLANKS)).ignitedByLava(), ItemBlockForestry::new, "plywood_block");

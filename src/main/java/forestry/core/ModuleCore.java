@@ -24,6 +24,7 @@ import forestry.core.platform.client.CoreClientHandler;
 import forestry.core.engine.climate.ForestryClimateManager;
 import forestry.core.platform.commands.DiagnosticsCommand;
 import forestry.core.platform.commands.DumpCommand;
+import forestry.core.features.CompostablesAndFuels;
 import forestry.core.features.CoreItems;
 import forestry.core.features.CoreTiles;
 import forestry.core.engine.genetics.GeneticsReloadHandler;
@@ -90,6 +91,7 @@ public class ModuleCore extends BlankForestryModule {
 		modBus.addListener(ModuleCore::registerCapabilities);
 		modBus.addListener(ModuleCore::registerGlobalLootModifiers);
 		modBus.addListener(ModuleCore::registerForestryRegistries);
+		modBus.addListener(CompostablesAndFuels::modifyDefaultComponents);
 		// 26.x: GatherDataEvent is abstract (sealed Server/Client); listeners go on a subclass.
 		modBus.addListener(net.neoforged.neoforge.data.event.GatherDataEvent.Server.class, ModuleCore::onGatherData);
 		modBus.addListener(net.neoforged.neoforge.data.event.GatherDataEvent.Client.class, ModuleCore::onGatherData);
