@@ -29,6 +29,9 @@ public record PacketWorktableRecipeRequest(BlockPos pos, MemorizedRecipe recipe)
 	public static void handle(PacketWorktableRecipeRequest msg, ServerPlayer player) {
 		BlockPos pos = msg.pos();
 		MemorizedRecipe recipe = msg.recipe();
+		if (!TileUtil.canReach(player, pos)) {
+			return;
+		}
 		TileUtil.actOnTile(player.level(), pos, WorktableTile.class, worktable -> {
 			worktable.setCurrentRecipe(recipe);
 
