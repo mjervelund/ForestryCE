@@ -4,6 +4,7 @@ import forestry.api.core.genetics.IGenome;
 import forestry.api.core.genetics.alleles.ButterflyChromosomes;
 import forestry.api.lepidopterology.genetics.IButterfly;
 import forestry.core.platform.util.ItemStackUtil;
+import forestry.core.platform.util.NbtValueIO;
 import forestry.core.platform.util.SpeciesUtil;
 import forestry.lepidopterology.cocoons.BlockCocoon;
 import forestry.lepidopterology.features.LepidopterologyTiles;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.List;
 
@@ -33,9 +36,12 @@ public class TileCocoon extends BlockEntity {
 
 	/* SAVING & LOADING */
 	@Override
-	public void loadAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
-		super.loadAdditional(compoundNBT, registries);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		loadAdditional(NbtValueIO.read(input), input.lookup());
+	}
 
+	public void loadAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		if (compoundNBT.contains("Caterpillar")) {
             this.caterpillar = SpeciesUtil.deserializeIndividual(SpeciesUtil.BUTTERFLY_TYPE.get(), compoundNBT.getCompoundOrEmpty("Caterpillar"));
 		}
@@ -44,9 +50,14 @@ public class TileCocoon extends BlockEntity {
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
-		super.saveAdditional(compoundNBT, registries);
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		CompoundTag data = new CompoundTag();
+		saveAdditional(data, NbtValueIO.registries(this.level));
+		output.store(data);
+	}
 
+	public void saveAdditional(CompoundTag compoundNBT, HolderLookup.Provider registries) {
 		Tag tag = SpeciesUtil.serializeIndividual(this.caterpillar);
 		if (tag != null) {
 			compoundNBT.put("Caterpillar", tag);

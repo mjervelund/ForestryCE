@@ -16,6 +16,7 @@ import forestry.api.lepidopterology.genetics.IButterflySpecies;
 import forestry.api.lepidopterology.genetics.IButterflySpeciesType;
 import forestry.core.platform.config.ForestryConfig;
 import forestry.core.platform.util.ItemStackUtil;
+import forestry.core.platform.util.NbtValueIO;
 import forestry.core.platform.util.SpeciesUtil;
 import forestry.lepidopterology.ModuleLepidopterology;
 import net.minecraft.core.BlockPos;
@@ -52,6 +53,8 @@ import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -143,8 +146,14 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 
 	/* SAVING & LOADING */
 	@Override
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
+		CompoundTag nbt = new CompoundTag();
+		addAdditionalSaveData(nbt);
+		output.store(nbt);
+	}
+
 	public void addAdditionalSaveData(CompoundTag nbt) {
-		super.addAdditionalSaveData(nbt);
 
 		// Individual data
 		Tag containedNbt = SpeciesUtil.serializeIndividual(this.contained);
@@ -168,8 +177,12 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 	}
 
 	@Override
+	protected void readAdditionalSaveData(ValueInput input) {
+		super.readAdditionalSaveData(input);
+		readAdditionalSaveData(NbtValueIO.read(input));
+	}
+
 	public void readAdditionalSaveData(CompoundTag nbt) {
-		super.readAdditionalSaveData(nbt);
 
 		IButterfly butterfly = null;
 		if (nbt.contains(NBT_BUTTERFLY)) {
