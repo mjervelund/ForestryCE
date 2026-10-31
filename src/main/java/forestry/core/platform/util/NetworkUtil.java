@@ -109,7 +109,10 @@ public class NetworkUtil {
 
 		for (int i = 0; i < size; i++) {
 			ItemStack stack = ItemStack.OPTIONAL_STREAM_CODEC.decode(buffer);
-			inventory.setItem(i, stack);
+			// the size is the sender's: a modified client can send more stacks than the inventory holds
+			if (i < inventory.getContainerSize()) {
+				inventory.setItem(i, stack);
+			}
 		}
 	}
 
