@@ -230,6 +230,10 @@ public class FilterLogic implements IFilterLogic {
 	}
 
 	public boolean setGenomeFilter(Direction facing, int index, boolean active, @Nullable ISpecies<?> allele) {
+		// index comes from PacketFilterChangeGenome
+		if (index < 0 || index >= this.genomeFilter[facing.ordinal()].length) {
+			return false;
+		}
 		AlleleFilter filter = this.genomeFilter[facing.ordinal()][index];
 		if (filter == null) {
 			filter = this.genomeFilter[facing.ordinal()][index] = new AlleleFilter();

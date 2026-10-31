@@ -8,6 +8,7 @@ import forestry.core.content.machines.tiles.TileFabricator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.world.Container;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -21,22 +22,30 @@ public record PacketRecipeTransferRequest(BlockPos pos,
 
 		BlockEntity tile = TileUtil.getTile(player.level(), pos);
 		if (tile instanceof TileCarpenter carpenter) {
-			int index = 0;
-			for (ItemStack stack : craftingInventory) {
-				carpenter.getCraftingInventory().setItem(index, stack);
-				index++;
-			}
+			NonNullList<ItemStack> ghostItems = setGhostItems(carpenter.getCraftingInventory(), craftingInventory);
 
-			NetworkUtil.sendNetworkPacket(new PacketRecipeTransferUpdate(carpenter.getBlockPos(), craftingInventory), pos, player.level());
+			NetworkUtil.sendNetworkPacket(new PacketRecipeTransferUpdate(carpenter.getBlockPos(), ghostItems), pos, player.level());
 		} else if (tile instanceof TileFabricator fabricator) {
-			int index = 0;
-			for (ItemStack stack : craftingInventory) {
-				fabricator.getCraftingInventory().setItem(index, stack);
-				index++;
-			}
+			NonNullList<ItemStack> ghostItems = setGhostItems(fabricator.getCraftingInventory(), craftingInventory);
 
-			NetworkUtil.sendNetworkPacket(new PacketRecipeTransferUpdate(fabricator.getBlockPos(), craftingInventory), pos, player.level());
+			NetworkUtil.sendNetworkPacket(new PacketRecipeTransferUpdate(fabricator.getBlockPos(), ghostItems), pos, player.level());
 		}
+	}
+
+	/**
+	 * The stacks come from the client: more of them than the grid has slots used to throw, so ignore the extra
+	 * ones (and relay what was stored, not what was sent, to the clients nearby). Ghost slots only show an item, so
+	 * store one of each.
+	 */
+	private static NonNullList<ItemStack> setGhostItems(Container grid, NonNullList<ItemStack> stacks) {
+		int size = Math.min(grid.getContainerSize(), stacks.size());
+		NonNullList<ItemStack> stored = NonNullList.withSize(size, ItemStack.EMPTY);
+		for (int index = 0; index < size; index++) {
+			ItemStack stack = stacks.get(index).copyWithCount(1);
+			grid.setItem(index, stack);
+			stored.set(index, stack);
+		}
+		return stored;
 	}
 
 	@Override

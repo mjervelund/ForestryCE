@@ -121,12 +121,13 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 	public List<RecipeHolder<CraftingRecipe>> getRecipes() {
 		if (this.recipes.isEmpty() && !this.recipeIds.isEmpty()) {
 			for (Identifier key : this.recipeIds) {
-				RecipeHolder<CraftingRecipe> recipe = RecipeUtils.getRecipe(key);
-				if (recipe != null) {
-					this.recipes.add(recipe);
+				// the ids come from the client (PacketWorktableRecipeRequest): any recipe type can be named
+				RecipeHolder<?> recipe = RecipeUtils.getRecipe(key);
+				if (recipe != null && recipe.value() instanceof CraftingRecipe) {
+					this.recipes.add((RecipeHolder<CraftingRecipe>) recipe);
 				}
 			}
-			if (this.selectedRecipe > this.recipes.size()) {
+			if (this.selectedRecipe < 0 || this.selectedRecipe >= this.recipes.size()) {
 				this.selectedRecipe = 0;
 			}
 		}
@@ -139,6 +140,9 @@ public class MemorizedRecipe implements INbtWritable, INbtReadable, IStreamable 
 		if (recipes.isEmpty()) {
 			return null;
 		} else {
+			if (this.selectedRecipe < 0 || this.selectedRecipe >= recipes.size()) {
+				this.selectedRecipe = 0;
+			}
 			return recipes.get(this.selectedRecipe);
 		}
 	}
