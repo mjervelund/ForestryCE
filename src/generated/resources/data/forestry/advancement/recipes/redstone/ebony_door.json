@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ebony_door"
+        "recipes": "forestry:ebony_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

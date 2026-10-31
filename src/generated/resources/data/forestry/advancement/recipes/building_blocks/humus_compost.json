@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:humus_compost"
+        "recipes": "forestry:humus_compost"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

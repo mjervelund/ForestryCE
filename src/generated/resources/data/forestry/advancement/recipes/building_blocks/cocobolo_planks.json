@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cocobolo_planks"
+        "recipes": "forestry:cocobolo_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

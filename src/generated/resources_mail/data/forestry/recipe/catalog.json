@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "tag": "forestry:stamps"
-    }
+    "minecraft:book",
+    "#forestry:stamps"
   ],
   "result": {
     "count": 1,

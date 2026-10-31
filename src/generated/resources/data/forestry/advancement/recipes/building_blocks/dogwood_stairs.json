@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:dogwood_stairs"
+        "recipes": "forestry:dogwood_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

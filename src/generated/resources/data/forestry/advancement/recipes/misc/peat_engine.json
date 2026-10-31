@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:peat_engine"
+        "recipes": "forestry:peat_engine"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

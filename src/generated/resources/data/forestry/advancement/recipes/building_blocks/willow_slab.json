@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:willow_slab"
+        "recipes": "forestry:willow_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

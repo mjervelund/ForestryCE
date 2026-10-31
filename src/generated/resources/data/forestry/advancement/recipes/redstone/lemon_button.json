@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:lemon_button"
+        "recipes": "forestry:lemon_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

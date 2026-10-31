@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:larch_logs"
-    }
+    "#forestry:larch_logs"
   ],
   "result": {
     "count": 4,

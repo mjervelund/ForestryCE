@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:foresters_manual_sapling"
+        "recipes": "forestry:foresters_manual_sapling"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

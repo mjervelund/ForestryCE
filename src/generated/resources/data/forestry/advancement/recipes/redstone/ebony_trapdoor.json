@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ebony_trapdoor"
+        "recipes": "forestry:ebony_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

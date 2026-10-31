@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:spongy_comb_block"
+        "recipes": "forestry:spongy_comb_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

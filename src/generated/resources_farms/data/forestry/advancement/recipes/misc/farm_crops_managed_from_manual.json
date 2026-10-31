@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:farm_crops_managed_from_manual"
+        "recipes": "forestry:farm_crops_managed_from_manual"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

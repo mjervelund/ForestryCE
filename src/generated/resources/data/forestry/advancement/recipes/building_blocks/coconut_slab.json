@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:coconut_slab"
+        "recipes": "forestry:coconut_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

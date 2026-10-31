@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kauri_planks"
+        "recipes": "forestry:kauri_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

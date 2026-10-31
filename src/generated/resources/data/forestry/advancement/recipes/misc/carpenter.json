@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:carpenter"
+        "recipes": "forestry:carpenter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

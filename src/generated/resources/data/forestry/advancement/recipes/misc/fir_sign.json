@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:fir_sign"
+        "recipes": "forestry:fir_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

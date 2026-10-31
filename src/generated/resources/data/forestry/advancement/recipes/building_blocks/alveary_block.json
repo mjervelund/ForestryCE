@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:alveary_block"
+        "recipes": "forestry:alveary_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

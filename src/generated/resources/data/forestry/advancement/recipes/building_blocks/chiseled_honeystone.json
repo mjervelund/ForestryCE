@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:chiseled_honeystone"
+        "recipes": "forestry:chiseled_honeystone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

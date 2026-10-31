@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:chiseled_ash_bricks"
+        "recipes": "forestry:chiseled_ash_bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:shovel_kit"
+        "recipes": "forestry:shovel_kit"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

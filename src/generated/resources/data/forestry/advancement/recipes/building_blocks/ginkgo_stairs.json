@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ginkgo_stairs"
+        "recipes": "forestry:ginkgo_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

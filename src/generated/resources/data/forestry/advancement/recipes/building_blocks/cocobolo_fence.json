@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cocobolo_fence"
+        "recipes": "forestry:cocobolo_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

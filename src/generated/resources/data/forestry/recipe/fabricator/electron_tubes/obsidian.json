@@ -8,12 +8,8 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "tag": "c:dusts/redstone"
-      },
-      "X": {
-        "item": "minecraft:obsidian"
-      }
+      "#": "#c:dusts/redstone",
+      "X": "minecraft:obsidian"
     },
     "pattern": [
       " X ",

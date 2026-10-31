@@ -3,9 +3,7 @@
   "category": "misc",
   "cookingtime": 200,
   "experience": 0.0,
-  "ingredient": {
-    "item": "forestry:peat"
-  },
+  "ingredient": "forestry:peat",
   "result": {
     "count": 1,
     "id": "forestry:ash"

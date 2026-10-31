@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:jacaranda_boat"
+        "recipes": "forestry:jacaranda_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

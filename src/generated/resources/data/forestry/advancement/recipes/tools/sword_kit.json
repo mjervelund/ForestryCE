@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sword_kit"
+        "recipes": "forestry:sword_kit"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

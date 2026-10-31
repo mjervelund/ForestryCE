@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:larch_slab"
+        "recipes": "forestry:larch_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

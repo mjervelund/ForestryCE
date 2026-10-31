@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:plum_boat"
+        "recipes": "forestry:plum_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

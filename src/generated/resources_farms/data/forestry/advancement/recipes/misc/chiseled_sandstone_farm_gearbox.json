@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:chiseled_sandstone_farm_gearbox"
+        "recipes": "forestry:chiseled_sandstone_farm_gearbox"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

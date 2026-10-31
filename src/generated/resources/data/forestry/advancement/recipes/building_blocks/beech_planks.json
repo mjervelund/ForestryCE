@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:beech_planks"
+        "recipes": "forestry:beech_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

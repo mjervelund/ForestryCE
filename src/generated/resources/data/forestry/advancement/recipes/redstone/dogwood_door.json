@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:dogwood_door"
+        "recipes": "forestry:dogwood_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

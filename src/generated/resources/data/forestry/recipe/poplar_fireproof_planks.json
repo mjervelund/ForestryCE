@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:fireproof_poplar_logs"
-    }
+    "#forestry:fireproof_poplar_logs"
   ],
   "result": {
     "count": 4,

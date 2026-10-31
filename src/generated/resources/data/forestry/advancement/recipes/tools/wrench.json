@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:wrench"
+        "recipes": "forestry:wrench"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

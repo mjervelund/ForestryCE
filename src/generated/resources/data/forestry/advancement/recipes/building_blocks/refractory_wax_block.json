@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:refractory_wax_block"
+        "recipes": "forestry:refractory_wax_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

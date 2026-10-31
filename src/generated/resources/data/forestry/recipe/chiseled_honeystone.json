@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "_": {
-      "item": "forestry:honeystone_slab"
-    }
+    "_": "forestry:honeystone_slab"
   },
   "pattern": [
     "_",

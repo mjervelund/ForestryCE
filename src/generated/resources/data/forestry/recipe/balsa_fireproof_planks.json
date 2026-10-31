@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:fireproof_balsa_logs"
-    }
+    "#forestry:fireproof_balsa_logs"
   ],
   "result": {
     "count": 4,

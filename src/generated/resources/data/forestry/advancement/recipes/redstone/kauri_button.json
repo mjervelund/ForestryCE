@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kauri_button"
+        "recipes": "forestry:kauri_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

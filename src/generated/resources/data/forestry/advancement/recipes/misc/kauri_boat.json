@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kauri_boat"
+        "recipes": "forestry:kauri_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

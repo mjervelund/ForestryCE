@@ -3,9 +3,7 @@
   "category": "building",
   "group": "combs",
   "key": {
-    "#": {
-      "item": "forestry:kaolin_comb"
-    }
+    "#": "forestry:kaolin_comb"
   },
   "pattern": [
     "##",

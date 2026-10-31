@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:poplar_fence"
+        "recipes": "forestry:poplar_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

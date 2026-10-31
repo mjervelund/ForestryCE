@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:macrocarpa_stairs"
+        "recipes": "forestry:macrocarpa_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

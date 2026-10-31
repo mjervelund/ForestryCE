@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ipe_fireproof_stairs"
+        "recipes": "forestry:ipe_fireproof_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,12 +3,8 @@
   "category": "redstone",
   "ingredients": [
     [
-      {
-        "item": "forestry:pewen_planks"
-      },
-      {
-        "item": "forestry:pewen_fireproof_planks"
-      }
+      "forestry:pewen_planks",
+      "forestry:pewen_fireproof_planks"
     ]
   ],
   "result": {

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:macrocarpa_fireproof_planks"
+        "recipes": "forestry:macrocarpa_fireproof_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

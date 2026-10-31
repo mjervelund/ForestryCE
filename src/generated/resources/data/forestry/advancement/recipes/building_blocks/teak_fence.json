@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:teak_fence"
+        "recipes": "forestry:teak_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

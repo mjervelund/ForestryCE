@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:apatite_from_apatite_block"
+        "recipes": "forestry:apatite_from_apatite_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

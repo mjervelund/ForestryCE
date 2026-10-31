@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:decorative_log_pile"
+        "recipes": "forestry:decorative_log_pile"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

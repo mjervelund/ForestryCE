@@ -3,12 +3,8 @@
   "category": "misc",
   "key": {
     "P": [
-      {
-        "item": "forestry:lime_planks"
-      },
-      {
-        "item": "forestry:lime_fireproof_planks"
-      }
+      "forestry:lime_planks",
+      "forestry:lime_fireproof_planks"
     ]
   },
   "pattern": [

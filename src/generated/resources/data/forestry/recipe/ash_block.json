@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "X": {
-      "tag": "c:dusts/ash"
-    }
+    "X": "#c:dusts/ash"
   },
   "pattern": [
     "XX",

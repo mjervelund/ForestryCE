@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kapok_door"
+        "recipes": "forestry:kapok_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

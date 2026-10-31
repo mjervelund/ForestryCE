@@ -1,6 +1,5 @@
 {
   "type": "forestry:carpenter",
-  "box": [],
   "id": "forestry:carpenter/escritoire",
   "liquid": {
     "amount": 500,
@@ -9,9 +8,7 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "tag": "minecraft:planks"
-      }
+      "#": "#minecraft:planks"
     },
     "pattern": [
       "#  ",

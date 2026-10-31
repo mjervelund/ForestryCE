@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:honey_comb_block"
+        "recipes": "forestry:honey_comb_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

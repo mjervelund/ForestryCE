@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "forestry:cocobolo_boat"
-    },
-    {
-      "tag": "c:chests/wooden"
-    }
+    "forestry:cocobolo_boat",
+    "#c:chests/wooden"
   ],
   "result": {
     "count": 1,

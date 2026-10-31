@@ -13,9 +13,7 @@
     "id": "forestry:mulch"
   },
   "resources": [
-    {
-      "tag": "c:fruits/coconut"
-    }
+    "#c:fruits/coconut"
   ],
   "time": 10
 }

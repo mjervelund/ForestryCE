@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:padauk_fireproof_wood"
+        "recipes": "forestry:padauk_fireproof_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

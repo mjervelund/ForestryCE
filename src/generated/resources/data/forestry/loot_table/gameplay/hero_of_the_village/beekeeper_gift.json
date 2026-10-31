@@ -18,13 +18,13 @@
               "type": "minecraft:set_count"
             }
           ],
-          "name": "forestry:village_combs"
+          "items": "#forestry:village_combs"
         },
         {
           "type": "minecraft:tag",
           "expand": true,
-          "name": "forestry:scoops",
-          "weight": 5
+          "weight": 5,
+          "items": "#forestry:scoops"
         }
       ],
       "name": "forestry_beekeeper_gift",

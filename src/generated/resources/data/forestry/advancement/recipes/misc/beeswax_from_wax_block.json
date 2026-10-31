@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:beeswax_from_wax_block"
+        "recipes": "forestry:beeswax_from_wax_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

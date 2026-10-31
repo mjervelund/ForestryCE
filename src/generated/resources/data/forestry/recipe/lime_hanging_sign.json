@@ -3,16 +3,10 @@
   "category": "misc",
   "key": {
     "#": [
-      {
-        "item": "forestry:lime_stripped_log"
-      },
-      {
-        "item": "forestry:lime_fireproof_stripped_log"
-      }
+      "forestry:lime_stripped_log",
+      "forestry:lime_fireproof_stripped_log"
     ],
-    "X": {
-      "item": "minecraft:chain"
-    }
+    "X": "minecraft:iron_chain"
   },
   "pattern": [
     "X X",

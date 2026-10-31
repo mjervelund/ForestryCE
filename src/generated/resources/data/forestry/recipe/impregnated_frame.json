@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "forestry:impregnated_stick"
-    },
-    "S": {
-      "tag": "c:strings"
-    }
+    "#": "forestry:impregnated_stick",
+    "S": "#c:strings"
   },
   "pattern": [
     "###",

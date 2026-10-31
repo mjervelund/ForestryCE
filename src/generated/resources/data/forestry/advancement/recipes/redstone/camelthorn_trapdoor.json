@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:camelthorn_trapdoor"
+        "recipes": "forestry:camelthorn_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

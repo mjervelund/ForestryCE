@@ -2,13 +2,11 @@
   "criteria": {
     "used_forestry": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {}
-          }
-        ]
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {}
+        }
       },
       "trigger": "minecraft:location"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:beech_sign"
+        "recipes": "forestry:beech_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

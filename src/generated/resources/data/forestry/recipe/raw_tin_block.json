@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": {
-      "item": "forestry:raw_tin"
-    }
+    "#": "forestry:raw_tin"
   },
   "pattern": [
     "###",

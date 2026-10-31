@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sturdy_casing"
+        "recipes": "forestry:sturdy_casing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

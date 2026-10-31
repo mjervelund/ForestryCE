@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:dogwood_trapdoor"
+        "recipes": "forestry:dogwood_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

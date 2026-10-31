@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:spruce_fireproof_wood"
+        "recipes": "forestry:spruce_fireproof_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

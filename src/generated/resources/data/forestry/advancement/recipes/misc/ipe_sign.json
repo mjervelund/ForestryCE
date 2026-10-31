@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ipe_sign"
+        "recipes": "forestry:ipe_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

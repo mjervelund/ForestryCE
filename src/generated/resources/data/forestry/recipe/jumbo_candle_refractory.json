@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "forestry:refractory_wax_block"
-    },
-    "|": {
-      "tag": "c:strings"
-    }
+    "#": "forestry:refractory_wax_block",
+    "|": "#c:strings"
   },
   "pattern": [
     "|",

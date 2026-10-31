@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahogany_stairs"
+        "recipes": "forestry:mahogany_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

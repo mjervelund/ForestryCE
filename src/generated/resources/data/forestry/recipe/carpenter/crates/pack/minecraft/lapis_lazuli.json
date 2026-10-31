@@ -1,8 +1,6 @@
 {
   "type": "forestry:carpenter",
-  "box": {
-    "item": "forestry:crate"
-  },
+  "box": "forestry:crate",
   "id": "forestry:carpenter/crates/pack/minecraft/lapis_lazuli",
   "liquid": {
     "amount": 100,
@@ -11,9 +9,7 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "tag": "c:gems/lapis"
-      }
+      "#": "#c:gems/lapis"
     },
     "pattern": [
       "###",

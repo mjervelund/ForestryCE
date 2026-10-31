@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:survivalists_shovel"
+        "recipes": "forestry:survivalists_shovel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

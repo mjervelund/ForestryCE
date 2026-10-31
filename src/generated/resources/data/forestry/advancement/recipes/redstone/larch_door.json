@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:larch_door"
+        "recipes": "forestry:larch_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

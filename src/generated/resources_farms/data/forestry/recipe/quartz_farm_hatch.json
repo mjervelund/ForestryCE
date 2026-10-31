@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:quartz_block"
-    },
-    "D": {
-      "tag": "minecraft:wooden_trapdoors"
-    },
-    "T": {
-      "tag": "c:gears/tin"
-    }
+    "#": "minecraft:quartz_block",
+    "D": "#minecraft:wooden_trapdoors",
+    "T": "#c:gears/tin"
   },
   "pattern": [
     " # ",

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "forestry:sour_cherry_boat"
-    },
-    {
-      "tag": "c:chests/wooden"
-    }
+    "forestry:sour_cherry_boat",
+    "#c:chests/wooden"
   ],
   "result": {
     "count": 1,

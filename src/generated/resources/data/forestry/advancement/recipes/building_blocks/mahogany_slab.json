@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahogany_slab"
+        "recipes": "forestry:mahogany_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

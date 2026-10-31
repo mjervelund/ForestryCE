@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:wenge_sign"
+        "recipes": "forestry:wenge_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

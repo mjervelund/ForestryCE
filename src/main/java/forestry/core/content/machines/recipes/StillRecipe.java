@@ -16,13 +16,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 public class StillRecipe implements IStillRecipe {
 	private static final MapCodec<StillRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(StillRecipe::getId),
 		Codec.INT.fieldOf("time").forGetter(StillRecipe::getCyclesPerUnit),
-		FluidStack.CODEC.fieldOf("input").forGetter(StillRecipe::getInput),
-		FluidStack.CODEC.fieldOf("output").forGetter(StillRecipe::getOutput)
+		FluidStackTemplate.CODEC.fieldOf("input").forGetter(r -> r.input),
+		FluidStackTemplate.CODEC.fieldOf("output").forGetter(r -> r.output)
 	).apply(instance, StillRecipe::new));
 	private static final StreamCodec<RegistryFriendlyByteBuf, StillRecipe> STREAM_CODEC = StreamCodec.of(
 		Serializer::toNetwork,
@@ -31,10 +32,11 @@ public class StillRecipe implements IStillRecipe {
 
 	private final Identifier id;
 	private final int timePerUnit;
-	private final FluidStack input;
-	private final FluidStack output;
+	private final FluidStackTemplate input;
+	private final FluidStackTemplate output;
 
-	public StillRecipe(Identifier id, int timePerUnit, FluidStack input, FluidStack output) {
+	// Decoded at datapack load, before fluid components are bound, so the fluids are kept as templates
+	public StillRecipe(Identifier id, int timePerUnit, FluidStackTemplate input, FluidStackTemplate output) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(input, "Still recipes need an input. Input was null.");
 		Preconditions.checkNotNull(output, "Still recipes need an output. Output was null.");
@@ -52,17 +54,17 @@ public class StillRecipe implements IStillRecipe {
 
 	@Override
 	public FluidStack getInput() {
-		return this.input;
+		return this.input.create();
 	}
 
 	@Override
 	public FluidStack getOutput() {
-		return this.output;
+		return this.output.create();
 	}
 
 	@Override
 	public boolean matches(FluidStack input) {
-		return FluidStack.isSameFluidSameComponents(input, this.input) && input.getAmount() >= this.input.getAmount();
+		return FluidStack.isSameFluidSameComponents(input, this.input) && input.getAmount() >= this.input.amount();
 	}
 
 	@Override
@@ -91,8 +93,8 @@ public class StillRecipe implements IStillRecipe {
 		private static StillRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier id = Identifier.STREAM_CODEC.decode(buffer);
 			int timePerUnit = ByteBufCodecs.VAR_INT.decode(buffer);
-			FluidStack input = FluidStack.STREAM_CODEC.decode(buffer);
-			FluidStack output = FluidStack.STREAM_CODEC.decode(buffer);
+			FluidStackTemplate input = FluidStackTemplate.STREAM_CODEC.decode(buffer);
+			FluidStackTemplate output = FluidStackTemplate.STREAM_CODEC.decode(buffer);
 
 			return new StillRecipe(id, timePerUnit, input, output);
 		}
@@ -100,8 +102,8 @@ public class StillRecipe implements IStillRecipe {
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, StillRecipe recipe) {
 			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.timePerUnit);
-			FluidStack.STREAM_CODEC.encode(buffer, recipe.input);
-			FluidStack.STREAM_CODEC.encode(buffer, recipe.output);
+			FluidStackTemplate.STREAM_CODEC.encode(buffer, recipe.input);
+			FluidStackTemplate.STREAM_CODEC.encode(buffer, recipe.output);
 		}
 	}
 }

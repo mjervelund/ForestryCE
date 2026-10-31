@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:lime_slab"
+        "recipes": "forestry:lime_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

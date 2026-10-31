@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:quartz_pillar_farm_hatch"
+        "recipes": "forestry:quartz_pillar_farm_hatch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

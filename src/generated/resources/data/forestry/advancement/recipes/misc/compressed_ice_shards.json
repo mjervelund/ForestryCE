@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:compressed_ice_shards"
+        "recipes": "forestry:compressed_ice_shards"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

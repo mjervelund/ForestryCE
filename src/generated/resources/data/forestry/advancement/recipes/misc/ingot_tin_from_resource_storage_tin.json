@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ingot_tin_from_resource_storage_tin"
+        "recipes": "forestry:ingot_tin_from_resource_storage_tin"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,9 +3,7 @@
   "category": "building",
   "group": "combs",
   "key": {
-    "#": {
-      "item": "forestry:honey_comb"
-    }
+    "#": "forestry:honey_comb"
   },
   "pattern": [
     "##",

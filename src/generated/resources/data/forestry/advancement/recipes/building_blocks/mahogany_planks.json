@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahogany_planks"
+        "recipes": "forestry:mahogany_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,9 +3,7 @@
   "category": "building",
   "group": "combs",
   "key": {
-    "#": {
-      "item": "forestry:simmering_comb"
-    }
+    "#": "forestry:simmering_comb"
   },
   "pattern": [
     "##",

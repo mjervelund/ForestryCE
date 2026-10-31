@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "item": "forestry:butterfly"
-    }
+    "minecraft:book",
+    "forestry:butterfly"
   ],
   "result": {
     "count": 1,

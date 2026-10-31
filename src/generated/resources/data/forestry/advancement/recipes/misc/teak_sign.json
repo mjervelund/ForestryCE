@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:teak_sign"
+        "recipes": "forestry:teak_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

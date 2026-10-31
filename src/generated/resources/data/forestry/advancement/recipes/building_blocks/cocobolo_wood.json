@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cocobolo_wood"
+        "recipes": "forestry:cocobolo_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:camelthorn_sign"
+        "recipes": "forestry:camelthorn_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

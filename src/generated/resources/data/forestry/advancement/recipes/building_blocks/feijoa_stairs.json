@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:feijoa_stairs"
+        "recipes": "forestry:feijoa_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:plum_planks"
+        "recipes": "forestry:plum_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:elm_boat"
+        "recipes": "forestry:elm_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

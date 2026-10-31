@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pear_trapdoor"
+        "recipes": "forestry:pear_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

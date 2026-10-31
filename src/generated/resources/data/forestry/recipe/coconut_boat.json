@@ -3,12 +3,8 @@
   "category": "misc",
   "key": {
     "P": [
-      {
-        "item": "forestry:coconut_planks"
-      },
-      {
-        "item": "forestry:coconut_fireproof_planks"
-      }
+      "forestry:coconut_planks",
+      "forestry:coconut_fireproof_planks"
     ]
   },
   "pattern": [

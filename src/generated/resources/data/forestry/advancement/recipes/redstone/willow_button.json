@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:willow_button"
+        "recipes": "forestry:willow_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

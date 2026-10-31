@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:padauk_planks"
+        "recipes": "forestry:padauk_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

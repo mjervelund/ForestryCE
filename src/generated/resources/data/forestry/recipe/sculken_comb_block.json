@@ -3,9 +3,7 @@
   "category": "building",
   "group": "combs",
   "key": {
-    "#": {
-      "item": "forestry:sculken_comb"
-    }
+    "#": "forestry:sculken_comb"
   },
   "pattern": [
     "##",

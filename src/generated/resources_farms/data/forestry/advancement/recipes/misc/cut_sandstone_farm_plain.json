@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cut_sandstone_farm_plain"
+        "recipes": "forestry:cut_sandstone_farm_plain"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

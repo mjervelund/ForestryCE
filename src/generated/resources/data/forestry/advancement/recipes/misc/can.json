@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:can"
+        "recipes": "forestry:can"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

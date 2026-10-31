@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:jumbo_candle_refractory"
+        "recipes": "forestry:jumbo_candle_refractory"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

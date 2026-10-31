@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:centrifuge"
+        "recipes": "forestry:centrifuge"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

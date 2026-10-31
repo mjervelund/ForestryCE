@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:honey_drop_block"
+        "recipes": "forestry:honey_drop_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

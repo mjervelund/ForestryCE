@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:alveary_heater"
+        "recipes": "forestry:alveary_heater"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

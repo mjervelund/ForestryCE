@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:wax_bricks"
+        "recipes": "forestry:wax_bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

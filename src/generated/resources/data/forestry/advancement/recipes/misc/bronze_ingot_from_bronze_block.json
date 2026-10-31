@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:bronze_ingot_from_bronze_block"
+        "recipes": "forestry:bronze_ingot_from_bronze_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

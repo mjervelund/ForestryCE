@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:survivalists_hoe"
+        "recipes": "forestry:survivalists_hoe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

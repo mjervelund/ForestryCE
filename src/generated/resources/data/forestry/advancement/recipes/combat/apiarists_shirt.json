@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:apiarists_shirt"
+        "recipes": "forestry:apiarists_shirt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

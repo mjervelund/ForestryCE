@@ -3,12 +3,8 @@
   "category": "redstone",
   "ingredients": [
     [
-      {
-        "item": "forestry:orange_planks"
-      },
-      {
-        "item": "forestry:orange_fireproof_planks"
-      }
+      "forestry:orange_planks",
+      "forestry:orange_fireproof_planks"
     ]
   ],
   "result": {

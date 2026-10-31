@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:polished_honeystone"
+        "recipes": "forestry:polished_honeystone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

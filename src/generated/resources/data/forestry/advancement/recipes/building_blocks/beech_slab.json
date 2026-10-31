@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:beech_slab"
+        "recipes": "forestry:beech_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

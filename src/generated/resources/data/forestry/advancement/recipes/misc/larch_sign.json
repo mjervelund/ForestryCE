@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:larch_sign"
+        "recipes": "forestry:larch_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:greenheart_boat"
+        "recipes": "forestry:greenheart_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

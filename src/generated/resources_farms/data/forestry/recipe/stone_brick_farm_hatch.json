@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:stone_bricks"
-    },
-    "D": {
-      "tag": "minecraft:wooden_trapdoors"
-    },
-    "T": {
-      "tag": "c:gears/tin"
-    }
+    "#": "minecraft:stone_bricks",
+    "D": "#minecraft:wooden_trapdoors",
+    "T": "#c:gears/tin"
   },
   "pattern": [
     " # ",

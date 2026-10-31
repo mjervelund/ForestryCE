@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:plum_logs"
-    }
+    "#forestry:plum_logs"
   ],
   "result": {
     "count": 4,

@@ -1,6 +1,5 @@
 {
   "type": "forestry:carpenter",
-  "box": [],
   "id": "forestry:carpenter/woven_silk",
   "liquid": {
     "amount": 500,
@@ -9,9 +8,7 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "X": {
-        "item": "forestry:silk_wisp"
-      }
+      "X": "forestry:silk_wisp"
     },
     "pattern": [
       "XX",

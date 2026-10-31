@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:chestnut_trapdoor"
+        "recipes": "forestry:chestnut_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

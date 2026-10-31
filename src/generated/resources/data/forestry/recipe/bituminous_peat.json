@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "c:dusts/ash"
-    },
-    "X": {
-      "item": "forestry:peat"
-    },
-    "Y": {
-      "item": "forestry:propolis"
-    }
+    "#": "#c:dusts/ash",
+    "X": "forestry:peat",
+    "Y": "forestry:propolis"
   },
   "pattern": [
     " # ",

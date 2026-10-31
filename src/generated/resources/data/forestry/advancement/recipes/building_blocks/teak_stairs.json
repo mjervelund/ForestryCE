@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:teak_stairs"
+        "recipes": "forestry:teak_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

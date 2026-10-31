@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:willow_door"
+        "recipes": "forestry:willow_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

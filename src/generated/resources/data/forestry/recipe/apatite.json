@@ -4,12 +4,8 @@
   "cookingtime": 200,
   "experience": 0.5,
   "ingredient": [
-    {
-      "item": "forestry:apatite_ore"
-    },
-    {
-      "item": "forestry:deepslate_apatite_ore"
-    }
+    "forestry:apatite_ore",
+    "forestry:deepslate_apatite_ore"
   ],
   "result": {
     "count": 1,

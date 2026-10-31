@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ipe_planks"
+        "recipes": "forestry:ipe_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

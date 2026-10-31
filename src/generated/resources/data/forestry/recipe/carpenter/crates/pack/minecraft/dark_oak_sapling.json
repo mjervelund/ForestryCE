@@ -1,8 +1,6 @@
 {
   "type": "forestry:carpenter",
-  "box": {
-    "item": "forestry:crate"
-  },
+  "box": "forestry:crate",
   "id": "forestry:carpenter/crates/pack/minecraft/dark_oak_sapling",
   "liquid": {
     "amount": 100,
@@ -11,9 +9,7 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "item": "minecraft:dark_oak_sapling"
-      }
+      "#": "minecraft:dark_oak_sapling"
     },
     "pattern": [
       "###",

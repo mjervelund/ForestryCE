@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:walnut_fireproof_fence"
+        "recipes": "forestry:walnut_fireproof_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

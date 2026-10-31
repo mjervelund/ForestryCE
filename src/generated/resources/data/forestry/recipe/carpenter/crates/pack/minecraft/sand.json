@@ -1,8 +1,6 @@
 {
   "type": "forestry:carpenter",
-  "box": {
-    "item": "forestry:crate"
-  },
+  "box": "forestry:crate",
   "id": "forestry:carpenter/crates/pack/minecraft/sand",
   "liquid": {
     "amount": 100,
@@ -11,9 +9,7 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "item": "minecraft:sand"
-      }
+      "#": "minecraft:sand"
     },
     "pattern": [
       "###",

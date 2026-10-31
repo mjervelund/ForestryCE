@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:walnut_door"
+        "recipes": "forestry:walnut_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

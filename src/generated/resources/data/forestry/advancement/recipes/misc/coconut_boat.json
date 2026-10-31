@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:coconut_boat"
+        "recipes": "forestry:coconut_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

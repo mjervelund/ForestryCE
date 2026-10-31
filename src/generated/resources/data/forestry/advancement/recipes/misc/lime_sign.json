@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:lime_sign"
+        "recipes": "forestry:lime_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

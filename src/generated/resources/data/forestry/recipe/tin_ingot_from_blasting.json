@@ -4,15 +4,9 @@
   "cookingtime": 100,
   "experience": 0.5,
   "ingredient": [
-    {
-      "item": "forestry:tin_ore"
-    },
-    {
-      "item": "forestry:deepslate_tin_ore"
-    },
-    {
-      "item": "forestry:raw_tin"
-    }
+    "forestry:tin_ore",
+    "forestry:deepslate_tin_ore",
+    "forestry:raw_tin"
   ],
   "result": {
     "count": 1,

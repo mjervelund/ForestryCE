@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:torch_from_wax"
+        "recipes": "forestry:torch_from_wax"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,12 +3,8 @@
   "category": "redstone",
   "ingredients": [
     [
-      {
-        "item": "forestry:giant_sequoia_planks"
-      },
-      {
-        "item": "forestry:giant_sequoia_fireproof_planks"
-      }
+      "forestry:giant_sequoia_planks",
+      "forestry:giant_sequoia_fireproof_planks"
     ]
   ],
   "result": {

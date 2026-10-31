@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:jumbo_candle_normal"
+        "recipes": "forestry:jumbo_candle_normal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

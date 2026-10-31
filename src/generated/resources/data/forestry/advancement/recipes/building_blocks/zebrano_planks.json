@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:zebrano_planks"
+        "recipes": "forestry:zebrano_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:elm_planks"
+        "recipes": "forestry:elm_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

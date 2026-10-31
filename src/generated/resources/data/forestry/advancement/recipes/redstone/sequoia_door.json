@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sequoia_door"
+        "recipes": "forestry:sequoia_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

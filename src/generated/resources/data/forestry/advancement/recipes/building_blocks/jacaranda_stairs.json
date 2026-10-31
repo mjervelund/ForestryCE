@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:jacaranda_stairs"
+        "recipes": "forestry:jacaranda_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

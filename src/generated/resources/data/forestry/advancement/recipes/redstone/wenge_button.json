@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:wenge_button"
+        "recipes": "forestry:wenge_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

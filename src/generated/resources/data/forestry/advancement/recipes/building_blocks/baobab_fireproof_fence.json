@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:baobab_fireproof_fence"
+        "recipes": "forestry:baobab_fireproof_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

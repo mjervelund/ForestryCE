@@ -13,9 +13,7 @@
     "id": "forestry:mulch"
   },
   "resources": [
-    {
-      "tag": "c:fruits/date"
-    }
+    "#c:fruits/date"
   ],
   "time": 10
 }

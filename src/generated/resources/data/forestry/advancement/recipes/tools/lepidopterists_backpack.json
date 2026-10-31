@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:lepidopterists_backpack"
+        "recipes": "forestry:lepidopterists_backpack"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

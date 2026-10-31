@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahoe_planks"
+        "recipes": "forestry:mahoe_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

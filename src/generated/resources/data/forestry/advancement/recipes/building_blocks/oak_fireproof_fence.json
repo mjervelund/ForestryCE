@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:oak_fireproof_fence"
+        "recipes": "forestry:oak_fireproof_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

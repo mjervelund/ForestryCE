@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:poplar_sign"
+        "recipes": "forestry:poplar_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

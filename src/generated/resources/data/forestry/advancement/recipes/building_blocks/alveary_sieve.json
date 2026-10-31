@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:alveary_sieve"
+        "recipes": "forestry:alveary_sieve"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

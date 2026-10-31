@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:olive_button"
+        "recipes": "forestry:olive_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

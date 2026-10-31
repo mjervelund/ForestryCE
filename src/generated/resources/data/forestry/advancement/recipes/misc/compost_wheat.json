@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:compost_wheat"
+        "recipes": "forestry:compost_wheat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

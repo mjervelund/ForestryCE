@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:orange_wood"
+        "recipes": "forestry:orange_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

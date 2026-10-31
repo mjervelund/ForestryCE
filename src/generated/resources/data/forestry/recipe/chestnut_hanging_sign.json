@@ -3,16 +3,10 @@
   "category": "misc",
   "key": {
     "#": [
-      {
-        "item": "forestry:chestnut_stripped_log"
-      },
-      {
-        "item": "forestry:chestnut_fireproof_stripped_log"
-      }
+      "forestry:chestnut_stripped_log",
+      "forestry:chestnut_fireproof_stripped_log"
     ],
-    "X": {
-      "item": "minecraft:chain"
-    }
+    "X": "minecraft:iron_chain"
   },
   "pattern": [
     "X X",

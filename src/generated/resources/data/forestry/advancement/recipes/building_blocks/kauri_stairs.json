@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kauri_stairs"
+        "recipes": "forestry:kauri_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

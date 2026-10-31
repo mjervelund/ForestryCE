@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:walnut_pressure_plate"
+        "recipes": "forestry:walnut_pressure_plate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

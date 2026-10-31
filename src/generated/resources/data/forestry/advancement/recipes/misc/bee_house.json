@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:bee_house"
+        "recipes": "forestry:bee_house"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

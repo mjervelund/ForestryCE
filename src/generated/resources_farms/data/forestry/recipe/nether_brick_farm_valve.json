@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:nether_bricks"
-    },
-    "T": {
-      "tag": "c:gears/tin"
-    },
-    "X": {
-      "tag": "c:glass_blocks/colorless"
-    }
+    "#": "minecraft:nether_bricks",
+    "T": "#c:gears/tin",
+    "X": "#c:glass_blocks/colorless"
   },
   "pattern": [
     " # ",

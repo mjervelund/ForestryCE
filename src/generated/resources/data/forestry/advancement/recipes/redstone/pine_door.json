@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pine_door"
+        "recipes": "forestry:pine_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

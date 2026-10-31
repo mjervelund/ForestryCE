@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sour_cherry_sign"
+        "recipes": "forestry:sour_cherry_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

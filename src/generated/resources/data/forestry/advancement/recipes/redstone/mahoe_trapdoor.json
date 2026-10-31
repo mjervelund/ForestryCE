@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahoe_trapdoor"
+        "recipes": "forestry:mahoe_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

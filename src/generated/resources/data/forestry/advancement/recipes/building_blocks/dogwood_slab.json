@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:dogwood_slab"
+        "recipes": "forestry:dogwood_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

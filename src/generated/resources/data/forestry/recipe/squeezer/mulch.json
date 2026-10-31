@@ -14,12 +14,8 @@
   },
   "resources": [
     [
-      {
-        "item": "minecraft:apple"
-      },
-      {
-        "item": "minecraft:carrot"
-      }
+      "minecraft:apple",
+      "minecraft:carrot"
     ]
   ],
   "time": 10

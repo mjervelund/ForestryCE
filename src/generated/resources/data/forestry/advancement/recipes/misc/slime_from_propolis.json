@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:slime_from_propolis"
+        "recipes": "forestry:slime_from_propolis"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

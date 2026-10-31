@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:wood_pile_from_decorative"
+        "recipes": "forestry:wood_pile_from_decorative"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

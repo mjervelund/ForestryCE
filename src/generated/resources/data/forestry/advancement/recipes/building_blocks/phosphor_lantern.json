@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:phosphor_lantern"
+        "recipes": "forestry:phosphor_lantern"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

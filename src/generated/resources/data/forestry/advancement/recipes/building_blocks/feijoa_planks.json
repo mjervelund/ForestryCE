@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:feijoa_planks"
+        "recipes": "forestry:feijoa_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

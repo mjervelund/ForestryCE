@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sour_cherry_wood"
+        "recipes": "forestry:sour_cherry_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

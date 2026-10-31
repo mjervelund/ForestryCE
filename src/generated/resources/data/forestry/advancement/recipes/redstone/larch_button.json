@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:larch_button"
+        "recipes": "forestry:larch_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

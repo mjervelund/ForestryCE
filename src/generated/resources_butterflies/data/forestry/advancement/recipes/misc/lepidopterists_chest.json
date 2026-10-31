@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:lepidopterists_chest"
+        "recipes": "forestry:lepidopterists_chest"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

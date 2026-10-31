@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:willow_logs"
-    }
+    "#forestry:willow_logs"
   ],
   "result": {
     "count": 4,

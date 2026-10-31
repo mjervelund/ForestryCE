@@ -18,7 +18,7 @@
               "type": "minecraft:set_count"
             }
           ],
-          "name": "forestry:village_combs"
+          "items": "#forestry:village_combs"
         },
         {
           "type": "minecraft:item",

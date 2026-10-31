@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:tin_from_nuggets"
+        "recipes": "forestry:tin_from_nuggets"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

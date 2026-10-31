@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:miner_backpack"
+        "recipes": "forestry:miner_backpack"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:arborists_backpack"
+        "recipes": "forestry:arborists_backpack"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

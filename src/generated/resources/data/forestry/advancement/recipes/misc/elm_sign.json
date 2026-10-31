@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:elm_sign"
+        "recipes": "forestry:elm_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

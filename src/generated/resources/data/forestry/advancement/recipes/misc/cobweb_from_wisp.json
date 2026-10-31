@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cobweb_from_wisp"
+        "recipes": "forestry:cobweb_from_wisp"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

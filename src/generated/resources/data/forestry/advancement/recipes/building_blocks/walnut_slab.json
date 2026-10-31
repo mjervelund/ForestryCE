@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:walnut_slab"
+        "recipes": "forestry:walnut_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

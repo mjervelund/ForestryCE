@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ipe_stairs"
+        "recipes": "forestry:ipe_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

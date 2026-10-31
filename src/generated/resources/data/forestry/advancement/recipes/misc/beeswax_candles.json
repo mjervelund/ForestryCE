@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:beeswax_candles"
+        "recipes": "forestry:beeswax_candles"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,9 +3,7 @@
   "category": "building",
   "group": "combs",
   "key": {
-    "#": {
-      "item": "forestry:mossy_comb"
-    }
+    "#": "forestry:mossy_comb"
   },
   "pattern": [
     "##",

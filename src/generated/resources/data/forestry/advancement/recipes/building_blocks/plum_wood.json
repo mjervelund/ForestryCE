@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:plum_wood"
+        "recipes": "forestry:plum_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

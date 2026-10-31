@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:raw_tin_block"
+        "recipes": "forestry:raw_tin_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

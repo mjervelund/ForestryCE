@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:elm_door"
+        "recipes": "forestry:elm_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

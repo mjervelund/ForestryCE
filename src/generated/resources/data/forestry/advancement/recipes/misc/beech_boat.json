@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:beech_boat"
+        "recipes": "forestry:beech_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

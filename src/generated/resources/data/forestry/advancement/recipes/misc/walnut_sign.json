@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:walnut_sign"
+        "recipes": "forestry:walnut_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

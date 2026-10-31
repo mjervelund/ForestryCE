@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cocobolo_sign"
+        "recipes": "forestry:cocobolo_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

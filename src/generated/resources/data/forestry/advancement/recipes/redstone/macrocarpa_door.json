@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:macrocarpa_door"
+        "recipes": "forestry:macrocarpa_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

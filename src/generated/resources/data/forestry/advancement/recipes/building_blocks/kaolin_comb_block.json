@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kaolin_comb_block"
+        "recipes": "forestry:kaolin_comb_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

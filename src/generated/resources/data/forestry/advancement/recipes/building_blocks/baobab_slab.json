@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:baobab_slab"
+        "recipes": "forestry:baobab_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pine_fireproof_wood"
+        "recipes": "forestry:pine_fireproof_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cut_sandstone_farm_valve"
+        "recipes": "forestry:cut_sandstone_farm_valve"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

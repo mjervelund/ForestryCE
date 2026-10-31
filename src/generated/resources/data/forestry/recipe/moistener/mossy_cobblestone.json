@@ -5,8 +5,6 @@
     "count": 1,
     "id": "minecraft:mossy_cobblestone"
   },
-  "resource": {
-    "item": "minecraft:cobblestone"
-  },
+  "resource": "minecraft:cobblestone",
   "time": 20000
 }

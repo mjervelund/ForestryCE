@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ash_block"
+        "recipes": "forestry:ash_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

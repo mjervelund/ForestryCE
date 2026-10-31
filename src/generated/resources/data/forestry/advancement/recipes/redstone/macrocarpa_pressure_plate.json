@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:macrocarpa_pressure_plate"
+        "recipes": "forestry:macrocarpa_pressure_plate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

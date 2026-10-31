@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:bee_smoker"
+        "recipes": "forestry:bee_smoker"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:fir_stairs"
+        "recipes": "forestry:fir_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

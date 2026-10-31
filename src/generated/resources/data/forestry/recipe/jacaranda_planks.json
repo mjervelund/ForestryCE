@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:jacaranda_logs"
-    }
+    "#forestry:jacaranda_logs"
   ],
   "result": {
     "count": 4,

@@ -1,8 +1,6 @@
 {
   "type": "forestry:carpenter",
-  "box": {
-    "item": "forestry:crate"
-  },
+  "box": "forestry:crate",
   "id": "forestry:carpenter/crates/pack/forestry/honey_comb",
   "liquid": {
     "amount": 100,
@@ -11,9 +9,7 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "item": "forestry:honey_comb"
-      }
+      "#": "forestry:honey_comb"
     },
     "pattern": [
       "###",

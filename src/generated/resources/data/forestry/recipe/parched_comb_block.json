@@ -3,9 +3,7 @@
   "category": "building",
   "group": "combs",
   "key": {
-    "#": {
-      "item": "forestry:parched_comb"
-    }
+    "#": "forestry:parched_comb"
   },
   "pattern": [
     "##",

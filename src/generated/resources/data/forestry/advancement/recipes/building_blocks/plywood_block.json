@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:plywood_block"
+        "recipes": "forestry:plywood_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

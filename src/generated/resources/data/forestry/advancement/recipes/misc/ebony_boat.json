@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ebony_boat"
+        "recipes": "forestry:ebony_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

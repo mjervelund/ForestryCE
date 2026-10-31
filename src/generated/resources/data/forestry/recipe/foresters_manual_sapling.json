@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    },
-    {
-      "tag": "minecraft:saplings"
-    }
+    "minecraft:book",
+    "#minecraft:saplings"
   ],
   "result": {
     "count": 1,

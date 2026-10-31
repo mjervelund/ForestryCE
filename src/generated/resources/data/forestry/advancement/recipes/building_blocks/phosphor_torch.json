@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:phosphor_torch"
+        "recipes": "forestry:phosphor_torch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

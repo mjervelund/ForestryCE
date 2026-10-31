@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:macrocarpa_sign"
+        "recipes": "forestry:macrocarpa_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

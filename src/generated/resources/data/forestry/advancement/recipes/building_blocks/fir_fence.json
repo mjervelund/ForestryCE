@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:fir_fence"
+        "recipes": "forestry:fir_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

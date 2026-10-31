@@ -41,7 +41,7 @@ import static forestry.core.data.recipe.RecipeIds.id;
 public class MailRecipeProvider {
 	public static void addRecipes(RecipeOutput output, MKRecipeProvider recipes) {
 		recipes.shapelessCrafting(RecipeCategory.MISC, MailItems.CATALOGUE, 1, Items.BOOK, ForestryTags.Items.STAMPS);
-		Ingredient sealant = CompoundIngredient.of(Ingredient.of(ForestryTags.Items.PROPOLIS), Ingredient.of(Tags.Items.SLIMEBALLS));
+		Ingredient sealant = CompoundIngredient.of(Ingredient.of(ForestryTags.Items.PROPOLIS), Ingredient.of(Tags.Items.SLIME_BALLS));
 		recipes.shapelessCrafting(RecipeCategory.MISC, MailItems.LETTERS.get(LetterItem.Size.EMPTY, LetterItem.State.FRESH), 1, Items.PAPER, sealant);
 
 		recipes.shapedCrafting(RecipeCategory.MISC, MailBlocks.BASE.get(MailBlockType.MAILBOX).block(), recipe -> {

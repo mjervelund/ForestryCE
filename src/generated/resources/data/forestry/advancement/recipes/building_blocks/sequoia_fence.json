@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sequoia_fence"
+        "recipes": "forestry:sequoia_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

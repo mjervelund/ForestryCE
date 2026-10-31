@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pear_sign"
+        "recipes": "forestry:pear_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pear_pressure_plate"
+        "recipes": "forestry:pear_pressure_plate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

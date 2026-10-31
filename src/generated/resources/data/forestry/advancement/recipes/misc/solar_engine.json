@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:solar_engine"
+        "recipes": "forestry:solar_engine"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

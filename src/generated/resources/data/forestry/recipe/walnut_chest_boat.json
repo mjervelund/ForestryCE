@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "forestry:walnut_boat"
-    },
-    {
-      "tag": "c:chests/wooden"
-    }
+    "forestry:walnut_boat",
+    "#c:chests/wooden"
   ],
   "result": {
     "count": 1,

@@ -13,9 +13,7 @@
     "id": "forestry:mulch"
   },
   "resources": [
-    {
-      "tag": "c:fruits/orange"
-    }
+    "#c:fruits/orange"
   ],
   "time": 10
 }

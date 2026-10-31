@@ -3,12 +3,8 @@
   "category": "redstone",
   "ingredients": [
     [
-      {
-        "item": "forestry:macrocarpa_planks"
-      },
-      {
-        "item": "forestry:macrocarpa_fireproof_planks"
-      }
+      "forestry:macrocarpa_planks",
+      "forestry:macrocarpa_fireproof_planks"
     ]
   ],
   "result": {

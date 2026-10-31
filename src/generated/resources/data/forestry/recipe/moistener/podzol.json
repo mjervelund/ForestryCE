@@ -5,8 +5,6 @@
     "count": 1,
     "id": "minecraft:podzol"
   },
-  "resource": {
-    "item": "minecraft:spruce_leaves"
-  },
+  "resource": "minecraft:spruce_leaves",
   "time": 5000
 }

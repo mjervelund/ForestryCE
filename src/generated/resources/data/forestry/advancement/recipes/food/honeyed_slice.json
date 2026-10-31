@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:honeyed_slice"
+        "recipes": "forestry:honeyed_slice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

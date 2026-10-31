@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:birch_fireproof_planks"
+        "recipes": "forestry:birch_fireproof_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

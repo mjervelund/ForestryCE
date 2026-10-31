@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ebony_stairs"
+        "recipes": "forestry:ebony_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

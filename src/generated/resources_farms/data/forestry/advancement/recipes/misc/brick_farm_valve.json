@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:brick_farm_valve"
+        "recipes": "forestry:brick_farm_valve"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:refractory_waxstone_crafting"
+        "recipes": "forestry:refractory_waxstone_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

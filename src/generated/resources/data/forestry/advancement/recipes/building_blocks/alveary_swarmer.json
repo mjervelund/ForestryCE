@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:alveary_swarmer"
+        "recipes": "forestry:alveary_swarmer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

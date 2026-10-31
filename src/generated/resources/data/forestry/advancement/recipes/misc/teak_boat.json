@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:teak_boat"
+        "recipes": "forestry:teak_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

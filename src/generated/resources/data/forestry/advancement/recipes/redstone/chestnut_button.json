@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:chestnut_button"
+        "recipes": "forestry:chestnut_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

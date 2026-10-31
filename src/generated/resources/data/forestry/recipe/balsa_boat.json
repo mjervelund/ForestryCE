@@ -3,12 +3,8 @@
   "category": "misc",
   "key": {
     "P": [
-      {
-        "item": "forestry:balsa_planks"
-      },
-      {
-        "item": "forestry:balsa_fireproof_planks"
-      }
+      "forestry:balsa_planks",
+      "forestry:balsa_fireproof_planks"
     ]
   },
   "pattern": [

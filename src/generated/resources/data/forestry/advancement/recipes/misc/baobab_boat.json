@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:baobab_boat"
+        "recipes": "forestry:baobab_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

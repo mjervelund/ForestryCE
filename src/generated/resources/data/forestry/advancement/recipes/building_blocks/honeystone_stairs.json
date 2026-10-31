@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:honeystone_stairs"
+        "recipes": "forestry:honeystone_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

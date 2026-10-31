@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:glistering_melon_slice"
+        "recipes": "forestry:glistering_melon_slice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

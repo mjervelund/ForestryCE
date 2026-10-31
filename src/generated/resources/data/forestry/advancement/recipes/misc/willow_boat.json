@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:willow_boat"
+        "recipes": "forestry:willow_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

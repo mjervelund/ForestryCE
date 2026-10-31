@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:balsa_button"
+        "recipes": "forestry:balsa_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

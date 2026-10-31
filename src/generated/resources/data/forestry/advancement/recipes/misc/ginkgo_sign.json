@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ginkgo_sign"
+        "recipes": "forestry:ginkgo_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

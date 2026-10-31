@@ -3,16 +3,10 @@
   "category": "misc",
   "key": {
     "#": [
-      {
-        "item": "forestry:balsa_stripped_log"
-      },
-      {
-        "item": "forestry:balsa_fireproof_stripped_log"
-      }
+      "forestry:balsa_stripped_log",
+      "forestry:balsa_fireproof_stripped_log"
     ],
-    "X": {
-      "item": "minecraft:chain"
-    }
+    "X": "minecraft:iron_chain"
   },
   "pattern": [
     "X X",

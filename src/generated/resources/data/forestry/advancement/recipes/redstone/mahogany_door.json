@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahogany_door"
+        "recipes": "forestry:mahogany_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

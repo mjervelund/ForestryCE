@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pewen_wood"
+        "recipes": "forestry:pewen_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

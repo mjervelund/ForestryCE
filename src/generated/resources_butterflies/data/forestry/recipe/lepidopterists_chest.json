@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "c:glass_blocks/colorless"
-    },
-    "X": {
-      "item": "forestry:butterfly"
-    },
-    "Y": {
-      "tag": "c:chests/wooden"
-    }
+    "#": "#c:glass_blocks/colorless",
+    "X": "forestry:butterfly",
+    "Y": "#c:chests/wooden"
   },
   "pattern": [
     " # ",

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:lemon_slab"
+        "recipes": "forestry:lemon_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

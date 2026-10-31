@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahoe_stairs"
+        "recipes": "forestry:mahoe_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

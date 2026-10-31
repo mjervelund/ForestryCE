@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:chain"
+            "items": "minecraft:iron_chain"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:chestnut_hanging_sign"
+        "recipes": "forestry:chestnut_hanging_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

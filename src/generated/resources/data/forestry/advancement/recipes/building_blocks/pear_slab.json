@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pear_slab"
+        "recipes": "forestry:pear_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

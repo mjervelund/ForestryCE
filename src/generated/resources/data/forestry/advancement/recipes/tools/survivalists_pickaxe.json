@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:survivalists_pickaxe"
+        "recipes": "forestry:survivalists_pickaxe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

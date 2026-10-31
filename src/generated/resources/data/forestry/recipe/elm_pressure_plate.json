@@ -3,12 +3,8 @@
   "category": "redstone",
   "key": {
     "P": [
-      {
-        "item": "forestry:elm_planks"
-      },
-      {
-        "item": "forestry:elm_fireproof_planks"
-      }
+      "forestry:elm_planks",
+      "forestry:elm_fireproof_planks"
     ]
   },
   "pattern": [

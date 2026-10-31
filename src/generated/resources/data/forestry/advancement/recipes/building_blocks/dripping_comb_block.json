@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:dripping_comb_block"
+        "recipes": "forestry:dripping_comb_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

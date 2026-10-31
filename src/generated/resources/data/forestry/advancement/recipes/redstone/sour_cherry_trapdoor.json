@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sour_cherry_trapdoor"
+        "recipes": "forestry:sour_cherry_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

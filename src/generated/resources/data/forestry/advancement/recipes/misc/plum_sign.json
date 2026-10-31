@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:plum_sign"
+        "recipes": "forestry:plum_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

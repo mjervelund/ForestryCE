@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:macrocarpa_trapdoor"
+        "recipes": "forestry:macrocarpa_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

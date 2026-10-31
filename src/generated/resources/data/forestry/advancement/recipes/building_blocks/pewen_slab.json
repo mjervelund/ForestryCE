@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pewen_slab"
+        "recipes": "forestry:pewen_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

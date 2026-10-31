@@ -3,12 +3,8 @@
   "category": "redstone",
   "ingredients": [
     [
-      {
-        "item": "forestry:cocobolo_planks"
-      },
-      {
-        "item": "forestry:cocobolo_fireproof_planks"
-      }
+      "forestry:cocobolo_planks",
+      "forestry:cocobolo_fireproof_planks"
     ]
   ],
   "result": {

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "c:glass_blocks/colorless"
-    },
-    "X": {
-      "tag": "minecraft:saplings"
-    },
-    "Y": {
-      "tag": "c:chests/wooden"
-    }
+    "#": "#c:glass_blocks/colorless",
+    "X": "#minecraft:saplings",
+    "Y": "#c:chests/wooden"
   },
   "pattern": [
     " # ",

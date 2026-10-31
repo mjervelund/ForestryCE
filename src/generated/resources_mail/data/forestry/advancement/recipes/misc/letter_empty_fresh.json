@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:letter_empty_fresh"
+        "recipes": "forestry:letter_empty_fresh"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

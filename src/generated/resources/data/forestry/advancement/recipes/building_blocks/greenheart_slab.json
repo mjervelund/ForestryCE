@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:greenheart_slab"
+        "recipes": "forestry:greenheart_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

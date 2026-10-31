@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahoe_boat"
+        "recipes": "forestry:mahoe_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:chiseled_quartz_farm_hatch"
+        "recipes": "forestry:chiseled_quartz_farm_hatch"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

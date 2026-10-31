@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:stone_brick_farm_block"
+        "recipes": "forestry:stone_brick_farm_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

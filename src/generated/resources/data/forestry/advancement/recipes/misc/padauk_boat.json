@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:padauk_boat"
+        "recipes": "forestry:padauk_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

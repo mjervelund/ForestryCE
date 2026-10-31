@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:quartz_pillar_farm_gearbox"
+        "recipes": "forestry:quartz_pillar_farm_gearbox"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

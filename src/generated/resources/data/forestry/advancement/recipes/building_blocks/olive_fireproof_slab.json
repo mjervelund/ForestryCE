@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:olive_fireproof_slab"
+        "recipes": "forestry:olive_fireproof_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

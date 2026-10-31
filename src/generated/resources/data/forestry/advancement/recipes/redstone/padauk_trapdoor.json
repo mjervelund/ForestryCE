@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:padauk_trapdoor"
+        "recipes": "forestry:padauk_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

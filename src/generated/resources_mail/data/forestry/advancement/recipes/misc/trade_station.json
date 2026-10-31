@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:trade_station"
+        "recipes": "forestry:trade_station"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

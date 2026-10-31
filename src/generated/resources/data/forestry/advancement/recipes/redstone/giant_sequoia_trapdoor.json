@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:giant_sequoia_trapdoor"
+        "recipes": "forestry:giant_sequoia_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

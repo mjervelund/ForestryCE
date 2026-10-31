@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:copper_gear"
+        "recipes": "forestry:copper_gear"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

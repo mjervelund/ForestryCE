@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:orange_sign"
+        "recipes": "forestry:orange_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

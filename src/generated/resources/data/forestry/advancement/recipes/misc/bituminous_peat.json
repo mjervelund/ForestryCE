@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:bituminous_peat"
+        "recipes": "forestry:bituminous_peat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

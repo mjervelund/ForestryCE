@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:refractory_wax_brick_stairs"
+        "recipes": "forestry:refractory_wax_brick_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

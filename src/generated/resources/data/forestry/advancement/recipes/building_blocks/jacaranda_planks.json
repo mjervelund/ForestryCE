@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:jacaranda_planks"
+        "recipes": "forestry:jacaranda_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

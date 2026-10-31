@@ -3,16 +3,10 @@
   "category": "misc",
   "key": {
     "#": [
-      {
-        "item": "forestry:padauk_stripped_log"
-      },
-      {
-        "item": "forestry:padauk_fireproof_stripped_log"
-      }
+      "forestry:padauk_stripped_log",
+      "forestry:padauk_fireproof_stripped_log"
     ],
-    "X": {
-      "item": "minecraft:chain"
-    }
+    "X": "minecraft:iron_chain"
   },
   "pattern": [
     "X X",

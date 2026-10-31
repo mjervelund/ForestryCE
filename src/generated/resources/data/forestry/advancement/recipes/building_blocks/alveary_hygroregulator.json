@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:alveary_hygroregulator"
+        "recipes": "forestry:alveary_hygroregulator"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

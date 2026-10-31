@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:arboretum_managed"
+        "recipes": "forestry:arboretum_managed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

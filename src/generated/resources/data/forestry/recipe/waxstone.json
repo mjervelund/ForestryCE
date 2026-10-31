@@ -3,9 +3,7 @@
   "category": "blocks",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "forestry:cobbled_waxstone"
-  },
+  "ingredient": "forestry:cobbled_waxstone",
   "result": {
     "count": 1,
     "id": "forestry:waxstone"

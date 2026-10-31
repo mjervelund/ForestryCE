@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:peat_bog_managed"
+        "recipes": "forestry:peat_bog_managed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

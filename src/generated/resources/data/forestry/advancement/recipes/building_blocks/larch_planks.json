@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:larch_planks"
+        "recipes": "forestry:larch_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:orange_stairs"
+        "recipes": "forestry:orange_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

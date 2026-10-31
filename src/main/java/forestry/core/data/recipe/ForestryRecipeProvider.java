@@ -2099,7 +2099,7 @@ public class ForestryRecipeProvider {
 				.pattern("B B")
 				.pattern("#E#")
 				.define('#', ForestryTags.Items.INGOTS_BRONZE)
-				.define('B', Tags.Items.SLIMEBALLS)
+				.define('B', Tags.Items.SLIME_BALLS)
 				.define('E', Tags.Items.GEMS_EMERALD))
 			.build(consumer, id("fabricator", "electron_tubes", "flexible_casing"));
 

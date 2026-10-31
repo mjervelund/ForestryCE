@@ -8,12 +8,8 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "tag": "c:dusts/redstone"
-      },
-      "X": {
-        "tag": "c:ingots/tin"
-      }
+      "#": "#c:dusts/redstone",
+      "X": "#c:ingots/tin"
     },
     "pattern": [
       " X ",

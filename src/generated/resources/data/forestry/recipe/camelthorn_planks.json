@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:camelthorn_logs"
-    }
+    "#forestry:camelthorn_logs"
   ],
   "result": {
     "count": 4,

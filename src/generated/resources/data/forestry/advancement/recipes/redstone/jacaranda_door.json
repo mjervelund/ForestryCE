@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:jacaranda_door"
+        "recipes": "forestry:jacaranda_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

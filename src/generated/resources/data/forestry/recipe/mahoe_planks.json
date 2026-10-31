@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:mahoe_logs"
-    }
+    "#forestry:mahoe_logs"
   ],
   "result": {
     "count": 4,

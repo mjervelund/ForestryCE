@@ -18,7 +18,7 @@
               "type": "minecraft:set_count"
             }
           ],
-          "name": "forestry:forestry_fruits"
+          "items": "#forestry:forestry_fruits"
         },
         {
           "type": "minecraft:item",

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:padauk_slab"
+        "recipes": "forestry:padauk_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

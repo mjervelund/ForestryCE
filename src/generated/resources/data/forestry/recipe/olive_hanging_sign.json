@@ -3,16 +3,10 @@
   "category": "misc",
   "key": {
     "#": [
-      {
-        "item": "forestry:olive_stripped_log"
-      },
-      {
-        "item": "forestry:olive_fireproof_stripped_log"
-      }
+      "forestry:olive_stripped_log",
+      "forestry:olive_fireproof_stripped_log"
     ],
-    "X": {
-      "item": "minecraft:chain"
-    }
+    "X": "minecraft:iron_chain"
   },
   "pattern": [
     "X X",

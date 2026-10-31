@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:feijoa_trapdoor"
+        "recipes": "forestry:feijoa_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

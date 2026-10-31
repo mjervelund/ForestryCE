@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:papaya_boat"
+        "recipes": "forestry:papaya_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

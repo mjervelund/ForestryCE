@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:macrocarpa_planks"
+        "recipes": "forestry:macrocarpa_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

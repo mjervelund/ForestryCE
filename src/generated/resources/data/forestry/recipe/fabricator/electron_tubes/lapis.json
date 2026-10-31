@@ -8,12 +8,8 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "tag": "c:dusts/redstone"
-      },
-      "X": {
-        "tag": "c:gems/lapis"
-      }
+      "#": "#c:dusts/redstone",
+      "X": "#c:gems/lapis"
     },
     "pattern": [
       " X ",

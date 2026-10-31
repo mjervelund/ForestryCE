@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:olive_planks"
+        "recipes": "forestry:olive_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

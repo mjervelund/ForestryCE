@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:maple_sign"
+        "recipes": "forestry:maple_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

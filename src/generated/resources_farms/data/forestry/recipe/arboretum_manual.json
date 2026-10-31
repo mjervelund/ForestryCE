@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "forestry:arboretum_managed"
-    }
+    "forestry:arboretum_managed"
   ],
   "result": {
     "count": 1,

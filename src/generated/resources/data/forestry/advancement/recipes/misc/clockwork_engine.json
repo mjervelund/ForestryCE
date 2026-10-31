@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:clockwork_engine"
+        "recipes": "forestry:clockwork_engine"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

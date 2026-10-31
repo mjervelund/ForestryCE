@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:giant_sequoia_button"
+        "recipes": "forestry:giant_sequoia_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

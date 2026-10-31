@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:orange_slab"
+        "recipes": "forestry:orange_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

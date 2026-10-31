@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kapok_fence"
+        "recipes": "forestry:kapok_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

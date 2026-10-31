@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:elm_fence"
+        "recipes": "forestry:elm_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

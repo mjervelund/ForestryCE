@@ -20,6 +20,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 public class FabricatorRecipe implements IFabricatorRecipe {
 
@@ -29,7 +30,7 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 		// Ingredient.CODEC rejects empty ingredients at serialization, so we map
 		// EmptyIngredient.EMPTY to absent and back.
 		Ingredient.CODEC.optionalFieldOf("plan").forGetter(r -> r.plan.isEmpty() ? java.util.Optional.<Ingredient>empty() : java.util.Optional.of(r.plan)),
-		FluidStack.CODEC.fieldOf("molten").forGetter(FabricatorRecipe::getResultFluid),
+		FluidStackTemplate.CODEC.fieldOf("molten").forGetter(r -> r.resultFluid),
 		ShapedRecipe.SERIALIZER.codec().codec().fieldOf("recipe").forGetter(FabricatorRecipe::getCraftingGridRecipe)
 	).apply(instance, (id, plan, molten, recipe) -> new FabricatorRecipe(id, plan.orElse(EmptyIngredient.EMPTY), molten, recipe)));
 	private static final StreamCodec<RegistryFriendlyByteBuf, FabricatorRecipe> STREAM_CODEC = StreamCodec.of(
@@ -39,10 +40,11 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 
 	private final Identifier id;
 	private final Ingredient plan;
-	private final FluidStack resultFluid;
+	private final FluidStackTemplate resultFluid;
 	private final ShapedRecipe recipe;
 
-	public FabricatorRecipe(Identifier id, Ingredient plan, FluidStack resultFluid, ShapedRecipe recipe) {
+	// Decoded at datapack load, before fluid components are bound, so the fluid is kept as a template
+	public FabricatorRecipe(Identifier id, Ingredient plan, FluidStackTemplate resultFluid, ShapedRecipe recipe) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(plan);
 		Preconditions.checkNotNull(resultFluid);
@@ -65,7 +67,7 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 
 	@Override
 	public FluidStack getResultFluid() {
-		return this.resultFluid;
+		return this.resultFluid.create();
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 
 	@Override
 	public boolean matches(Level level, FluidStack liquid, ItemStack stack, Container inventory) {
-		return FluidStack.isSameFluidSameComponents(liquid, this.resultFluid) && liquid.getAmount() >= this.resultFluid.getAmount() && this.plan.test(stack) && this.recipe.matches(FakeCraftingInventory.of(inventory), level);
+		return FluidStack.isSameFluidSameComponents(liquid, this.resultFluid) && liquid.getAmount() >= this.resultFluid.amount() && this.plan.test(stack) && this.recipe.matches(FakeCraftingInventory.of(inventory), level);
 	}
 
 	@Override
@@ -99,7 +101,7 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 		private static FabricatorRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier id = Identifier.STREAM_CODEC.decode(buffer);
 			Ingredient plan = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-			FluidStack molten = FluidStack.STREAM_CODEC.decode(buffer);
+			FluidStackTemplate molten = FluidStackTemplate.STREAM_CODEC.decode(buffer);
 			ShapedRecipe shapedRecipe = ShapedRecipe.SERIALIZER.streamCodec().decode(buffer);
 
 			return new FabricatorRecipe(id, plan, molten, shapedRecipe);
@@ -108,7 +110,7 @@ public class FabricatorRecipe implements IFabricatorRecipe {
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, FabricatorRecipe recipe) {
 			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.plan);
-			FluidStack.STREAM_CODEC.encode(buffer, recipe.resultFluid);
+			FluidStackTemplate.STREAM_CODEC.encode(buffer, recipe.resultFluid);
 			ShapedRecipe.SERIALIZER.streamCodec().encode(buffer, recipe.recipe);
 		}
 	}

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:pine_logs"
-    }
+    "#forestry:pine_logs"
   ],
   "result": {
     "count": 4,

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pine_sign"
+        "recipes": "forestry:pine_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

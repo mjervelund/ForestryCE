@@ -5,8 +5,6 @@
     "count": 1,
     "id": "minecraft:mycelium"
   },
-  "resource": {
-    "item": "minecraft:wheat_seeds"
-  },
+  "resource": "minecraft:wheat_seeds",
   "time": 5000
 }

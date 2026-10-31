@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:silicon_block"
+        "recipes": "forestry:silicon_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

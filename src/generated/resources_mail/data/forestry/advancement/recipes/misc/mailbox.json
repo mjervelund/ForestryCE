@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mailbox"
+        "recipes": "forestry:mailbox"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

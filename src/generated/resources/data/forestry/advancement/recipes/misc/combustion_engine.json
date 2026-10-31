@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:combustion_engine"
+        "recipes": "forestry:combustion_engine"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

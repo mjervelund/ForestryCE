@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:padauk_stripped_wood"
+        "recipes": "forestry:padauk_stripped_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

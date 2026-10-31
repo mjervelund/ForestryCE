@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:greenheart_button"
+        "recipes": "forestry:greenheart_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

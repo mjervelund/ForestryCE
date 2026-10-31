@@ -3,16 +3,10 @@
   "category": "misc",
   "key": {
     "#": [
-      {
-        "item": "forestry:pewen_stripped_log"
-      },
-      {
-        "item": "forestry:pewen_fireproof_stripped_log"
-      }
+      "forestry:pewen_stripped_log",
+      "forestry:pewen_fireproof_stripped_log"
     ],
-    "X": {
-      "item": "minecraft:chain"
-    }
+    "X": "minecraft:iron_chain"
   },
   "pattern": [
     "X X",

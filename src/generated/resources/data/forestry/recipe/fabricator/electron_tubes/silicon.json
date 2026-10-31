@@ -8,12 +8,8 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "tag": "c:dusts/redstone"
-      },
-      "X": {
-        "tag": "c:silicon"
-      }
+      "#": "#c:dusts/redstone",
+      "X": "#c:silicon"
     },
     "pattern": [
       " X ",

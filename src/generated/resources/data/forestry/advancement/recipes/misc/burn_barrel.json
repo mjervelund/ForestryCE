@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:burn_barrel"
+        "recipes": "forestry:burn_barrel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

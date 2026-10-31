@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:fertilizer_apatite"
+        "recipes": "forestry:fertilizer_apatite"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

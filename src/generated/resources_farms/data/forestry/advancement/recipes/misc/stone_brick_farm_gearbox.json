@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:stone_brick_farm_gearbox"
+        "recipes": "forestry:stone_brick_farm_gearbox"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

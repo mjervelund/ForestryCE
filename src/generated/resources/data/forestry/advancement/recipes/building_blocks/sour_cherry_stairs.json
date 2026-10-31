@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sour_cherry_stairs"
+        "recipes": "forestry:sour_cherry_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

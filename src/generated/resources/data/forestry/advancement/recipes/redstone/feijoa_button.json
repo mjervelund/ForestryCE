@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:feijoa_button"
+        "recipes": "forestry:feijoa_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

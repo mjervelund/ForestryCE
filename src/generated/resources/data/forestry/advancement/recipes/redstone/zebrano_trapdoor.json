@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:zebrano_trapdoor"
+        "recipes": "forestry:zebrano_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

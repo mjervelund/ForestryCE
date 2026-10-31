@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahoe_wood"
+        "recipes": "forestry:mahoe_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

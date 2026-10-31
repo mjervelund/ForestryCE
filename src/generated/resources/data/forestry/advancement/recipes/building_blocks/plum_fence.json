@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:plum_fence"
+        "recipes": "forestry:plum_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

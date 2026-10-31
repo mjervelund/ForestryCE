@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "forestry:wax_block"
-    },
-    "|": {
-      "tag": "c:strings"
-    }
+    "#": "forestry:wax_block",
+    "|": "#c:strings"
   },
   "pattern": [
     "|",

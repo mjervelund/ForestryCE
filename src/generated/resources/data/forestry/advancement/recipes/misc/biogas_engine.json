@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:biogas_engine"
+        "recipes": "forestry:biogas_engine"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

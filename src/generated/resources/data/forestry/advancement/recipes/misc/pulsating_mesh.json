@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pulsating_mesh"
+        "recipes": "forestry:pulsating_mesh"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

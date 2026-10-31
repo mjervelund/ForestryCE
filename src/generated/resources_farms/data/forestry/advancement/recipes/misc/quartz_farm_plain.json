@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:quartz_farm_plain"
+        "recipes": "forestry:quartz_farm_plain"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

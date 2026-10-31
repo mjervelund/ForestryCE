@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kauri_fence"
+        "recipes": "forestry:kauri_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

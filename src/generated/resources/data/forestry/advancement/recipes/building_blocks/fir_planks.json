@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:fir_planks"
+        "recipes": "forestry:fir_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sequoia_slab"
+        "recipes": "forestry:sequoia_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

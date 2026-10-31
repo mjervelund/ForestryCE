@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:beech_fence_gate"
+        "recipes": "forestry:beech_fence_gate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

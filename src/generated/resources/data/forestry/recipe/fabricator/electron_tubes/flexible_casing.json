@@ -8,15 +8,9 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "tag": "c:ingots/bronze"
-      },
-      "B": {
-        "tag": "c:slimeballs"
-      },
-      "E": {
-        "tag": "c:gems/emerald"
-      }
+      "#": "#c:ingots/bronze",
+      "B": "#c:slime_balls",
+      "E": "#c:gems/emerald"
     },
     "pattern": [
       "#E#",

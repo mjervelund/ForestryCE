@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:scoop"
+        "recipes": "forestry:scoop"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

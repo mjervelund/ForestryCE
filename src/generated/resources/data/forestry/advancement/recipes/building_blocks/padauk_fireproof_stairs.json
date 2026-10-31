@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:padauk_fireproof_stairs"
+        "recipes": "forestry:padauk_fireproof_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

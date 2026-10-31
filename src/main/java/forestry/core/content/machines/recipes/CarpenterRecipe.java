@@ -3,6 +3,7 @@ package forestry.core.content.machines.recipes;
 import net.minecraft.world.item.crafting.CraftingInput;
 import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
+import forestry.core.platform.util.EmptyIngredient;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -47,11 +49,12 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 	private static final MapCodec<CarpenterRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(CarpenterRecipe::getId),
 		Codec.INT.fieldOf("time").forGetter(CarpenterRecipe::getPackagingTime),
-		FluidStack.OPTIONAL_CODEC.optionalFieldOf("liquid", FluidStack.EMPTY).forGetter(CarpenterRecipe::getInputFluid),
-		Ingredient.CODEC.fieldOf("box").forGetter(CarpenterRecipe::getBox),
+		FluidStackTemplate.CODEC.optionalFieldOf("liquid").forGetter(r -> Optional.ofNullable(r.liquid)),
+		// Most recipes have no box; Ingredient.CODEC rejects empty ingredients, so EmptyIngredient.EMPTY maps to absent
+		Ingredient.CODEC.optionalFieldOf("box").forGetter(r -> r.box.isEmpty() ? Optional.<Ingredient>empty() : Optional.of(r.box)),
 		CRAFTING_RECIPE_CODEC.fieldOf("recipe").forGetter(CarpenterRecipe::getCraftingGridRecipe),
 		ItemStackTemplate.CODEC.optionalFieldOf("result").forGetter(r -> Optional.ofNullable(r.result))
-	).apply(instance, (id, time, liquid, box, recipe, optResult) -> new CarpenterRecipe(id, time, liquid, box, recipe, optResult.orElse(null))));
+	).apply(instance, (id, time, liquid, box, recipe, optResult) -> new CarpenterRecipe(id, time, liquid.orElse(null), box.orElse(EmptyIngredient.EMPTY), recipe, optResult.orElse(null))));
 	private static final StreamCodec<RegistryFriendlyByteBuf, CarpenterRecipe> STREAM_CODEC = StreamCodec.of(
 		Serializer::toNetwork,
 		Serializer::fromNetwork
@@ -59,20 +62,20 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 
 	private final Identifier id;
 	private final int packagingTime;
-	private final FluidStack liquid;
+	@Nullable
+	private final FluidStackTemplate liquid;
 	private final Ingredient box;
 	private final CraftingRecipe recipe;
 	@Nullable
 	private final ItemStackTemplate result;
 
 	public CarpenterRecipe(Identifier id, int packagingTime, FluidStack liquid, Ingredient box, CraftingRecipe recipe, @Nullable ItemStack result) {
-		this(id, packagingTime, liquid, box, recipe, result == null || result.isEmpty() ? null : ItemStackTemplate.fromStack(result));
+		this(id, packagingTime, liquid.isEmpty() ? null : FluidStackTemplate.fromNonEmptyStack(liquid), box, recipe, result == null || result.isEmpty() ? null : ItemStackTemplate.fromStack(result));
 	}
 
-	// Decoded at datapack load, before item components are bound, so the result is kept as a template
-	public CarpenterRecipe(Identifier id, int packagingTime, FluidStack liquid, Ingredient box, CraftingRecipe recipe, @Nullable ItemStackTemplate result) {
+	// Decoded at datapack load, before item and fluid components are bound, so the result and liquid are kept as templates
+	public CarpenterRecipe(Identifier id, int packagingTime, @Nullable FluidStackTemplate liquid, Ingredient box, CraftingRecipe recipe, @Nullable ItemStackTemplate result) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
-		Preconditions.checkNotNull(liquid, "Recipe liquid cannot be null; use FluidStack.EMPTY for no fluid input");
 		Preconditions.checkNotNull(box);
 		Preconditions.checkNotNull(recipe);
 		if (!(recipe instanceof ShapedRecipe) && !(recipe instanceof ShapelessRecipe)) {
@@ -99,7 +102,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 
 	@Override
 	public FluidStack getInputFluid() {
-		return this.liquid;
+		return this.liquid != null ? this.liquid.create() : FluidStack.EMPTY;
 	}
 
 	@Override
@@ -115,9 +118,9 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 
 	@Override
 	public boolean matches(FluidStack fluid, ItemStack boxStack, Container craftingInventory, Level level) {
-		FluidStack liquid = this.liquid;
-		if (!liquid.isEmpty()) {
-			if (fluid.isEmpty() || !(FluidStack.isSameFluidSameComponents(fluid, liquid) && fluid.getAmount() >= liquid.getAmount())) {
+		FluidStackTemplate liquid = this.liquid;
+		if (liquid != null) {
+			if (fluid.isEmpty() || !(FluidStack.isSameFluidSameComponents(fluid, liquid) && fluid.getAmount() >= liquid.amount())) {
 				return false;
 			}
 		}
@@ -151,7 +154,7 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 		private static CarpenterRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			int packagingTime = ByteBufCodecs.VAR_INT.decode(buffer);
-			FluidStack liquid = FluidStack.OPTIONAL_STREAM_CODEC.decode(buffer);
+			FluidStackTemplate liquid = buffer.readBoolean() ? FluidStackTemplate.STREAM_CODEC.decode(buffer) : null;
 			Ingredient box = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
 			CraftingRecipe internal = buffer.readBoolean()
 				? ShapedRecipe.SERIALIZER.streamCodec().decode(buffer)
@@ -164,7 +167,10 @@ public class CarpenterRecipe implements ICarpenterRecipe {
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, CarpenterRecipe recipe) {
 			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.packagingTime);
-			FluidStack.OPTIONAL_STREAM_CODEC.encode(buffer, recipe.liquid);
+			buffer.writeBoolean(recipe.liquid != null);
+			if (recipe.liquid != null) {
+				FluidStackTemplate.STREAM_CODEC.encode(buffer, recipe.liquid);
+			}
 			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.box);
 			if (recipe.recipe instanceof ShapedRecipe shaped) {
 				buffer.writeBoolean(true);

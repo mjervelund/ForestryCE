@@ -3,16 +3,10 @@
   "category": "misc",
   "key": {
     "P": [
-      {
-        "item": "forestry:palm_planks"
-      },
-      {
-        "item": "forestry:palm_fireproof_planks"
-      }
+      "forestry:palm_planks",
+      "forestry:palm_fireproof_planks"
     ],
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "S": "#c:rods/wooden"
   },
   "pattern": [
     "PPP",

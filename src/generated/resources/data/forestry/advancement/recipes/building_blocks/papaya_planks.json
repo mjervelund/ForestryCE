@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:papaya_planks"
+        "recipes": "forestry:papaya_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

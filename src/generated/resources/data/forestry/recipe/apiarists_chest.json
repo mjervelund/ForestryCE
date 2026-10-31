@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "tag": "c:glass_blocks/colorless"
-    },
-    "X": {
-      "tag": "forestry:combs"
-    },
-    "Y": {
-      "tag": "c:chests/wooden"
-    }
+    "G": "#c:glass_blocks/colorless",
+    "X": "#forestry:combs",
+    "Y": "#c:chests/wooden"
   },
   "pattern": [
     " G ",

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:teak_logs"
-    }
+    "#forestry:teak_logs"
   ],
   "result": {
     "count": 4,

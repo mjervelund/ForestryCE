@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:sequoia_boat"
+        "recipes": "forestry:sequoia_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

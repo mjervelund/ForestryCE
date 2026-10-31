@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahogany_fence"
+        "recipes": "forestry:mahogany_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,12 +3,8 @@
   "category": "misc",
   "key": {
     "P": [
-      {
-        "item": "forestry:larch_planks"
-      },
-      {
-        "item": "forestry:larch_fireproof_planks"
-      }
+      "forestry:larch_planks",
+      "forestry:larch_fireproof_planks"
     ]
   },
   "pattern": [

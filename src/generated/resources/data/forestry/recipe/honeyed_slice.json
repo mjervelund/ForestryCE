@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "forestry:honey_drop"
-    },
-    "X": {
-      "item": "minecraft:bread"
-    }
+    "#": "forestry:honey_drop",
+    "X": "minecraft:bread"
   },
   "pattern": [
     "###",

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:coconut_sign"
+        "recipes": "forestry:coconut_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

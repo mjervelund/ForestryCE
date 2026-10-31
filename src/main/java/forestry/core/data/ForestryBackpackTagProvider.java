@@ -84,7 +84,7 @@ public class ForestryBackpackTagProvider {
 			Tags.Items.FEATHERS,
 			Tags.Items.GUNPOWDERS,
 			Tags.Items.LEATHERS,
-			Tags.Items.SLIMEBALLS,
+			Tags.Items.SLIME_BALLS,
 			Tags.Items.STRINGS
 		);
 		tags.tag(ForestryTags.Items.HUNTER_ALLOW).add(

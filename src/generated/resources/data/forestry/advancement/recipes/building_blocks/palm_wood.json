@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:palm_wood"
+        "recipes": "forestry:palm_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

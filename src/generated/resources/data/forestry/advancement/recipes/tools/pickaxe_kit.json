@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pickaxe_kit"
+        "recipes": "forestry:pickaxe_kit"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

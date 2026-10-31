@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    ".": {
-      "tag": "c:nuggets/tin"
-    },
-    "^": {
-      "item": "forestry:phosphor_torch"
-    }
+    ".": "#c:nuggets/tin",
+    "^": "forestry:phosphor_torch"
   },
   "pattern": [
     "...",

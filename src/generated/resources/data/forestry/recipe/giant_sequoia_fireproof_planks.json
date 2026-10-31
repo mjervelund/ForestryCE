@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:fireproof_giant_sequoia_logs"
-    }
+    "#forestry:fireproof_giant_sequoia_logs"
   ],
   "result": {
     "count": 4,

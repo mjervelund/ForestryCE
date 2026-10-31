@@ -2,6 +2,7 @@ package forestry.core.content.machines.recipes;
 
 import forestry.api.core.machines.IForestryRecipe;
 import com.google.common.base.Preconditions;
+import forestry.core.platform.util.EmptyIngredient;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -17,12 +18,13 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStackTemplate;
 
 public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 	private static final MapCodec<FabricatorSmeltingRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
 		Identifier.CODEC.fieldOf("id").forGetter(FabricatorSmeltingRecipe::getId),
 		Ingredient.CODEC.fieldOf("resource").forGetter(FabricatorSmeltingRecipe::getInput),
-		FluidStack.CODEC.fieldOf("product").forGetter(FabricatorSmeltingRecipe::getResultFluid),
+		FluidStackTemplate.CODEC.fieldOf("product").forGetter(r -> r.product),
 		Codec.INT.fieldOf("melting").forGetter(FabricatorSmeltingRecipe::getMeltingPoint)
 	).apply(instance, FabricatorSmeltingRecipe::new));
 	private static final StreamCodec<RegistryFriendlyByteBuf, FabricatorSmeltingRecipe> STREAM_CODEC = StreamCodec.of(
@@ -32,13 +34,15 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 
 	private final Identifier id;
 	private final Ingredient resource;
-	private final FluidStack product;
+	private final FluidStackTemplate product;
 	private final int meltingPoint;
 
-	public FabricatorSmeltingRecipe(Identifier id, Ingredient resource, FluidStack molten, int meltingPoint) {
+	// Decoded at datapack load, before fluid components are bound, so the fluid is kept as a template
+	public FabricatorSmeltingRecipe(Identifier id, Ingredient resource, FluidStackTemplate molten, int meltingPoint) {
 		Preconditions.checkNotNull(id, "Recipe identifier cannot be null");
 		Preconditions.checkNotNull(resource);
-		Preconditions.checkArgument(!resource.isEmpty());
+		// Not resource.isEmpty(): that reads tag contents, which are unbound while recipes decode
+		Preconditions.checkArgument(resource != EmptyIngredient.EMPTY);
 		Preconditions.checkNotNull(molten);
 
 		this.id = id;
@@ -54,7 +58,7 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 
 	@Override
 	public FluidStack getResultFluid() {
-		return this.product;
+		return this.product.create();
 	}
 
 	@Override
@@ -88,7 +92,7 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 		private static FabricatorSmeltingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			Identifier recipeId = Identifier.STREAM_CODEC.decode(buffer);
 			Ingredient resource = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-			FluidStack product = FluidStack.STREAM_CODEC.decode(buffer);
+			FluidStackTemplate product = FluidStackTemplate.STREAM_CODEC.decode(buffer);
 			int meltingPoint = ByteBufCodecs.VAR_INT.decode(buffer);
 
 			return new FabricatorSmeltingRecipe(recipeId, resource, product, meltingPoint);
@@ -97,7 +101,7 @@ public class FabricatorSmeltingRecipe implements IFabricatorSmeltingRecipe {
 		private static void toNetwork(RegistryFriendlyByteBuf buffer, FabricatorSmeltingRecipe recipe) {
 			Identifier.STREAM_CODEC.encode(buffer, recipe.id);
 			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.resource);
-			FluidStack.STREAM_CODEC.encode(buffer, recipe.product);
+			FluidStackTemplate.STREAM_CODEC.encode(buffer, recipe.product);
 			ByteBufCodecs.VAR_INT.encode(buffer, recipe.meltingPoint);
 		}
 	}

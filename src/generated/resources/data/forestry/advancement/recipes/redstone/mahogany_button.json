@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mahogany_button"
+        "recipes": "forestry:mahogany_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

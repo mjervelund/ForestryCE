@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "tag": "forestry:jumbo_candles"
-    },
-    {
-      "tag": "c:dyes/yellow"
-    }
+    "#forestry:jumbo_candles",
+    "#c:dyes/yellow"
   ],
   "result": {
     "count": 1,

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:dogwood_logs"
-    }
+    "#forestry:dogwood_logs"
   ],
   "result": {
     "count": 4,

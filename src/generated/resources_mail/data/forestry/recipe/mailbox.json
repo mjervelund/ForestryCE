@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "c:ingots/tin"
-    },
-    "X": {
-      "tag": "c:chests/wooden"
-    },
-    "Y": {
-      "item": "forestry:sturdy_casing"
-    }
+    "#": "#c:ingots/tin",
+    "X": "#c:chests/wooden",
+    "Y": "forestry:sturdy_casing"
   },
   "pattern": [
     " # ",

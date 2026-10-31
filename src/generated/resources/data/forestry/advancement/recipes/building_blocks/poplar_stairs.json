@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:poplar_stairs"
+        "recipes": "forestry:poplar_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

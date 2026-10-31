@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:poplar_boat"
+        "recipes": "forestry:poplar_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

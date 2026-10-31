@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "forestry:camelthorn_boat"
-    },
-    {
-      "tag": "c:chests/wooden"
-    }
+    "forestry:camelthorn_boat",
+    "#c:chests/wooden"
   ],
   "result": {
     "count": 1,

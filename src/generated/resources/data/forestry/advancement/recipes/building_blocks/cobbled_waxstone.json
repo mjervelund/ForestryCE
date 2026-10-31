@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cobbled_waxstone"
+        "recipes": "forestry:cobbled_waxstone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

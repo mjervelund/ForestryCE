@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:dogwood_fireproof_fence_gate"
+        "recipes": "forestry:dogwood_fireproof_fence_gate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

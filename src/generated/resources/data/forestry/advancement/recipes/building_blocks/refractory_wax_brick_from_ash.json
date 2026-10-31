@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:refractory_wax_brick_from_ash"
+        "recipes": "forestry:refractory_wax_brick_from_ash"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:stamp_1n"
+        "recipes": "forestry:stamp_1n"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

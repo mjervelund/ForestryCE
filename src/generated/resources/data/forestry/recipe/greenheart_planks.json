@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "tag": "forestry:greenheart_logs"
-    }
+    "#forestry:greenheart_logs"
   ],
   "result": {
     "count": 4,

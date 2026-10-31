@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:balsa_fence_gate"
+        "recipes": "forestry:balsa_fence_gate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

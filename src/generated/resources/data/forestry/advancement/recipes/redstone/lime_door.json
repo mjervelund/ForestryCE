@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:lime_door"
+        "recipes": "forestry:lime_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

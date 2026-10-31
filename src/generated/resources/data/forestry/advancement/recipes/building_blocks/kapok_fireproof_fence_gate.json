@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:kapok_fireproof_fence_gate"
+        "recipes": "forestry:kapok_fireproof_fence_gate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

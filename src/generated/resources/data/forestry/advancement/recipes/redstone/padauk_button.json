@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:padauk_button"
+        "recipes": "forestry:padauk_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

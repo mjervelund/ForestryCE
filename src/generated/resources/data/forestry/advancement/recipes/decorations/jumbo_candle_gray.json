@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:jumbo_candle_gray"
+        "recipes": "forestry:jumbo_candle_gray"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

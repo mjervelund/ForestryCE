@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cobbled_honeystone_slab"
+        "recipes": "forestry:cobbled_honeystone_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

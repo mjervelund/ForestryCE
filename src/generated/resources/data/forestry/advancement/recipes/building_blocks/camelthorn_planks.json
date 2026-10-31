@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:camelthorn_planks"
+        "recipes": "forestry:camelthorn_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

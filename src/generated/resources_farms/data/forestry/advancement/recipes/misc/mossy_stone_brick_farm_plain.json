@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:mossy_stone_brick_farm_plain"
+        "recipes": "forestry:mossy_stone_brick_farm_plain"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

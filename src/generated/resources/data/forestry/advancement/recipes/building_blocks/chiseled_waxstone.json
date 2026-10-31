@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:chiseled_waxstone"
+        "recipes": "forestry:chiseled_waxstone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:farm_nether_manual"
+        "recipes": "forestry:farm_nether_manual"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

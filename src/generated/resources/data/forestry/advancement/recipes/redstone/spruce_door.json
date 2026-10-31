@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:spruce_door"
+        "recipes": "forestry:spruce_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

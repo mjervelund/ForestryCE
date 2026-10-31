@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:powdery_comb_block"
+        "recipes": "forestry:powdery_comb_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

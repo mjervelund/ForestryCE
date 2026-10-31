@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:survivalists_sword"
+        "recipes": "forestry:survivalists_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

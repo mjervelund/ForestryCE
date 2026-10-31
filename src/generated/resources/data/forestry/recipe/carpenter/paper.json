@@ -1,6 +1,5 @@
 {
   "type": "forestry:carpenter",
-  "box": [],
   "id": "forestry:carpenter/paper",
   "liquid": {
     "amount": 250,
@@ -9,9 +8,7 @@
   "recipe": {
     "category": "misc",
     "key": {
-      "#": {
-        "item": "forestry:wood_pulp"
-      }
+      "#": "forestry:wood_pulp"
     },
     "pattern": [
       "#",

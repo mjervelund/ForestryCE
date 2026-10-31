@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:feijoa_slab"
+        "recipes": "forestry:feijoa_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

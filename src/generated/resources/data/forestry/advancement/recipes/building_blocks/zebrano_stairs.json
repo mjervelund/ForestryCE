@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:zebrano_stairs"
+        "recipes": "forestry:zebrano_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

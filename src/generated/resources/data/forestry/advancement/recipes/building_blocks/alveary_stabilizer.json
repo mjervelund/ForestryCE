@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:alveary_stabilizer"
+        "recipes": "forestry:alveary_stabilizer"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

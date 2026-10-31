@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:ginkgo_trapdoor"
+        "recipes": "forestry:ginkgo_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

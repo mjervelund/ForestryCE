@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:plum_stairs"
+        "recipes": "forestry:plum_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

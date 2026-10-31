@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "item": "minecraft:quartz_block"
-    },
-    "T": {
-      "tag": "c:gears/tin"
-    }
+    "#": "minecraft:quartz_block",
+    "T": "#c:gears/tin"
   },
   "pattern": [
     " # ",

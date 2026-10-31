@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:macrocarpa_fireproof_slab"
+        "recipes": "forestry:macrocarpa_fireproof_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:papaya_door"
+        "recipes": "forestry:papaya_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

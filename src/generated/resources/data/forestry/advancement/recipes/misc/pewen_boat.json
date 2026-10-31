@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pewen_boat"
+        "recipes": "forestry:pewen_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

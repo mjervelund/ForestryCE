@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:string_from_wisp"
+        "recipes": "forestry:string_from_wisp"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

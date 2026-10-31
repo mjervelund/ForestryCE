@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:waxstone_brick_stairs"
+        "recipes": "forestry:waxstone_brick_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

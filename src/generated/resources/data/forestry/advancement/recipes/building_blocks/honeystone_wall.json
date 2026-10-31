@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:honeystone_wall"
+        "recipes": "forestry:honeystone_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

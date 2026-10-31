@@ -3,16 +3,10 @@
   "category": "misc",
   "key": {
     "P": [
-      {
-        "item": "forestry:chestnut_planks"
-      },
-      {
-        "item": "forestry:chestnut_fireproof_planks"
-      }
+      "forestry:chestnut_planks",
+      "forestry:chestnut_fireproof_planks"
     ],
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "S": "#c:rods/wooden"
   },
   "pattern": [
     "PPP",

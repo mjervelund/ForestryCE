@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:greenheart_trapdoor"
+        "recipes": "forestry:greenheart_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

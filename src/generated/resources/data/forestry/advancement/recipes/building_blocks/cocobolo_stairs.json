@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:cocobolo_stairs"
+        "recipes": "forestry:cocobolo_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

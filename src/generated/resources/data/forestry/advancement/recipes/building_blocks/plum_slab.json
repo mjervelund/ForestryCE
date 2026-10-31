@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:plum_slab"
+        "recipes": "forestry:plum_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

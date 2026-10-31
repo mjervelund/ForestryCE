@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:camelthorn_boat"
+        "recipes": "forestry:camelthorn_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

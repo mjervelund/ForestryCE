@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:papaya_fence"
+        "recipes": "forestry:papaya_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

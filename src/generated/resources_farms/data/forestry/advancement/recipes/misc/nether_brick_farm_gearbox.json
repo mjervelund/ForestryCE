@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:nether_brick_farm_gearbox"
+        "recipes": "forestry:nether_brick_farm_gearbox"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

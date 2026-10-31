@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:bog_earth_bucket"
+        "recipes": "forestry:bog_earth_bucket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

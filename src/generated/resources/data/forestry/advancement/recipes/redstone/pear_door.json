@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:pear_door"
+        "recipes": "forestry:pear_door"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

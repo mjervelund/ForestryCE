@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:arborists_chest"
+        "recipes": "forestry:arborists_chest"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

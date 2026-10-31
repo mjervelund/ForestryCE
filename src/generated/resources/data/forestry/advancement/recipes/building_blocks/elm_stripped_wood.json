@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "forestry:elm_stripped_wood"
+        "recipes": "forestry:elm_stripped_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
