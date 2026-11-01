@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_wall_hanging_sign",
+  "textures": {
+    "all": "forestry:block/giant_sequoia_hanging_sign",
+    "particle": "forestry:block/stripped_giant_sequoia_log"
+  }
+}
