@@ -1,5 +1,6 @@
 package forestry.core.platform.commands;
 
+import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -37,6 +38,7 @@ public final class CommandSaveStats implements Command<CommandSourceStack> {
 
 	public static ArgumentBuilder<CommandSourceStack, ?> register(IStatsSaveHelper saveHelper) {
 		return Commands.literal("save")
+			.requires(CommandHelpers.ADMIN)
 			.then(Commands.argument("player", EntityArgument.player())
 				.executes(new CommandSaveStats(saveHelper)));
 
@@ -84,8 +86,7 @@ public final class CommandSaveStats implements Command<CommandSourceStack> {
 			statistics.add(Component.literal(generateSpeciesListEntry(allele, tracker)));
 		}
 
-		// todo test
-		File file = new File("config/" + ForestryConstants.MOD_ID + "/stats/" + player.getDisplayName().getString() + '-' + this.saveHelper.getFileSuffix() + ".log");
+		File file = getStatsFile(player.getGameProfile(), this.saveHelper.getFileSuffix());
 		try {
 			File folder = file.getParentFile();
 			if (folder != null && !folder.exists()) {
@@ -127,6 +128,15 @@ public final class CommandSaveStats implements Command<CommandSourceStack> {
 		CommandHelpers.sendLocalizedChatMessage(ctx.getSource(), "for.chat.command.forestry.stats.save.saved", player.getDisplayName());
 
 		return 1;
+	}
+
+	/**
+	 * The file name used to be the display name, which team prefixes and nickname mods control, and offline-mode
+	 * player names may contain {@code /} and {@code ..} too: keep only name characters vanilla allows online.
+	 */
+	public static File getStatsFile(GameProfile profile, String suffix) {
+		String name = profile.name().replaceAll("[^A-Za-z0-9_]", "_");
+		return new File("config/" + ForestryConstants.MOD_ID + "/stats/" + name + '-' + suffix + ".log");
 	}
 
 	private static String generateSpeciesListHeader() {
