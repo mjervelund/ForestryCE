@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "forestry:item/zebrano_sapling"
+    "cross": "forestry:block/zebrano_sapling"
   }
 }
