@@ -32,6 +32,15 @@ public class ResourceUtil {
 		return getBlockSprite(Identifier.parse(location));
 	}
 
+	// 26.x: item textures (textures/item/...) are in their own atlas, no longer in the block atlas
+	public static TextureAtlasSprite getItemSprite(Identifier location) {
+		return Minecraft.getInstance().getAtlasManager().getAtlasOrThrow(AtlasIds.ITEMS).getSprite(location);
+	}
+
+	public static TextureAtlasSprite getItemSprite(String location) {
+		return getItemSprite(Identifier.parse(location));
+	}
+
 	// 26.x: fluid textures and tints come from the fluid's model instead of IClientFluidTypeExtensions
 	public static FluidModel getFluidModel(Fluid fluid) {
 		return Minecraft.getInstance().getModelManager().getFluidStateModelSet().get(fluid.defaultFluidState());
