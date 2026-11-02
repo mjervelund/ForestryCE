@@ -19,6 +19,7 @@ import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 
 import forestry.core.platform.legacy.energy.IEnergyStorage;
+import forestry.core.platform.multiblock.MultiblockTileEntityForestry;
 import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 import forestry.core.platform.legacy.items.IItemHandler;
 import forestry.core.platform.legacy.items.wrapper.InvWrapper;
@@ -34,9 +35,16 @@ public final class LegacyCapabilities {
 
 	public static ResourceHandler<ItemResource> items(IItemHandler handler) {
 		if (handler instanceof SidedInvWrapper sided) {
+			if (sided.getInv() instanceof MultiblockTileEntityForestry<?>) {
+				// delegating container: its size changes with the multiblock state, see LiveContainerHandler
+				return new LiveContainerHandler(() -> new WorldlyContainerWrapper(sided.getInv(), sided.getSide()));
+			}
 			return new WorldlyContainerWrapper(sided.getInv(), sided.getSide());
 		}
 		if (handler instanceof InvWrapper wrapper) {
+			if (wrapper.getInv() instanceof MultiblockTileEntityForestry<?>) {
+				return new LiveContainerHandler(() -> VanillaContainerWrapper.of(wrapper.getInv()));
+			}
 			return VanillaContainerWrapper.of(wrapper.getInv());
 		}
 		return new DeferredResourceHandlers.Items(handler);
