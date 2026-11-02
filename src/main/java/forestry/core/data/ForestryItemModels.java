@@ -163,7 +163,8 @@ public class ForestryItemModels {
 
 			// Sapling assets are named "<id>_sapling" (e.g. ipe_sapling).
 			String name = species.id().getPath() + "_sapling";
-			models.cross("block/" + name, models.modLoc("item/" + name));
+			// 26.x: block models may only use block atlas sprites, so the block model has its own copy in textures/block
+			models.cross("block/" + name, models.modLoc("block/" + name));
 			models.generic2d(models.modLoc(name));
 		}
 	}
