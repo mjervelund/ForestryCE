@@ -35,8 +35,9 @@ public class FarmLedger extends Ledger {
 		int xHeader = x + 22;
 
 		// Draw icon
-		TextureAtlasSprite textureAtlasSprite = ResourceUtil.getBlockSprite("item/water_bucket");
-		drawSprite(graphics, textureAtlasSprite, xIcon, y, TextureAtlas.LOCATION_BLOCKS);
+		// 26.x: item/water_bucket lives in the item atlas; looked up in the block atlas it was the missing sprite
+		TextureAtlasSprite textureAtlasSprite = ResourceUtil.getItemSprite("item/water_bucket");
+		drawSprite(graphics, textureAtlasSprite, xIcon, y, TextureAtlas.LOCATION_ITEMS);
 		y += 4;
 
 		if (!isFullyOpened()) {
