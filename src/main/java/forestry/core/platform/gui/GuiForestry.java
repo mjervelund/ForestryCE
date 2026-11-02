@@ -1,6 +1,7 @@
 package forestry.core.platform.gui;
 
 import org.joml.Matrix3x2fStack;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import com.google.common.base.Preconditions;
@@ -146,17 +147,31 @@ public abstract class GuiForestry<C extends AbstractContainerMenu> extends Abstr
 		return this.font;
 	}
 
+	/**
+	 * Ledgers and widgets (and the packets they send, e.g. the worktable recipe click) number mouse buttons
+	 * 0 = left, 1 = right, 2 = middle. 26.3 input events use SDL numbers ({@link InputConstants#MOUSE_BUTTON_LEFT} = 1,
+	 * {@link InputConstants#MOUSE_BUTTON_RIGHT} = 3), so convert like vanilla's container click button does.
+	 */
+	public static int legacyMouseButton(MouseButtonEvent event) {
+		return switch (event.button()) {
+			case InputConstants.MOUSE_BUTTON_LEFT -> 0;
+			case InputConstants.MOUSE_BUTTON_RIGHT -> 1;
+			default -> event.button();
+		};
+	}
+
 	@Override
 	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
 		// / Handle ledger clicks
-		this.ledgerManager.handleMouseClicked(event.x(), event.y(), event.button());
-		this.widgetManager.handleMouseClicked(event.x(), event.y(), event.button());
+		int mouseButton = legacyMouseButton(event);
+		this.ledgerManager.handleMouseClicked(event.x(), event.y(), mouseButton);
+		this.widgetManager.handleMouseClicked(event.x(), event.y(), mouseButton);
 		return super.mouseClicked(event, doubleClick);
 	}
 
 	@Override
 	public boolean mouseReleased(MouseButtonEvent event) {
-		if (this.widgetManager.handleMouseRelease(event.x(), event.y(), event.button())) {
+		if (this.widgetManager.handleMouseRelease(event.x(), event.y(), legacyMouseButton(event))) {
 			return true;
 		}
 		return super.mouseReleased(event);

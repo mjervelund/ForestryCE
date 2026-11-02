@@ -1,5 +1,6 @@
 package forestry.core.platform.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import com.google.common.collect.ImmutableList;
@@ -75,7 +76,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 		double mouseX = event.x();
 		double mouseY = event.y();
 		int mouseButton = event.button();
-		if (mouseButton == 0 && isOverScrollBar(mouseX, mouseY)) {
+		if (mouseButton == InputConstants.MOUSE_BUTTON_LEFT && isOverScrollBar(mouseX, mouseY)) {
 			this.scrolling = true;
 			scrollTo(mouseY);
 			return true;
@@ -87,7 +88,7 @@ public class GuiNaturalistInventory<C extends AbstractContainerMenu & INaturalis
 	public boolean mouseDragged(MouseButtonEvent event, double dragX, double dragY) {
 		double mouseY = event.y();
 		int mouseButton = event.button();
-		if (this.scrolling && mouseButton == 0) {
+		if (this.scrolling && mouseButton == InputConstants.MOUSE_BUTTON_LEFT) {
 			scrollTo(mouseY);
 			return true;
 		}
