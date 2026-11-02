@@ -20,10 +20,7 @@ public class ForestryAtlasProvider extends SpriteSourceProvider {
 		SourceList icons = atlas(ForestrySpriteUploader.ATLAS_PATH);
 
 		icons.addSource(new DirectoryLister("forestry/atlas/gui", ""));
-
-		// A bit redundant but fixes the issue
-		SourceList blocks = atlas(BLOCKS_ATLAS);
-
-		blocks.addSource(new DirectoryLister("forestry/atlas/gui/slots", "slots/"));
+		// 26.x: slot backgrounds (Slot#getNoItemIcon) are drawn from the gui atlas, so the slot icons are no longer
+		// also added to the blocks atlas (sprite ids are global on 26.x; the copy was a duplicate sprite)
 	}
 }
