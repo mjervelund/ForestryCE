@@ -29,7 +29,7 @@ import java.util.function.Consumer;
  * loader ({@code ButterflyItemModel}), which baked {@code item/butterfly_base} once per species texture and
  * scaled it by the butterfly's size. The generated {@code items/*.json} uses {@code item/butterfly_base} as the
  * special model's base, so its display transforms still apply; this draws its two wings and the body with the
- * species' item sprite from the blocks atlas, scaled by size around the block centre.
+ * species' item sprite from the item atlas (26.x: item textures are no longer in the blocks atlas), scaled by size around the block centre.
  */
 public class ButterflySpecialRenderer implements SpecialModelRenderer<ButterflySpecialRenderer.Argument> {
 
@@ -53,13 +53,13 @@ public class ButterflySpecialRenderer implements SpecialModelRenderer<ButterflyS
 		IButterflyClientManager manager = IForestryClientApi.INSTANCE.getButterflyManager();
 		Identifier spriteId = argument != null ? argument.sprite() : manager.getDefaultTextures().getFirst();
 		float size = argument != null ? argument.size() : 1.0F;
-		TextureAtlasSprite sprite = ResourceUtil.getBlockSprite(spriteId);
+		TextureAtlasSprite sprite = ResourceUtil.getItemSprite(spriteId);
 
 		poseStack.pushPose();
 		poseStack.translate(0.5F, 0.5F, 0.5F);
 		poseStack.scale(size, size, size);
 		poseStack.translate(-0.5F, -0.5F, -0.5F);
-		collector.submitCustomGeometry(poseStack, RenderTypes.entityCutoutCull(TextureAtlas.LOCATION_BLOCKS), (pose, buffer) -> {
+		collector.submitCustomGeometry(poseStack, RenderTypes.entityCutoutCull(TextureAtlas.LOCATION_ITEMS), (pose, buffer) -> {
 			// coordinates and UVs in pixels, as in models/item/butterfly_base.json
 			// left wing: down uv [0,0,7,13], up uv [9,0,16,13] rotated 180
 			down(buffer, pose, sprite, light, overlay, 0.5F, 7.5F, 14F, 1F, 13.5F, 0, 0, 7, 13);
