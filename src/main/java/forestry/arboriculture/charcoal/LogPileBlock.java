@@ -73,6 +73,20 @@ public class LogPileBlock extends Block {
 		}
 	}
 
+	/**
+	 * An active pile only ages through its scheduled tick, and a scheduled tick stays at its position. A pile that
+	 * arrives already active (moved by a piston, or placed next to a burning pile) would otherwise never age.
+	 * https://github.com/thedarkcolour/ForestryCE/issues/278
+	 */
+	@Override
+	protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+		super.onPlace(state, level, pos, oldState, movedByPiston);
+		if (!level.isClientSide() && state.getValue(IS_ACTIVE) && !oldState.is(this)
+			&& !level.getBlockTicks().hasScheduledTick(pos, this)) {
+			level.scheduleTick(pos, this, TICK_RATE + level.getRandom().nextInt(RANDOM_TICK));
+		}
+	}
+
 	private void activatePile(BlockState state, Level level, BlockPos pos, boolean scheduleUpdate) {
 		level.setBlock(pos, state.setValue(IS_ACTIVE, true), Block.UPDATE_CLIENTS);
 
