@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 import forestry.arboriculture.wood.ForestryWoodType;
+import forestry.arboriculture.wood.VanillaWoodType;
+import net.minecraft.world.level.block.state.BlockState;
 import forestry.arboriculture.fruit.Fruit;
 
 // Fruits that grow on the side of a tree's trunk, like cocoa beans
@@ -54,6 +56,21 @@ public class PodFruit extends Fruit {
 			case PAPAYA -> ForestryWoodType.PAPAYA.blockTag;
 			case COCONUT -> ForestryWoodType.COCONUT.blockTag;
 			default -> BlockTags.JUNGLE_LOGS;
+		};
+	}
+
+	// Forestry keeps fireproof logs out of the burnable log tag (that one feeds #logs_that_burn), so check both.
+	@Override
+	public boolean isPodLog(BlockState state) {
+		return state.is(getLogTag()) || state.is(getFireproofLogTag());
+	}
+
+	private TagKey<Block> getFireproofLogTag() {
+		return switch (this.type) {
+			case DATES -> ForestryWoodType.PALM.fireproofBlockTag;
+			case PAPAYA -> ForestryWoodType.PAPAYA.fireproofBlockTag;
+			case COCONUT -> ForestryWoodType.COCONUT.fireproofBlockTag;
+			default -> VanillaWoodType.JUNGLE.fireproofBlockTag;
 		};
 	}
 
