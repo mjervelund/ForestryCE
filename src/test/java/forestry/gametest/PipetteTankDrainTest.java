@@ -1,7 +1,6 @@
 package forestry.gametest;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -9,12 +8,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.util.FakePlayerFactory;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.gametest.GameTestHolder;
-import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
-import forestry.api.ForestryConstants;
 import forestry.core.content.energy.blocks.EngineBlockType;
 import forestry.core.content.energy.features.EnergyBlocks;
 import forestry.core.content.energy.tiles.BiogasEngineBlockEntity;
@@ -22,21 +16,21 @@ import forestry.core.content.energy.tiles.CombustionEngineBlockEntity;
 import forestry.core.features.CoreItems;
 import forestry.core.platform.fluids.StandardTank;
 import forestry.core.platform.gui.ContainerLiquidTanksHelper;
+import forestry.core.platform.legacy.fluids.FluidUtil;
+import forestry.core.platform.legacy.fluids.capability.IFluidHandler;
 import forestry.core.platform.tile.ILiquidTankTile;
 
-@GameTestHolder(ForestryConstants.MOD_ID)
-@PrefixGameTestTemplate(false)
 public class PipetteTankDrainTest {
 	private static final BlockPos ENGINE_POS = new BlockPos(8, 2, 8);
 	// both engines keep their drain-locked tank at index 1
 	private static final int LOCKED_TANK = 1;
 	private static final int INITIAL_AMOUNT = 3 * FluidType.BUCKET_VOLUME;
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void pipetteDrainsCombustionCoolantTank(GameTestHelper helper) {
 		helper.setBlock(ENGINE_POS, EnergyBlocks.ENGINES.get(EngineBlockType.COMBUSTION).defaultState());
 
-		if (!(helper.getBlockEntity(ENGINE_POS) instanceof CombustionEngineBlockEntity engine)) {
+		if (!(helper.getLevel().getBlockEntity(helper.absolutePos(ENGINE_POS)) instanceof CombustionEngineBlockEntity engine)) {
 			helper.fail("Expected a CombustionEngineBlockEntity at " + ENGINE_POS);
 			return;
 		}
@@ -45,11 +39,11 @@ public class PipetteTankDrainTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void pipetteDrainsBiogasHeatingTank(GameTestHelper helper) {
 		helper.setBlock(ENGINE_POS, EnergyBlocks.ENGINES.get(EngineBlockType.BIOGAS).defaultState());
 
-		if (!(helper.getBlockEntity(ENGINE_POS) instanceof BiogasEngineBlockEntity engine)) {
+		if (!(helper.getLevel().getBlockEntity(helper.absolutePos(ENGINE_POS)) instanceof BiogasEngineBlockEntity engine)) {
 			helper.fail("Expected a BiogasEngineBlockEntity at " + ENGINE_POS);
 			return;
 		}
@@ -58,11 +52,11 @@ public class PipetteTankDrainTest {
 		helper.succeed();
 	}
 
-	@GameTest(template = "empty")
+	@ForestryGameTest
 	public static void pipetteClickIgnoresInvalidTankIndex(GameTestHelper helper) {
 		helper.setBlock(ENGINE_POS, EnergyBlocks.ENGINES.get(EngineBlockType.COMBUSTION).defaultState());
 
-		if (!(helper.getBlockEntity(ENGINE_POS) instanceof CombustionEngineBlockEntity engine)) {
+		if (!(helper.getLevel().getBlockEntity(helper.absolutePos(ENGINE_POS)) instanceof CombustionEngineBlockEntity engine)) {
 			helper.fail("Expected a CombustionEngineBlockEntity at " + ENGINE_POS);
 			return;
 		}
