@@ -27,7 +27,8 @@ public class CropPeat extends Crop {
 	@Override
 	protected List<ItemStack> harvestBlock(Level level, BlockPos pos) {
 		NonNullList<ItemStack> drops = NonNullList.create();
-		drops.add(CoreItems.PEAT.stack());
+		// same as the peat block loot table (2 peat), GitHub #350
+		drops.add(CoreItems.PEAT.stack(2));
 
 		BlockUtil.sendDestroyEffects(level, pos, level.getBlockState(pos));
 
