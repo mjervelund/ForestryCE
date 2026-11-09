@@ -229,7 +229,7 @@ public class TreeSpeciesType extends SpeciesType<ITreeSpecies, ITree> implements
 
 	@Override
 	public boolean setFruitBlock(LevelAccessor level, IGenome genome, IFruit fruit, float yield, BlockPos pos) {
-		Direction facing = BlockUtil.getValidPodFacing(level, pos, fruit.getLogTag());
+		Direction facing = BlockUtil.getValidPodFacing(level, pos, fruit::isPodLog);
 
 		// todo make this not hardcoded to forestry pods
 		if (facing != null && fruit instanceof PodFruit podFruit && ArboricultureBlocks.PODS.has(podFruit.getType())) {

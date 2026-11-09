@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -27,6 +26,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Predicate;
 
 public abstract class BlockUtil {
 	public static final BlockBehaviour.StatePredicate ALWAYS = (state, level, pos) -> true;
@@ -43,7 +43,8 @@ public abstract class BlockUtil {
 	}
 
 	public static boolean tryPlantCocoaPod(LevelAccessor world, BlockPos pos) {
-		Direction facing = getValidPodFacing(world, pos, BlockTags.JUNGLE_LOGS);
+		// what vanilla CocoaBlock.canSurvive accepts; Forestry adds its fireproof jungle logs to the tag
+		Direction facing = getValidPodFacing(world, pos, state -> state.is(BlockTags.SUPPORTS_COCOA));
 		if (facing == null) {
 			return false;
 		}
@@ -54,22 +55,22 @@ public abstract class BlockUtil {
 	}
 
 	@Nullable
-	public static Direction getValidPodFacing(LevelAccessor world, BlockPos pos, TagKey<Block> logTag) {
+	public static Direction getValidPodFacing(LevelAccessor world, BlockPos pos, Predicate<BlockState> isLog) {
 		for (Direction facing : Direction.Plane.HORIZONTAL) {
-			if (isValidPodLocation(world, pos, facing, logTag)) {
+			if (isValidPodLocation(world, pos, facing, isLog)) {
 				return facing;
 			}
 		}
 		return null;
 	}
 
-	public static boolean isValidPodLocation(LevelReader world, BlockPos pos, Direction direction, TagKey<Block> logTag) {
+	public static boolean isValidPodLocation(LevelReader world, BlockPos pos, Direction direction, Predicate<BlockState> isLog) {
 		pos = pos.relative(direction);
 		if (!world.hasChunkAt(pos)) {
 			return false;
 		}
 		BlockState state = world.getBlockState(pos);
-		return state.is(logTag);
+		return isLog.test(state);
 	}
 
 	public static boolean isBreakableBlock(Level world, BlockPos pos) {
