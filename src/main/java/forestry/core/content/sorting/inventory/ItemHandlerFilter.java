@@ -33,7 +33,8 @@ public class ItemHandlerFilter implements IItemHandler {
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 		ItemStack remaining = stack;
 		for (Direction facing : this.filter.getValidDirections(stack, this.facing)) {
-			remaining = this.itemHandler.insertItem(facing.get3DDataValue(), stack, simulate);
+			// offer only what the previous sides left over, or a partial insert duplicates the rest
+			remaining = this.itemHandler.insertItem(facing.get3DDataValue(), remaining, simulate);
 			if (remaining.isEmpty()) {
 				return ItemStack.EMPTY;
 			}
