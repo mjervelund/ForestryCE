@@ -21,6 +21,8 @@ public class ModuleEnergy extends BlankForestryModule {
 		LegacyCapabilities.registerEnergy(event, EnergyTiles.CLOCKWORK_ENGINE.tileType(), (tile, side) -> tile.getEnergyHandler(side));
 		LegacyCapabilities.registerEnergy(event, EnergyTiles.BIOGAS_ENGINE.tileType(), (tile, side) -> tile.getEnergyHandler(side));
 		LegacyCapabilities.registerEnergy(event, EnergyTiles.PEAT_ENGINE.tileType(), (tile, side) -> tile.getEnergyHandler(side));
+		// pipes and hoppers feed peat in and take ash out (the engine had no item capability)
+		LegacyCapabilities.registerItems(event, EnergyTiles.PEAT_ENGINE.tileType(), (tile, side) -> tile.getItemHandler(side));
 		// Deviation from 1.20.1: capabilities are registered here instead of overriding getCapability on the tile.
 		LegacyCapabilities.registerEnergy(event, EnergyTiles.SOLAR_ENGINE.tileType(), (tile, side) -> tile.getEnergyHandler(side));
 		LegacyCapabilities.registerEnergy(event, EnergyTiles.COMBUSTION_ENGINE.tileType(), (tile, side) -> tile.getEnergyHandler(side));
