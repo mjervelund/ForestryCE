@@ -24,22 +24,25 @@ public abstract class WithScreenItem extends ItemForestry {
 		ItemStack stack = player.getItemInHand(handIn);
 
 		if (player instanceof ServerPlayer serverPlayer) {
-			openGui(serverPlayer, stack);
+			openGui(serverPlayer, stack, handIn);
 		}
 
 		return InteractionResult.SUCCESS;
 	}
 
-	protected void openGui(ServerPlayer serverPlayer, ItemStack heldItem) {
-		serverPlayer.openMenu(getMenuProvider(heldItem), buffer -> writeContainerData(serverPlayer, heldItem, buffer));
+	protected void openGui(ServerPlayer serverPlayer, ItemStack heldItem, InteractionHand hand) {
+		serverPlayer.openMenu(getMenuProvider(heldItem), buffer -> writeContainerData(serverPlayer, heldItem, hand, buffer));
 	}
 
 	public SimpleMenuProvider getMenuProvider(ItemStack heldItem) {
 		return new SimpleMenuProvider((windowId, playerInv, player) -> getContainer(windowId, player, heldItem), heldItem.getHoverName());
 	}
 
-	protected void writeContainerData(ServerPlayer player, ItemStack stack, RegistryFriendlyByteBuf buffer) {
-		buffer.writeBoolean(player.getUsedItemHand() == InteractionHand.MAIN_HAND);
+	// The client menu factory reads this to find the held stack. It must be the hand that was right-clicked:
+	// getUsedItemHand() is the hand of the last use-duration item (food, shield, smoker), so it pointed at the
+	// other hand, and the client either bound the menu to the wrong stack or was disconnected on an empty hand.
+	protected void writeContainerData(ServerPlayer player, ItemStack stack, InteractionHand hand, RegistryFriendlyByteBuf buffer) {
+		buffer.writeBoolean(hand == InteractionHand.MAIN_HAND);
 	}
 
 	@Override
