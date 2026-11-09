@@ -1,5 +1,5 @@
 {
-  "parent": "forestry:block/soil/peat",
+  "parent": "forestry:block/peat",
   "display": {
     "thirdperson": {
       "rotation": [

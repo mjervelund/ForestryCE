@@ -1,4 +1,5 @@
 {
-  "parent": "neoforge:block/default",
-  "loader": "forestry:sapling_ge"
+  "textures": {
+    "particle": "minecraft:block/oak_sapling"
+  }
 }
