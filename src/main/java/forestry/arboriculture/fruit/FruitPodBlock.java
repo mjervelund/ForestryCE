@@ -46,6 +46,13 @@ public class FruitPodBlock extends CocoaBlock implements EntityBlock {
 		return tile.getPickBlock();
 	}
 
+	// CocoaBlock.randomTick only raises the AGE state, so pods looked ripe but their block entity (what the orchard and
+	// the drops read) never matured (GitHub #373). Grow through the block entity instead; it sets AGE itself.
+	@Override
+	protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
+		tick(state, level, pos, rand);
+	}
+
 	@Override
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
 		if (!canSurvive(state, level, pos)) {
