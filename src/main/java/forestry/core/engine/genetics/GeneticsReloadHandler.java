@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.resources.Identifier;
@@ -28,7 +30,12 @@ public final class GeneticsReloadHandler {
 	}
 
 	// must run after every species rebuild, MutationManager is keyed by species identity
-	public static void rebuildMutations(RecipeMap recipeManager) {
+	public static void rebuildMutations(@Nullable RecipeMap recipeManager) {
+		if (recipeManager == null) {
+			// Client: on login the species sync packets arrive before the recipes (no recipe map yet).
+			// RecipesReceivedEvent (CoreClientHandler#onRecipesUpdated) rebuilds the index once they arrive.
+			return;
+		}
 		for (ISpeciesType<?, ?> type : IForestryApi.INSTANCE.getGeneticManager().getSpeciesTypes()) {
 			rebuildOne(type, recipeManager);
 		}
