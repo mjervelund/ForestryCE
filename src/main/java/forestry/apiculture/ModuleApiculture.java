@@ -7,6 +7,7 @@ import forestry.api.ForestryCapabilities;
 import forestry.api.ForestryDataMaps;
 import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.ForestryBeeSpecies;
+import forestry.api.apiculture.genetics.IBee;
 import forestry.api.client.IClientModuleHandler;
 import forestry.api.client.IForestryClientApi;
 import forestry.api.client.plugin.IClientRegistration;
@@ -92,7 +93,12 @@ public class ModuleApiculture extends BlankForestryModule {
 
 	private static void onNetherBeeMate(ForestryEvent.BeeMatingEvent event) {
 		if (event.getPrincess().getSpecies().getGenusName().equals(ForestryTaxa.GENUS_EMBITTERED) && event.getHousing().temperature() != TemperatureType.HELLISH) {
-			event.setPrincess(SpeciesUtil.getBeeSpecies(ForestryBeeSpecies.ZOMBIFIED).createIndividual());
+			IBee princess = event.getPrincess();
+			// the princess turns into a zombified bee but stays the same bee otherwise: keep her pristine flag
+			// (ignoble stays ignoble), her generation and the drone she was just mated with
+			IBee zombified = princess.copyWithGenome(SpeciesUtil.getBeeSpecies(ForestryBeeSpecies.ZOMBIFIED).getDefaultGenome());
+			zombified.setMate(princess.getMate());
+			event.setPrincess(zombified);
 		}
 	}
 
