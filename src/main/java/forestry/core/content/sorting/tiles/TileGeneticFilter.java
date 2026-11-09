@@ -10,6 +10,7 @@ import forestry.core.platform.network.IStreamableGui;
 import forestry.core.platform.tile.TileForestry;
 import forestry.core.platform.tile.TileUtil;
 import forestry.core.platform.util.ItemStackUtil;
+import forestry.core.content.sorting.DefaultFilterRuleType;
 import forestry.core.content.sorting.FilterLogic;
 import forestry.core.content.sorting.features.SortingTiles;
 import forestry.core.content.sorting.gui.ContainerGeneticFilter;
@@ -131,7 +132,15 @@ public class TileGeneticFilter extends TileForestry implements IStreamableGui {
 		IIndividual individual = IIndividualHandlerItem.getIndividual(stack);
 		ILifeStage stage = IIndividualHandlerItem.getLifeStage(stack);
 		if (individual == null || stage == null) {
-			return List.of();
+			// non-genetic items (honeycombs, ...) go to the sides set to the "item" rule (GitHub #461)
+			List<Direction> itemFacings = new ArrayList<>();
+			for (Direction facing : Direction.VALUES) {
+				if (facing != from && this.inventoryCache.getAdjacentInventory(facing) != null
+					&& this.logic.getRule(facing) == DefaultFilterRuleType.ITEM) {
+					itemFacings.add(facing);
+				}
+			}
+			return itemFacings;
 		}
 
 		FilterData filterData = new FilterData(individual, stage);
