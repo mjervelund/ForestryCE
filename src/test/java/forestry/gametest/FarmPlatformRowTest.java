@@ -37,12 +37,10 @@ public class FarmPlatformRowTest {
 		helper.setBlock(BRICK, Blocks.STONE_BRICKS);
 		List<BlockPos> members = MultiblockTestSupport.buildFarm(helper, FARM_BASE);
 
-		// wait for the multiblock to assemble
-		helper.runAfterDelay(40, () -> {
-			if (!(MultiblockTestSupport.controllerAt(level, members.get(0)) instanceof FarmController farm) || !farm.isAssembled()) {
-				helper.fail("Expected an assembled multifarm at " + FARM_BASE);
-				return;
-			}
+		// wait for the multiblock to assemble (a fixed delay flaked under load in the full suite)
+		helper.startSequence().thenWaitUntil(() -> helper.assertTrue(MultiblockTestSupport.isAssembled(level, members.get(0)),
+			"Expected an assembled multifarm at " + FARM_BASE)).thenExecute(() -> {
+			FarmController farm = (FarmController) MultiblockTestSupport.controllerAt(level, members.get(0));
 			MultiblockTestSupport.insertItem(level, members, MultiblockTestSupport.FARM_INV_SIZE, 0, new ItemStack(Blocks.MYCELIUM, 64));
 
 			IFarmLogic shroom = IForestryApi.INSTANCE.getFarmingManager().getFarmType(ForestryFarmTypes.SHROOM).getLogic(false);
@@ -56,7 +54,6 @@ public class FarmPlatformRowTest {
 			}
 			helper.assertBlockPresent(Blocks.STONE_BRICKS, BRICK);
 			helper.assertBlockPresent(Blocks.AIR, BRICK.west());
-			helper.succeed();
-		});
+		}).thenSucceed();
 	}
 }
