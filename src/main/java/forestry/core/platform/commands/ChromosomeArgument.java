@@ -36,11 +36,11 @@ public class ChromosomeArgument implements ISpeciesArgumentType<IChromosome<?>> 
 
 	@Override
 	public IChromosome<?> parse(StringReader reader) throws CommandSyntaxException {
-		Identifier id = Identifier.read(reader);
+		Identifier id = CommandHelpers.readForestryId(reader);
 		IChromosome<?> chromosome = this.chromosomes.get(id);
 
 		if (chromosome == null) {
-			throw LifeStageArgument.INVALID_VALUE.create(id);
+			throw LifeStageArgument.INVALID_VALUE.create(id.toString());
 		} else {
 			return chromosome;
 		}
@@ -48,6 +48,6 @@ public class ChromosomeArgument implements ISpeciesArgumentType<IChromosome<?>> 
 
 	@Override
 	public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
-		return SharedSuggestionProvider.suggest(this.chromosomes.keySet().stream().map(Identifier::toString), builder);
+		return SharedSuggestionProvider.suggestResource(this.chromosomes.keySet(), builder);
 	}
 }
