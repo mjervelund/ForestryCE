@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.phys.Vec3;
 
 public class CoreDamageTypes {
 	public static final ResourceKey<DamageType> AGGRESSIVE = ResourceKey.create(Registries.DAMAGE_TYPE, ForestryConstants.forestry("aggressive"));
@@ -17,5 +18,10 @@ public class CoreDamageTypes {
 
 	public static DamageSource source(LevelReader level, ResourceKey<DamageType> type) {
 		return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(type));
+	}
+
+	/** A damage source located at {@code position}, so vanilla knockback pushes the victim away from it (ForestryCE#415). */
+	public static DamageSource source(LevelReader level, ResourceKey<DamageType> type, Vec3 position) {
+		return new DamageSource(level.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(type), position);
 	}
 }

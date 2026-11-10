@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,7 +55,7 @@ public class ClockworkEngineBlockEntity extends EngineBlockEntity {
 
 		player.causeFoodExhaustion(WIND_EXHAUSTION);
 		if (this.tension > ENGINE_CLOCKWORK_WIND_MAX + 0.1 * WIND_TENSION_BASE) {
-			if (player.hurtServer(player.level(), CoreDamageTypes.source(this.level, CoreDamageTypes.CLOCKWORK), 6)) {
+			if (player.hurtServer(player.level(), CoreDamageTypes.source(this.level, CoreDamageTypes.CLOCKWORK, Vec3.atCenterOf(this.worldPosition)), 6)) {
 				AdvancementHelper.tryUnlock(player, CLOCKWORK_ENGINE_HURT_PLAYER);
 			}
 		}
