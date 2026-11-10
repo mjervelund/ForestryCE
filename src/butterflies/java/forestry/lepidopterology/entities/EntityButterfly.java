@@ -591,6 +591,19 @@ public class EntityButterfly extends PathfinderMob implements IEntityButterfly {
 		}
 	}
 
+	/**
+	 * Butterflies fly; like vanilla bats they keep movement game events but play no step, muffled-step or amethyst
+	 * sounds when they land on or brush along blocks.
+	 */
+	@Override
+	protected Entity.MovementEmission getMovementEmission() {
+		return Entity.MovementEmission.EVENTS;
+	}
+
+	@Override
+	protected void playStepSound(BlockPos pos, BlockState state) {
+	}
+
 	@Override
 	public boolean causeFallDamage(double fallDistance, float damageModifier, DamageSource damageSource) {
 		return false;
