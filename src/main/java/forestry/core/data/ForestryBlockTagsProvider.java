@@ -90,7 +90,8 @@ public final class ForestryBlockTagsProvider {
 			.add(CoreBlocks.BOG_EARTH.block())
 			.add(CoreBlocks.PEAT.block())
 			.add(CoreBlocks.TURF.block())
-			.add(CoreBlocks.TURF_BLOCK.block());
+			.add(CoreBlocks.TURF_BLOCK.block())
+			.add(CharcoalBlocks.ASH.block());
 
 		for (Block block : union(
 			CoreBlocks.BASE,
