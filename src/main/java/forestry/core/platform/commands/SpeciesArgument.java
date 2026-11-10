@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public record SpeciesArgument(ISpeciesType<?, ?> type) implements ISpeciesArgumentType<ISpecies<?>> {
 	@Override
 	public ISpecies<?> parse(final StringReader reader) throws CommandSyntaxException {
-		Identifier location = Identifier.read(reader);
+		Identifier location = CommandHelpers.readForestryId(reader);
 
 		ISpecies<?> species = this.type.getSpeciesSafe(location);
 
