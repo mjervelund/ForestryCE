@@ -46,7 +46,12 @@ public class ButterflyEntityReloadTest {
 		try {
 			IButterflySpecies defaultSpecies = type.getDefaultSpecies();
 			IButterfly individual = defaultSpecies.createIndividual();
-			BlockPos rel = new BlockPos(2, 2, 2);
+			// In the test's own block column: the test only starts once the chunks its 1x1x1 structure touches have
+			// their entities loaded, and (2, 2, 2) lies in a neighbouring chunk whenever the grid puts the test within
+			// two blocks of a chunk edge. On a fresh grid that chunk's entity section is not tracked yet at tick 0,
+			// so the butterfly was never added to the level's entity lookup, the reload's level.getEntities missed it
+			// and its species stayed stale.
+			BlockPos rel = new BlockPos(0, 2, 0);
 			BlockPos abs = helper.absolutePos(rel);
 			entity = (EntityButterfly) type.spawnButterflyInWorld(helper.getLevel(), individual, abs.getX(), abs.getY(), abs.getZ());
 			IButterflySpecies beforeSpecies = entity.getButterfly().getSpecies();
