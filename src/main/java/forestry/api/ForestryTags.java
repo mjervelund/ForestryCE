@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.ApiStatus;
 
 public class ForestryTags {
@@ -219,12 +220,15 @@ public class ForestryTags {
 	}
 
 	public static class Fluids {
-		public static final TagKey<Fluid> HONEY = forgeTag("honey");
-		public static final TagKey<Fluid> EXPERIENCE = forgeTag("experience");
-		public static final TagKey<Fluid> WAX = forgeTag("wax");
+		// Deviation from 1.20.1: fluid tags moved from the forge: namespace to NeoForge's common c: tags (ForestryCE#32),
+		// so other mods' honey/experience fluids are accepted and Forestry's fluids are visible to them.
+		public static final TagKey<Fluid> HONEY = Tags.Fluids.HONEY;
+		public static final TagKey<Fluid> EXPERIENCE = Tags.Fluids.EXPERIENCE;
+		// NeoForge has no common wax fluid tag; c:wax follows the same convention
+		public static final TagKey<Fluid> WAX = commonTag("wax");
 
-		private static TagKey<Fluid> forgeTag(String name) {
-			return FluidTags.create(Identifier.fromNamespaceAndPath("forge", name));
+		private static TagKey<Fluid> commonTag(String name) {
+			return FluidTags.create(Identifier.fromNamespaceAndPath("c", name));
 		}
 	}
 
