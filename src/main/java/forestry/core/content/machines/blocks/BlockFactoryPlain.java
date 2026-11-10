@@ -53,7 +53,8 @@ public class BlockFactoryPlain extends BlockBase<BlockTypeFactoryPlain> {
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext context) {
 		switch (this.blockType) {
-			case FABRICATOR, SMELTER -> {
+			// the smelter's model is the same hollow frame as the other plain machines, only the fabricator is a full cube
+			case FABRICATOR -> {
 				return Shapes.block();
 			}
 			default -> {
