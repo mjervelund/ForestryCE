@@ -9,6 +9,7 @@ import forestry.core.platform.gui.ContainerItemInventory;
 import forestry.core.platform.gui.ContainerNaturalistInventory;
 import forestry.core.platform.gui.IGuiSelectable;
 import forestry.core.platform.gui.INaturalistMenu;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
@@ -58,7 +59,8 @@ public class ContainerNaturalistBackpack extends ContainerItemInventory<Backpack
 
 	public static ContainerNaturalistBackpack fromNetwork(int windowId, Inventory playerInventory, FriendlyByteBuf buffer) {
 		Identifier typeId = buffer.readIdentifier();
-		ItemStack parent = playerInventory.getSelectedItem();
+		InteractionHand hand = buffer.readBoolean() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+		ItemStack parent = playerInventory.player.getItemInHand(hand);
 
 		return makeContainer(windowId, playerInventory.player, parent, typeId);
 	}

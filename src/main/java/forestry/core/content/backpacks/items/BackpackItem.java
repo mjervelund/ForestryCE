@@ -61,7 +61,7 @@ public class BackpackItem extends WithScreenItem implements ITintedItem {
 	}
 
 	@Override
-	protected void writeContainerData(ServerPlayer player, ItemStack stack, RegistryFriendlyByteBuf buffer) {
+	protected void writeContainerData(ServerPlayer player, ItemStack stack, InteractionHand hand, RegistryFriendlyByteBuf buffer) {
 		NetworkUtil.writeEnum(buffer, this.type == EnumBackpackType.WOVEN ? ContainerBackpack.Size.T2 : ContainerBackpack.Size.DEFAULT);
 		ItemStack.STREAM_CODEC.encode(buffer, stack);
 	}
