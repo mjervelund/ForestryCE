@@ -168,7 +168,9 @@ public class FilterLogic implements IFilterLogic {
 			return false;
 		}
 		if (rule == DefaultFilterRuleType.ITEM) {
-			return true;
+			// the "item" rule is for non-genetic items only (TileGeneticFilter.getValidDirections); genetic ones
+			// use "anything" or a species rule, as before the 2024 API refactor (GitHub #461)
+			return false;
 		}
 		Identifier requiredRoot = rule.getSpeciesTypeId();
 		if (requiredRoot != null && (!filterData.type().id().equals(requiredRoot))) {
