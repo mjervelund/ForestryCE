@@ -138,7 +138,8 @@ public class BlockJumboCandle extends Block {
 			&& state.getValue(SHAPE) != CandleShape.BOTTOM
 			&& state.getValue(SHAPE) != CandleShape.MIDDLE
 			&& !player.isShiftKeyDown()
-			&& !level.getBlockState(pos.above()).isSolidRender()) {
+			&& !level.getBlockState(pos.above()).isSolidRender()
+			&& !isDoused(level.getBlockState(pos.above()))) {
 
 			if (stack.is(Items.FLINT_AND_STEEL)) {
 				if (!level.isClientSide()) {
@@ -164,6 +165,15 @@ public class BlockJumboCandle extends Block {
 		}
 
 		return InteractionResult.TRY_WITH_EMPTY_HAND;
+	}
+
+	/**
+	 * Water (or any non-lava fluid, including a waterlogged block) above the candle puts it out, as
+	 * updateShape does, so it must not be lit there either. Vanilla candles refuse to light while waterlogged.
+	 */
+	private static boolean isDoused(BlockState aboveState) {
+		FluidState fluidState = aboveState.getFluidState();
+		return !fluidState.isEmpty() && !fluidState.is(FluidTags.LAVA);
 	}
 
 	@Override
