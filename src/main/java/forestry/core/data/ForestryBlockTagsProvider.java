@@ -133,6 +133,8 @@ public final class ForestryBlockTagsProvider {
 			);
 			tags.tag(BlockTags.LOGS).addTags(woodType.fireproofBlockTag);
 		}
+		// cocoa grown by Forestry trees with fireproof jungle logs must also survive on them
+		tags.tag(BlockTags.SUPPORTS_COCOA).addTag(VanillaWoodType.JUNGLE.fireproofBlockTag);
 
 		tags.tag(BlockTags.STAIRS).add(ArboricultureBlocks.STAIRS.blockArray());
 		tags.tag(BlockTags.WOODEN_STAIRS).add(ArboricultureBlocks.STAIRS.blockArray());

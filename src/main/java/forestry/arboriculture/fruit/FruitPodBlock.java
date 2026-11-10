@@ -85,7 +85,7 @@ public class FruitPodBlock extends CocoaBlock implements EntityBlock {
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 		Direction facing = state.getValue(FACING);
-		return BlockUtil.isValidPodLocation(level, pos, facing, this.podType.getFruit().getLogTag());
+		return BlockUtil.isValidPodLocation(level, pos, facing, this.podType.getFruit()::isPodLog);
 	}
 
 	@Override

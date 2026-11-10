@@ -15,6 +15,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -118,5 +119,13 @@ public interface IFruit extends IProductProducer, ISpecialtyProducer {
 	 */
 	default TagKey<Block> getLogTag() {
 		return BlockTags.JUNGLE_LOGS;
+	}
+
+	/**
+	 * Whether a pod fruit can hang on this block. Defaults to {@link #getLogTag()}; pod fruits also accept the fireproof
+	 * variant of their log.
+	 */
+	default boolean isPodLog(BlockState state) {
+		return state.is(getLogTag());
 	}
 }
