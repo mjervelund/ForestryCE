@@ -58,6 +58,18 @@ public final class ForestryTints {
 			}
 			return -1;
 		}
+
+		// TerrainParticle (break, sprint and fall dust) tints its particle sprite with tint index 0, which for the
+		// plain machines is the resource tank colour: black when the tank is empty or the machine has no tank, so
+		// the centrifuge, carpenter and the other machines threw black particles. Only IColoredBlocks (leaves,
+		// comb blocks) mean their tint for the whole block
+		@Override
+		public int colorAsTerrainParticle(BlockState state, BlockAndTintGetter level, BlockPos pos) {
+			if (state.getBlock() instanceof IColoredBlock) {
+				return colorInWorld(state, level, pos);
+			}
+			return -1;
+		}
 	}
 
 	/**
