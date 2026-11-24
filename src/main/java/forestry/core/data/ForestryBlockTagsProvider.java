@@ -238,8 +238,13 @@ public final class ForestryBlockTagsProvider {
 		tags.tag(ForestryTags.Blocks.CORAL_FLOWERS).addTags(BlockTags.CORALS).addTags(BlockTags.WALL_CORALS);
 		tags.tag(ForestryTags.Blocks.SCULK_FLOWERS).add(Blocks.SCULK_SHRIEKER, Blocks.SCULK_CATALYST, Blocks.SCULK_SENSOR);
 
+		// #minecraft:flowers minus its leaf blocks (flowering azalea leaves, cherry leaves): bees planted copies of
+		// those, a free leaf duplicator (ForestryCE#421). Keep in step with the vanilla tag.
 		tags.tag(ForestryTags.Blocks.PLANTABLE_FLOWERS)
-			.addTag(BlockTags.FLOWERS)
+			.addTag(BlockTags.SMALL_FLOWERS)
+			.add(Blocks.SUNFLOWER, Blocks.LILAC, Blocks.PEONY, Blocks.ROSE_BUSH, Blocks.PITCHER_PLANT)
+			.add(Blocks.FLOWERING_AZALEA, Blocks.MANGROVE_PROPAGULE, Blocks.PINK_PETALS, Blocks.WILDFLOWERS)
+			.add(Blocks.CHORUS_FLOWER, Blocks.SPORE_BLOSSOM, Blocks.CACTUS_FLOWER)
 			.add(Blocks.RED_MUSHROOM, Blocks.BROWN_MUSHROOM)
 			.add(Blocks.FERN)
 			.add(Blocks.CRIMSON_FUNGUS, Blocks.WARPED_FUNGUS, Blocks.WARPED_ROOTS, Blocks.CRIMSON_ROOTS);
