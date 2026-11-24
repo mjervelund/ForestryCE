@@ -3,6 +3,7 @@ package forestry.apiculture.apiary;
 import java.util.function.Consumer;
 import net.minecraft.world.item.component.TooltipDisplay;
 import forestry.core.platform.registration.RegistrationIds;
+import java.util.Locale;
 import java.util.List;
 
 import net.minecraft.ChatFormatting;
@@ -51,8 +52,8 @@ public class CreativeHiveFrameItem extends ItemForestry implements IHiveFrame {
 	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag advanced) {
 		super.appendHoverText(stack, context, display, tooltip, advanced);
 
-		tooltip.accept(Component.translatable("item.forestry.bee.modifier.production", Modifier.PRODUCTION));
-		tooltip.accept(Component.translatable("item.forestry.bee.modifier.genetic.decay", Modifier.GENETIC_DECAY));
+		tooltip.accept(Component.translatable("item.forestry.bee.modifier.production", String.format(Locale.ROOT, "%.2f", Modifier.PRODUCTION)));
+		tooltip.accept(Component.translatable("item.forestry.bee.modifier.genetic.decay", String.format(Locale.ROOT, "%.2f", Modifier.GENETIC_DECAY)));
 
 		Identifier forced = getForcedMutation(stack);
 		if (forced != null) {
