@@ -139,7 +139,8 @@ public class ForestryBlockLootTables extends BlockLootSubProvider {
 		// todo fix all of these
 		registerEmptyTables(ArboricultureBlocks.PODS); // Handled by internal logic
 		registerEmptyTables(ArboricultureBlocks.SAPLING_GE); // Handled by internal logic
-		registerEmptyTables(ArboricultureBlocks.LEAVES);  // Handled by internal logic
+		// saplings and fruit are handled by internal logic; sticks like vanilla leaves (ForestryCE#369)
+		registerLootTable(ArboricultureBlocks.LEAVES, block -> LootTable.lootTable().withPool(stickPool(block)));
 
 		registerLootTable(CoreBlocks.APATITE_ORE, this::createApatiteOreDrops);
 		registerLootTable(CoreBlocks.DEEPSLATE_APATITE_ORE, this::createApatiteOreDrops);
@@ -167,7 +168,15 @@ public class ForestryBlockLootTables extends BlockLootSubProvider {
 		return createSilkTouchOrShearsDispatchTable(block,
 			applyExplosionCondition(block, LootItem.lootTableItem(ArboricultureItems.TREE_SAPLING)
 				.apply(OrganismFunction.fromId(SpeciesUtil.TREE_TYPE.get().id(), definition.getSpeciesId())))
-				.when(BonusLevelTableCondition.bonusLevelFlatChance(enchantments().getOrThrow(Enchantments.FORTUNE), chances)));
+				.when(BonusLevelTableCondition.bonusLevelFlatChance(enchantments().getOrThrow(Enchantments.FORTUNE), chances)))
+			.withPool(stickPool(block));
+	}
+
+	// the stick pool of vanilla's createLeavesDrops
+	private LootPool.Builder stickPool(Block block) {
+		return LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).when(doesNotHaveShearsOrSilkTouch())
+			.add(applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
+				.when(BonusLevelTableCondition.bonusLevelFlatChance(enchantments().getOrThrow(Enchantments.FORTUNE), NORMAL_LEAVES_STICK_CHANCES)));
 	}
 
 	public void registerLootTable(FeatureBlock<?, ?> featureBlock, Function<Block, LootTable.Builder> builderFunction) {
