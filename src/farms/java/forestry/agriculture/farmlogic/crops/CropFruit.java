@@ -1,6 +1,8 @@
 package forestry.agriculture.farmlogic.crops;
 
 import forestry.api.core.genetics.IFruitBearer;
+import forestry.arboriculture.leaves.DefaultFruitLeavesBlock;
+import forestry.arboriculture.trees.TreeUtil;
 import forestry.core.platform.tile.TileUtil;
 import forestry.core.platform.util.BlockUtil;
 import net.minecraft.core.BlockPos;
@@ -18,12 +20,20 @@ public class CropFruit extends Crop {
 	@Override
 	protected boolean isCrop(Level world, BlockPos pos) {
 		IFruitBearer bearer = TileUtil.getTile(world, pos, IFruitBearer.class);
-		return bearer != null && bearer.hasFruit() && bearer.getRipeness() >= 1.0f;
+		if (bearer == null) {
+			// tile-less fruit leaves of a default-genome tree are always ripe
+			return world.getBlockState(pos).getBlock() instanceof DefaultFruitLeavesBlock;
+		}
+		return bearer.hasFruit() && bearer.getRipeness() >= 1.0f;
 	}
 
 	@Override
 	protected List<ItemStack> harvestBlock(Level level, BlockPos pos) {
 		IFruitBearer tile = TileUtil.getTile(level, pos, IFruitBearer.class);
+		if (tile == null && level.getBlockState(pos).getBlock() instanceof DefaultFruitLeavesBlock) {
+			// Convert to genetic leaves (ripe, like the pollination/grafting path does) so the fruit grows back
+			tile = TreeUtil.getOrCreateLeaves(level, pos, true);
+		}
 		if (tile == null) {
 			return NonNullList.create();
 		}
