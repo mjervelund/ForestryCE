@@ -109,6 +109,8 @@ public class PortableAnalyzerScreen extends GuiForestry<PortableAnalyzerMenu> {
 		this.textLayout.drawLine(graphics, Component.literal("III: ").append(Component.translatable("for.gui.produce")), 0 + 16);
 		this.textLayout.newLine();
 		this.textLayout.drawLine(graphics, Component.literal("IV : ").append(Component.translatable("for.gui.evolution")), 0 + 16);
+		this.textLayout.newLine();
+		this.textLayout.drawLine(graphics, Component.literal("V  : ").append(Component.translatable("for.gui.alyzer.classification")), 0 + 16);
 
 		this.textLayout.endPage(graphics);
 	}
