@@ -68,7 +68,8 @@ public abstract class FarmLogicWatered extends FarmLogicSoil {
 				if (!isValidPosition(farmHousing, direction, position, CultivationType.SOIL)
 					|| !BlockUtil.isBreakableBlock(state, world, pos)
 					|| isAcceptedSoil(farmHousing, direction, position, state)
-					|| isWaterSourceBlock(world, position)
+					// keep water sources and waterlogged blocks, but lay soil over flowing water (ForestryCE#200)
+					|| world.getFluidState(position).isSourceOfType(Fluids.WATER)
 					|| !farmHousing.getFarmInventory().hasResources(resources)) {
 					continue;
 				}
