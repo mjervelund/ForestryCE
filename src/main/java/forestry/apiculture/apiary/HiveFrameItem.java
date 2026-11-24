@@ -15,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
+import java.util.Locale;
 import java.util.List;
 
 public class HiveFrameItem extends ItemForestry implements IHiveFrame {
@@ -68,8 +69,8 @@ public class HiveFrameItem extends ItemForestry implements IHiveFrame {
 		}
 
 		public void addInformation(List<Component> tooltip) {
-			tooltip.add(Component.translatable("item.forestry.bee.modifier.production", production));
-			tooltip.add(Component.translatable("item.forestry.bee.modifier.genetic.decay", this.geneticDecay));
+			tooltip.add(Component.translatable("item.forestry.bee.modifier.production", String.format(Locale.ROOT, "%.2f", production)));
+			tooltip.add(Component.translatable("item.forestry.bee.modifier.genetic.decay", String.format(Locale.ROOT, "%.2f", this.geneticDecay)));
 		}
 	}
 }
