@@ -26,7 +26,10 @@ import forestry.core.content.energy.ForestryEnergyStorage;
  * work cycle itself as the only thing under test.
  */
 public class MinifarmEnergyTest {
-	private static final BlockPos FARM_POS = new BlockPos(8, 2, 8);
+	// inside this test's own grid cell: the grid spaces tests 6 blocks apart in x and 8 in z, so the old (8, 2, 8) was
+	// a neighbour's (2, 2, 0), where MultiblockPersistenceTest's alveary (and other tests' blocks) could replace the
+	// farm mid-test, leaving this test holding a removed block entity that stopped spending energy
+	private static final BlockPos FARM_POS = new BlockPos(2, 2, 3);
 
 	private static final Item PRODUCT = Items.APPLE;
 	// one pending stack is stowed per work cycle, so keep the queue longer than any test runs
@@ -57,6 +60,7 @@ public class MinifarmEnergyTest {
 		helper.startSequence()
 			.thenIdle(PAID_CYCLES_IDLE)
 			.thenExecute(() -> {
+				assertFarmInPlace(helper, farm);
 				int spent = stored - energy.getEnergyStored();
 				helper.assertTrue(spent >= expected,
 					"expected the minifarm to spend at least " + expected + " energy over " + CYCLES
@@ -81,6 +85,7 @@ public class MinifarmEnergyTest {
 		helper.startSequence()
 			.thenIdle(OUT_OF_ENERGY_IDLE)
 			.thenExecute(() -> {
+				assertFarmInPlace(helper, farm);
 				int stowed = countProducts(farm);
 				helper.assertTrue(stowed == 1,
 					"expected the minifarm to stow 1 product on its one cycle of energy, it stowed " + stowed
@@ -98,6 +103,12 @@ public class MinifarmEnergyTest {
 
 		helper.fail("Expected an AbstractMinifarmBlockEntity at " + FARM_POS);
 		throw new AssertionError("unreachable");
+	}
+
+	// a removed block entity stops ticking, which would read as a farm that stopped paying for work
+	private static void assertFarmInPlace(GameTestHelper helper, AbstractMinifarmBlockEntity farm) {
+		helper.assertTrue(!farm.isRemoved() && helper.getLevel().getBlockEntity(helper.absolutePos(FARM_POS)) == farm,
+			"the minifarm at " + FARM_POS + " was replaced during the test (another test placed a block there)");
 	}
 
 	private static void queueProducts(AbstractMinifarmBlockEntity farm, int count) {

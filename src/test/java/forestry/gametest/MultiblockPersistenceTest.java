@@ -24,7 +24,12 @@ import java.util.List;
 // an idle alveary never reports a change from serverTick, so a shared inventory change only survives a save if the
 // change itself marks the holder's chunk unsaved
 public final class MultiblockPersistenceTest {
-	private static final BlockPos BASE = new BlockPos(6, 1, 6);
+	// inside this test's own grid cell (tests sit 6 blocks apart in x and 8 in z). The old (6..8, 1..4, 6..8) reached
+	// the south-east neighbour's (0..2, 1..4, 0), so a neighbour's block could break the alveary ("structure failed to
+	// assemble"), and the alveary could replace a neighbour's block at its (8, y, 8) (MinifarmEnergyTest's farm)
+	private static final BlockPos BASE = new BlockPos(1, 1, 2);
+	// the site needs real seconds to load, not ticks (see ChunkLifecycle.Steps#await)
+	private static final int SITE_TIMEOUT = 2_000_000;
 	private static final int PRODUCT_SLOT = 2;
 
 	private MultiblockPersistenceTest() {
@@ -51,38 +56,44 @@ public final class MultiblockPersistenceTest {
 		});
 	}
 
-	@ForestryGameTest
+	// runs on an isolated site: an alveary that straddles a chunk border cannot fit in a 6-wide grid cell, and in the
+	// grid it reached up to 14 blocks east into the neighbours' cells
+	@ForestryGameTest(timeoutTicks = SITE_TIMEOUT)
 	public static void alvearyChangeFromOtherChunkMarksHolderUnsaved(GameTestHelper helper) {
 		ServerLevel level = helper.getLevel();
-		// put the min corner in the last column of a chunk so the rest of the alveary sits in the next chunk
-		int column = Math.floorMod(helper.absolutePos(BlockPos.ZERO).getX(), 16);
-		int x = Math.floorMod(15 - column, 16);
-		if (x > 12) {
-			x--;
-		}
-		List<BlockPos> members = MultiblockTestSupport.buildAlveary(helper, new BlockPos(x, 1, 6));
+		ChunkPos site = ChunkLifecycle.isolatedSite(helper);
+		ChunkPos east = new ChunkPos(site.x() + 1, site.z());
+		List<BlockPos> members = new ArrayList<>();
 
-		helper.runAfterDelay(5, () -> {
-			BlockPos holder = holderOf(helper, members);
-			ChunkPos holderChunkPos = ChunkPos.containing(holder);
-			BlockPos remote = members.stream()
-				.filter(pos -> !ChunkPos.containing(pos).equals(holderChunkPos))
-				.findFirst()
-				.orElse(null);
-			helper.assertTrue(remote != null, "alveary does not straddle a chunk border");
+		ChunkLifecycle.steps(helper)
+			// distance 2 so the east neighbour ticks too
+			.run(() -> ChunkLifecycle.hold(level, site, 2))
+			.await(() -> ChunkLifecycle.isTicking(level, site) && ChunkLifecycle.isTicking(level, east), "site did not start ticking")
+			// x 14..16: two columns in the site chunk, one in the next
+			.run(() -> members.addAll(MultiblockTestSupport.buildAlveary(helper, ChunkLifecycle.siteBlock(helper, site, 14, 4))))
+			.await(() -> MultiblockTestSupport.isAssembled(level, members.getFirst()), "alveary did not assemble")
+			.run(() -> {
+				BlockPos holder = holderOf(helper, members);
+				ChunkPos holderChunkPos = ChunkPos.containing(holder);
+				BlockPos remote = members.stream()
+					.filter(pos -> !ChunkPos.containing(pos).equals(holderChunkPos))
+					.findFirst()
+					.orElse(null);
+				helper.assertTrue(remote != null, "alveary does not straddle a chunk border");
 
-			LevelChunk holderChunk = level.getChunkAt(holder);
-			holderChunk.tryMarkSaved();
-			level.getChunkAt(remote).tryMarkSaved();
+				LevelChunk holderChunk = level.getChunkAt(holder);
+				holderChunk.tryMarkSaved();
+				level.getChunkAt(remote).tryMarkSaved();
 
-			// the same calls a menu slot makes when a player places an item
-			Container container = (Container) level.getBlockEntity(remote);
-			container.setItem(PRODUCT_SLOT, new ItemStack(Items.HONEYCOMB, 7));
-			container.setChanged();
+				// the same calls a menu slot makes when a player places an item
+				Container container = (Container) level.getBlockEntity(remote);
+				container.setItem(PRODUCT_SLOT, new ItemStack(Items.HONEYCOMB, 7));
+				container.setChanged();
 
-			helper.assertTrue(holderChunk.isUnsaved(), "a change through a member in another chunk did not mark the holder's chunk unsaved");
-			helper.succeed();
-		});
+				helper.assertTrue(holderChunk.isUnsaved(), "a change through a member in another chunk did not mark the holder's chunk unsaved");
+				ChunkLifecycle.release(level, site, 2);
+			})
+			.succeed();
 	}
 
 	// a queen's death leaves the alveary idle, so serverTick never reports the dead queen or her offspring. Machines
