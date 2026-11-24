@@ -21,6 +21,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -133,5 +134,11 @@ public class BlockBase<P extends Enum<P> & IBlockType> extends BlockForestry imp
 	public BlockState rotate(BlockState state, Rotation rot) {
 		Direction facing = state.getValue(FACING);
 		return state.setValue(FACING, rot.rotate(facing));
+	}
+
+	// Without this a mirrored structure (structure block, jigsaw, WorldEdit) kept the machines' unmirrored facing
+	@Override
+	public BlockState mirror(BlockState state, Mirror mirror) {
+		return state.setValue(FACING, mirror.mirror(state.getValue(FACING)));
 	}
 }
