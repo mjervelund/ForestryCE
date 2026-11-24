@@ -39,7 +39,10 @@ public record PacketGuiStream(
 
 	public static void handle(PacketGuiStream msg, Player player) {
 		IStreamableGui tile = TileUtil.getTile(player.level(), msg.pos, IStreamableGui.class);
-		if (tile != null) {
+		// An empty payload comes from a server-side multiblock that is no longer assembled: its fake controller writes
+		// nothing, while this client's copy may still be formed and its real controller would read past the end
+		// (IndexOutOfBoundsException, the client is disconnected). Nothing to update then.
+		if (tile != null && msg.payload.isReadable()) {
 			tile.readGuiData(msg.payload);
 		}
 	}
