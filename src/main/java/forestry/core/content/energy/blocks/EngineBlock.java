@@ -13,6 +13,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -58,6 +59,17 @@ public class EngineBlock extends BlockBase<EngineBlockType> {
 	@Override
 	public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation rot) {
 		return rotate(state, world, pos);
+	}
+
+	// Engines replace BlockBase's FACING with VERTICAL_FACING, so BlockBase's rotate/mirror would throw on them
+	@Override
+	public BlockState rotate(BlockState state, Rotation rot) {
+		return state.setValue(VERTICAL_FACING, rot.rotate(state.getValue(VERTICAL_FACING)));
+	}
+
+	@Override
+	public BlockState mirror(BlockState state, Mirror mirror) {
+		return state.setValue(VERTICAL_FACING, mirror.mirror(state.getValue(VERTICAL_FACING)));
 	}
 
 	private static boolean isOrientedAtEnergyReciever(LevelAccessor world, BlockPos pos, Direction orientation) {
