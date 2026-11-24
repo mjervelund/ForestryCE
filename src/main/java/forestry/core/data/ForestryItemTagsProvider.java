@@ -65,6 +65,8 @@ public class ForestryItemTagsProvider {
 		tags.copy(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS);
 		tags.copy(BlockTags.DOORS, ItemTags.DOORS);
 		tags.copy(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS);
+		tags.copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);
+		tags.copy(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS);
 		// The decorative stone and brick walls are the only forestry blocks in BlockTags.WALLS
 		tags.copy(BlockTags.WALLS, ItemTags.WALLS);
 
@@ -160,6 +162,9 @@ public class ForestryItemTagsProvider {
 		tags.tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(CoreItems.SURVIVALISTS_PICKAXE);
 		tags.tag(ItemTags.PICKAXES).add(CoreItems.SURVIVALISTS_PICKAXE);
 		tags.tag(ItemTags.SHOVELS).add(CoreItems.SURVIVALISTS_SHOVEL);
+		tags.tag(ItemTags.AXES).add(CoreItems.SURVIVALISTS_AXE);
+		tags.tag(ItemTags.SWORDS).add(CoreItems.SURVIVALISTS_SWORD);
+		tags.tag(ItemTags.HOES).add(CoreItems.SURVIVALISTS_HOE);
 
 		tags.tag(ForestryTags.Items.BURN_BARREL_BLACKLIST).add(
 			Items.LAVA_BUCKET,
