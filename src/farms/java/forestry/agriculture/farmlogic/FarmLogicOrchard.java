@@ -5,6 +5,7 @@ import forestry.api.agriculture.IFarmHousing;
 import forestry.api.agriculture.IFarmType;
 import forestry.api.agriculture.IFarmable;
 import forestry.api.core.genetics.IFruitBearer;
+import forestry.arboriculture.leaves.DefaultFruitLeavesBlock;
 import forestry.core.platform.tile.TileUtil;
 import forestry.agriculture.farmlogic.crops.CropFruit;
 import net.minecraft.core.BlockPos;
@@ -108,6 +109,11 @@ public class FarmLogicOrchard extends FarmLogic {
 		if (tile != null) {
 			return true;
 		}
+		// The fruit leaves of default-genome trees (worldgen, and saplings of a species' default genome) have no block
+		// entity; CropFruit turns them into ripe genetic leaves when it harvests them
+		if (state.getBlock() instanceof DefaultFruitLeavesBlock) {
+			return true;
+		}
 
 		for (IFarmable farmable : getFarmables()) {
 			if (farmable.isSaplingAt(world, pos, state)) {
@@ -126,6 +132,8 @@ public class FarmLogicOrchard extends FarmLogic {
 			if (fruitBearer.hasFruit() && fruitBearer.getRipeness() >= 1.0f) {
 				return new CropFruit(world, position);
 			}
+		} else if (world.getBlockState(position).getBlock() instanceof DefaultFruitLeavesBlock) {
+			return new CropFruit(world, position);
 		} else {
 			return getCrop(world, position);
 		}
