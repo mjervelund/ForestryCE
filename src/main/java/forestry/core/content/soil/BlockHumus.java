@@ -1,5 +1,6 @@
 package forestry.core.content.soil;
 
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -20,7 +21,7 @@ public class BlockHumus extends Block {
 	public static final IntegerProperty DEGRADE = IntegerProperty.create("degrade", 0, MAX_DEGRADE);
 
 	public BlockHumus(Block.Properties properties) {
-		super(properties.randomTicks().strength(0.5f).sound(SoundType.GRAVEL));
+		super(properties.mapColor(MapColor.DIRT).randomTicks().strength(0.5f).sound(SoundType.GRAVEL));
 
 		registerDefaultState(this.getStateDefinition().any().setValue(DEGRADE, 0));
 	}

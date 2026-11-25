@@ -1,5 +1,6 @@
 package forestry.core.content.soil;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.core.features.CoreBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -24,6 +25,7 @@ public class BlockBogEarth extends Block {
 
 	public BlockBogEarth(Block.Properties properties) {
 		super(properties
+			.mapColor(MapColor.DIRT)
 			.randomTicks()
 			.strength(0.5f)
 			.sound(SoundType.GRAVEL));

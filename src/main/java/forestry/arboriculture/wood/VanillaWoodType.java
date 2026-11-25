@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.world.level.material.MapColor;
 import com.mojang.authlib.GameProfile;
 import forestry.api.ForestryTags;
 import forestry.api.arboriculture.IWoodType;
@@ -44,6 +45,32 @@ public enum VanillaWoodType implements IWoodType {
 	@Override
 	public float getHardness() {
 		return 2.0F;
+	}
+
+	/** Same colours as the vanilla planks/logs this type copies. */
+	@Override
+	public MapColor getPlanksMapColor() {
+		return switch (this) {
+			case OAK -> MapColor.WOOD;
+			case SPRUCE -> MapColor.PODZOL;
+			case BIRCH -> MapColor.SAND;
+			case JUNGLE -> MapColor.DIRT;
+			case ACACIA -> MapColor.COLOR_ORANGE;
+			case DARK_OAK -> MapColor.COLOR_BROWN;
+			case CHERRY -> MapColor.TERRACOTTA_WHITE;
+		};
+	}
+
+	@Override
+	public MapColor getBarkMapColor() {
+		return switch (this) {
+			case OAK -> MapColor.PODZOL;
+			case SPRUCE, DARK_OAK -> MapColor.COLOR_BROWN;
+			case BIRCH -> MapColor.QUARTZ;
+			case JUNGLE -> MapColor.DIRT;
+			case ACACIA -> MapColor.STONE;
+			case CHERRY -> MapColor.TERRACOTTA_GRAY;
+		};
 	}
 
 	@Override

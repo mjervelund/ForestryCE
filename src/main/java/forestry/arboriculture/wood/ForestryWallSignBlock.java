@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.api.ForestryConstants;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -26,7 +27,7 @@ public class ForestryWallSignBlock extends WallSignBlock implements IWoodTyped {
 
 	// 26.x: lootFrom is gone; drop the standing sign through its loot table id
 	public ForestryWallSignBlock(ForestryWoodType type) {
-		super(type.getWoodType(), RegistrationIds.block().forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).overrideLootTable(Optional.of(ResourceKey.create(Registries.LOOT_TABLE, ForestryConstants.forestry("blocks/" + type.getSerializedName() + "_sign")))).ignitedByLava());
+		super(type.getWoodType(), RegistrationIds.block().mapColor(MapColor.WOOD).forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).overrideLootTable(Optional.of(ResourceKey.create(Registries.LOOT_TABLE, ForestryConstants.forestry("blocks/" + type.getSerializedName() + "_sign")))).ignitedByLava());
 
 		this.type = type;
 	}
