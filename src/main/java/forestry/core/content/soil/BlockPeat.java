@@ -1,5 +1,6 @@
 package forestry.core.content.soil;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.core.features.CoreBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +17,7 @@ import net.minecraft.world.phys.HitResult;
 public class BlockPeat extends Block {
 	public BlockPeat(Block.Properties properties) {
 		super(properties
+			.mapColor(MapColor.COLOR_BROWN)
 			.strength(0.5f)
 			.sound(SoundType.MUDDY_MANGROVE_ROOTS));
 	}

@@ -1,5 +1,6 @@
 package forestry.arboriculture.leaves;
 
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import forestry.api.arboriculture.genetics.IFruit;
 import forestry.api.arboriculture.genetics.ITree;
@@ -32,6 +33,7 @@ public class DecorativeLeavesBlock extends Block implements IColoredBlock, IShea
 
 	public DecorativeLeavesBlock(Properties properties, ForestryLeafType type) {
 		super(properties
+			.mapColor(MapColor.PLANT)
 			.strength(0.2f)
 			.sound(SoundType.GRASS)
 			.noOcclusion()

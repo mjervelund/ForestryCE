@@ -22,7 +22,7 @@ public class MultifarmBlock extends BlockStructure implements EntityBlock {
 	public static final BooleanProperty BAND = BooleanProperty.create("band");
 
 	public MultifarmBlock(MultifarmBlockType type, MultifarmMaterialType farmMaterial) {
-		super(RegistrationIds.block().strength(1.0f));
+		super(RegistrationIds.block().mapColor(farmMaterial.getBase().defaultMapColor()).strength(1.0f));
 		this.type = type;
 		this.farmMaterial = farmMaterial;
 	}

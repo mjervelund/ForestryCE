@@ -1,5 +1,6 @@
 package forestry.agriculture.minifarm.blocks;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.block.BlockBase;
 import forestry.core.platform.render.ParticleRender;
@@ -14,7 +15,7 @@ public class MinifarmBlock extends BlockBase<MinifarmBlockType> {
 	private final boolean manual;
 
 	public MinifarmBlock(MinifarmBlockType type, boolean manual) {
-		super(RegistrationIds.block().noOcclusion(), type);
+		super(RegistrationIds.block().mapColor(MapColor.METAL).noOcclusion(), type);
 		this.manual = manual;
 	}
 

@@ -1,5 +1,6 @@
 package forestry.core.content.machines.blocks;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.block.BlockBase;
 import forestry.core.platform.block.IMachineProperties;
@@ -23,7 +24,7 @@ public class BlockFactoryPlain extends BlockBase<BlockTypeFactoryPlain> {
 	private static final ThreadLocal<BlockTypeFactoryPlain> CACHE_TYPE = new ThreadLocal<>();
 
 	private BlockFactoryPlain(BlockTypeFactoryPlain type) {
-		super(RegistrationIds.block(), type);
+		super(RegistrationIds.block().mapColor(MapColor.METAL), type);
 	}
 
 	public static void setMachineType(BlockTypeFactoryPlain type) {

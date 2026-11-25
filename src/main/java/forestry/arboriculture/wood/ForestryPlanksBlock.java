@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ForestryPlanksBlock extends Block implements IWoodTyped {
 	public static Properties createWoodProperties(IWoodType woodType) {
-		return RegistrationIds.block().strength(woodType.getHardness(), woodType.getHardness() * 1.5F).sound(SoundType.WOOD);
+		return RegistrationIds.block().mapColor(woodType.getPlanksMapColor()).strength(woodType.getHardness(), woodType.getHardness() * 1.5F).sound(SoundType.WOOD);
 	}
 
 	private final boolean fireproof;

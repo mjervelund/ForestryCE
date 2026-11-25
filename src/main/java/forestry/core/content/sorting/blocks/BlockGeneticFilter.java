@@ -1,5 +1,6 @@
 package forestry.core.content.sorting.blocks;
 
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.LevelReader;
@@ -49,6 +50,7 @@ public class BlockGeneticFilter extends BlockForestry implements EntityBlock {
 
 	public BlockGeneticFilter(Block.Properties properties) {
 		super(properties
+			.mapColor(MapColor.METAL)
 				.strength(0.25f, 3.0f)
 				.dynamicShape()
 				.noOcclusion(),

@@ -1,5 +1,6 @@
 package forestry.arboriculture.leaves;
 
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import com.mojang.authlib.GameProfile;
@@ -53,6 +54,7 @@ public abstract class AbstractLeavesBlock extends BlockExtendedLeaves implements
 
 	public AbstractLeavesBlock(Block.Properties properties) {
 		super(properties
+			.mapColor(MapColor.PLANT)
 			.strength(0.2f)
 			.sound(SoundType.GRASS)
 			.randomTicks()

@@ -1,5 +1,6 @@
 package forestry.apiculture.alveary;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.core.platform.block.ITooltipBlock;
 import net.minecraft.world.level.redstone.Orientation;
 import java.util.function.Consumer;
@@ -63,7 +64,7 @@ public class AlvearyBlock extends BlockStructure implements ITooltipBlock, Entit
 	private final Type type;
 
 	public AlvearyBlock(Type type) {
-		super(RegistrationIds.block().strength(1f).sound(SoundType.WOOD));
+		super(RegistrationIds.block().mapColor(MapColor.WOOD).strength(1f).sound(SoundType.WOOD));
 		this.type = type;
 		BlockState defaultState = this.getStateDefinition().any();
 		if (type == Type.PLAIN) {

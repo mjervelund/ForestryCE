@@ -1,5 +1,6 @@
 package forestry.api.arboriculture;
 
+import net.minecraft.world.level.material.MapColor;
 import com.mojang.authlib.GameProfile;
 import forestry.api.core.IBlockSubtype;
 import forestry.api.core.IItemSubtype;
@@ -28,6 +29,16 @@ public interface IWoodType extends IBlockSubtype, IItemSubtype {
 	 * @return Whether the placement was successful. Typically the same return value as {@link LevelAccessor#setBlock}.
 	 */
 	boolean setDefaultLeaves(LevelAccessor level, BlockPos pos, IGenome genome, RandomSource rand, @Nullable GameProfile owner);
+
+	/** Map colour of the planks and of log ends (vanilla oak: {@link MapColor#WOOD}). */
+	default MapColor getPlanksMapColor() {
+		return MapColor.WOOD;
+	}
+
+	/** Map colour of the bark: log sides and wood blocks (vanilla oak: {@link MapColor#PODZOL}). */
+	default MapColor getBarkMapColor() {
+		return MapColor.PODZOL;
+	}
 
 	default SoundEvent getFenceGateOpenSound() {
 		return SoundEvents.FENCE_GATE_OPEN;

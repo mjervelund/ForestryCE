@@ -1,5 +1,6 @@
 package forestry.core.content.worktable.blocks;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.core.platform.block.ITooltipBlock;
 import java.util.function.Consumer;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class WorktableBlock extends BlockBase<WorktableBlockType> implements ITooltipBlock {
 	public WorktableBlock(BlockBehaviour.Properties properties, WorktableBlockType blockType) {
-		super(properties.sound(SoundType.WOOD), blockType);
+		super(properties.mapColor(MapColor.WOOD).sound(SoundType.WOOD), blockType);
 	}
 
 	@Override

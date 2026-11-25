@@ -1,5 +1,6 @@
 package forestry.apiculture.hives;
 
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.item.ItemInstance;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.ForestryTags;
@@ -54,7 +55,7 @@ public class BlockBeeHive extends Block implements EntityBlock {
 	}
 
 	public BlockBeeHive(Identifier speciesId) {
-		super(RegistrationIds.block().sound(SoundType.WOOD).lightLevel(state -> 7).strength(2.5f));
+		super(RegistrationIds.block().mapColor(MapColor.COLOR_YELLOW).sound(SoundType.WOOD).lightLevel(state -> 7).strength(2.5f));
 		this.speciesId = speciesId;
 	}
 

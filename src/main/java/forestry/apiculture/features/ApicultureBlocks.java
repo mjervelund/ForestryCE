@@ -26,7 +26,7 @@ public class ApicultureBlocks {
 
 	public static final FeatureBlockGroup<BlockBase<ApicultureBlockType>, ApicultureBlockType> BASE = REGISTRY
 		.blockGroup(BlockBase::new, ApicultureBlockType.values())
-		.blockProperties(props -> props.sound(SoundType.WOOD).strength(2.0f))
+		.blockProperties(props -> props.mapColor(MapColor.WOOD).sound(SoundType.WOOD).strength(2.0f))
 		.item(ItemBlockForestry::new)
 		.create();
 

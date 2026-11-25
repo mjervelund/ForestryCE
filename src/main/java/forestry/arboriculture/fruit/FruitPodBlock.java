@@ -1,5 +1,6 @@
 package forestry.arboriculture.fruit;
 
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.block.BonemealSource;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.core.platform.tile.TileUtil;
@@ -33,7 +34,7 @@ public class FruitPodBlock extends CocoaBlock implements EntityBlock {
 	private final ForestryPodType podType;
 
 	public FruitPodBlock(ForestryPodType podType) {
-		super(RegistrationIds.block().randomTicks().strength(0.2f, 3.0f).sound(SoundType.WOOD));
+		super(RegistrationIds.block().mapColor(MapColor.PLANT).randomTicks().strength(0.2f, 3.0f).sound(SoundType.WOOD));
 		this.podType = podType;
 	}
 
