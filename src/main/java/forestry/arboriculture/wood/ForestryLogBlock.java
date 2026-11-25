@@ -1,5 +1,6 @@
 package forestry.arboriculture.wood;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.api.arboriculture.IWoodType;
 import forestry.api.arboriculture.WoodBlockKind;
 import forestry.arboriculture.features.ArboricultureBlocks;
@@ -19,10 +20,19 @@ public class ForestryLogBlock extends RotatedPillarBlock implements IWoodTyped {
 	private final IWoodType woodType;
 
 	public ForestryLogBlock(WoodBlockKind kind, boolean fireproof, IWoodType woodType) {
-		super(ForestryPlanksBlock.createWoodProperties(woodType));
+		super(ForestryPlanksBlock.createWoodProperties(woodType).mapColor(logMapColor(kind, woodType)));
 		this.kind = kind;
 		this.fireproof = fireproof;
 		this.woodType = woodType;
+	}
+
+	/** Like vanilla logs: log ends and stripped blocks show the planks colour, bark shows the bark colour. */
+	private static java.util.function.Function<BlockState, MapColor> logMapColor(WoodBlockKind kind, IWoodType woodType) {
+		return switch (kind) {
+			case LOG -> state -> state.getValue(AXIS) == Direction.Axis.Y ? woodType.getPlanksMapColor() : woodType.getBarkMapColor();
+			case WOOD -> state -> woodType.getBarkMapColor();
+			default -> state -> woodType.getPlanksMapColor();
+		};
 	}
 
 	@Override

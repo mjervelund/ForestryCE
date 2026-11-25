@@ -1,5 +1,6 @@
 package forestry.arboriculture.charcoal;
 
+import net.minecraft.world.level.material.MapColor;
 import javax.annotation.Nullable;
 import net.minecraft.world.level.redstone.Orientation;
 import com.google.common.base.Preconditions;
@@ -36,7 +37,7 @@ public class LogPileBlock extends Block {
 	public static final int TICK_RATE = 960;
 
 	public LogPileBlock(Block.Properties properties) {
-		super(properties.strength(1.5f).sound(SoundType.WOOD).noOcclusion());
+		super(properties.mapColor(MapColor.PODZOL).strength(1.5f).sound(SoundType.WOOD).noOcclusion());
 		registerDefaultState(getStateDefinition().any().setValue(AGE, 0).setValue(IS_ACTIVE, false));
 	}
 

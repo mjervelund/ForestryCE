@@ -95,7 +95,7 @@ public class CoreBlocks {
 	// torch properties are otherwise identical to soul torch's, so copying the standing torch reproduces 1.20.1 exactly.
 	public static final FeatureBlock<BlockWaterloggableWallTorch, ItemBlockForestry<?>> PHOSPHOR_WALL_TORCH = REGISTRY.block(BlockWaterloggableWallTorch::new, () -> RegistrationIds.block(Properties.ofFullCopy(Blocks.SOUL_TORCH)).lightLevel(state -> 13), null, "phosphor_wall_torch");
 
-	public static final FeatureBlockGroup<BlockTesr<NaturalistChestBlockType>, NaturalistChestBlockType> NATURALIST_CHEST = REGISTRY.blockGroup(type -> new BlockTesr<>(type, RegistrationIds.block().sound(SoundType.WOOD)), List.of(NaturalistChestBlockType.values())).item(ItemBlockTesr::new).create();
+	public static final FeatureBlockGroup<BlockTesr<NaturalistChestBlockType>, NaturalistChestBlockType> NATURALIST_CHEST = REGISTRY.blockGroup(type -> new BlockTesr<>(type, RegistrationIds.block().mapColor(MapColor.WOOD).sound(SoundType.WOOD)), List.of(NaturalistChestBlockType.values())).item(ItemBlockTesr::new).create();
 
 	/* Decorative stone and brick block sets */
 	// Deviation from 1.20.1: that tree registered all 68 of these by hand and left a "//TODO: Helper method?"

@@ -1,5 +1,6 @@
 package forestry.arboriculture.features;
 
+import net.minecraft.world.level.material.MapColor;
 import forestry.core.platform.registration.RegistrationIds;
 import forestry.api.modules.ForestryModuleIds;
 import forestry.arboriculture.charcoal.AshBlock;
@@ -22,7 +23,7 @@ public class CharcoalBlocks {
 
 	public static final FeatureBlock<Block, ItemBlockForestry<Block>> CHARCOAL = REGISTRY.block(
 		Block::new,
-		() -> RegistrationIds.block().strength(5.0f, 10.0f).sound(SoundType.STONE),
+		() -> RegistrationIds.block().mapColor(MapColor.COLOR_BLACK).strength(5.0f, 10.0f).sound(SoundType.STONE),
 		ItemBlockForestry::new,
 		Item.Properties::new,
 		"charcoal_block"

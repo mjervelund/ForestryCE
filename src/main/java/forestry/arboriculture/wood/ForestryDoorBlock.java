@@ -11,7 +11,7 @@ public class ForestryDoorBlock extends DoorBlock implements IWoodTyped {
 	private final ForestryWoodType woodType;
 
 	public ForestryDoorBlock(ForestryWoodType woodType) {
-		super(woodType.getBlockSetType(), RegistrationIds.block().strength(woodType.getHardness(), woodType.getHardness() * 1.5F).sound(SoundType.WOOD).noOcclusion());
+		super(woodType.getBlockSetType(), RegistrationIds.block().mapColor(woodType.getPlanksMapColor()).strength(woodType.getHardness(), woodType.getHardness() * 1.5F).sound(SoundType.WOOD).noOcclusion());
 		this.woodType = woodType;
 	}
 

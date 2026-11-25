@@ -23,8 +23,7 @@ public class ForestryFenceGateBlock extends FenceGateBlock implements IWoodTyped
 	}
 
 	private static Properties createBlockProperties(boolean fireproof, IWoodType woodType) {
-		// todo add mapColor
-		var props = RegistrationIds.block()
+		var props = RegistrationIds.block().mapColor(woodType.getPlanksMapColor())
 			.forceSolidOn()
 			.strength(woodType.getHardness(), woodType.getHardness() * 1.5F)
 			.instrument(NoteBlockInstrument.BASS)
